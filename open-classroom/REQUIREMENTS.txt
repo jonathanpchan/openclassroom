@@ -4,5 +4,6 @@ AngularJS (TODO)
 Nodejs (v7.7.4)
 
 npm install -g nodemon <-- allows for quick local server updating after file save
+npm install in the ../open-classroom/openclassroom folder
 
 Install postman or something else <-- to handle post requests
