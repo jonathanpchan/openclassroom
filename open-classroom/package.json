@@ -1,0 +1,22 @@
+{
+  "name": "open-classroom",
+  "version": "1.0.0",
+  "description": "A web application for students to find open classrooms.",
+  "main": "home.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node home"
+  },
+  "dependencies":{
+  "express":"*",
+  "mongoose":"*",
+  "bcryptjs":"*",
+  "cors":"*",
+  "jsonwebtoken":"*",
+  "body-parser":"*",
+  "passport":"*",
+  "passport-jwt":"*" 
+  },
+  "author": "Syed Hussain, Jonathan Chan, Jonathan Nguyen, Nicholas Sugimoto",
+  "license": "ISC"
+}

@@ -1,0 +1,1 @@
+This is the routes folder. This is passing the data between the db and and the view. This is most likely the controller.
