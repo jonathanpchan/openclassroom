@@ -48,7 +48,7 @@ home.use('/users', users);
 
 // Index route
 home.get('/', (req, res) => {
-    res.send('Invalid endpoint')
+    res.send('Hello World')
 });
 
 // Takes a port and starts up server

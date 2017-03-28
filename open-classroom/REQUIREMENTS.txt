@@ -1,0 +1,8 @@
+MongoDB (Stable Release (3.4.2) = Windows Server 2008 R2 64-bit and later, with SSL support x64)
+Express
+AngularJS (TODO)
+Nodejs (v7.7.4)
+
+npm install -g nodemon <-- allows for quick local server updating after file save
+
+Install postman or something else <-- to handle post requests
