@@ -1,0 +1,1 @@
+This is the setup portion of the code. This is where the locational stuff goes as well as authentication strategies go.
