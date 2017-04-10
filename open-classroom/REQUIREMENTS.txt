@@ -14,4 +14,4 @@ Install postman or something else <-- to handle post requests
 To get it running:
 1) run mongod.exe in a command prompt
 2) run nodemon in a command prompt in the ../openclassroom/open-classroom folder
-3) ng serve in a command prompt in the ../openclassroom/open-classroom/angular-src folder
+3) npm start in a command prompt in the ../openclassroom/open-classroom/angular-src folder
