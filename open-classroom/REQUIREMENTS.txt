@@ -6,12 +6,11 @@ Nodejs (v7.7.4)
 YOU NEED TODO THIS:
 
 npm install -g nodemon <-- allows for quick local server updating after file save
-npm install when in the ../openclassroom/open-classroom
-(possibly need) npm install -g ng
+npm install -g @angular/cli@latest in ../openclassroom/open-classroom
 
 Install postman or something else <-- to handle post requests
 
 To get it running:
-1) run mongod.exe in a command prompt
+1) run mongod.exe in a command prompt (linux: sudo service mongod start, mac: mongod)
 2) run nodemon in a command prompt in the ../openclassroom/open-classroom folder
-3) npm start in a command prompt in the ../openclassroom/open-classroom/angular-src folder
+3) npm start (or ng serve) in a command prompt in the ../openclassroom/open-classroom/angular-src folder
