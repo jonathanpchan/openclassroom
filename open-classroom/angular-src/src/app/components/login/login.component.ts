@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       if(data.success){
         this.authService.storeUserData(data.token, data.user);
         this.flashMessage.show('Login Successful' ,{cssClass: 'alert-success', timeout: 3000})
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['schedule']);
       }
       else{//don't show what was wrong, disallow brute forcing
         this.flashMessage.show('No Match with that Username and Password' ,{cssClass: 'alert-danger', timeout: 3000})
