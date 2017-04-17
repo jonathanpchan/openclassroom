@@ -28,12 +28,12 @@ export class AuthService {
     this.user = user;
   }
 
-  getProfile(){
+  getSchedule(){
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/users/profile', {headers: headers}).map(res => res.json());
+    return this.http.get('http://localhost:3000/users/schedule', {headers: headers}).map(res => res.json());
   }
 
   loadToken(){

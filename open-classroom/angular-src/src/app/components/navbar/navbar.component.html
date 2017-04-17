@@ -1,12 +1,32 @@
-<div class='navbar'>
-<ul>
-    <li id='1'><button [routerLink]="['/']" >Home</button></li>
-    <li *ngIf = "authService.loggedIn()" id='2'><button [routerLink]="['/profile']">Profile</button></li>
-    <li *ngIf = "authService.loggedIn()" id='3'><button [routerLink]="['/dashboard']">Dashboard</button></li>
-    <li id='4'><button>Something</button></li>
-    <li *ngIf = "authService.loggedIn()" id='5'><button (click) = "onLogoutClick()" href="#">Logout</button></li>
-</ul>
-</div>
+<nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">OpenClassroom</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/schedule']">My Schedule</a></li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/findclasroom']">Find Classroom</a></li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/findbuddy']">Find Buddy</a></li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/messages']">Messages</a></li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/groups']">Groups</a></li>
+          </ul>
 
-<!-- This is for navbar: https://www.w3schools.com/css/css_navbar.asp -->
+          <ul class="nav navbar-nav navbar-right">
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/']">Settings</a></li>
+            <li *ngIf="!authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/login']">Login</a></li>
+            <li *ngIf="!authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/register']">Register </a></li>
+            <li *ngIf="authService.loggedIn()"><a (click)="onLogoutClick()" href="#">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
 <!-- TODO: redirect http://plnkr.co/edit/w2aolrt9wdW3EFcEB3Lw?p=preview-->
+<!-- TODO: *ngIf isn't working properly (database issues)-->
