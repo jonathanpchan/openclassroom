@@ -51,6 +51,10 @@ home.get('/', (req, res) => {
     res.send('Hello World')
 });
 
+home.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
 // Takes a port and starts up server
 home.listen(port, () => {
     console.log('Server started on port '+port);
