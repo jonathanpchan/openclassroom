@@ -1,10 +1,10 @@
 <div class='navbar'>
 <ul>
-    <li id='1'><button ng-click='/register'>First</button></li>
-    <li id='2'><button>First1</button></li>
-    <li id='3'><button>First2</button></li>
-    <li id='4'><button>First3</button></li>
-    <li id='5'><button>First4</button></li>
+    <li id='1'><button [routerLink]="['/']" >Home</button></li>
+    <li *ngIf = "authService.loggedIn()" id='2'><button [routerLink]="['/profile']">Profile</button></li>
+    <li *ngIf = "authService.loggedIn()" id='3'><button [routerLink]="['/dashboard']">Dashboard</button></li>
+    <li id='4'><button>Something</button></li>
+    <li *ngIf = "authService.loggedIn()" id='5'><button (click) = "onLogoutClick()" href="#">Logout</button></li>
 </ul>
 </div>
 

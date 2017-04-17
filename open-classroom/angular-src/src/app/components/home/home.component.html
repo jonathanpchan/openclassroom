@@ -1,3 +1,25 @@
-<p>
-  home works!
-</p>
+<div class="jumbotron text-center">
+  <h1>Open Classroom</h1>
+  <p class="lead">Find your study buddy here</p>
+  <div *ngIf = "!authService.loggedIn()">
+    <a class="btn btn-primary" [routerLink]="['/register']">Register</a> <a class="btn btn-default" [routerLink]="['/login']">Login</a>
+  </div>
+  <div *ngIf = "authService.loggedIn()">
+    <a class="btn btn-primary" >Find Open Classroom</a> <a class="btn btn-default">Find Study Buddy</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <h3>Never question where to study again!</h3>
+    <p>Find open rooms according to the building you're in, or your own schedule</p>
+  </div>
+  <div class="col-md-4">
+    <h3>Study Buddies</h3>
+    <p>Find classmates, or others in the same program to study with!</p>
+  </div>
+  <div class="col-md-4">
+    <h3>Something!</h3>
+    <p>BLAH BLAH BLAH</p>
+  </div>
+</div>
