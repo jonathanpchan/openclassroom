@@ -3,22 +3,28 @@ import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
 export class RegisterComponent implements OnInit {
 
   name: String;
   username: String;
   email: String;
   password: String;
+  regdate: Date;
 
-  constructor(private validateService: ValidateService,
-              private flashMessage: FlashMessagesService,
-              private authService: AuthService,
-              private router: Router) { }
+  // What services that are being used to register
+  constructor (
+    private validateService: ValidateService, 
+    private flashMessage : FlashMessagesService,
+    private authService : AuthService,
+    private router : Router
+  ) { }
 
   ngOnInit() {
   }
@@ -28,7 +34,8 @@ export class RegisterComponent implements OnInit {
       name: this.name,
       email: this.email,
       username: this.username,
-      password: this.password
+      password: this.password,
+      regdate: new Date()
     }
 
     // Required Fields
@@ -47,18 +54,15 @@ export class RegisterComponent implements OnInit {
     //register user into DB
     //what is an observable
     //what is subscribing to it?
-    //we need to make sure we can't re-register users
     this.authService.registerUser(user).subscribe(data => {
       if(data.success){
         this.flashMessage.show('You have now registered now try logging in', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login'])
 
       }else{
-        this.flashMessage.show('Sumting Wong', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessage.show('Something went wrong!', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register'])
       }
     });
-
-
   }
 }
