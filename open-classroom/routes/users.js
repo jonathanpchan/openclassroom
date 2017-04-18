@@ -18,7 +18,7 @@ router.post('/register', (req, res, next) => {
   User.getUserByEmail(newUser.email, (err, user) => {
     // If invalid email
     if(err) {
-      return res.json({success: false, msg:'Failed to register user'}); 
+      return res.json({success: false, msg:'Failed to register user'});
     }
     // If email not in database
     if(!user) {
@@ -41,7 +41,7 @@ router.post('/register', (req, res, next) => {
 
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
   // If user exists, check for password
