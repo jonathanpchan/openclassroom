@@ -11,16 +11,32 @@ router.post('/register', (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+  	regdate: req.body.regdate
   });
 
-  User.addUser(newUser, (err, user) => {
-    if(err){
-      res.json({success: false, msg:'Failed to register user'});
-    } else {
-      res.json({success: true, msg:'User registered'});
+  User.getUserByEmail(newUser.email, (err, user) => {
+    // If invalid email
+    if(err) {
+      return res.json({success: false, msg:'Failed to register user'}); 
     }
-  });
+    // If email not in database
+    if(!user) {
+      // Add the user
+      User.addUser(newUser, (err, user) => {
+        // If invalid user
+        if(err){
+          return res.json({success: false, msg:'Failed to register user'});
+        } else {
+          // Return when valid user
+          return res.json({success: true, msg:'User registered'});
+        }
+      });
+    } else {
+      // Email is in database
+      return res.json({success: false, msg:'Invalid Email.'});
+    }
+  })
 });
 
 // Authenticate
@@ -29,7 +45,7 @@ router.post('/authenticate', (req, res, next) => {
   const password = req.body.password;
 
   // If user exists, check for password
-  User.getUserByUsername(username, (err, user) => {
+  User.getUserByEmail(email, (err, user) => {
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
@@ -62,7 +78,7 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 // Profile
-router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
 });
 
