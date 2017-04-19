@@ -5,7 +5,7 @@ test = true // turn this to false to see all errors (should be flase in general)
 var fs = require('fs');
 var cheerio = require('cheerio');
 
-var fs = require('fs');
+//pipe output to file
 var util = require('util');
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
@@ -14,6 +14,7 @@ console.log = function(d) { //
   log_file.write(util.format(d) + '\n');
   log_stdout.write(util.format(d) + '\n');
 };
+//pipe output to file end
 
 var arr = []
 
@@ -148,7 +149,7 @@ function roomObject(room){
     this.openTimesWed = []
     this.openTimesThu = []
 
-    this.toString = function(){
+    this.print = function(){
         console.log("-------------------------------------------------")
         console.log(this.room + ": ")
         console.log("Monday: ")
@@ -177,6 +178,7 @@ function roomObject(room){
         for (let i in this.thu){
             console.log("   " + this.thu[i].name + " on " + this.thu[i].day + " at " + this.thu[i].time)
         }
+        //console.log("end")
 
         
     }
@@ -330,7 +332,7 @@ function processBuildings(values, key, map){
         values.placeByDay()
         values.sortEachDay()
         values.findTimes()
-        console.log(values.toString())
+        values.print()
       //console.log(values.toString())
     }
     values.rmap.forEach(processRooms)
