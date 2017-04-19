@@ -45,7 +45,7 @@ router.post('/authenticate', (req, res, next) => {
   const password = req.body.password;
 
   // If user exists, check for password
-  User.getUserByEmail(email, (err, user) => {
+  User.getUserByUsername(username, (err, user) => {
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
