@@ -5,6 +5,17 @@ test = true // turn this to false to see all errors (should be flase in general)
 var fs = require('fs');
 var cheerio = require('cheerio');
 
+//pipe output to file
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
+//pipe output to file end
+
 var arr = []
 
 
@@ -52,13 +63,13 @@ function classSection(name, sec, day, time, room){
         }
         else {
             this.sh = this.sh +12
-            this.eh = this.eh+ 12
+            this.eh = this.eh + 12
         }
 
     }
     
-    this.stimeInMin = (sh * 60) + sm
-    this.etimeInMin = (eh * 60) + em
+    this.stimeInMin = (this.sh * 60) + this.sm
+    this.etimeInMin = (this.eh * 60) + this.em
     
 }
 
@@ -109,7 +120,8 @@ fs.writeFile("file.txt", arr2, function(err) {
 */
 //console.log(arr)
 
-//-------------------------------new file for processing-------------------------------
+//-------------------------------make this a new file for processing-------------------------------
+//export primary array
 var bmap = new Map()
 buildingset = new Set();
 var t2 = Date.now();
@@ -132,36 +144,41 @@ function roomObject(room){
     this.thu = []
     this.fri = []
     this.sat = []
-    this.opentimes = [[],[],[],[]]
+    this.openTimesMon = []
+    this.openTimesTue = []
+    this.openTimesWed = []
+    this.openTimesThu = []
 
-    this.toString = function(){
+    this.print = function(){
+        console.log("-------------------------------------------------")
         console.log(this.room + ": ")
         console.log("Monday: ")
         //console.log("")
         for (let i in this.mon){
-            console.log(this.mon[i].name + " on " + this.mon[i].day + " at " + this.mon[i].time)
+            console.log("   " + this.mon[i].name + " on " + this.mon[i].day + " at " + this.mon[i].time)
         }
         
         //console.log("")
         console.log("Tuesday: ")
         //console.log("")
         for (let i in this.tue){
-            console.log( this.tue[i].name + " on " + this.tue[i].day + " at " + this.tue[i].time)
+            console.log("   " + this.tue[i].name + " on " + this.tue[i].day + " at " + this.tue[i].time)
         }
 
         //console.log("")
         console.log("Wednesday: ")
         //console.log("")
         for (let i in this.wed){
-            console.log(this.wed[i].name + " on " + this.wed[i].day + " at " + this.wed[i].time)
+            console.log("   " + this.wed[i].name + " on " + this.wed[i].day + " at " + this.wed[i].time)
         }
 
         //console.log("")
         console.log("Thursday: ")
         //console.log("")
         for (let i in this.thu){
-            console.log(this.thu[i].name + " on " + this.thu[i].day + " at " + this.thu[i].time)
+            console.log("   " + this.thu[i].name + " on " + this.thu[i].day + " at " + this.thu[i].time)
         }
+        //console.log("end")
 
         
     }
@@ -219,12 +236,31 @@ function roomObject(room){
 
     this.findTimes = function(){
         let tEnd = 21 //9 PM
-        let lim = this.mon.length
-        for (let i = this.mon.length; i < 1; i--){
-            if (this.mon[i].en - this.mon[i - 1]){}
-            //console.log(room + " " + lim) //will double count
+        
+        var helper = function(arr, arr2){
+            let size = arr.length
+            //account for 0 and 1 class
+            if (size >= 1){
+                //console.log(room + " " + "has more than one")
+                return
+                //account for last class of the day
+                //if ()
+                //account for first class of the day
+                //account for all other
+                for (let i = this.arr.length; i < 1; i--){
+                    if (this.arr[i].stimeInMin - this.arr[i - 1].etimeInMin > 20){
+
+                    }
+                    //console.log(room + " " + lim) //will double count
+                    
+                }    
+            }
+           // console.log(room + " missed return or < 2")
             
         }
+        helper (this.mon, this.openTimesMon)
+        
+        //sort array in right order
     }
     
 }
@@ -296,6 +332,7 @@ function processBuildings(values, key, map){
         values.placeByDay()
         values.sortEachDay()
         values.findTimes()
+        values.print()
       //console.log(values.toString())
     }
     values.rmap.forEach(processRooms)
@@ -316,12 +353,9 @@ console.log("Total took: " + (Date.now() - t1) + "ms")
 //GET OPEN TIMES
     //might have to creat new class for time data struct
 //PAGES
-    // EXPORT AND CLASS-IFY  
+    // EXPORTs AND CLASS-IFY  
 //CONNECT AND IMOIRT TO DB
 
-//figure our best way to sort rmap and put into array
 //delete all redundant objects
-//figure out what im actualy doing with loops
-//am i creating new objects?
 //better print methods and data structure
 
