@@ -1,2 +1,9 @@
+mongo\.exe
 
-standalone_scraper/node_modules/
+mongod\.exe
+
+open-classroom/node_modules/
+
+scraper/data/
+
+scraper/node_modules/
