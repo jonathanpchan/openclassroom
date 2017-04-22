@@ -4,7 +4,8 @@ syed hussain, csulb, cecs 491
 test = true // turn this to false to see all errors (should be flase in general)
 var fs = require('fs');
 var cheerio = require('cheerio');
-var mongoose = require('mongoose');
+// Be explicit at its location
+var mongoose = require('./node_modules/mongoose');
 var config = require('../open-classroom/config/database');
 
 //pipe output to file

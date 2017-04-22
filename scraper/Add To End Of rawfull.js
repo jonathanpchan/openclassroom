@@ -1,7 +1,8 @@
 //=================================//
 // WRITE BUILDINGS TO THE DATABASE //
 //=================================//
-
+// This code won't work alone but it gives general idea of what it looks like.
+var mongoose = require('./node_modules/mongoose');
 // Connect location of database
 mongoose.connect(config.database);
 // Check to see if connected to database
