@@ -3,26 +3,34 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Building Schema
-const BuildingSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  room: {
-      type: String,
-      required: true
-  },
-  start: {
-    type: Number,
-    required: true
-  },
-  end: {
-    type: Number,
-    required: true
-  }
+const ClassSectionSchema = mongoose.Schema({
+  name : {type: String},
+  sec :  {type: String},
+  days :  {type: String},
+  location :  {type: String},
+  st :  {type: Number},
+  et :  {type: Number}
 });
 
-module.exports = mongoose.model('Buildings', BuildingSchema);
+const RoomSchema = mongoose.Schema({
+  name : {type: Number},
+  mon : {type: [ClassSectionSchema]},
+  tue : {type: [ClassSectionSchema]},
+  wed : {type: [ClassSectionSchema]},
+  thu : {type: [ClassSectionSchema]}
+});
+
+const BuildingSchema = mongoose.Schema({
+  name: {type: String},
+  rooms: {type: [RoomSchema] }
+});
+
+BS = mongoose.model('Building', BuildingSchema );
+RS = mongoose.model('Room', RoomSchema );
+module.exports = {
+  BS: BS,
+  RS: RS
+}
 
 module.exports.addBuilding = function(newBuilding) {
     newBuilding.save();
