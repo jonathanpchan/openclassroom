@@ -369,37 +369,11 @@ console.log("Total took: " + (Date.now() - t1) + "ms")
 //delete all redundant objects
 //better print methods and data structure
 
-// module.exports = function base() {return bmap}
-
-// var exec = require('child_process').exec;
-// var prompt = require ('prompt')
-
-// var doit = function(){exec('node test', function callback(error, stdout, stderr){
-//     console.log(error)
-//     console.log(stdout)
-//     console.log(stderr)
-// });}
-
-// var loop = function(){
-//     prompt.start();
-//     prompt.get(['value'], function (err, result){
-//         x = result.value
-//         //console.log(x)
-//         if (x != -1){
-//             doit()
-//             loop()
-//         }
-        
-//     });
-// }
-
-
-   
-// loop()
 
 function insertToDB(){
     //const building = require('..\open-classroom\models\building');
     // Connect location of database
+    //mongoose.set('debug', true)
     mongoose.connect(config.database);
     // Check to see if connected to database
     mongoose.connection.on('connected', () => {
@@ -410,17 +384,21 @@ function insertToDB(){
         console.log('Database not connected:');
     })
 
-
+    
 
     // Require building model to access add function
     const build = require('../open-classroom/models/building');
     // Grab the schema used by said model
     const bs = mongoose.model('Building', build.BS.schema);
+   // bs.collection.drop()
 
-    function buildingsDB(values, key, map){
-        var dbRoomsArray = []
+
+    function dbAddBuildings(values1, key1, map1){
+      //  console.log("adding : " + key1)
+        var dbRoomsInBuildingArr = []
         
-        function roomsDB(values, key, map){
+            function dbAddRoomsToBuilding(values, key, map){
+
             function DBrooms(arr){
                 tarr = []
                 for (let i in arr){
@@ -443,46 +421,27 @@ function insertToDB(){
             var thu1 = DBrooms(values.thu)
 
             
-            dbRoomsArray.push({name: values.room, mon : mon1, tue : tue1, wed : wed1, thu : thu1})
+            dbRoomsInBuildingArr.push({name: values.room, mon : mon1, tue : tue1, wed : wed1, thu : thu1})
+            //dbRoomsInBuildingArr.push({name: values.room})
+          
         }
         
-        values.rmap.forEach(roomsDB)
-        bs.create({name : key , rooms: dbRoomsArray})
+        values1.rmap.forEach(dbAddRoomsToBuilding)
+
+        bs.create({name : key1 , rooms: dbRoomsInBuildingArr})
+         // console.log("added : " + key1)
+        //bs.create({name : key})
     }
-    //const rs = mongoose.model('Room', build.RS.schema);
-    // var class1 = ({name: "cecs1" , time: 830, day: "monday"})
-    // var class2 = ({name: "cecs2" , time: 930})
-    // var class3 = ({name: "cecs3" , time: 1030})
-
-    // barr = [class1,class2,class3]
-
-    // var room1 = ({name : 100, classes : barr})
-    // var room2 = ({name : 101, classes : barr})
-    // var room3 = ({name : 102, classes : barr})
-
-    // arr = [room1,room2,room3]
+ 
+    var tCount =0
+    // bmap.forEach( function(values,key,map){
+    //     tCount = tCount + 1
+    //     console.log( "(" + tCount + ") Building: " + key + " .. " + typeof key)
+    // })    
+    // console.log(tCount)
 
 
-
-    // bs.create({name : "vec" , rooms: arr})
-
-    // FOR LOOP GOES HERE
-    // bmap.forEach(function(value,key,map) {
-    //     // Add a building to the building collection
-    //     build.addBuilding(new Building({
-    //         name: "TODO", // replace with variable name
-    //         room: "Something", // replace with room number
-    //         start: 1, // replace with variable name start time
-    //         end: 2 // Replace with variable name end time
-    //     }));
-    // // END OF FOR LOOP
-    // });
-    // function newtodo(values, key, map){
-    //     console.log("Building: " + key)
-    // }
-
-    // bmap.forEach(newtodo)    
-    bmap.forEach(buildingsDB)
+    bmap.forEach(dbAddBuildings)
     // Close the database
     mongoose.connection.close(function() {
         console.log('Disconnected from database');
