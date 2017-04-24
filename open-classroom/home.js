@@ -26,6 +26,8 @@ mongoose.connection.on('error', () => {
 const home = express();
 
 const users = require('./routes/users');
+const buildings = require('./routes/buildings');
+
 
 // Port Number
 const port = 3000;
@@ -45,15 +47,23 @@ home.use(passport.session());
 require('./config/passport')(passport);
 
 home.use('/users', users);
+//home.use('/buildings', buildings);
+
 
 // Index route
 home.get('/', (req, res) => {
-    res.send('Hello World')
+      res.send('Hello World')
 });
 
-home.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+home.get('/buildings', function(req, res) {
+    mongoose.model('Building').find(function(err, buildings){
+      res.send(buildings);
+    });
 });
+
+// home.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/index.html'));
+// });
 
 // Takes a port and starts up server
 home.listen(port, () => {

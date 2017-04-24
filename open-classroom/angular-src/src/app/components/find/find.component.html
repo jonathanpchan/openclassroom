@@ -1,0 +1,88 @@
+<h1>  find classroom</h1>
+<h2>  building </h2>
+<ul>
+    <li *ngFor="let building of buildings">
+      {{building.name}}
+
+      <!--Monday-->
+      <ul>
+        <li><strong>Monday</strong></li>
+          <ul>
+          <li *ngFor = "let room of building.rooms">
+            {{building.name}} - {{room.name}}
+            <ul>
+              <li *ngFor = "let class of room.mon">
+                {{class.name}}
+                  <ul>
+                    <li>Location: {{class.location}}  </li>
+                    <li>Start:  {{class.st}} </li>
+                    <li>End:  {{class.et}} </li>
+                  </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+
+      <!--Tuesday-->
+      <ul>
+        <li>Tuesday</li>
+          <ul>
+          <li *ngFor = "let room of building.rooms">
+            {{building.name}} - {{room.name}}
+            <ul>
+              <li *ngFor = "let class of room.tue">
+                {{class.name}}
+                  <ul>
+                    <li>Location: {{class.location}}  </li>
+                    <li>Start:  {{class.st}} </li>
+                    <li>End:  {{class.et}} </li>
+                  </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+
+      <!--Wednesday-->
+      <ul>
+        <li>Wednesday</li>
+          <ul>
+          <li *ngFor = "let room of building.rooms">
+            {{building.name}} - {{room.name}}
+            <ul>
+              <li *ngFor = "let class of room.wed">
+                {{class.name}}
+                  <ul>
+                    <li>Location: {{class.location}}  </li>
+                    <li>Start:  {{class.st}} </li>
+                    <li>End:  {{class.et}} </li>
+                  </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+
+      <!--Thursday-->
+      <ul>
+        <li>Thursday</li>
+          <ul>
+          <li *ngFor = "let room of building.rooms">
+            {{building.name}} - {{room.name}}
+            <ul>
+              <li *ngFor = "let class of room.thu">
+                {{class.name}}
+                  <ul>
+                    <li>Location: {{class.location}}  </li>
+                    <li>Start:  {{class.st}} </li>
+                    <li>End:  {{class.et}} </li>
+                  </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+
+    </li>
+</ul>

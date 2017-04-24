@@ -82,4 +82,8 @@ router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res
   res.json({user: req.user});
 });
 
+// router.get('/find', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+//   res.json({user: req.user});
+// });
+
 module.exports = router;
