@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
   // What services that are being used to register
   constructor (
-    private validateService: ValidateService, 
+    private validateService: ValidateService,
     private flashMessage : FlashMessagesService,
     private authService : AuthService,
     private router : Router
@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit {
       this.flashMessage.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
-
 
     //register user into DB
     //what is an observable

@@ -47,7 +47,7 @@ home.use(passport.session());
 require('./config/passport')(passport);
 
 home.use('/users', users);
-//home.use('/buildings', buildings);
+home.use('/buildings', buildings);
 
 
 // Index route
@@ -55,11 +55,11 @@ home.get('/', (req, res) => {
       res.send('Hello World')
 });
 
-home.get('/buildings', function(req, res) {
-    mongoose.model('Building').find(function(err, buildings){
-      res.send(buildings);
-    });
-});
+// home.get('/buildings', function(req, res) {
+//     mongoose.model('Building').find(function(err, buildings){
+//       res.send(buildings);
+//     });
+// });
 
 // home.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'public/index.html'));

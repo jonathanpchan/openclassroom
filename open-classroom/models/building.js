@@ -40,6 +40,6 @@ module.exports.addBuilding = function(newBuilding) {
 }
 
 module.exports.getBuildings = function(buildings, callback) {
-    const query = {}
-    BS.find(query, callback);
-}
+    const query = {name: BuldingSchema.name}
+    BS.find(query,callback);
+  }
