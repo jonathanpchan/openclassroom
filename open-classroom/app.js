@@ -23,7 +23,7 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected');
 })
 
-const home = express();
+const app = express();
 
 const users = require('./routes/users');
 
@@ -31,31 +31,31 @@ const users = require('./routes/users');
 const port = 3000;
 
 // Make route public so any domain can access it
-home.use(cors());
+app.use(cors());
 
 // Set static location (what is seen first)
-home.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Body Parser Middleware
-home.use(bodyParser.json());
+app.use(bodyParser.json());
 
 // Passport Middleware
-home.use(passport.initialize());
-home.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 require('./config/passport')(passport);
 
-home.use('/users', users);
+app.use('/users', users);
 
 // Index route
-home.get('/', (req, res) => {
-    res.send('Hello World')
+app.get('/', (req, res) => {
+    res.send('Invalid Endpoint')
 });
 
-home.get('*', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 // Takes a port and starts up server
-home.listen(port, () => {
+app.listen(port, () => {
     console.log('Server started on port '+port);
 })
