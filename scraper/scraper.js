@@ -390,7 +390,7 @@ function insertToDB(){
     const build = require('../open-classroom/models/building');
     // Grab the schema used by said model
     const bs = mongoose.model('Building', build.BS.schema);
-   // bs.collection.drop()
+    bs.collection.drop()
 
 
     function dbAddBuildings(values1, key1, map1){
