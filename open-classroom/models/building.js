@@ -25,8 +25,11 @@ const BuildingSchema = mongoose.Schema({
   rooms: {type: [RoomSchema] }
 });
 
-BS = mongoose.model('Building', BuildingSchema );
-RS = mongoose.model('Room', RoomSchema );
+//building schema
+BS = module.exports = mongoose.model('Building', BuildingSchema );
+//rooms schema
+RS = module.exports = mongoose.model('Room', RoomSchema );
+
 module.exports = {
   BS: BS,
   RS: RS
@@ -35,3 +38,8 @@ module.exports = {
 module.exports.addBuilding = function(newBuilding) {
     newBuilding.save();
 }
+
+module.exports.getBuildings = function(buildings, callback) {
+    const query = {name: BuldingSchema.name}
+    BS.find(query,callback);
+  }

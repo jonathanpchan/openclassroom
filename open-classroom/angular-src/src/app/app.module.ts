@@ -12,6 +12,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FindComponent } from './components/find/find.component';
 
 // manually written after using ng g service _______"
 import {ValidateService} from './services/validate.service';
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
   {path:'register', component: RegisterComponent },
   {path:'login', component: LoginComponent },
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
-  {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] }
+  {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
+  {path:'findclassroom', component: FindComponent, canActivate:[AuthGuard] }
 ]
 
 @NgModule({
@@ -39,7 +41,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     DashboardComponent,
     ScheduleComponent,
-    NavbarComponent
+    NavbarComponent,
+    FindComponent
   ],
   imports: [
     BrowserModule,
