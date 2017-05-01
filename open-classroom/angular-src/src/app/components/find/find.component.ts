@@ -9,34 +9,41 @@ import {AuthService} from '../../services/auth.service';
 })
 export class FindComponent implements OnInit {
   buildings : Object;
-  //buildingNames: string[];
-
+  currentBuilding : Object;
+  index: number;
   constructor(
     private authService:AuthService,
     private router:Router
   ) {}
 
-  test(){
-    console.log(this.buildings);
-    }
+  // test(){
+  //   this.currentBuilding = Object.assign({}, this.buildings[this.index]);
+  //   this.index=this.index+1;
+  //    }
+   onChange(bName) {
+     //pass the name into function to change index
+     this.getIndex(bName);
+     this.currentBuilding = Object.assign({}, this.buildings[this.index]);
+   }
+
+   getIndex(bName){
+    //stupid loop to get index for display.
+    //this will probably break at some point
+      var num:number = 0;
+      while(bName != this.buildings[num].name){
+        num = num+1;
+      }
+      this.index = num;
+   }
 
   ngOnInit() {
+    this.index = 0;
     this.authService.getBuildingList().subscribe(buildinglist => {
       this.buildings = buildinglist;
-      //console.log(buildinglist);
-      //this.buildings.push(build);
-      //building list is the list of buildings show by console
-      //need to go through and fill building array with the data
-      //from building list.
-      //  buildinglist.forEach(function(building) {
-      //    //console.log(building.name);
-      //    //get rooms
-      //   //  building.forEach(function(building.room){//not working
-      //   //    console.log
-      //         //get classes parse data
-      //   //  })
-      // });
-      //console.log(this.buildings);
+      //default, otherwise AS wont work until we change and change back.
+      //not sure if its better to do it like this, or like in onChange(num);
+    this.currentBuilding = this.buildings[this.index];
+
     },
     err => {
       console.log(err);
@@ -46,12 +53,12 @@ export class FindComponent implements OnInit {
 }
 
 
-interface Building {
+class  Building {
   name: string;
   rooms: Room[];
 }
 
-interface Room {
+class  Room {
   name: number;
   mon: Class[];
   tue: Class[];
@@ -59,7 +66,7 @@ interface Room {
   thu: Class[];
 }
 
-interface Class {
+class Class {
   name: string;
   sec: string;
   days: string;
