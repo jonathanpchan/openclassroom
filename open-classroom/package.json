@@ -2,10 +2,10 @@
   "name": "open-classroom",
   "version": "1.0.0",
   "description": "A web application for students to find open classrooms.",
-  "main": "home.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node home"
+    "start": "node app"
   },
   "dependencies": {
     "express": "*",
