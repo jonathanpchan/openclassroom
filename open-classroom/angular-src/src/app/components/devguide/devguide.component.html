@@ -1,60 +1,94 @@
 <head>
-  <title> User manual </title>
+  <title> Developer Guide </title>
 </head>
 
 <div>
-  <h2 class="page-header">User manual</h2>
-  <h3 class="header"> [Overview] </h3>
-  <p class= "tab">
-    <body>
-    For a student, finding the ideal place to study can be a reoccurring issue.
-    With the inception of OpenClassroom, our goal is to minimize students' already
-    high stress levels by a simple solution to finding optimal classrooms to study in.
-    Our application will be able to search for classrooms based on a specific time,
-    a specific building, or by a "now" function that will list all available classrooms
-    that are open at the time of query.
-  </body></p>
-  <h3 class="header"> [Registration] </h3>
+  <h2 class="page-header" style="text-align: center;">Developer Guide</h2>
+  
+  <h3 class="header"> [What is Open Classroom?] </h3>
   <body>
-  To register, you will need a valid e-mail address.
-</body>
-  <ol type = "1">
-    <li> Click on the register tab on the top right corner of the navigation bar. </li>
-    <li> Enter your name.</li>
-    <li> Enter a username. (Other users will be able to identify you by this.)</li>
-    <li> Enter a valid e-mail address.</li>
-    <li> Create a password.</li>
-    <li> Click submit!</li>
-    <li> Congratulations! You will now be able to login and access the services provided.</li>
-  </ol>
-
-  <h3 class="header"> [Login] </h3>
-  <body>
-  To login, you will need to have a registered account.
+    As computer science students, we have personally had issues finding open rooms to study in. So we created an app to let students know what classrooms and labs are open. Currently students have no easy way to find this out. They have to chance upon a room or search physically till they find one. We provide a listing of what rooms are open to make the lives of students easier. In addition, students will soon be able to upload their schedules and Open Classroom will suggest where they can go to study. There are also social elements in the works, where students can find other people to study with whether they are in the same class or taking a different section. Chat functionality and note sharing are also on the way. A means for users updating erroneous information and having it user moderated will also be implemented. This application will surely increase the student’s knowledgebase of where they can prepare for their next exam or simply get the help they need in a free space devoid of professor involvement.
   </body>
-  <ol type = "1">
-    <li> Click on the login tab on the top right corner of the navigation bar. </li>
-    <li> Enter your e-mail address.</li>
-    <li> Enter your password.</li>
-    <li> Click submit!</li>
-  </ol>
-</div>
+  
+  <h3 class="header"> [Features] </h3>
+  <body>
+    <u>Currently Live</u>
+    <ul>
+      <li>Signup</li>
+      <li>Login/Logout</li>
+      <li>Get Open Classroom by Building</li>
+    </ul>
+    <u>Currently Live</u>
+    <ul>
+      <li>Open Classroom based on Schedule</li>
+      <li>User Schedule Building</li>
+      <li>User Chatroom</li>
+      <li>User Group Boards</li>
+      <li>File Transfer between Users</li>
+    </ul>
+  </body>
+  
+  <h3 class="header"> [Setup] </h3>
+  <body>
+    You can install the Open Classroom application by downloading the source code directly and unzipping the contents into a folder. Alternatively, you can also fork project. As this is a MEAN stack application, you must <strong>install the 4 dependencies</strong>:
+    <ol type = "1">
+      <li> <strong>MongoDB</strong> (via website)</li>
+      <li> <strong>Angular 2.0</strong> (via npm install)</li>
+      <li> <strong>ExpressJS</strong> (via npm install)</li>
+      <li> <strong>NodeJS</strong> (via website)</li>
+    </ol>
+    Furthermore, you must <strong>install ("ng install") the node_modules folder</strong> into these 3 folders <strong>using a terminal at that path location</strong>:
+    <ol type = "1">
+      <li> "scraper" folder</li>
+      <li> "open-classroom" folder</li>
+      <li> "open-classroom/angular-src" folder</li>
+    </ol>
 
-<h3 class="header"> [FAQ] </h3>
-<ol type = "1">
-  <li> When will the application be released to the public? </li>
+    <u>Populate your MongoDB Database with Classroom Content</u>
+    <ol type = "1">
+      <li> Navigate where you installed MongoDB (default location: C:\Program Files\MongoDB\Server\3.4\bin) and <strong>run "mongod.exe"</strong> or the <strong>"mongod.exe" shortcut</strong> in the scraper folder.</li>
+      <li> Navigate to the "scraper" folder</li>
+      <li> In a terminal at this path location, run "node scraper"</li>
+    </ol>
+
+    <u>Run the Open Classroom Application</u>
+    <ol type = "1">
+      <li> Make sure <strong>"mongod.exe"</strong> is running (if not, run "mongod.exe" as seen above) </li>
+      <li> Open a new terminal in the <strong>"open-classroom"</strong> folder</li>
+      <li> Use the command <strong>"npm start"</strong> or <strong>"npm serve"</strong> or <strong>"nodemon"</strong> (see dependencies) </li>
+      <li> <strong>Open a web browser</strong> (Chrome, Edge, Firefox, etc.) and go to <strong>"localhost:3000".</strong> </li>
+    </ol>
+  </body>
+  
+  <h3 class="header"> [Dependencies] </h3>
+  <body>
+    <u>Open Classroom uses the MEAN stack</u>
     <ul>
-      <li> We are looking to launch in December, 2017! </li>
+      <li><a href="https://www.mongodb.com/download-center"> MongoDB </a></li>
+      <li><a href="https://github.com/angular/angular-cli"> Angular 2.0</a></li>
+      <li><a href="https://github.com/expressjs/express"> ExpressJS </a></li>
+      <li><a href="https://nodejs.org/en/download/"> NodeJS </a></li>
     </ul>
-  <li> How can I become a part of the development team? </li>
+    <i>(Angular 2.0 and ExpressJS are installed using "ng install". MongoDB and NodeJS shall be installed from their respective websites)</i>
+
+    <u>Helpful Applications</u>
     <ul>
-      <li> Please refer to our developer guide!  </li>
+      <li> <a href="https://nodemon.io/">Nodemon</a> - an application that updates your project without having to restart "npm start" or "ng serve" </li>
+      <li> <a href="https://robomongo.org/">Robomongo</a> - a MongoDB client that displays the data in your database (when connected)</li>
     </ul>
-  <li> I can't login! What should I do?</li>
+  </body>
+
+  <h3 class="header"> [How do I contribute?] </h3>
+  <body>
+    If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.
     <ul>
-      <li> Please make sure you're using the credentials you created your account
-    with, and if you are still unable to access your account, please contact us
-    @ openclassroom2017@gmail.com!
-      </li>
+      <li>Source Code: <a href="https://github.com/jonathanpchan/openclassroom">https://github.com/jonathanpchan/openclassroom</a></li>
+      <li>Issue Tracker: <a href="https://github.com/jonathanpchan/openclassroom/issues">https://github.com/jonathanpchan/openclassroom/issues</a></li>
     </ul>
-</ol>
+  </body>
+
+  <h3 class="header"> [Support] </h3>
+  <body>
+    If you have any questions, feel free to contact us at <a href="openclassroom2017@gmail.com">openclassroom2017@gmail.com.</a> 
+  </body>
+</div>
