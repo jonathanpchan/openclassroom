@@ -1,0 +1,9 @@
+mongo\.exe
+
+mongod\.exe
+
+open-classroom/node_modules/
+
+scraper/data/
+
+scraper/node_modules/

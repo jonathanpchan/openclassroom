@@ -1,0 +1,36 @@
+<h1> <strong> Find Open Classroom </strong></h1>
+<!-- <button (click) = "test()"> Testing</button> -->
+<h3>  Select Your Building </h3>
+
+<!-- this creates a drop down list of buildings -->
+<select [(ngModel)]="$index" (ngModelChange)="onChange($event)">
+  <option *ngFor="let buildingName of buildings"> {{buildingName.name}} </option>
+</select>
+
+<!-- I have not been able to get ng-options or ng-repeat to work-->
+<!-- <select ng-model="selectedBuilding">
+<option ng-repeat="x in Buildings" value="{{x.name}}">{{x.name}}</option>
+</select> -->
+
+<h2>{{currentBuilding?.name}} Building</h2>
+
+      <!--if i create a day value i should be abel to *ngIf this -->
+      <!-- <li><strong>Monday</strong></li> -->
+  <ul>
+    <li *ngFor = "let room of currentBuilding?.rooms">
+      <!-- display bug if room has no classes ex EN3-111 on monday-->
+      {{currentBuilding.name}} - {{room.name}}
+      <ul>
+        <!--if i create a day value i should be abel to *ngIf this -->
+        <!--will need to adapt for open times-->
+        <li *ngFor = "let class of room.mon">
+          {{class.name}}
+          <ul>
+            <li>Location: {{class.location}}  </li>
+            <li>Start:  {{class.st}} </li>
+            <li>End:  {{class.et}} </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>

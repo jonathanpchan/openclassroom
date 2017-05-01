@@ -13,9 +13,11 @@ import { FindclassroomComponent } from './components/findclassroom/findclassroom
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { DropdownComponent } from './components/dropdown/dropdown.component';
-import { UsermanualComponent } from './components/usermanual/usermanual.component';
-import { DevguideComponent } from './components/devguide/devguide.component';
+// jonn-Testing
+// import { DropdownComponent } from './components/dropdown/dropdown.component';
+// import { UsermanualComponent } from './components/usermanual/usermanual.component';
+// import { DevguideComponent } from './components/devguide/devguide.component';
+import { FindComponent } from './components/find/find.component';
 
 // manually written after using ng g service _______"
 import {ValidateService} from './services/validate.service';
@@ -33,8 +35,10 @@ const appRoutes: Routes = [
   {path:'findclassroom', component: FindclassroomComponent, canActivate:[AuthGuard] },
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
-  {path:'dropdown', component: DropdownComponent, canActivate:[AuthGuard] },
-  {path:'usermanual', component: UsermanualComponent}
+  //{path:'dropdown', component: DropdownComponent, canActivate:[AuthGuard] },
+  //{path:'usermanual', component: UsermanualComponent}
+
+  {path:'findclassroom', component: FindComponent, canActivate:[AuthGuard] }
 ]
 
 @NgModule({
@@ -45,11 +49,15 @@ const appRoutes: Routes = [
     RegisterComponent,
     DashboardComponent,
     ScheduleComponent,
-    FindclassroomComponent,
+// jonn-Testing
+//     FindclassroomComponent,
+//     NavbarComponent,
+//     DropdownComponent,
+//     UsermanualComponent,
+//     DevguideComponent
+
     NavbarComponent,
-    DropdownComponent,
-    UsermanualComponent,
-    DevguideComponent
+    FindComponent
   ],
   imports: [
     BrowserModule,
