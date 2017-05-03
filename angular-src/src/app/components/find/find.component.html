@@ -24,12 +24,10 @@
         <!--if i create a day value i should be abel to *ngIf this -->
         <!--will need to adapt for open times-->
         <li *ngFor = "let class of room.mon">
-          {{class.name}}
-          <ul>
-            <li>Location: {{class.location}}  </li>
-            <li>Start:  {{class.st}} </li>
-            <li>End:  {{class.et}} </li>
-          </ul>
+
+            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
+
         </li>
       </ul>
     </li>
