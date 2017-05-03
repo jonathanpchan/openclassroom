@@ -1,3 +1,11 @@
+[3 May 2017]
+- Deployed App to https://openclassroom.herokuapp.com
+- Eliminated other branches and created development branch (any changes should be pull requests to master)
+- Master is live version
+- Add devguide and usermanual implementations
+- Changed display of buildings
+- Imported building data using (http://docs.mlab.com/migrating/)
+
 [1 May 2017]
 - Created Developers Guide & User Manual
 - Clear unnecessary branches (keep jonn's to run it by him)
