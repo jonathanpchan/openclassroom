@@ -15,8 +15,8 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 // jonn-Testing
 // import { DropdownComponent } from './components/dropdown/dropdown.component';
-// import { UsermanualComponent } from './components/usermanual/usermanual.component';
-// import { DevguideComponent } from './components/devguide/devguide.component';
+import { UsermanualComponent } from './components/usermanual/usermanual.component';
+import { DevguideComponent } from './components/devguide/devguide.component';
 import { FindComponent } from './components/find/find.component';
 
 // manually written after using ng g service _______"
@@ -36,8 +36,8 @@ const appRoutes: Routes = [
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
   //{path:'dropdown', component: DropdownComponent, canActivate:[AuthGuard] },
-  //{path:'usermanual', component: UsermanualComponent}
-
+  {path:'usermanual', component: UsermanualComponent},
+  {path:'devguide', component: DevguideComponent},
   {path:'findclassroom', component: FindComponent, canActivate:[AuthGuard] }
 ]
 
@@ -53,11 +53,10 @@ const appRoutes: Routes = [
 //     FindclassroomComponent,
 //     NavbarComponent,
 //     DropdownComponent,
-//     UsermanualComponent,
-//     DevguideComponent
-
+    UsermanualComponent,
+    DevguideComponent,
     NavbarComponent,
-    FindComponent
+    FindComponent,
   ],
   imports: [
     BrowserModule,

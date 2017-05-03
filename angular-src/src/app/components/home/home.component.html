@@ -7,6 +7,14 @@
   <div *ngIf = "authService.loggedIn()">
     <a class="btn btn-primary" [routerLink]="['/findclassroom']">Find Open Classroom</a> <a class="btn btn-default">Find Study Buddy</a>
   </div>
+
+  <div>
+    <p>
+      <br /> <a *ngIf="authService.loggedIn()" [routerLinkActive]="[active]"
+      [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/usermanual']">User Manual</a></a> | <a *ngIf="authService.loggedIn()" [routerLinkActive]="[active]"
+      [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/devguide']">Dev Guide</a></a>
+    </p>
+  </div>
 </div>
 
 <div class="row">
