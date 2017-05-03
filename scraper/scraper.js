@@ -92,12 +92,15 @@ $('.courseBlock').each( function(i, e)     {
             while( row.html() != null){
 
                 sec = row.children().next().html();
+                //console.log(sec + " " + typeof sec)
                 day = row.children().next().next().next().next().html();
                 time = row.children().next().next().next().next().next().html()
                 room = row.children().next().next().next().next().next().next().next().html()
                 row = row.next()
 
-                if (!(room == "TBA" || room == "ONLINE ONLY" || room == "ONLINE-ONLY" || time == "TBA")){
+                if (!(room == "TBA" || room == "ONLINE ONLY" || room == "ONLINE-ONLY" || time == "TBA"
+                        || sec == "&#xA0;"
+                )){
                     arr.push(new classSection(name, sec, day, time, room))
                 }
             }
