@@ -31,6 +31,7 @@ const buildings = require('./routes/buildings');
 
 // Port Number
 const port = 3000;
+// const port = process.env.PORT || 8080;
 
 // Make route public so any domain can access it
 app.use(cors());

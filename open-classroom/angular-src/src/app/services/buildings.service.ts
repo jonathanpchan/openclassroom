@@ -17,6 +17,7 @@ export class BuildingsService {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     return this.http.get('http://localhost:3000/buildings', {headers: headers}).map(this.extractData).catch(this.handleError);
+    // return this.http.get('buildings', {headers: headers}).map(this.extractData).catch(this.handleError);
   }
 
   private extractData(res: Response) {
