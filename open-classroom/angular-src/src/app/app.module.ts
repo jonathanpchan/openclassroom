@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { FindclassroomComponent } from './components/findclassroom/findclassroom.component';
+// import { FindclassroomComponent } from './components/findclassroom/findclassroom.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -32,7 +32,7 @@ const appRoutes: Routes = [
   {path:'', component: HomeComponent },
   {path:'register', component: RegisterComponent },
   {path:'login', component: LoginComponent },
-  {path:'findclassroom', component: FindclassroomComponent, canActivate:[AuthGuard] },
+  // {path:'findclassroom', component: FindclassroomComponent, canActivate:[AuthGuard] },
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
   //{path:'dropdown', component: DropdownComponent, canActivate:[AuthGuard] },
@@ -50,7 +50,7 @@ const appRoutes: Routes = [
     DashboardComponent,
     ScheduleComponent,
 // jonn-Testing
-     FindclassroomComponent,
+//     FindclassroomComponent,
 //     NavbarComponent,
 //     DropdownComponent,
 //     UsermanualComponent,
