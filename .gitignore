@@ -2,12 +2,6 @@ mongo\.exe
 
 mongod\.exe
 
-open-classroom/node_modules/
+node_modules
 
-open-classroom/agular-src/node_modules/
-
-scraper/data/
-
-scraper/node_modules/
-
-open-classroom/angular-src/node_modules/
+angular-src/node_modules/

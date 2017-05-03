@@ -17,7 +17,9 @@
     "jsonwebtoken": "*",
     "mongoose": "*",
     "passport": "*",
-    "passport-jwt": "*"
+    "passport-jwt": "*",
+    "cheerio": "*",
+    "request": "*"
   },
   "author": "Syed Hussain, Jonathan Chan, Jonathan Nguyen, Nicholas Sugimoto",
   "license": "ISC",

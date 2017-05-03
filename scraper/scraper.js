@@ -5,8 +5,8 @@ test = true // turn this to false to see all errors (should be flase in general)
 var fs = require('fs');
 var cheerio = require('cheerio');
 // Be explicit at its location
-var mongoose = require('./node_modules/mongoose');
-var config = require('../open-classroom/config/database');
+var mongoose = require('mongoose');
+var config = require('../config/database');
 
 //pipe output to file
 var util = require('util');
@@ -387,7 +387,7 @@ function insertToDB(){
     
 
     // Require building model to access add function
-    const build = require('../open-classroom/models/building');
+    const build = require('../models/building');
     // Grab the schema used by said model
     const bs = mongoose.model('Building', build.BS.schema);
     bs.collection.drop()
