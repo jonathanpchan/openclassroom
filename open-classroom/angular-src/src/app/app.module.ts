@@ -50,7 +50,7 @@ const appRoutes: Routes = [
     DashboardComponent,
     ScheduleComponent,
 // jonn-Testing
-//     FindclassroomComponent,
+     FindclassroomComponent,
 //     NavbarComponent,
 //     DropdownComponent,
 //     UsermanualComponent,
