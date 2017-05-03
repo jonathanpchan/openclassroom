@@ -171,7 +171,7 @@ var LoginComponent = (function () {
                 _this.router.navigate(['schedule']);
             }
             else {
-                _this.flashMessage.show('No Match with that Username and Password', { cssClass: 'alert-danger', timeout: 3000 });
+                _this.flashMessage.show('No Match with that Email and Password', { cssClass: 'alert-danger', timeout: 3000 });
                 _this.router.navigate(['login']);
             }
         });
@@ -579,14 +579,14 @@ var AuthService = (function () {
     AuthService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:3000/users/register', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
+        //return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
+        return this.http.post('users/register', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/authenticate', user, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers}).map(res => res.json());
+        return this.http.post('users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.storeUserData = function (token, user) {
         localStorage.setItem('id_token', token);
@@ -599,16 +599,16 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/users/schedule', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('users/schedule', {headers: headers}).map(res => res.json());
+        // return this.http.get('http://localhost:3000/users/schedule', {headers: headers}).map(res => res.json());
+        return this.http.get('users/schedule', { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.getBuildingList = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('buildings', {headers: headers}).map(res => res.json());
+        // return this.http.get('http://localhost:3000/buildings', {headers: headers}).map(res => res.json());
+        return this.http.get('buildings', { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
