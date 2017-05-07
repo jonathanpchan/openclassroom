@@ -25,10 +25,30 @@ var FindComponent = (function () {
         this.authService = authService;
         this.router = router;
     }
-    // test(){
-    //   this.currentBuilding = Object.assign({}, this.buildings[this.index]);
-    //   this.index=this.index+1;
-    //    }
+    FindComponent.prototype.showMonday = function () {
+        this.monday = true;
+        this.tuesday = false;
+        this.wednesday = false;
+        this.thursday = false;
+    };
+    FindComponent.prototype.showTuesday = function () {
+        this.monday = false;
+        this.tuesday = true;
+        this.wednesday = false;
+        this.thursday = false;
+    };
+    FindComponent.prototype.showWednesday = function () {
+        this.monday = false;
+        this.tuesday = false;
+        this.wednesday = true;
+        this.thursday = false;
+    };
+    FindComponent.prototype.showThursday = function () {
+        this.monday = false;
+        this.tuesday = false;
+        this.wednesday = false;
+        this.thursday = true;
+    };
     FindComponent.prototype.onChange = function (bName) {
         //pass the name into function to change index
         this.getIndex(bName);
@@ -51,6 +71,10 @@ var FindComponent = (function () {
             //default, otherwise AS wont work until we change and change back.
             //not sure if its better to do it like this, or like in onChange(num);
             _this.currentBuilding = _this.buildings[_this.index];
+            _this.monday = true;
+            _this.tuesday = false;
+            _this.wednesday = false;
+            _this.thursday = false;
         }, function (err) {
             console.log(err);
             return false;
@@ -839,7 +863,7 @@ module.exports = "<head>\r\n  <title> Developer Guide </title>\r\n</head>\r\n\r\
 /***/ 182:
 /***/ (function(module, exports) {
 
-module.exports = "<h1> <strong> Find Open Classroom </strong></h1>\r\n<!-- <button (click) = \"test()\"> Testing</button> -->\r\n<h3>  Select Your Building </h3>\r\n\r\n<!-- this creates a drop down list of buildings -->\r\n<select [(ngModel)]=\"$index\" (ngModelChange)=\"onChange($event)\">\r\n  <option *ngFor=\"let buildingName of buildings\"> {{buildingName.name}} </option>\r\n</select>\r\n\r\n<!-- I have not been able to get ng-options or ng-repeat to work-->\r\n<!-- <select ng-model=\"selectedBuilding\">\r\n<option ng-repeat=\"x in Buildings\" value=\"{{x.name}}\">{{x.name}}</option>\r\n</select> -->\r\n\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.mon\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n"
+module.exports = "<h1> <strong> Find Open Classroom </strong></h1>\r\n<button (click) = \"showMonday()\"> Monday</button> <button (click) = \"showTuesday()\"> Tuesday</button> <button (click) = \"showWednesday()\"> Wednesday</button> <button (click) = \"showThursday()\"> Thursday</button>\r\n\r\n\r\n\r\n<h3>  Select Your Building </h3>\r\n\r\n<!-- this creates a drop down list of buildings -->\r\n<select [(ngModel)]=\"$index\" (ngModelChange)=\"onChange($event)\">\r\n  <option *ngFor=\"let buildingName of buildings\"> {{buildingName.name}} </option>\r\n</select>\r\n\r\n<!-- I have not been able to get ng-options or ng-repeat to work-->\r\n<!-- <select ng-model=\"selectedBuilding\">\r\n<option ng-repeat=\"x in Buildings\" value=\"{{x.name}}\">{{x.name}}</option>\r\n</select> -->\r\n<div *ngIf = \"monday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.mon\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"tuesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.tue\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"wednesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.wed\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"thursday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.thu\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
 
