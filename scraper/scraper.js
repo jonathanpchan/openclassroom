@@ -77,6 +77,11 @@ function classSection(name, sec, day, time, room){
     
 }
 
+function oclassSection(st,et){
+    this.stimeInMin = st;
+    this.etimeInMin = et;
+}
+
 // target course block
 $('.courseBlock').each( function(i, e)     {
     name = $('.courseCode', this).text(); 
@@ -241,33 +246,38 @@ function roomObject(room){
 
     }
 
-    this.findTimes = function(){
-        let tEnd = 21 //9 PM
-        
-        var helper = function(arr, arr2){
-            let size = arr.length
-            //account for 0 and 1 class
-            if (size >= 1){
-                //console.log(room + " " + "has more than one")
-                return
-                //account for last class of the day
-                //if ()
-                //account for first class of the day
-                //account for all other
-                for (let i = this.arr.length; i < 1; i--){
-                    if (this.arr[i].stimeInMin - this.arr[i - 1].etimeInMin > 20){
+    this.findTimes = function(){        
+        this.helper (this.mon, this.openTimesMon)
+        this.helper (this.tue, this.openTimesTue)
+        this.helper (this.wed, this.openTimesWed)
+        this.helper (this.thu, this.openTimesThu)
+    }
 
-                    }
-                    //console.log(room + " " + lim) //will double count
-                    
-                }    
-            }
-           // console.log(room + " missed return or < 2")
-            
+    this.helper = function(arr1, arr2){
+        let tEnd = 21 * 60 //9 PM
+        let tStart = 8*60//8am
+        let size = arr1.length
+        //console.log(size)
+
+        //account for 0 and 1 class
+        if (size > 2){
+            //console.log(arr1[0].sec)
+            //handle last class
+            arr2.push(new oclassSection(arr1[size-1].etimeInMin, tEnd))
+
+            //account for all other
+            for (let i = arr1.length -2; i > 0; i--){
+                if (arr1[i].stimeInMin - arr1[i - 1].etimeInMin > 20){
+                    arr2.push(new oclassSection(arr1[i - 1].etimeInMin,arr1[i].stimeInMin))
+                }   
+            } 
+            //account for first class of the day   
+            arr2.push(new oclassSection(tStart, arr1[0].stimeInMin))
+            //reverse open times arr
+            arr2.reverse()
         }
-        helper (this.mon, this.openTimesMon)
-        
-        //sort array in right order
+           /////console.log(room + " missed return or < 2")
+
     }
     
 }
@@ -340,8 +350,9 @@ function processBuildings(values, key, map){
     function processRooms(values, key, map){
         values.placeByDay()
         values.sortEachDay()
-        //values.findTimes()
         //values.print()
+        values.findTimes()
+        
       //console.log(values.toString())
     }
     values.rmap.forEach(processRooms)
@@ -422,9 +433,16 @@ function insertToDB(){
             var tue1 = DBrooms(values.tue)
             var wed1 = DBrooms(values.wed)
             var thu1 = DBrooms(values.thu)
+            var omon1 = DBrooms(values.openTimesMon)
+            var otue1 = DBrooms(values.openTimesTue)
+            var owed1 = DBrooms(values.openTimesWed)
+            var othu1 = DBrooms(values.openTimesThu)
 
             
-            dbRoomsInBuildingArr.push({name: values.room, mon : mon1, tue : tue1, wed : wed1, thu : thu1})
+            dbRoomsInBuildingArr.push({name: values.room, 
+                                       mon : mon1, tue : tue1, wed : wed1, thu : thu1,
+                                       omon : omon1, otue : otue1, owed : owed1, othu : thu1
+                                    })
             //dbRoomsInBuildingArr.push({name: values.room})
           
         }
