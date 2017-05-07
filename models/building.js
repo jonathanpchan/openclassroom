@@ -13,7 +13,7 @@ const ClassSectionSchema = mongoose.Schema({
 });
 
 const RoomSchema = mongoose.Schema({
-  name : {type: Number},
+  name : {type: String},
   mon : {type: [ClassSectionSchema]},
   tue : {type: [ClassSectionSchema]},
   wed : {type: [ClassSectionSchema]},
