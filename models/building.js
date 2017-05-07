@@ -13,7 +13,7 @@ const ClassSectionSchema = mongoose.Schema({
 });
 
 const RoomSchema = mongoose.Schema({
-  name : {type: Number},
+  name : {type: String},
   mon : {type: [ClassSectionSchema]},
   tue : {type: [ClassSectionSchema]},
   wed : {type: [ClassSectionSchema]},
@@ -41,5 +41,5 @@ module.exports.addBuilding = function(newBuilding) {
 
 module.exports.getBuildings = function(buildings, callback) {
     const query = {name: BuldingSchema.name}
-    BS.find(query,callback);
+    BS.find(query,callback).sort({name: BuildingSchema.name});
   }

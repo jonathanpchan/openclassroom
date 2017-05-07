@@ -1,5 +1,8 @@
 <h1> <strong> Find Open Classroom </strong></h1>
-<!-- <button (click) = "test()"> Testing</button> -->
+<button (click) = "showMonday()"> Monday</button> <button (click) = "showTuesday()"> Tuesday</button> <button (click) = "showWednesday()"> Wednesday</button> <button (click) = "showThursday()"> Thursday</button>
+
+
+
 <h3>  Select Your Building </h3>
 
 <!-- this creates a drop down list of buildings -->
@@ -11,7 +14,7 @@
 <!-- <select ng-model="selectedBuilding">
 <option ng-repeat="x in Buildings" value="{{x.name}}">{{x.name}}</option>
 </select> -->
-
+<div *ngIf = "monday">
 <h2>{{currentBuilding?.name}} Building</h2>
 
       <!--if i create a day value i should be abel to *ngIf this -->
@@ -32,3 +35,73 @@
       </ul>
     </li>
   </ul>
+</div>
+
+<div *ngIf = "tuesday">
+<h2>{{currentBuilding?.name}} Building</h2>
+
+      <!--if i create a day value i should be abel to *ngIf this -->
+      <!-- <li><strong>Monday</strong></li> -->
+  <ul>
+    <li *ngFor = "let room of currentBuilding?.rooms">
+      <!-- display bug if room has no classes ex EN3-111 on monday-->
+      {{currentBuilding.name}} - {{room.name}}
+      <ul>
+        <!--if i create a day value i should be abel to *ngIf this -->
+        <!--will need to adapt for open times-->
+        <li *ngFor = "let class of room.tue">
+
+            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
+
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf = "wednesday">
+<h2>{{currentBuilding?.name}} Building</h2>
+
+      <!--if i create a day value i should be abel to *ngIf this -->
+      <!-- <li><strong>Monday</strong></li> -->
+  <ul>
+    <li *ngFor = "let room of currentBuilding?.rooms">
+      <!-- display bug if room has no classes ex EN3-111 on monday-->
+      {{currentBuilding.name}} - {{room.name}}
+      <ul>
+        <!--if i create a day value i should be abel to *ngIf this -->
+        <!--will need to adapt for open times-->
+        <li *ngFor = "let class of room.wed">
+
+            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
+
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf = "thursday">
+<h2>{{currentBuilding?.name}} Building</h2>
+
+      <!--if i create a day value i should be abel to *ngIf this -->
+      <!-- <li><strong>Monday</strong></li> -->
+  <ul>
+    <li *ngFor = "let room of currentBuilding?.rooms">
+      <!-- display bug if room has no classes ex EN3-111 on monday-->
+      {{currentBuilding.name}} - {{room.name}}
+      <ul>
+        <!--if i create a day value i should be abel to *ngIf this -->
+        <!--will need to adapt for open times-->
+        <li *ngFor = "let class of room.thu">
+
+            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
+
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

@@ -11,15 +11,43 @@ export class FindComponent implements OnInit {
   buildings : Object;
   currentBuilding : Object;
   index: number;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
   constructor(
     private authService:AuthService,
     private router:Router
   ) {}
 
-  // test(){
-  //   this.currentBuilding = Object.assign({}, this.buildings[this.index]);
-  //   this.index=this.index+1;
-  //    }
+    showMonday(){
+      this.monday = true;
+      this.tuesday = false;
+      this.wednesday = false;
+      this.thursday = false;
+    }
+
+    showTuesday(){
+      this.monday = false;
+      this.tuesday = true;
+      this.wednesday = false;
+      this.thursday = false;
+    }
+
+    showWednesday(){
+      this.monday = false;
+      this.tuesday = false;
+      this.wednesday = true;
+      this.thursday = false;
+    }
+
+    showThursday(){
+      this.monday = false;
+      this.tuesday = false;
+      this.wednesday = false;
+      this.thursday = true;
+    }
+
    onChange(bName) {
      //pass the name into function to change index
      this.getIndex(bName);
@@ -43,6 +71,11 @@ export class FindComponent implements OnInit {
       //default, otherwise AS wont work until we change and change back.
       //not sure if its better to do it like this, or like in onChange(num);
     this.currentBuilding = this.buildings[this.index];
+    this.monday = true;
+    this.tuesday = false;
+    this.wednesday = false;
+    this.thursday = false;
+
 
     },
     err => {
