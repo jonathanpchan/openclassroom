@@ -450,16 +450,14 @@ function insertToDB(){
 
     bmap.forEach(dbAddBuildings)
 
-
-
     bs.collection.insert(fullDBArr, onInsert)
 
     function onInsert(err) {
          if (err) {
             // TODO: handle error 
-            console.log("error on insert")
+            console.log("Error on insert")
          } else {
-            console.info(' potatoes were successfully stored.');
+            console.info('Buildings were successfully stored.');
         }
     } 
     // Close the database

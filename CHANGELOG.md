@@ -1,3 +1,8 @@
+[6 May 2017]
+- Created promise to import building data syncronously
+- Ran scraper to import building data to database
+- Next step will be open times rather than closed times
+
 [3 May 2017]
 - Deployed App to https://openclassroom.herokuapp.com
 - Eliminated other branches and created development branch (any changes should be pull requests to master)
