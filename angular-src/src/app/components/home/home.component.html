@@ -10,8 +10,8 @@
 
   <div>
     <p>
-      <br /> <a *ngIf="authService.loggedIn()" [routerLinkActive]="[active]"
-      [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/usermanual']">User Manual</a></a> | <a *ngIf="authService.loggedIn()" [routerLinkActive]="[active]"
+      <br /> <a [routerLinkActive]="[active]"
+      [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/usermanual']">User Manual</a></a> | <a [routerLinkActive]="[active]"
       [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/devguide']">Dev Guide</a></a>
     </p>
   </div>
