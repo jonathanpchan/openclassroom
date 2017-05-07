@@ -34,7 +34,7 @@ function classSection(name, sec, day, time, room){
     this.location = room;
     temp = this.location.split('-');
     this.building = temp[0];
-    this.room = temp[1];
+    this.room = temp[1].replace(/^0+/, '');
     //parse time
     this.time = time;
     this.period = time.substring(time.length - 2)
