@@ -17,7 +17,12 @@ const RoomSchema = mongoose.Schema({
   mon : {type: [ClassSectionSchema]},
   tue : {type: [ClassSectionSchema]},
   wed : {type: [ClassSectionSchema]},
-  thu : {type: [ClassSectionSchema]}
+  thu : {type: [ClassSectionSchema]},
+  //open times
+  omon : {type: [ClassSectionSchema]},
+  otue : {type: [ClassSectionSchema]},
+  owed : {type: [ClassSectionSchema]},
+  othu : {type: [ClassSectionSchema]}
 });
 
 const BuildingSchema = mongoose.Schema({
