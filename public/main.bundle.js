@@ -71,7 +71,6 @@ var FindComponent = (function () {
             //default, otherwise AS wont work until we change and change back.
             //not sure if its better to do it like this, or like in onChange(num);
             _this.currentBuilding = _this.buildings[_this.index];
-            //perhaps make this autodetect later, if weekend default to monday
             _this.monday = true;
             _this.tuesday = false;
             _this.wednesday = false;
@@ -196,7 +195,7 @@ var LoginComponent = (function () {
                 _this.router.navigate(['schedule']);
             }
             else {
-                _this.flashMessage.show('No Match with that Username and Password', { cssClass: 'alert-danger', timeout: 3000 });
+                _this.flashMessage.show('No Match with that Email and Password', { cssClass: 'alert-danger', timeout: 3000 });
                 _this.router.navigate(['login']);
             }
         });
@@ -604,14 +603,14 @@ var AuthService = (function () {
     AuthService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:3000/users/register', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
+        //return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
+        return this.http.post('users/register', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/authenticate', user, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers}).map(res => res.json());
+        return this.http.post('users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.storeUserData = function (token, user) {
         localStorage.setItem('id_token', token);
@@ -624,16 +623,16 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/users/schedule', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('users/schedule', {headers: headers}).map(res => res.json());
+        // return this.http.get('http://localhost:3000/users/schedule', {headers: headers}).map(res => res.json());
+        return this.http.get('users/schedule', { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.getBuildingList = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('buildings', {headers: headers}).map(res => res.json());
+        // return this.http.get('http://localhost:3000/buildings', {headers: headers}).map(res => res.json());
+        return this.http.get('buildings', { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
@@ -864,7 +863,8 @@ module.exports = "<head>\r\n  <title> Developer Guide </title>\r\n</head>\r\n\r\
 /***/ 182:
 /***/ (function(module, exports) {
 
-module.exports = "<h1> <strong> Find Open Classroom </strong></h1>\r\n<button (click) = \"showMonday()\"> Monday</button> <button (click) = \"showTuesday()\"> Tuesday</button> <button (click) = \"showWednesday()\"> Wednesday</button> <button (click) = \"showThursday()\"> Thursday</button>\r\n\r\n\r\n\r\n<h3>  Select Your Building </h3>\r\n\r\n<!-- this creates a drop down list of buildings -->\r\n<select [(ngModel)]=\"$index\" (ngModelChange)=\"onChange($event)\">\r\n  <option *ngFor=\"let buildingName of buildings\"> {{buildingName.name}} </option>\r\n</select>\r\n\r\n<!-- I have not been able to get ng-options or ng-repeat to work-->\r\n<!-- <select ng-model=\"selectedBuilding\">\r\n<option ng-repeat=\"x in Buildings\" value=\"{{x.name}}\">{{x.name}}</option>\r\n</select> -->\r\n<div *ngIf = \"monday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n      <ul>\r\n        <li *ngFor=\"let room of currentBuilding?.rooms\">\r\n          <!-- <template *ngIf =\"room.omon?.length >0\">\r\n            {{currentBuilding.name}} - {{room.name}}\r\n          </template> -->\r\n          <!-- not sure how to display this based on if it has a value or not later on in the loops -->\r\n          {{currentBuilding.name}} - {{room.name}}\r\n          <ul>\r\n            <!--if i create a day value i should be abel to *ngIf this -->\r\n            <!--will need to adapt for open times-->\r\n            <li *ngFor = \"let class of room.otue\">\r\n\r\n                Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n                {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n            </li>\r\n          </ul>\r\n        </li>\r\n    </ul>\r\n</div>\r\n\r\n<div *ngIf = \"tuesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.otue\">\r\n\r\n            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"wednesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.owed\">\r\n\r\n            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"thursday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.othu\">\r\n\r\n            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<h1> <strong> Find Open Classroom </strong></h1>\r\n<button (click) = \"showMonday()\"> Monday</button> <button (click) = \"showTuesday()\"> Tuesday</button> <button (click) = \"showWednesday()\"> Wednesday</button> <button (click) = \"showThursday()\"> Thursday</button>\r\n\r\n\r\n\r\n<h3>  Select Your Building </h3>\r\n\r\n<!-- this creates a drop down list of buildings -->\r\n<select [(ngModel)]=\"$index\" (ngModelChange)=\"onChange($event)\">\r\n  <option *ngFor=\"let buildingName of buildings\"> {{buildingName.name}} </option>\r\n</select>\r\n\r\n<!-- I have not been able to get ng-options or ng-repeat to work-->\r\n<!-- <select ng-model=\"selectedBuilding\">\r\n<option ng-repeat=\"x in Buildings\" value=\"{{x.name}}\">{{x.name}}</option>\r\n</select> -->\r\n<div *ngIf = \"monday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.mon\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"tuesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.tue\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"wednesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.wed\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"thursday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be abel to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be abel to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.thu\">\r\n\r\n            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n"
+
 
 /***/ }),
 
