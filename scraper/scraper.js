@@ -387,7 +387,6 @@ function insertToDB(){
         console.log('Database not connected:');
     })
 
-    
 
     // Require building model to access add function
     const build = require('../models/building');
@@ -395,6 +394,7 @@ function insertToDB(){
     const bs = mongoose.model('Building', build.BS.schema);
     bs.collection.drop()
 
+    var fullDBArr = []
 
     function dbAddBuildings(values1, key1, map1){
       //  console.log("adding : " + key1)
@@ -431,9 +431,13 @@ function insertToDB(){
         
         values1.rmap.forEach(dbAddRoomsToBuilding)
 
-        bs.create({name : key1 , rooms: dbRoomsInBuildingArr})
+        //bs.create({name : key1 , rooms: dbRoomsInBuildingArr})
+
+        fullDBArr.push({name : key1 , rooms: dbRoomsInBuildingArr})
+
          // console.log("added : " + key1)
         //bs.create({name : key})
+
     }
  
     var tCount =0
@@ -445,6 +449,19 @@ function insertToDB(){
 
 
     bmap.forEach(dbAddBuildings)
+
+
+
+    bs.collection.insert(fullDBArr, onInsert)
+
+    function onInsert(err) {
+         if (err) {
+            // TODO: handle error 
+            console.log("error on insert")
+         } else {
+            console.info(' potatoes were successfully stored.');
+        }
+    } 
     // Close the database
     mongoose.connection.close(function() {
         console.log('Disconnected from database');
