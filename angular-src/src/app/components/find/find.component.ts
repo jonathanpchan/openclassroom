@@ -71,6 +71,7 @@ export class FindComponent implements OnInit {
       //default, otherwise AS wont work until we change and change back.
       //not sure if its better to do it like this, or like in onChange(num);
     this.currentBuilding = this.buildings[this.index];
+    //perhaps make this autodetect later, if weekend default to monday
     this.monday = true;
     this.tuesday = false;
     this.wednesday = false;
@@ -97,6 +98,10 @@ class  Room {
   tue: Class[];
   wed: Class[];
   thu: Class[];
+  omon: Class[];
+  otue: Class[];
+  owed: Class[];
+  othu: Class[];
 }
 
 class Class {

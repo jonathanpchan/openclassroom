@@ -19,22 +19,25 @@
 
       <!--if i create a day value i should be abel to *ngIf this -->
       <!-- <li><strong>Monday</strong></li> -->
-  <ul>
-    <li *ngFor = "let room of currentBuilding?.rooms">
-      <!-- display bug if room has no classes ex EN3-111 on monday-->
-      {{currentBuilding.name}} - {{room.name}}
       <ul>
-        <!--if i create a day value i should be abel to *ngIf this -->
-        <!--will need to adapt for open times-->
-        <li *ngFor = "let class of room.mon">
+        <li *ngFor="let room of currentBuilding?.rooms">
+          <!-- <template *ngIf ="room.omon?.length >0">
+            {{currentBuilding.name}} - {{room.name}}
+          </template> -->
+          <!-- not sure how to display this based on if it has a value or not later on in the loops -->
+          {{currentBuilding.name}} - {{room.name}}
+          <ul>
+            <!--if i create a day value i should be abel to *ngIf this -->
+            <!--will need to adapt for open times-->
+            <li *ngFor = "let class of room.otue">
 
-            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
-            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
+                Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+                {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
 
+            </li>
+          </ul>
         </li>
-      </ul>
-    </li>
-  </ul>
+    </ul>
 </div>
 
 <div *ngIf = "tuesday">
@@ -49,9 +52,9 @@
       <ul>
         <!--if i create a day value i should be abel to *ngIf this -->
         <!--will need to adapt for open times-->
-        <li *ngFor = "let class of room.tue">
+        <li *ngFor = "let class of room.otue">
 
-            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
             {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
 
         </li>
@@ -72,9 +75,9 @@
       <ul>
         <!--if i create a day value i should be abel to *ngIf this -->
         <!--will need to adapt for open times-->
-        <li *ngFor = "let class of room.wed">
+        <li *ngFor = "let class of room.owed">
 
-            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
             {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
 
         </li>
@@ -95,9 +98,9 @@
       <ul>
         <!--if i create a day value i should be abel to *ngIf this -->
         <!--will need to adapt for open times-->
-        <li *ngFor = "let class of room.thu">
+        <li *ngFor = "let class of room.othu">
 
-            Closed From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
+            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
             {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
 
         </li>
