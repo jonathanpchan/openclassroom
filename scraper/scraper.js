@@ -263,16 +263,20 @@ function roomObject(room){
         if (size > 2){
             //console.log(arr1[0].sec)
             //handle last class
-            arr2.push(new oclassSection(arr1[size-1].etimeInMin, tEnd))
-
+            if(tEnd - arr1[size-1].etimeInMin > 20){
+                arr2.push(new oclassSection(arr1[size-1].etimeInMin, tEnd))
+            }
+            
             //account for all other
             for (let i = arr1.length -2; i > 0; i--){
                 if (arr1[i].stimeInMin - arr1[i - 1].etimeInMin > 20){
                     arr2.push(new oclassSection(arr1[i - 1].etimeInMin,arr1[i].stimeInMin))
                 }   
             } 
-            //account for first class of the day   
-            arr2.push(new oclassSection(tStart, arr1[0].stimeInMin))
+            //account for first class of the day 
+            if (arr1[0].stimeInMin - tStart > 20){
+                  arr2.push(new oclassSection(tStart, arr1[0].stimeInMin))
+            }
             //reverse open times arr
             arr2.reverse()
         }
