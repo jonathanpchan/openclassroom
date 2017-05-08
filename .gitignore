@@ -5,3 +5,4 @@ node_modules
 angular-src/node_modules/
 
 scraper/debug\.log
+public/README.md
