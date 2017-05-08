@@ -31,8 +31,8 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected');
 })
 
-// Which port number we are connecting to
-// const port = 3000; // For Testing
+// Port Number
+const port = 3000; // For testing
 const port = process.env.PORT || 8080; // For Deployment (if we test, we'll be on localhost:8080 connected to db)
 
 // Make route public so any domain can access it
