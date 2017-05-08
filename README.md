@@ -74,7 +74,7 @@ openclassroom
 * public (deployment files and starting page location)
 * routes (set up GET and POST requests here)
 * scraper (where CSULB population happens)
-	*open-classroom-data (JSON file with pre-scraped buildings 2017)
+	* open-classroom-data (JSON file with pre-scraped buildings 2017)
 	* node_modules (dependencies installed based on package.json)
 
 ## [How do I contribute?]
