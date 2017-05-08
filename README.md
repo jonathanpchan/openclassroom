@@ -5,24 +5,28 @@ As computer science students, we have personally had issues finding open rooms t
 ## [Features]
 
 Currently Live: 
-	* Signup
-	* Login/Logout
-	* Get Open Classroom by Building
+* Signup
+* Login/Logout
+* Get Open Classroom by Building
+
 In Progress: 
-	* Open Classroom based on Schedule
-	* User Schedule Building
-	* User Chatroom
-	* User Group Boards
-	* File Transfer between Users
+* Open Classroom based on Schedule
+* User Schedule Building
+* User Chatroom
+* User Group Boards
+* File Transfer between Users
 
 ## [Setup]
 
 You can install the Open Classroom application by downloading the source code directly and unzipping the contents into a folder. Alternatively, you can also fork project. As this is a MEAN stack application, you must install the 4 dependencies:
+
 * MongoDB (via website)
 * Angular 2.0 (via npm install) 
 * ExpressJS (via npm install) 
 * NodeJS (via website) 
+
 Furthermore, you must install ("ng install") the node_modules folder into these 3 folders using a terminal at that path location:
+
 * "scraper" folder, 
 * "open-classroom" folder, 
 * "open-classroom/angular-src" folder.
