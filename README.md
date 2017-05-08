@@ -32,15 +32,15 @@ Furthermore, you must install ("ng install") the node_modules folder into these 
 * "open-classroom/angular-src" folder.
 
 ## [Populate your MongoDB Database with Classroom Content]
-1) Navigate where you installed MongoDB (default location: C:\Program Files\MongoDB\Server\3.4\bin) and run "mongod.exe" or the "mongod.exe" shortcut in the scraper folder, 
-2) Navigate to the "scraper" folder, 
-3) In a terminal at this path location, run "node scraper".
+1) Navigate where you installed MongoDB (default location: C:\Program Files\MongoDB\Server\3.4\bin) and run "mongod.exe" or the "mongod.exe" shortcut in the scraper folder
+2) Navigate to the "scraper" folder
+3) In a terminal at this path location, run "node scraper"
 
 ## [Run the Open Classroom Application]
-1) Make sure "mongod.exe" is running (if not, run "mongod.exe" as seen above), 
-2) Open a new terminal in the "open-classroom" folder, 
-3) Use the command "npm start" or "npm serve" or "nodemon" (see dependencies), 
-4) Open a web browser (Chrome, Edge, Firefox, etc.) and go to "localhost:3000".
+1) Make sure "mongod.exe" is running (if not, run "mongod.exe" as seen above)
+2) Open a new terminal in the "open-classroom" folder
+3) Use the command "npm start" or "npm serve" or "nodemon" (see dependencies)
+4) Open a web browser (Chrome, Edge, Firefox, etc.) and go to "localhost:3000"
 
 ## [Dependencies]
 
@@ -52,7 +52,7 @@ Open Classroom uses the MEAN stack:
 (Angular 2.0 and ExpressJS are installed using "ng install". MongoDB and NodeJS shall be installed from their respective websites) 
 
 Helpful Applications: 
-* Nodemon - an application that updates your project without having to restart "npm start" or "ng serve", 
+* Nodemon - an application that updates your project without having to restart "npm start" or "ng serve"
 * Robomongo - a MongoDB client that displays the data in your database (when connected)
 
 ## [Project Folder Tree]
