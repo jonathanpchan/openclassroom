@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
-// Building Schema
+// Class Section Schema
 const ClassSectionSchema = mongoose.Schema({
   name : {type: String},
   sec :  {type: String},
@@ -12,6 +12,7 @@ const ClassSectionSchema = mongoose.Schema({
   et :  {type: Number}
 });
 
+// Room Schema (Mon -> Thurs)
 const RoomSchema = mongoose.Schema({
   name : {type: String},
   mon : {type: [ClassSectionSchema]},
@@ -25,25 +26,29 @@ const RoomSchema = mongoose.Schema({
   othu : {type: [ClassSectionSchema]}
 });
 
+// Building Schema
 const BuildingSchema = mongoose.Schema({
   name: {type: String},
   rooms: {type: [RoomSchema] }
 });
 
-//building schema
+// Export Building schema
 BS = module.exports = mongoose.model('Building', BuildingSchema );
-//rooms schema
+// Export Room SChema
 RS = module.exports = mongoose.model('Room', RoomSchema );
 
+// Export BS as BS and RS as RS
 module.exports = {
   BS: BS,
   RS: RS
 }
 
+// Add a new building by saving
 module.exports.addBuilding = function(newBuilding) {
     newBuilding.save();
 }
 
+// Gets the Buildings based on BuildingSchema name
 module.exports.getBuildings = function(buildings, callback) {
     const query = {name: BuldingSchema.name}
     BS.find(query,callback).sort({name: BuildingSchema.name});

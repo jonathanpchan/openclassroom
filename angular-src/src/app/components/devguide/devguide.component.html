@@ -78,6 +78,42 @@
     </ul>
   </body>
 
+  <h3 class="header"> [OpenClassroom Project Tree] </h3>
+  <body>
+    <ul>
+      <li>angular-src (where our angular project resides)
+        <ul>
+          <li>e2e (for testing)</li>
+          <li>node_modules (dependencies installed based on package.json)</li>
+          <li>src
+            <ul>
+              <li>app (where the pieces to make the application resides)
+                <ul>
+                  <li>components (modules that are added to the website)</li>
+                  <li>guards (protects routes)</li>
+                  <li>services (authenticate and distribute data)</li>
+                </ul>
+              </li>
+              <li>assets</li>
+              <li>environments</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>config (where JSON Web Token strategy and database is located)</li>
+      <li>models (what objects the project will be interacting with)</li>
+      <li>node_modules (dependencies installed based on package.json)</li>
+      <li>public (deployment files and starting page location)</li>
+      <li>routes (set up GET and POST requests here)</li>
+      <li>scraper (where CSULB population happens)
+        <ul>
+        <li>open-classroom-data (JSON file with pre-scraped buildings 2017)</li>
+        <li>node_modules (dependencies installed based on package.json)</li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+
   <h3 class="header"> [How do I contribute?] </h3>
   <body>
     If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.

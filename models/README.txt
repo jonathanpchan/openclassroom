@@ -1,1 +1,0 @@
-This is where the models go. They are what is used in the routes folder.

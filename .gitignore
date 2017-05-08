@@ -1,9 +1,7 @@
 mongo\.exe
-
 mongod\.exe
 
 node_modules
-
 angular-src/node_modules/
 
 scraper/debug\.log

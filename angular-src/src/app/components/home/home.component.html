@@ -10,24 +10,23 @@
 
   <div>
     <p>
-      <br /> <a *ngIf="authService.loggedIn()" [routerLinkActive]="[active]"
-      [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/usermanual']">User Manual</a></a> | <a *ngIf="authService.loggedIn()" [routerLinkActive]="[active]"
-      [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/devguide']">Dev Guide</a></a>
+      <br /><a [routerLink]="['/usermanual']">User Manual</a> | <a [routerLink]="['/devguide']">Dev Guide</a> 
+      <!--<a *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"> for need authorization-->
     </p>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-4">
-    <h3>Never question where to study again!</h3>
-    <p>Find open rooms according to the building you're in, or your own schedule</p>
+    <h3>Find the Best Study Spot!</h3>
+    <p>Find open rooms by building or by schedule.</p>
   </div>
   <div class="col-md-4">
-    <h3>Study Buddies</h3>
-    <p>Find classmates, or others in the same program to study with!</p>
+    <h3>Study with fellow Study Buddies!</h3>
+    <p>Find others in the same program to study with.</p>
   </div>
   <div class="col-md-4">
-    <h3>Something!</h3>
-    <p>BLAH BLAH BLAH</p>
+    <h3>Share Class Notes!</h3>
+    <p>Share notes to get an edge on the competition.</p>
   </div>
 </div>

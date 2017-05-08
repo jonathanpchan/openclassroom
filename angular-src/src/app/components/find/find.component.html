@@ -17,17 +17,15 @@
 <div *ngIf = "monday">
 <h2>{{currentBuilding?.name}} Building</h2>
 
-      <!--if i create a day value i should be abel to *ngIf this -->
+      <!--if i create a day value i should be able to *ngIf this -->
       <!-- <li><strong>Monday</strong></li> -->
       <ul>
         <li *ngFor="let room of currentBuilding?.rooms">
-          <!-- <template *ngIf ="room.omon?.length >0">
-            {{currentBuilding.name}} - {{room.name}}
-          </template> -->
+          <!-- display bug if room has no classes ex EN3-111 on monday-->
           <!-- not sure how to display this based on if it has a value or not later on in the loops -->
           {{currentBuilding.name}} - {{room.name}}
           <ul>
-            <!--if i create a day value i should be abel to *ngIf this -->
+            <!--if i create a day value i should be able to *ngIf this -->
             <!--will need to adapt for open times-->
             <li *ngFor = "let class of room.otue">
 
@@ -43,14 +41,14 @@
 <div *ngIf = "tuesday">
 <h2>{{currentBuilding?.name}} Building</h2>
 
-      <!--if i create a day value i should be abel to *ngIf this -->
+      <!--if i create a day value i should be able to *ngIf this -->
       <!-- <li><strong>Monday</strong></li> -->
   <ul>
     <li *ngFor = "let room of currentBuilding?.rooms">
       <!-- display bug if room has no classes ex EN3-111 on monday-->
       {{currentBuilding.name}} - {{room.name}}
       <ul>
-        <!--if i create a day value i should be abel to *ngIf this -->
+        <!--if i create a day value i should be able to *ngIf this -->
         <!--will need to adapt for open times-->
         <li *ngFor = "let class of room.otue">
 
@@ -66,14 +64,14 @@
 <div *ngIf = "wednesday">
 <h2>{{currentBuilding?.name}} Building</h2>
 
-      <!--if i create a day value i should be abel to *ngIf this -->
+      <!--if i create a day value i should be able to *ngIf this -->
       <!-- <li><strong>Monday</strong></li> -->
   <ul>
     <li *ngFor = "let room of currentBuilding?.rooms">
       <!-- display bug if room has no classes ex EN3-111 on monday-->
       {{currentBuilding.name}} - {{room.name}}
       <ul>
-        <!--if i create a day value i should be abel to *ngIf this -->
+        <!--if i create a day value i should be able to *ngIf this -->
         <!--will need to adapt for open times-->
         <li *ngFor = "let class of room.owed">
 
@@ -89,14 +87,14 @@
 <div *ngIf = "thursday">
 <h2>{{currentBuilding?.name}} Building</h2>
 
-      <!--if i create a day value i should be abel to *ngIf this -->
+      <!--if i create a day value i should be able to *ngIf this -->
       <!-- <li><strong>Monday</strong></li> -->
   <ul>
     <li *ngFor = "let room of currentBuilding?.rooms">
       <!-- display bug if room has no classes ex EN3-111 on monday-->
       {{currentBuilding.name}} - {{room.name}}
       <ul>
-        <!--if i create a day value i should be abel to *ngIf this -->
+        <!--if i create a day value i should be able to *ngIf this -->
         <!--will need to adapt for open times-->
         <li *ngFor = "let class of room.othu">
 
