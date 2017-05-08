@@ -1,17 +1,25 @@
 // Comes packaged initially
 const path = require('path');
-// Routing
+// Require for routing
 const express = require('express');
+// Require to interact with our database
 const mongoose = require('mongoose');
 // Allows us to make request to api from different domain name
 const cors = require('cors');
 // Parses incoming requests and grabs the data
 const bodyParser = require('body-parser');
+// Require for password encryption and decryption
 const passport = require('passport');
+// Require to know where we are getting our data from
 const config = require('./config/database');
+// Require for routing
+const app = express();
 
+// Requires users and buildings from routes folder
+const users = require('./routes/users');
+const buildings = require('./routes/buildings');
 
-// Connect location of database
+// Connect to database location
 mongoose.connect(config.database);
 
 // Check to see if connected to database
@@ -23,15 +31,9 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected');
 })
 
-const app = express();
-
-const users = require('./routes/users');
-const buildings = require('./routes/buildings');
-
-
 // Port Number
 const port = 3000; // For testing
-// const port = process.env.PORT || 8080; // For Deployment
+const port = process.env.PORT || 8080; // For Deployment (if we test, we'll be on localhost:8080 connected to db)
 
 // Make route public so any domain can access it
 app.use(cors());
@@ -45,8 +47,10 @@ app.use(bodyParser.json());
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
+// require the config file's passport which specifies authentication
 require('./config/passport')(passport);
 
+// 
 app.use('/users', users);
 app.use('/buildings', buildings);
 
@@ -55,15 +59,10 @@ app.get('/', (req, res) => {
     res.send('Invalid Endpoint')
 });
 
+// Direct our homepage to be public/index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
-
-// app.get('/buildings', function(req, res) {
-//     mongoose.model('Building').find(function(err, buildings){
-//       res.send(buildings);
-//     });
-// });
 
 // Takes a port and starts up server
 app.listen(port, () => {

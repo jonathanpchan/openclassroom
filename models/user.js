@@ -4,27 +4,14 @@ const config = require('../config/database');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-  name: {
-    type: String
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  username: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  regdate: {
-    type: Date,
-    required: true
-  }
+  name: { type: String },
+  email: { type: String, required: true },
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  regdate: { type: Date, required: true }
 });
 
+// Export User Schema
 const User = module.exports = mongoose.model('User', UserSchema);
 
 // Get the user based on id
@@ -55,6 +42,7 @@ module.exports.addUser = function(newUser, callback){
   });
 }
 
+// Compare password for validation
 module.exports.comparePassword = function(candidatePassword, hash, callback){
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     if(err) throw err;

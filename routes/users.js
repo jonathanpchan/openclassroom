@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
 
-// Register
+// Register POST request
 router.post('/register', (req, res, next) => {
   let newUser = new User({
     name: req.body.name,
@@ -39,7 +39,7 @@ router.post('/register', (req, res, next) => {
   })
 });
 
-// Authenticate
+// Authenticate POST request
 router.post('/authenticate', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -77,13 +77,9 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
-// Profile
+// Profile GET request
 router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
 });
-
-// router.get('/find', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-//   res.json({user: req.user});
-// });
 
 module.exports = router;
