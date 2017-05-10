@@ -1,4 +1,8 @@
-# [7 May 2017]
+# [10 May 2017]
+- Update devguide
+- Submit final submission!
+
+## [7 May 2017]
 - Scraper populates buildings with open times as well
 - Navbar adapts to small screens
 - Simple housecleaning for code readibility (+ ng build after)
