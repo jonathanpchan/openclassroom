@@ -50,7 +50,7 @@ Open Classroom uses the MEAN stack:
 
 Helpful Applications: 
 * Nodemon - an application that updates your project without having to restart "npm start" or "ng serve"
-* Robomongo - a MongoDB client that displays the data in your database (when connected)
+* Robo 3T - a MongoDB client that displays the data in your database (when connected)
 
 # [Project Folder Tree]
 
