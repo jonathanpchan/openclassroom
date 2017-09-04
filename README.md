@@ -24,7 +24,7 @@ You can install the Open Classroom application by downloading the source code di
 * ExpressJS (via npm install) 
 * NodeJS (via website) 
 
-Furthermore, you must install ("ng install") the node_modules folder into these folders using a terminal at that path location:
+Furthermore, you must install ("npm install") the node_modules folder into these folders using a terminal at that path location:
 * "openclassroom"
 * "openclassroom/angular-src"
 
