@@ -365,7 +365,7 @@ function processBuildings(values, key, map){
      // if arr[i +1].start - arr[i].end > 20
      //account for end of day
      
-     if (buildcount == 48){
+     if (buildcount == 49){
          insertToDB()
      }
 }
