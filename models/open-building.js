@@ -34,12 +34,13 @@ module.exports = {
   OCS : OCS
 }
 
-module.exports.getBuildings = function(name, day, callback) {
-    // const query = {name: name}
+module.exports.getBuildingsByDay = function(Name, Day, callback) {
+    // var query = {};
+    // query[Name] = this.Name;
+    // query[Day] = this.Day;
     // OBS.find(query).exec(callback);
-    console.log(name);
-    console.log(day);
+    console.log("Name : " + Name);
+    console.log("Day : " + Day);
 
-
-    OBS.find({$and : [{name:"AS"}, {day: "Monday"}]}).exec(callback);
+    OBS.find({$and : [{name: Name}, {day: Day}]}).exec(callback);
   }

@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
   const name = req.body.name;
   const day = req.body.day;
 
-  OpenBuilding.getBuildings(name,day,(err, OpenBuilding) => {
+  OpenBuilding.getBuildingsByDay(name,day,(err, OpenBuilding) => {
     if(err) throw err;
     if(OpenBuilding == ""){//if OpenBuilding is empty return false
       return res.json({success: false, msg: 'OpenBuilding not found'});
