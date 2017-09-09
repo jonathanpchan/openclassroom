@@ -16,8 +16,5 @@ export class DropdownComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.builService.getBuildings().subscribe(building => {
-      this.buildings = building.buildings;
-    });
   }
 }

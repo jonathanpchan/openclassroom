@@ -35,12 +35,5 @@ module.exports = {
 }
 
 module.exports.getBuildingsByDay = function(Name, Day, callback) {
-    // var query = {};
-    // query[Name] = this.Name;
-    // query[Day] = this.Day;
-    // OBS.find(query).exec(callback);
-    console.log("Name : " + Name);
-    console.log("Day : " + Day);
-
-    OBS.find({$and : [{name: Name}, {day: Day}]}).exec(callback);
-  }
+  OBS.find({$and : [{name: Name}, {day: Day}]}, {_id : 0}).exec(callback);
+}
