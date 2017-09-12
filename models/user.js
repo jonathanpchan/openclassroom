@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
-const ClassSectionSchema = require('../models/building');
-const CSS = mongoose.model('Class');
+
+const build = require('../models/building');
+const CS = mongoose.model('Class', build.CS.Schema);
+const Schema = mongoose.Schema;
+
+    // const build = require('../models/building');
+    // // Grab the schema used by said model
+    // const bs = mongoose.model('Building', build.BS.schema);
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -13,7 +19,7 @@ const UserSchema = mongoose.Schema({
   password: { type: String, required: true },
   regdate: { type: Date, required: true },
   emailVerified: {type: Boolean, required: true},
-  schedule: {type: [CSS] }
+  schedule: {type: [CS.schema] }
 
 });
 
