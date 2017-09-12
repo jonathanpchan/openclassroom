@@ -5,8 +5,44 @@ webpackJsonp([1,4],{
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(11);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DevguideComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var DevguideComponent = (function () {
+    function DevguideComponent() {
+    }
+    DevguideComponent.prototype.ngOnInit = function () {
+    };
+    return DevguideComponent;
+}());
+DevguideComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-devguide',
+        template: __webpack_require__(181),
+        styles: [__webpack_require__(170)]
+    }),
+    __metadata("design:paramtypes", [])
+], DevguideComponent);
+
+//# sourceMappingURL=devguide.component.js.map
+
+/***/ }),
+
+/***/ 101:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(13);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -21,65 +57,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var FindComponent = (function () {
-    function FindComponent(authService, router) {
-        this.authService = authService;
+    function FindComponent(buildingService, router) {
+        this.buildingService = buildingService;
         this.router = router;
     }
-    FindComponent.prototype.showMonday = function () {
-        this.monday = true;
-        this.tuesday = false;
-        this.wednesday = false;
-        this.thursday = false;
-    };
-    FindComponent.prototype.showTuesday = function () {
-        this.monday = false;
-        this.tuesday = true;
-        this.wednesday = false;
-        this.thursday = false;
-    };
-    FindComponent.prototype.showWednesday = function () {
-        this.monday = false;
-        this.tuesday = false;
-        this.wednesday = true;
-        this.thursday = false;
-    };
-    FindComponent.prototype.showThursday = function () {
-        this.monday = false;
-        this.tuesday = false;
-        this.wednesday = false;
-        this.thursday = true;
-    };
-    FindComponent.prototype.onChange = function (bName) {
-        //pass the name into function to change index
-        this.getIndex(bName);
-        this.currentBuilding = Object.assign({}, this.buildings[this.index]);
-    };
-    FindComponent.prototype.getIndex = function (bName) {
-        //stupid loop to get index for display.
-        //this will probably break at some point
-        var num = 0;
-        while (bName != this.buildings[num].name) {
-            num = num + 1;
-        }
-        this.index = num;
-    };
-    FindComponent.prototype.ngOnInit = function () {
+    FindComponent.prototype.ngOnInit = function () { };
+    FindComponent.prototype.onSubmit = function () {
         var _this = this;
-        this.index = 0;
-        this.authService.getBuildingList().subscribe(function (buildinglist) {
-            _this.buildings = buildinglist;
-            //default, otherwise AS wont work until we change and change back.
-            //not sure if its better to do it like this, or like in onChange(num);
-            _this.currentBuilding = _this.buildings[_this.index];
-            //perhaps make this autodetect later, if weekend default to monday
-            _this.monday = true;
-            _this.tuesday = false;
-            _this.wednesday = false;
-            _this.thursday = false;
+        this.buildingList = this.buildingService.getBuildings(this.name, this.day).subscribe(function (buildingList) {
+            _this.buildingList = buildingList.OpenBuilding;
+            // There is difference between this.buildingList and buildingList. For accessing and processing, use this.buildingList :) :) :)
+            console.log(_this.buildingList[0].name);
         }, function (err) {
             console.log(err);
             return false;
         });
+        // Processing of the data can come here before it's displayed in the html!!! :) :) :)
     };
     return FindComponent;
 }());
@@ -89,35 +82,20 @@ FindComponent = __decorate([
         template: __webpack_require__(182),
         styles: [__webpack_require__(171)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object])
 ], FindComponent);
 
-var Building = (function () {
-    function Building() {
-    }
-    return Building;
-}());
-var Room = (function () {
-    function Room() {
-    }
-    return Room;
-}());
-var Class = (function () {
-    function Class() {
-    }
-    return Class;
-}());
 var _a, _b;
 //# sourceMappingURL=find.component.js.map
 
 /***/ }),
 
-/***/ 101:
+/***/ 102:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -152,13 +130,13 @@ var _a;
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
@@ -217,13 +195,13 @@ var _a, _b, _c;
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(37);
@@ -276,16 +254,16 @@ var _a, _b, _c, _d;
 
 /***/ }),
 
-/***/ 104:
+/***/ 105:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(13);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -360,13 +338,13 @@ var _a, _b, _c, _d;
 
 /***/ }),
 
-/***/ 105:
+/***/ 106:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(13);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScheduleComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -410,7 +388,7 @@ var _a, _b;
 
 /***/ }),
 
-/***/ 106:
+/***/ 107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -446,13 +424,13 @@ UsermanualComponent = __decorate([
 
 /***/ }),
 
-/***/ 107:
+/***/ 108:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(14);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -491,71 +469,6 @@ var _a, _b;
 
 /***/ }),
 
-/***/ 108:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-//Service module for building, class, and classroom queries
-
-
-
-
-var BuildingsService = (function () {
-    function BuildingsService(http) {
-        this.http = http;
-    }
-    BuildingsService.prototype.getBuildings = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        headers.append('Content-Type', 'application/json');
-        // return this.http.get('http://localhost:3000/buildings', {headers: headers}).map(this.extractData).catch(this.handleError);
-        return this.http.get('buildings', { headers: headers }).map(this.extractData).catch(this.handleError);
-    };
-    BuildingsService.prototype.extractData = function (res) {
-        var body = res.json();
-        return body || {};
-    };
-    BuildingsService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Promise.reject(errMsg);
-    };
-    return BuildingsService;
-}());
-BuildingsService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], BuildingsService);
-
-var _a;
-//# sourceMappingURL=buildings.service.js.map
-
-/***/ }),
-
 /***/ 109:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -573,13 +486,13 @@ var environment = {
 
 /***/ }),
 
-/***/ 11:
+/***/ 14:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_jwt__);
@@ -864,7 +777,7 @@ module.exports = "<head>\r\n  <title> Developer Guide </title>\r\n</head>\r\n\r\
 /***/ 182:
 /***/ (function(module, exports) {
 
-module.exports = "<h1> <strong> Find Open Classroom </strong></h1>\r\n<button (click) = \"showMonday()\"> Monday</button> <button (click) = \"showTuesday()\"> Tuesday</button> <button (click) = \"showWednesday()\"> Wednesday</button> <button (click) = \"showThursday()\"> Thursday</button>\r\n\r\n\r\n\r\n<h3>  Select Your Building </h3>\r\n\r\n<!-- this creates a drop down list of buildings -->\r\n<select [(ngModel)]=\"$index\" (ngModelChange)=\"onChange($event)\">\r\n  <option *ngFor=\"let buildingName of buildings\"> {{buildingName.name}} </option>\r\n</select>\r\n\r\n<!-- I have not been able to get ng-options or ng-repeat to work-->\r\n<!-- <select ng-model=\"selectedBuilding\">\r\n<option ng-repeat=\"x in Buildings\" value=\"{{x.name}}\">{{x.name}}</option>\r\n</select> -->\r\n<div *ngIf = \"monday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be able to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n      <ul>\r\n        <li *ngFor=\"let room of currentBuilding?.rooms\">\r\n          <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n          <!-- not sure how to display this based on if it has a value or not later on in the loops -->\r\n          {{currentBuilding.name}} - {{room.name}}\r\n          <ul>\r\n            <!--if i create a day value i should be able to *ngIf this -->\r\n            <!--will need to adapt for open times-->\r\n            <li *ngFor = \"let class of room.omon\">\r\n\r\n                Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n                {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n            </li>\r\n          </ul>\r\n        </li>\r\n    </ul>\r\n</div>\r\n\r\n<div *ngIf = \"tuesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be able to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be able to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.otue\">\r\n\r\n            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"wednesday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be able to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be able to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.owed\">\r\n\r\n            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n\r\n<div *ngIf = \"thursday\">\r\n<h2>{{currentBuilding?.name}} Building</h2>\r\n\r\n      <!--if i create a day value i should be able to *ngIf this -->\r\n      <!-- <li><strong>Monday</strong></li> -->\r\n  <ul>\r\n    <li *ngFor = \"let room of currentBuilding?.rooms\">\r\n      <!-- display bug if room has no classes ex EN3-111 on monday-->\r\n      {{currentBuilding.name}} - {{room.name}}\r\n      <ul>\r\n        <!--if i create a day value i should be able to *ngIf this -->\r\n        <!--will need to adapt for open times-->\r\n        <li *ngFor = \"let class of room.othu\">\r\n\r\n            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -\r\n            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}\r\n\r\n        </li>\r\n      </ul>\r\n    </li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<h2 class=\"page-header\">Buildings</h2>\r\n<form (submit)=\"onSubmit()\">\r\n  <div class=\"form-group\">\r\n    <label>Name</label>\r\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"name\" name=\"name\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label>Day</label>\r\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"day\" name=\"day\">\r\n  </div>\r\n  <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n</form>\r\n"
 
 /***/ }),
 
@@ -913,7 +826,7 @@ module.exports = "<head>\r\n  <title> User manual </title>\r\n</head>\r\n\r\n<di
 /***/ 224:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(90);
+module.exports = __webpack_require__(91);
 
 
 /***/ }),
@@ -960,7 +873,71 @@ ValidateService = __decorate([
 
 /***/ }),
 
-/***/ 89:
+/***/ 66:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//Service module for building, class, and classroom queries
+
+
+
+
+var BuildingsService = (function () {
+    function BuildingsService(http) {
+        this.http = http;
+    }
+    BuildingsService.prototype.getBuildings = function (name, day) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        // return this.http.get('http://localhost:3000/buildings', {headers: headers}).map(this.extractData).catch(this.handleError);
+        return this.http.post('buildings', { name: name, day: day }).map(function (res) { return res.json(); }).catch(this.handleError);
+    };
+    BuildingsService.prototype.extractData = function (res) {
+        var body = res.json();
+        return body || {};
+    };
+    BuildingsService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Promise.reject(errMsg);
+    };
+    return BuildingsService;
+}());
+BuildingsService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], BuildingsService);
+
+var _a;
+//# sourceMappingURL=buildings.service.js.map
+
+/***/ }),
+
+/***/ 90:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -969,19 +946,19 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 89;
+webpackEmptyContext.id = 90;
 
 
 /***/ }),
 
-/***/ 90:
+/***/ 91:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(109);
 
 
@@ -995,7 +972,7 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 96:
+/***/ 97:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1026,31 +1003,31 @@ AppComponent = __decorate([
 
 /***/ }),
 
-/***/ 97:
+/***/ 98:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_home_home_component__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_login_login_component__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_register_register_component__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_dashboard_dashboard_component__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_home_home_component__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_login_login_component__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_register_register_component__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_dashboard_dashboard_component__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_validate_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_auth_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__guards_auth_guard__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__guards_auth_guard__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_angular2_flash_messages__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_buildings_service__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_buildings_service__ = __webpack_require__(66);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1126,7 +1103,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 98:
+/***/ 99:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1159,42 +1136,6 @@ DashboardComponent = __decorate([
 ], DashboardComponent);
 
 //# sourceMappingURL=dashboard.component.js.map
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DevguideComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var DevguideComponent = (function () {
-    function DevguideComponent() {
-    }
-    DevguideComponent.prototype.ngOnInit = function () {
-    };
-    return DevguideComponent;
-}());
-DevguideComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-devguide',
-        template: __webpack_require__(181),
-        styles: [__webpack_require__(170)]
-    }),
-    __metadata("design:paramtypes", [])
-], DevguideComponent);
-
-//# sourceMappingURL=devguide.component.js.map
 
 /***/ })
 
