@@ -36,9 +36,12 @@ const BuildingSchema = mongoose.Schema({
 BS = module.exports = mongoose.model('Building', BuildingSchema );
 // Export Room SChema
 RS = module.exports = mongoose.model('Room', RoomSchema );
+// Export ClassSection schema
+CSS = module.exports = mongoose.model('Class', ClassSectionSchema);
 
-// Export BS as BS and RS as RS
+// Export BS as BS and RS as RS, CSS as CSS
 module.exports = {
+  CSS: CSS,
   BS: BS,
   RS: RS
 }
