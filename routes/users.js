@@ -79,7 +79,12 @@ router.post('/authenticate', (req, res, next) => {
 
 // Profile GET request
 router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-  res.json({user: req.user});
+  return res.json({user: req.user});
+  //return res.json({user: "bobbiii", email: "lolllerslol.com"});
 });
 
 module.exports = router;
+
+router.post('/getschedule', (req, res) =>{
+  return res.json({one: "hello"});
+})
