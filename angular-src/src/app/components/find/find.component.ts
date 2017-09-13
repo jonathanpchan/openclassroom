@@ -30,7 +30,7 @@ export class FindComponent implements OnInit {
         let openRoomJSON = openBuildingJSON[build]['rooms'];
         for (var room in openRoomJSON)
         {
-          let openClassJSON = openBuildingJSON[build]['rooms'][room]['class'];
+          let openClassJSON = openRoomJSON[room]['class'];
           for (var oclass in openClassJSON)
           {
             let timesJSON = openClassJSON[oclass];
