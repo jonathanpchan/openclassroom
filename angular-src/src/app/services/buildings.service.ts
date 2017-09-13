@@ -10,7 +10,7 @@ import 'rxjs/add/operator/catch';
 export class BuildingsService {
   constructor(private http:Http) { }
 
-  getBuildings(name, day) : Observable<any> {
+  getBuildings(name : String, day : String) : Observable<any> {
     let headers = new Headers({'Content-Type' : 'application/json' });
     return this.http.post('http://localhost:3000/buildings', {name, day}).map(res => res.json()).catch(this.handleError);
     //return this.http.post('buildings', {name, day}).map(res => res.json()).catch(this.handleError);

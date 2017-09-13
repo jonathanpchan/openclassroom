@@ -21,16 +21,11 @@ export class FindComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    this.buildingList = this.buildingService.getBuildings(this.name, this.day).subscribe(buildingList => {
+    this.buildingService.getBuildings(this.name, this.day).subscribe(buildingList => {
       this.buildingList = buildingList.OpenBuilding;
-      // There is difference between this.buildingList and buildingList. For accessing and processing, use this.buildingList :) :) :)
-      console.log(this.buildingList[0].name);
     },
     err => {
       console.log(err);
-      return false;
     });
-
-    // Processing of the data can come here before it's displayed in the html!!! :) :) :)
   }
 }

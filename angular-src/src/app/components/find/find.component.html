@@ -10,3 +10,14 @@
   </div>
   <input type="submit" class="btn btn-primary" value="Submit">
 </form>
+
+<h3 *ngFor="let build of buildingList">
+  {{build?.day}}
+  <h4 *ngFor="let room of build?.rooms">
+    {{build?.name}}-{{room?.name}}
+    <h5 *ngFor="let class of room?.class">
+        {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} to
+        {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
+    </h5>
+  </h4>
+</h3>
