@@ -56,3 +56,14 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     callback(null, isMatch);
   });
 }
+/* */
+module.exports.getUserSchedule = function (username, callback){
+  //console.log(User.findOne({email: "bofabofa2@bofa.com"}, {schedule: 1, _id:0}))
+  //callback(null, User.findOne({email: "bofabofa2@bofa.com"}, {schedule: 1, _id:0}))
+  User.find({email: username}, {schedule: 1, _id:0}, callback);
+}
+
+// add should sort at end, idk if it needs to return the new list, prolly
+//module.exports.addScheduleItem = function (class, )
+
+//edit should specify an array position and an entire class section object

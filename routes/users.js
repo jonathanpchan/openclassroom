@@ -87,7 +87,11 @@ module.exports = router;
 
 router.post('/getschedule', (req, res) =>{
   if (req.body.user.name){
-    return res.json({one: req.body.user.name});
+    User.getUserSchedule(req.body.user.email, (err, sched) =>{
+      return res.json(sched);
+    }
+    )
+   
   }
   else
     return res.json({error: "bad request"});

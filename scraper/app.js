@@ -1,6 +1,7 @@
 
 const mongoose = require('mongoose');
-const users = require('../models/user');
+const um = require('../models/user');
+const us = mongoose.model('User', um.schema)
 var config = require('../config/database');
 
 
@@ -14,16 +15,16 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected:');
 })
 
-users.collection.insert({
+um.collection.insert({
 
-    "name" : "deezdsds", 
-    "email" : "bofabofa2@bofa.com", 
-    "username" : "bofabofa", 
+    "name" : "tom willis", 
+    "email" : "tom@bofa.com", 
+    "username" : "getfunck", 
     "password" : "$2a$10$UheBIbtgYHwCYUCUghw3Se01xDlvyfDZg/TTvuoQpnO4aBCkTf4VW", 
     "__v" : 0, 
     "schedule" : [
         {
-            "name" : "COUN 644D", 
+            "name" : "ENG 5001", 
             "sec" : "3718", 
             "days" : "Tu", 
             "location" : "AS-230", 
@@ -41,6 +42,10 @@ users.collection.insert({
     ]
     
 });
+// us.find({email: "bofabofa2@bofa.com"}, {schedule: 1, _id:0}, (err, cbb) => {
+//     console.log(cbb);
+// })
+
 
 mongoose.connection.close(function() {
     console.log('Disconnected from database'); })
