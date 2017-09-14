@@ -78,7 +78,7 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 // Profile GET request
-router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+router.post('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   return res.json({user: req.user});
   //return res.json({user: "bobbiii", email: "lolllerslol.com"});
 });
@@ -86,5 +86,10 @@ router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res
 module.exports = router;
 
 router.post('/getschedule', (req, res) =>{
-  return res.json({one: "hello"});
+  if (req.body.user.name){
+    return res.json({one: req.body.user.name});
+  }
+  else
+    return res.json({error: "bad request"});
+  
 })
