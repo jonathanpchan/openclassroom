@@ -4,6 +4,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const Building = require('../models/building');
+const mongoose = require('mongoose');
 
 // Register POST request
 router.post('/register', (req, res, next) => {
@@ -89,11 +91,15 @@ router.post('/getschedule', (req, res) =>{
   if (req.body.user.name){
     User.getUserSchedule(req.body.user.email, (err, sched) =>{
       return res.json(sched);
-    }
-    )
-   
+    })
   }
-  else
+  else{
     return res.json({error: "bad request"});
-  
+  }
+})
+
+router.post('/addschedule', (req, res) => {
+  User.addScheduleItem('jon@random.com', (err, course) => {
+        return res.json(course);
+  })
 })

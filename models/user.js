@@ -64,6 +64,41 @@ module.exports.getUserSchedule = function (username, callback){
 }
 
 // add should sort at end, idk if it needs to return the new list, prolly
-//module.exports.addScheduleItem = function (class, )
+module.exports.addScheduleItem = function(username, callback){
+    var u =
+    {
+        name : "ENG 5001",
+        sec : "3718",
+        days : "Tu",
+        location : "AS-230",
+        st : 960,
+        et : 1080
+    };
 
+    db.users.update(
+        { email : "jon@random.com" },
+        {
+            $push: {
+                schedule: {
+                  name: u.name,
+                  sec: u.sec,
+                  days: u.days,
+                  location: u.location,
+                  st: u.st,
+                  et: u.et}
+            }
+        }
+    );
+    User.find({email: username}, {schedule: 1, _id:0}, callback);
+
+};
+
+/**
+registerUser(user){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    // return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
+    return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
+}
+ **/
 //edit should specify an array position and an entire class section object
