@@ -99,7 +99,9 @@ router.post('/getschedule', (req, res) =>{
 })
 
 router.post('/addschedule', (req, res) => {
-  User.addScheduleItem('jon@random.com', (err, course) => {
+  //return res.json(req.body.email);
+  User.addScheduleItem(req.body.user.email, req.body.u, (err, course) => {
+    console.log(course);
         return res.json(course);
   })
 })

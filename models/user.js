@@ -64,41 +64,37 @@ module.exports.getUserSchedule = function (username, callback){
 }
 
 // add should sort at end, idk if it needs to return the new list, prolly
-module.exports.addScheduleItem = function(username, callback){
-    var u =
-    {
-        name : "ENG 5001",
-        sec : "3718",
-        days : "Tu",
-        location : "AS-230",
-        st : 960,
-        et : 1080
-    };
+module.exports.addScheduleItem = function(username, u, callback) {
 
-    db.users.update(
-        { email : "jon@random.com" },
+   /** var u =
+        {
+            name: "ENG 5001",
+            sec: "3718",
+            days: "Tu",
+            location: "AS-230",
+            st: 960,
+            et: 1080
+        };
+**/
+    User.findOneAndUpdate(
+        {"email": username},
         {
             $push: {
-                schedule: {
-                  name: u.name,
-                  sec: u.sec,
-                  days: u.days,
-                  location: u.location,
-                  st: u.st,
-                  et: u.et}
+                "schedule": {
+                    "name": u.name,
+                    "sec": u.sec,
+                    "days": u.days,
+                    "location": u.location,
+                    "st": u.st,
+                    "et": u.et
+                }
             }
-        }
-    );
-    User.find({email: username}, {schedule: 1, _id:0}, callback);
-
+        }, {new: true}, function(err) {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+            User.find({email: username}, {schedule: 1, _id:0}, callback);
+        })
 };
 
-/**
-registerUser(user){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    // return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
-    return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
-}
- **/
 //edit should specify an array position and an entire class section object
