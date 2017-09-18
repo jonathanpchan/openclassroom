@@ -7,6 +7,7 @@ const User = require('../models/user');
 const Building = require('../models/building');
 const mongoose = require('mongoose');
 
+
 // Register POST request
 router.post('/register', (req, res, next) => {
   let newUser = new User({
@@ -104,4 +105,12 @@ router.post('/addschedule', (req, res) => {
     console.log(course);
         return res.json(course);
   })
+})
+
+router.post('/editschedule', (req, res) => {
+    //return res.json(req.body.email);
+    User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
+    console.log(course);
+return res.json(course);
+})
 })

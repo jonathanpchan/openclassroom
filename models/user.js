@@ -4,6 +4,7 @@ const config = require('../config/database');
 const build = require('../models/building');
 const CS = mongoose.model('Class', build.CS.Schema);
 const Schema = mongoose.Schema;
+var ObjectId = require('mongodb').ObjectID;
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -63,8 +64,9 @@ module.exports.getUserSchedule = function (username, callback){
   User.find({email: username}, {schedule: 1, _id:0}, callback);
 }
 
+/**
 // add should sort at end, idk if it needs to return the new list, prolly
-module.exports.addScheduleItem = function(username, u, callback) {
+module.exports.addScheduleItem = function(eMail, u, callback) {
 
    /** var u =
         {
@@ -75,7 +77,32 @@ module.exports.addScheduleItem = function(username, u, callback) {
             st: 960,
             et: 1080
         };
+
+    User.findOneAndUpdate(
+        {"email": eMail,
+         "schedule.name": objID},
+        {
+            $set: {
+                "schedule": {
+                    "name": u.name,
+                    "sec": u.sec,
+                    "days": u.days,
+                    "location": u.location,
+                    "st": u.st,
+                    "et": u.et
+                }
+            }
+        }, {new: true}, function(err) {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+            User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+        }
+    )
+};
 **/
+
+module.exports.addScheduleItem = function(username, u, callback) {
     User.findOneAndUpdate(
         {"email": username},
         {
@@ -90,11 +117,37 @@ module.exports.addScheduleItem = function(username, u, callback) {
                 }
             }
         }, {new: true}, function(err) {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        User.find({email: username}, {schedule: 1, _id:0}, callback);
+    })
+};
+
+//editClass finds an objectID and then changes that objectID's contents by a modified class object.
+//for front end; was thinking that user clicks edit button -> edit button triggers page to save objectID of course object
+// -> user edits all fields -> submit sends all fields back as an object with objectID as well.
+module.exports.editScheduleItem = function(eMail, objID, u, callback) {
+    User.findOneAndUpdate(
+        {
+            "email": eMail,
+            "schedule._id": ObjectId(objID)},
+        {
+            $set:
+                {
+                    "schedule.$.name": u.name,
+                    "schedule.$.sec": u.sec,
+                    "schedule.$.days": u.days,
+                    "schedule.$.location": u.location,
+                    "schedule.$.st": u.st,
+                    "schedule.$.et": u.et
+                }
+        }, {new: true}, function(err) {
             if (err) {
                 console.log("Something wrong when updating data!");
             }
-            User.find({email: username}, {schedule: 1, _id:0}, callback);
-        })
-};
-
-//edit should specify an array position and an entire class section object
+            //User.find({schedule: {"_id": ObjectId(objID)}}, {schedule: 1, _id:0}, callback);
+            //User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+        }
+    )
+}
