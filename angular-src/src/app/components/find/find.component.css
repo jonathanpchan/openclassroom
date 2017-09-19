@@ -1,6 +1,14 @@
 table {
-    width : 2500px;
-    height : 250px;
+    width : 2000px;
+    height : auto;
+}
+
+tr{
+  height: 20px;
+}
+
+td{
+  border-collapse: collapse;
 }
 
 .tablecontainer {
@@ -11,11 +19,30 @@ table {
 }
 
 .opentime {
-    background-color : blue;
+    background-color : #81ea9d;
     padding : 5px, 5px, 5px, 5px;
+    border: 2px solid black;
 }
 
 .closedtime {
-    background-color : gold;
+    background-color : #ed5d50;
     padding : 5px, 5px, 5px, 5px;
+    border: 2px solid black;
+}
+
+.five-minute-chunk{
+
+}
+
+.left-column{
+ position: sticky;
+ left: 0;
+ background-color: #ffffff;
+ width: 75px;
+ border: 2px solid black;
+ text-align: center;
+}
+
+.left-column:hover {
+  background-color: #76a8f7;
 }

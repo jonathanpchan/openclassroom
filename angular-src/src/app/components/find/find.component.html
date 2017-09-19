@@ -2,8 +2,59 @@
 <form (submit)="onSubmit()" id="input" style="display: block">
   <div class="form-group">
     <label>Name</label>
-    <input type="text" class="form-control" [(ngModel)]="name" name="name">
-  </div>
+    <select class="form-control" [(ngModel)]="name" name="name" >
+      <option selected disabled hidden>Choose here</option>
+      <option value="AS">AS</option>
+      <option value="CBA">CBA</option>
+      <option value="CTS">CTS</option>
+      <option value="DC">DC</option>
+      <option value="DESN">DESN</option>
+      <option value="ECS">ECS</option>
+      <option value="ED2">ED2</option>
+      <option value="EED">EED</option>
+      <option value="EN2">EN2</option>
+      <option value="EN3">EN3</option>
+      <option value="EN4">EN4</option>
+      <option value="ET">ET</option>
+      <option value="FA1">FA1</option>
+      <option value="FA2">FA2</option>
+      <option value="FA3">FA3</option>
+      <option value="FA4">FA4</option>
+      <option value="FCS">FCS</option>
+      <option value="FLD">FLD</option>
+      <option value="FO2">FO2</option>
+      <option value="HHS1">HHS1</option>
+      <option value="HSCI">HSCI</option>
+      <option value="HSD">HSD</option>
+      <option value="KIN">KIN</option>
+      <option value="LA1">LA1</option>
+      <option value="LA2">LA2</option>
+      <option value="LA3">LA3</option>
+      <option value="LA4">LA4</option>
+      <option value="LA5">LA5</option>
+      <option value="LAB">LAB</option>
+      <option value="LCH">LCH</option>
+      <option value="LH">LH</option>
+      <option value="MHB">MHB</option>
+      <option value="MIC">MIC</option>
+      <option value="MLSC">MLSC</option>
+      <option value="MM">MM</option>
+      <option value="NUR">NUR</option>
+      <option value="OFF">OFF</option>
+      <option value="PH1">PH1</option>
+      <option value="PSY">PSY</option>
+      <option value="RNG">RNG</option>
+      <option value="RLC">RLC</option>
+      <option value="SPA">SPA</option>
+      <option value="SWM">SWM</option>
+      <option value="TA">TA</option>
+      <option value="UMC">UMC</option>
+      <option value="USU">USU</option>
+      <option value="UT">UT</option>
+      <option value="UTC">UTC</option>
+      <option value="VEC">VEC</option>
+   </select>
+     </div>
   <div class="form-group">
     <label>Day</label>
     <select class="form-control" [(ngModel)]="day" name="day" >
@@ -20,7 +71,7 @@
   <table>
     <tbody>
       <tr>
-        <td></td>
+        <th></th>
         <!--<td colspan="12">12:00 AM</td>
         <td colspan="12">1:00 AM</td>
         <td colspan="12">2:00 AM</td>
@@ -28,26 +79,26 @@
         <td colspan="12">4:00 AM</td>
         <td colspan="12">5:00 AM</td>
         <td colspan="12">6:00 AM</td> -->
-        <td colspan="12">7:00 AM</td>
-        <td colspan="12">8:00 AM</td>
-        <td colspan="12">9:00 AM</td>
-        <td colspan="12">10:00 AM</td>
-        <td colspan="12">11:00 AM</td>
-        <td colspan="12">12:00 PM</td>
-        <td colspan="12">1:00 PM</td>
-        <td colspan="12">2:00 PM</td>
-        <td colspan="12">3:00 PM</td>
-        <td colspan="12">4:00 PM</td>
-        <td colspan="12">5:00 PM</td>
-        <td colspan="12">6:00 PM</td>
-        <td colspan="12">7:00 PM</td>
-        <td colspan="12">8:00 PM</td>
-        <td colspan="12">9:00 PM</td>
-        <td colspan="12">10:00 PM</td>
+        <th colspan="12">7:00 AM</th>
+        <th colspan="12">8:00 AM</th>
+        <th colspan="12">9:00 AM</th>
+        <th colspan="12">10:00 AM</th>
+        <th colspan="12">11:00 AM</th>
+        <th colspan="12">12:00 PM</th>
+        <th colspan="12">1:00 PM</th>
+        <th colspan="12">2:00 PM</th>
+        <th colspan="12">3:00 PM</th>
+        <th colspan="12">4:00 PM</th>
+        <th colspan="12">5:00 PM</th>
+        <th colspan="12">6:00 PM</th>
+        <th colspan="12">7:00 PM</th>
+        <th colspan="12">8:00 PM</th>
+        <th colspan="12">9:00 PM</th>
+        <!-- <th colspan="12">10:00 PM</td> -->
         <!--<td colspan="12">11:00 PM</td>-->
       </tr>
-      <tr *ngFor="let rooms of roomsList">
-        <td>{{rooms.name}}</td>
+      <tr class="classroom" *ngFor="let rooms of roomsList">
+        <th class="left-column">{{name}}-{{rooms.name}}</th>
         <!-- Potential place for index of for loop -->
         <td *ngFor="let room of rooms?.room" [ngClass]="room ? 'opentime' : 'closedtime'"></td>
       </tr>
