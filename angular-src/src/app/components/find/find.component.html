@@ -1,108 +1,108 @@
-<h1> <strong> Find Open Classroom </strong></h1>
-<button (click) = "showMonday()"> Monday</button> <button (click) = "showTuesday()"> Tuesday</button> <button (click) = "showWednesday()"> Wednesday</button> <button (click) = "showThursday()"> Thursday</button>
+<h2 class="page-header">Open Buildings</h2>
+<form (submit)="onSubmit()" id="input" style="display: block">
+  <div class="form-group">
+    <label>Name</label>
+    <select class="form-control" [(ngModel)]="name" name="name" >
+      <option selected disabled hidden>Choose here</option>
+      <option value="AS">AS</option>
+      <option value="CBA">CBA</option>
+      <option value="CTS">CTS</option>
+      <option value="DC">DC</option>
+      <option value="DESN">DESN</option>
+      <option value="ECS">ECS</option>
+      <option value="ED2">ED2</option>
+      <option value="EED">EED</option>
+      <option value="EN2">EN2</option>
+      <option value="EN3">EN3</option>
+      <option value="EN4">EN4</option>
+      <option value="ET">ET</option>
+      <option value="FA1">FA1</option>
+      <option value="FA2">FA2</option>
+      <option value="FA3">FA3</option>
+      <option value="FA4">FA4</option>
+      <option value="FCS">FCS</option>
+      <option value="FLD">FLD</option>
+      <option value="FO2">FO2</option>
+      <option value="HHS1">HHS1</option>
+      <option value="HSCI">HSCI</option>
+      <option value="HSD">HSD</option>
+      <option value="KIN">KIN</option>
+      <option value="LA1">LA1</option>
+      <option value="LA2">LA2</option>
+      <option value="LA3">LA3</option>
+      <option value="LA4">LA4</option>
+      <option value="LA5">LA5</option>
+      <option value="LAB">LAB</option>
+      <option value="LCH">LCH</option>
+      <option value="LH">LH</option>
+      <option value="MHB">MHB</option>
+      <option value="MIC">MIC</option>
+      <option value="MLSC">MLSC</option>
+      <option value="MM">MM</option>
+      <option value="NUR">NUR</option>
+      <option value="OFF">OFF</option>
+      <option value="PH1">PH1</option>
+      <option value="PSY">PSY</option>
+      <option value="RNG">RNG</option>
+      <option value="RLC">RLC</option>
+      <option value="SPA">SPA</option>
+      <option value="SWM">SWM</option>
+      <option value="TA">TA</option>
+      <option value="UMC">UMC</option>
+      <option value="USU">USU</option>
+      <option value="UT">UT</option>
+      <option value="UTC">UTC</option>
+      <option value="VEC">VEC</option>
+   </select>
+     </div>
+  <div class="form-group">
+    <label>Day</label>
+    <select class="form-control" [(ngModel)]="day" name="day" >
+      <option value="omon">Monday</option>
+      <option value="otue">Tuesday</option>
+      <option value="owed">Wednesday</option>
+      <option value="othu">Thursday</option>
+    </select>
+  </div>
+  <input type="submit" class="btn btn-primary">
+</form>
 
-
-
-<h3>  Select Your Building </h3>
-
-<!-- this creates a drop down list of buildings -->
-<select [(ngModel)]="$index" (ngModelChange)="onChange($event)">
-  <option *ngFor="let buildingName of buildings"> {{buildingName.name}} </option>
-</select>
-
-<!-- I have not been able to get ng-options or ng-repeat to work-->
-<!-- <select ng-model="selectedBuilding">
-<option ng-repeat="x in Buildings" value="{{x.name}}">{{x.name}}</option>
-</select> -->
-<div *ngIf = "monday">
-<h2>{{currentBuilding?.name}} Building</h2>
-
-      <!--if i create a day value i should be able to *ngIf this -->
-      <!-- <li><strong>Monday</strong></li> -->
-      <ul>
-        <li *ngFor="let room of currentBuilding?.rooms">
-          <!-- display bug if room has no classes ex EN3-111 on monday-->
-          <!-- not sure how to display this based on if it has a value or not later on in the loops -->
-          {{currentBuilding.name}} - {{room.name}}
-          <ul>
-            <!--if i create a day value i should be able to *ngIf this -->
-            <!--will need to adapt for open times-->
-            <li *ngFor = "let class of room.omon">
-
-                Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
-                {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
-
-            </li>
-          </ul>
-        </li>
-    </ul>
+<div class="tablecontainer" id="table" style="display: none">
+  <table>
+    <tbody>
+      <tr>
+        <th></th>
+        <!--<td colspan="12">12:00 AM</td>
+        <td colspan="12">1:00 AM</td>
+        <td colspan="12">2:00 AM</td>
+        <td colspan="12">3:00 AM</td>
+        <td colspan="12">4:00 AM</td>
+        <td colspan="12">5:00 AM</td>
+        <td colspan="12">6:00 AM</td> -->
+        <th colspan="12">7:00 AM</th>
+        <th colspan="12">8:00 AM</th>
+        <th colspan="12">9:00 AM</th>
+        <th colspan="12">10:00 AM</th>
+        <th colspan="12">11:00 AM</th>
+        <th colspan="12">12:00 PM</th>
+        <th colspan="12">1:00 PM</th>
+        <th colspan="12">2:00 PM</th>
+        <th colspan="12">3:00 PM</th>
+        <th colspan="12">4:00 PM</th>
+        <th colspan="12">5:00 PM</th>
+        <th colspan="12">6:00 PM</th>
+        <th colspan="12">7:00 PM</th>
+        <th colspan="12">8:00 PM</th>
+        <th colspan="12">9:00 PM</th>
+        <!-- <th colspan="12">10:00 PM</td> -->
+        <!--<td colspan="12">11:00 PM</td>-->
+      </tr>
+      <tr class="classroom" *ngFor="let rooms of roomsList">
+        <th class="left-column">{{name}}-{{rooms.name}}</th>
+        <!-- Potential place for index of for loop -->
+        <td *ngFor="let room of rooms?.room" [ngClass]="room ? 'opentime' : 'closedtime'"></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-<div *ngIf = "tuesday">
-<h2>{{currentBuilding?.name}} Building</h2>
-
-      <!--if i create a day value i should be able to *ngIf this -->
-      <!-- <li><strong>Monday</strong></li> -->
-  <ul>
-    <li *ngFor = "let room of currentBuilding?.rooms">
-      <!-- display bug if room has no classes ex EN3-111 on monday-->
-      {{currentBuilding.name}} - {{room.name}}
-      <ul>
-        <!--if i create a day value i should be able to *ngIf this -->
-        <!--will need to adapt for open times-->
-        <li *ngFor = "let class of room.otue">
-
-            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
-            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
-
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
-<div *ngIf = "wednesday">
-<h2>{{currentBuilding?.name}} Building</h2>
-
-      <!--if i create a day value i should be able to *ngIf this -->
-      <!-- <li><strong>Monday</strong></li> -->
-  <ul>
-    <li *ngFor = "let room of currentBuilding?.rooms">
-      <!-- display bug if room has no classes ex EN3-111 on monday-->
-      {{currentBuilding.name}} - {{room.name}}
-      <ul>
-        <!--if i create a day value i should be able to *ngIf this -->
-        <!--will need to adapt for open times-->
-        <li *ngFor = "let class of room.owed">
-
-            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
-            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
-
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
-<div *ngIf = "thursday">
-<h2>{{currentBuilding?.name}} Building</h2>
-
-      <!--if i create a day value i should be able to *ngIf this -->
-      <!-- <li><strong>Monday</strong></li> -->
-  <ul>
-    <li *ngFor = "let room of currentBuilding?.rooms">
-      <!-- display bug if room has no classes ex EN3-111 on monday-->
-      {{currentBuilding.name}} - {{room.name}}
-      <ul>
-        <!--if i create a day value i should be able to *ngIf this -->
-        <!--will need to adapt for open times-->
-        <li *ngFor = "let class of room.othu">
-
-            Open From:  {{(class.st-class.st%60)/60}}:{{class.st%60 | number:'2.0-0'}} -
-            {{(class.et-class.et%60)/60}}:{{class.et%60 | number:'2.0-0'}}
-
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
+<input type="button" class="btn btn-primary" (click)="onBack()" id="back" style="display: none" value="Back">

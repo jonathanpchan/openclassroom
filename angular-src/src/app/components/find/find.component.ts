@@ -1,114 +1,96 @@
 import { Component, OnInit } from '@angular/core';
+import {BuildingsService} from '../../services/buildings.service';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-find',
   templateUrl: './find.component.html',
   styleUrls: ['./find.component.css']
 })
+
 export class FindComponent implements OnInit {
-  buildings : Object;
-  currentBuilding : Object;
-  index: number;
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
+  name : string;
+  day : string;
+  roomsList = [];
+
   constructor(
-    private authService:AuthService,
+    private buildingService:BuildingsService,
     private router:Router
   ) {}
 
-    showMonday(){
-      this.monday = true;
-      this.tuesday = false;
-      this.wednesday = false;
-      this.thursday = false;
-    }
-
-    showTuesday(){
-      this.monday = false;
-      this.tuesday = true;
-      this.wednesday = false;
-      this.thursday = false;
-    }
-
-    showWednesday(){
-      this.monday = false;
-      this.tuesday = false;
-      this.wednesday = true;
-      this.thursday = false;
-    }
-
-    showThursday(){
-      this.monday = false;
-      this.tuesday = false;
-      this.wednesday = false;
-      this.thursday = true;
-    }
-
-   onChange(bName) {
-     //pass the name into function to change index
-     this.getIndex(bName);
-     this.currentBuilding = Object.assign({}, this.buildings[this.index]);
-   }
-
-   getIndex(bName){
-    //stupid loop to get index for display.
-    //this will probably break at some point
-      var num:number = 0;
-      while(bName != this.buildings[num].name){
-        num = num+1;
+  ngOnInit() {}
+  onSubmit() {
+    this.buildingService.getBuildings(this.name).subscribe(buildingList => {
+      this.roomsList = [];
+      let roomsJSON = buildingList.OpenBuilding[0].rooms;
+      for (var room in roomsJSON)
+      {
+        var arr = new Array(180);
+        let timesJSON = roomsJSON[room][this.day];
+        for (var time in timesJSON)
+        {
+          for (var i = timesJSON[time].st / 5 - 84; i < timesJSON[time].et / 5 - 84; i++)
+          {
+            arr[i] = 1;	
+          }
+        }
+        this.roomsList.push({ name : roomsJSON[room].name, room : arr});
       }
-      this.index = num;
-   }
-
-  ngOnInit() {
-    this.index = 0;
-    this.authService.getBuildingList().subscribe(buildinglist => {
-      this.buildings = buildinglist;
-      //default, otherwise AS wont work until we change and change back.
-      //not sure if its better to do it like this, or like in onChange(num);
-    this.currentBuilding = this.buildings[this.index];
-    //perhaps make this autodetect later, if weekend default to monday
-    this.monday = true;
-    this.tuesday = false;
-    this.wednesday = false;
-    this.thursday = false;
-
-
+      document.getElementById("input").style.display = "none";
+      document.getElementById("table").style.display = "block";
+      document.getElementById("back").style.display = "block";
     },
     err => {
       console.log(err);
-      return false;
-    })
+    });
+  }
+  
+
+
+
+  // timeFormat(time)
+  // {
+  //   var t;
+  //   var minutes = time;
+
+  //   if(minutes>=780)    {
+  //     minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
+  //   }
+  //   // TODO: remove this for deployment as it's unneeded
+  //   else if(minutes < 60)    {
+  //     minutes+=720;//adding 12 hours if its before 1 AM
+  //   }
+
+  //   t = (minutes - minutes%60)/60 + ":";//calculating hours
+
+  //   if(minutes%60==0)    {//formating minutes toFixed and to Prevision dont work
+  //     t += "00";
+  //   }else    {
+  //     t += time%60;
+  //   }
+
+  //   if(time>720)    {//setting AM/PM based on the original time
+  //     t+= " PM";
+  //   }
+  //   else    {
+  //     t+= " AM";
+  //   }
+
+  //   return t;
+  // }
+
+  onBack() {
+    document.getElementById("input").style.display = "block";
+    document.getElementById("table").style.display = "none";
+    document.getElementById("back").style.display = "none";
+  }
+
+  getClass(value : any) : string {
+    return 'opentime';
   }
 }
 
-
-class  Building {
-  name: string;
-  rooms: Room[];
-}
-
-class  Room {
-  name: number;
-  mon: Class[];
-  tue: Class[];
-  wed: Class[];
-  thu: Class[];
-  omon: Class[];
-  otue: Class[];
-  owed: Class[];
-  othu: Class[];
-}
-
-class Class {
-  name: string;
-  sec: string;
-  days: string;
-  location: string;
-  st: number;
-  et:number;
+class openRooms {
+  name : string;
+  openclass : [number];
 }

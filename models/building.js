@@ -52,7 +52,6 @@ module.exports.addBuilding = function(newBuilding) {
 }
 
 // Gets the Buildings based on BuildingSchema name
-module.exports.getBuildings = function(buildings, callback) {
-    const query = {name: BuldingSchema.name}
-    BS.find(query,callback).sort({name: BuildingSchema.name});
+ module.exports.getBuildings = function(Name, callback) {
+    BS.find({name: Name}, {_id : 0}).exec(callback);
   }
