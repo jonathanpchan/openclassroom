@@ -56,7 +56,8 @@ router.post('/authenticate', (req, res, next) => {
       if(err) throw err;
       // If it matches, add more fields and return that data
       if(isMatch){
-        const token = jwt.sign(user, config.secret, {
+        // https://stackoverflow.com/questions/46115993/mean-app-error-expected-object
+        const token = jwt.sign({data : user}, config.secret, {
           expiresIn: 604800 // 1 week
         });
 
