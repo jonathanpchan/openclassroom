@@ -7,10 +7,10 @@
   <div class="form-group">
     <label>Day</label>
     <select class="form-control" [(ngModel)]="day" name="day" >
-      <option value="Monday">Monday</option>
-      <option value="Tuesday">Tuesday</option>
-      <option value="Wednesday">Wednesday</option>
-      <option value="Thursday">Thursday</option>
+      <option value="omon">Monday</option>
+      <option value="otue">Tuesday</option>
+      <option value="owed">Wednesday</option>
+      <option value="othu">Thursday</option>
     </select>
   </div>
   <input type="submit" class="btn btn-primary">
@@ -21,13 +21,13 @@
     <tbody>
       <tr>
         <td></td>
-        <td colspan="12">12:00 AM</td>
+        <!--<td colspan="12">12:00 AM</td>
         <td colspan="12">1:00 AM</td>
         <td colspan="12">2:00 AM</td>
         <td colspan="12">3:00 AM</td>
         <td colspan="12">4:00 AM</td>
         <td colspan="12">5:00 AM</td>
-        <td colspan="12">6:00 AM</td>
+        <td colspan="12">6:00 AM</td> -->
         <td colspan="12">7:00 AM</td>
         <td colspan="12">8:00 AM</td>
         <td colspan="12">9:00 AM</td>
@@ -44,10 +44,11 @@
         <td colspan="12">8:00 PM</td>
         <td colspan="12">9:00 PM</td>
         <td colspan="12">10:00 PM</td>
-        <td colspan="12">11:00 PM</td>
+        <!--<td colspan="12">11:00 PM</td>-->
       </tr>
       <tr *ngFor="let rooms of roomsList">
         <td>{{rooms.name}}</td>
+        <!-- Potential place for index of for loop -->
         <td *ngFor="let room of rooms?.room" [ngClass]="room ? 'opentime' : 'closedtime'"></td>
       </tr>
     </tbody>

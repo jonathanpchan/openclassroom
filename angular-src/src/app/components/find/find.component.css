@@ -1,7 +1,6 @@
 table {
-    width : 5000px;
+    width : 2500px;
     height : 250px;
-    align-content: top;
 }
 
 .tablecontainer {
@@ -12,11 +11,11 @@ table {
 }
 
 .opentime {
-    background-color : green;
+    background-color : blue;
     padding : 5px, 5px, 5px, 5px;
 }
 
 .closedtime {
-    background-color : red;
+    background-color : gold;
     padding : 5px, 5px, 5px, 5px;
 }
