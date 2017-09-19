@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {BuildingsService} from '../../services/buildings.service';
 import {Router} from '@angular/router';
+import {FlashMessagesService} from 'angular2-flash-messages';
+
 
 @Component({
   selector: 'app-find',
@@ -15,11 +17,20 @@ export class FindComponent implements OnInit {
 
   constructor(
     private buildingService:BuildingsService,
-    private router:Router
+    private router:Router,
+    private flashMessage : FlashMessagesService
   ) {}
 
   ngOnInit() {}
   onSubmit() {
+
+    console.log(this.name);
+    console.log(this.day);
+    if(this.name == null || this.day == null){
+      this.flashMessage.show('Please select the building and day', {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
+
     this.buildingService.getBuildings(this.name).subscribe(buildingList => {
       this.roomsList = [];
       let roomsJSON = buildingList.OpenBuilding[0].rooms;
@@ -31,7 +42,7 @@ export class FindComponent implements OnInit {
         {
           for (var i = timesJSON[time].st / 5 - 84; i < timesJSON[time].et / 5 - 84; i++)
           {
-            arr[i] = 1;	
+            arr[i] = 1;
           }
         }
         this.roomsList.push({ name : roomsJSON[room].name, room : arr});
@@ -44,7 +55,7 @@ export class FindComponent implements OnInit {
       console.log(err);
     });
   }
-  
+
 
 
 
