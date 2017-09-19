@@ -102,9 +102,14 @@ module.exports.addScheduleItem = function(eMail, u, callback) {
 };
 **/
 
-module.exports.addScheduleItem = function(username, u, callback) {
+function helperSort(a,b) {
+    //console.log(a.time + " - " + b.time + " = " )
+    return (a.sh - b.sh)
+}
+
+module.exports.addScheduleItem = function(eMail, u, callback) {
     User.findOneAndUpdate(
-        {"email": username},
+        {"email": eMail},
         {
             $push: {
                 "schedule": {
@@ -120,7 +125,13 @@ module.exports.addScheduleItem = function(username, u, callback) {
         if (err) {
             console.log("Something wrong when updating data!");
         }
-        User.find({email: username}, {schedule: 1, _id:0}, callback);
+
+            User.find({ supportTicket: st }).toArray(function (err, docs) {
+                callback(docs);
+            });
+        use.schedule.sort(helperSort)
+
+        User.find({email: eMail}, {schedule: 1, _id:0}, callback);
     })
 };
 

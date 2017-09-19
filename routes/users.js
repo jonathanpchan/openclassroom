@@ -100,14 +100,16 @@ router.post('/getschedule', (req, res) =>{
   }
 })
 
+// if/else
 router.post('/addschedule', (req, res) => {
   //return res.json(req.body.email);
-  User.addScheduleItem(req.body.user.email, req.body.u, (err, course) => {
+  User.addScheduleItem(req.body.user, req.body.u, (err, course) => {
     console.log(course);
         return res.json(course);
   })
 })
 
+// if/else
 router.post('/editschedule', (req, res) => {
     //return res.json(req.body.email);
     User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
