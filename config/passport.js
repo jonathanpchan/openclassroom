@@ -9,7 +9,7 @@ const config = require('../config/database');
 module.exports = function(passport){
   let opts = {};
   // Create a new extractor that looks for the JWT in the authorization header with the scheme 'JWT'
-  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken(); 
+  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
   // REQUIRED string containing the secret key for verifying the token's signature
   opts.secretOrKey = config.secret;
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
