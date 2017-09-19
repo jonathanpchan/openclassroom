@@ -32,8 +32,8 @@ mongoose.connection.on('error', () => {
 })
 
 // Port Number
-const port = 3000; // For testing
-// const port = process.env.PORT || 8080; // For Deployment
+// const port = 3000; // For testing
+const port = process.env.PORT || 5000; // For Deployment
 
 // Make route public so any domain can access it
 app.use(cors());
