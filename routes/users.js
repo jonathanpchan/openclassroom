@@ -4,9 +4,6 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
-const Building = require('../models/building');
-const mongoose = require('mongoose');
-
 
 // Register POST request
 router.post('/register', (req, res, next) => {
@@ -81,36 +78,8 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 // Profile GET request
-router.post('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-  return res.json({user: req.user});
-  //return res.json({user: "bobbiii", email: "lolllerslol.com"});
+router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  res.json({user: req.user});
 });
 
 module.exports = router;
-
-router.post('/getschedule', (req, res) =>{
-  if (req.body.user.name){
-    User.getUserSchedule(req.body.user.email, (err, sched) =>{
-      return res.json(sched);
-    })
-  }
-  else{
-    return res.json({error: "bad request"});
-  }
-})
-
-router.post('/addschedule', (req, res) => {
-  //return res.json(req.body.email);
-  User.addScheduleItem(req.body.user.email, req.body.u, (err, course) => {
-    console.log(course);
-        return res.json(course);
-  })
-})
-
-router.post('/editschedule', (req, res) => {
-    //return res.json(req.body.email);
-    User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
-    console.log(course);
-return res.json(course);
-})
-})
