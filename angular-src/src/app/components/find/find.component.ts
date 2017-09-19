@@ -21,77 +21,82 @@ export class FindComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    this.buildingService.getBuildings(this.name, this.day).subscribe(buildingList => {
+    this.buildingService.getBuildings(this.name).subscribe(buildingList => {
       this.roomsList = [];
-      let openBuildingJSON = buildingList['OpenBuilding']; // list of buildings
-      for (var build in openBuildingJSON)
+      let roomsJSON = buildingList.OpenBuilding.rooms;
+      for (var build in roomsJSON)
       {
-        let openRoomJSON = openBuildingJSON[build]['rooms'];
-
-        for (var room in openRoomJSON) //list of rooms in that given building
-        {
-          var arr = new Array(24*12);
-          let openClassJSON = openRoomJSON[room]['class']; //list of classes in that building
-          for (var oclass in openClassJSON)
-          {
-            let timesJSON = openClassJSON[oclass];
-            var st = timesJSON.st;
-            var et = timesJSON.et;
-
-            // Needs to be reviewed. This is static but should be dynamic.
-            for (var i = 0; i < 24*12; i++)
-            {
-              if (timesJSON.st == i*5)
-              {
-                if (timesJSON.et == (i+1)*5)
-                {
-                  arr[i] = arr[i] | 1;
-                }
-                else if (timesJSON.et < (i+1)*5)
-                {
-                  arr[i] = arr[i] | 1;
-                }
-                else
-                {
-                  arr[i] = arr[i] | 1;
-                }
-              }
-              else if (timesJSON.st < i*5)
-              {
-                if (timesJSON.et == (i+1)*5)
-                {
-                  arr[i] = arr[i] | 1;
-                }
-                else if (timesJSON.et < (i+1)*5)
-                {
-                  if (timesJSON.et >= i*5)
-                  {
-                    //arr[i] = ((i+1)*60 - timesJSON.et)/60;
-                    arr[i] = arr[i] | 1;
-                  }
-                  else
-                  {
-                    arr[i] = arr[i] | 0;
-                  }
-                }
-                else 
-                {
-                  arr[i] = arr[i] | 1;
-                }
-              }
-              else
-              {
-                arr[i] = arr[i] | 0;
-              }
-            }
-          }
-          //console.log(openRoomJSON[room].name+" "+arr);
-          this.roomsList.push({ name : openRoomJSON[room].name, room : arr});
-        }
+        console.log(roomsJSON[build].name);
       }
-      document.getElementById("input").style.display = "none";
-      document.getElementById("table").style.display = "block";
-      document.getElementById("back").style.display = "block";
+      console.log("Submit");
+      // for (var build in openBuildingJSON)
+      // {
+      //   let openRoomJSON = openBuildingJSON[build]['rooms'];
+
+      //   for (var room in openRoomJSON) //list of rooms in that given building
+      //   {
+      //     var arr = new Array(24*12);
+      //     let openClassJSON = openRoomJSON[room]['class']; //list of classes in that building
+      //     for (var oclass in openClassJSON)
+      //     {
+      //       let timesJSON = openClassJSON[oclass];
+      //       var st = timesJSON.st;
+      //       var et = timesJSON.et;
+
+      //       // Needs to be reviewed. This is static but should be dynamic.
+      //       for (var i = 0; i < 24*12; i++)
+      //       {
+      //         if (timesJSON.st == i*5)
+      //         {
+      //           if (timesJSON.et == (i+1)*5)
+      //           {
+      //             arr[i] = arr[i] | 1;
+      //           }
+      //           else if (timesJSON.et < (i+1)*5)
+      //           {
+      //             arr[i] = arr[i] | 1;
+      //           }
+      //           else
+      //           {
+      //             arr[i] = arr[i] | 1;
+      //           }
+      //         }
+      //         else if (timesJSON.st < i*5)
+      //         {
+      //           if (timesJSON.et == (i+1)*5)
+      //           {
+      //             arr[i] = arr[i] | 1;
+      //           }
+      //           else if (timesJSON.et < (i+1)*5)
+      //           {
+      //             if (timesJSON.et >= i*5)
+      //             {
+      //               //arr[i] = ((i+1)*60 - timesJSON.et)/60;
+      //               arr[i] = arr[i] | 1;
+      //             }
+      //             else
+      //             {
+      //               arr[i] = arr[i] | 0;
+      //             }
+      //           }
+      //           else 
+      //           {
+      //             arr[i] = arr[i] | 1;
+      //           }
+      //         }
+      //         else
+      //         {
+      //           arr[i] = arr[i] | 0;
+      //         }
+      //       }
+      //     }
+      //     //console.log(openRoomJSON[room].name+" "+arr);
+      //     this.roomsList.push({ name : openRoomJSON[room].name, room : arr});
+      //   }
+      // }
+      // document.getElementById("input").style.display = "none";
+      // document.getElementById("table").style.display = "block";
+      // document.getElementById("back").style.display = "block";
     },
     err => {
       console.log(err);

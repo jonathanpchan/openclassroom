@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
-const OpenBuilding = require('../models/open-building');
+const Building = require('../models/building');
 const mongoose = require('mongoose');
 
 //What to display when getting a building
@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
   const name = req.body.name;
   const day = req.body.day;
 
-  OpenBuilding.getBuildingsByDay(name,day,(err, OpenBuilding) => {
+  Building.getBuildings(name,(err, OpenBuilding) => {
     if(err) throw err;
     if(OpenBuilding == "") { //if OpenBuilding is empty return false
       return res.json({success: false, msg: 'OpenBuilding not found'});
