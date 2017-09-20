@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { NouisliderModule } from 'ng2-nouislider';
 
 // Automatically written in using "ng g component ________" in the components folder
 import { AppComponent } from './app.component';
@@ -47,14 +48,15 @@ const appRoutes: Routes = [
     UsermanualComponent,
     DevguideComponent,
     NavbarComponent,
-    FindComponent,
+    FindComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule
+    FlashMessagesModule,
+    NouisliderModule
   ],
   providers: [ValidateService, AuthService, AuthGuard, BuildingsService],
   bootstrap: [AppComponent]

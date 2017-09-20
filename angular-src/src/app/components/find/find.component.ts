@@ -3,7 +3,6 @@ import {BuildingsService} from '../../services/buildings.service';
 import {Router} from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages';
 
-
 @Component({
   selector: 'app-find',
   templateUrl: './find.component.html',
@@ -14,6 +13,26 @@ export class FindComponent implements OnInit {
   name : string;
   day : string;
   roomsList = [];
+  // See: http://tb.github.io/ng2-nouislider/
+  timeRange : number[];
+  timeSliderConfig: any = {
+    behaviour: 'drag',
+    connect: true,
+    start: [0, 24],
+    keyboard: true,  // same as [keyboard]="true"
+    step: 0.5,
+    pageSteps: 2,
+    range: {
+      min : 0, 
+      max : 24
+    },
+    pips: {
+      mode: 'count',
+      density: 2,
+      values: 6,
+      stepped: true
+    }
+  };
 
   constructor(
     private buildingService:BuildingsService,
@@ -48,6 +67,7 @@ export class FindComponent implements OnInit {
         this.roomsList.push({ name : roomsJSON[room].name, room : arr});
       }
       document.getElementById("input").style.display = "none";
+      document.getElementById("slider").style.display = "none";
       document.getElementById("table").style.display = "block";
       document.getElementById("back").style.display = "block";
     },
@@ -55,9 +75,6 @@ export class FindComponent implements OnInit {
       console.log(err);
     });
   }
-
-
-
 
   // timeFormat(time)
   // {
@@ -92,12 +109,17 @@ export class FindComponent implements OnInit {
 
   onBack() {
     document.getElementById("input").style.display = "block";
+    document.getElementById("slider").style.display = "block";
     document.getElementById("table").style.display = "none";
     document.getElementById("back").style.display = "none";
   }
 
   getClass(value : any) : string {
     return 'opentime';
+  }
+
+  onChange(value: any) {
+    console.log('Value changed to', value);
   }
 }
 

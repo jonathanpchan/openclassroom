@@ -53,8 +53,8 @@
       <option value="UT">UT</option>
       <option value="UTC">UTC</option>
       <option value="VEC">VEC</option>
-   </select>
-     </div>
+  </select>
+    </div>
   <div class="form-group">
     <label>Day</label>
     <select class="form-control" [(ngModel)]="day" name="day" >
@@ -64,8 +64,9 @@
       <option value="othu">Thursday</option>
     </select>
   </div>
-  <input type="submit" class="btn btn-primary">
+  <input type="submit" class="btn btn-primary">  
 </form>
+<nouislider [config]="timeSliderConfig" [(ngModel)]="timeRange" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}" id="slider"></nouislider>
 
 <div class="tablecontainer" id="table" style="display: none">
   <table>
