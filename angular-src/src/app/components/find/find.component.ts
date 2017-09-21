@@ -33,11 +33,11 @@ export class FindComponent implements OnInit {
       let roomsJSON = buildingList.OpenBuilding[0].rooms;
       for (var room in roomsJSON)
       {
-        var arr = new Array(180);
+        var arr = new Array(168);
         let timesJSON = roomsJSON[room][day];
         for (var time in timesJSON)
         {
-          for (var i = timesJSON[time].st / 5 - 84; i < timesJSON[time].et / 5 - 84; i++)
+          for (var i = timesJSON[time].st / 5 - 96; i < timesJSON[time].et / 5 - 96; i++)
           {
             arr[i] = 1;
           }

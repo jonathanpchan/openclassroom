@@ -13,9 +13,7 @@
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
         <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/schedule']">My Schedule</a></li>
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}">
-          <a [routerLink]="['/findclassroom']">Find Classroom</a>
-        </li>
+        <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/findclassroom']">Find Classroom</a></li>
         <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/findbuddy']">Find Buddy</a></li>
         <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/messages']">Messages</a></li>
         <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/groups']">Groups</a></li>
