@@ -16,6 +16,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsermanualComponent } from './components/usermanual/usermanual.component';
 import { DevguideComponent } from './components/devguide/devguide.component';
 import { FindComponent } from './components/find/find.component';
+import { FindHomeComponent } from './components/find-home/find-home.component';
 
 // manually written after using ng g service _______"
 import {ValidateService} from './services/validate.service';
@@ -23,7 +24,8 @@ import {AuthService} from './services/auth.service';
 import {AuthGuard} from './guards/auth.guard';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {BuildingsService} from './services/buildings.service';
-
+import { FindNowComponent } from './components/find-now/find-now.component';
+import { FindTimesComponent } from './components/find-times/find-times.component';
 
 // Routes for the components (will be protected later)
 const appRoutes: Routes = [
@@ -34,7 +36,10 @@ const appRoutes: Routes = [
   {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
   {path:'usermanual', component: UsermanualComponent},
   {path:'devguide', component: DevguideComponent},
-  {path:'findclassroom', component: FindComponent, canActivate:[AuthGuard] }
+  {path:'findclassroom', component: FindHomeComponent, canActivate:[AuthGuard] },
+  {path:'findclassroom/now', component: FindNowComponent},
+  {path:'findclassroom/building', component: FindComponent},
+  {path:'findclassroom/time', component: FindTimesComponent}
 ]
 
 @NgModule({
@@ -49,7 +54,10 @@ const appRoutes: Routes = [
     DevguideComponent,
     NavbarComponent,
     FindComponent,
-    NouisliderComponent
+    NouisliderComponent,
+    FindHomeComponent,
+    FindNowComponent,
+    FindTimesComponent
   ],
   imports: [
     BrowserModule,
