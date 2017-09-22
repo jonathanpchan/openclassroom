@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Class Section Schema
@@ -49,6 +48,10 @@ module.exports.addBuilding = function(newBuilding) {
 }
 
 // Gets the Buildings based on BuildingSchema name
- module.exports.getBuildings = function(Name, callback) {
-    BS.find({name: Name}, {_id : 0}).exec(callback);
-  }
+module.exports.getBuildings = function(Name, callback) {
+  BS.find({name: Name}, {_id : 0}).exec(callback);
+}
+
+module.exports.getAll = function(callback) {
+  BS.find().exec(callback);
+}

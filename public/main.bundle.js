@@ -37,7 +37,7 @@ AppComponent = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(189);
@@ -53,12 +53,12 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_devguide_devguide_component__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_find_find_component__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_find_home_find_home_component__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_validate_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_validate_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_buildings_service__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_buildings_service__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__ = __webpack_require__(108);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
@@ -259,6 +259,7 @@ FindHomeComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(32);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindNowComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -270,10 +271,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var FindNowComponent = (function () {
-    function FindNowComponent() {
+    function FindNowComponent(buildingService) {
+        this.buildingService = buildingService;
+        this.days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
+        this.buildingNow = [];
     }
     FindNowComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        // let day = this.days[new Date().getUTCDay()];
+        var day = this.days[1];
+        // let hour = new Date().getUTCHours();
+        var hour = 10 * 60;
+        this.buildingService.getAll().subscribe(function (buildingList) {
+            for (var build in buildingList.OpenBuilding) {
+                var roomsJSON = buildingList.OpenBuilding[build].rooms;
+                for (var room in roomsJSON) {
+                    var timesJSON = roomsJSON[room][day];
+                    for (var time in timesJSON) {
+                        //console.log(buildingList.OpenBuilding[build].name+" | "+roomsJSON[room].name+" | "+timesJSON[time].st+"-"+timesJSON[time].et);
+                        if (timesJSON[time].st <= hour && (timesJSON[time].et - hour) >= 30) {
+                            _this.buildingNow.push({ building: buildingList.OpenBuilding[build].name, name: roomsJSON[room].name });
+                        }
+                    }
+                }
+            }
+        }, function (err) {
+            console.log(err);
+        });
     };
     return FindNowComponent;
 }());
@@ -283,9 +309,10 @@ FindNowComponent = __decorate([
         template: __webpack_require__(195),
         styles: [__webpack_require__(180)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
 ], FindNowComponent);
 
+var _a;
 //# sourceMappingURL=find-now.component.js.map
 
 /***/ }),
@@ -295,6 +322,7 @@ FindNowComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(32);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindTimesComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -306,18 +334,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var FindTimesComponent = (function () {
-    function FindTimesComponent() {
+    function FindTimesComponent(buildingService) {
+        this.buildingService = buildingService;
         this.timeSliderConfig = {
             behaviour: 'drag',
             connect: true,
-            start: [0, 24],
+            start: [7, 22],
             keyboard: true,
             step: 0.5,
             pageSteps: 2,
             range: {
-                min: 0,
-                max: 24
+                min: 7,
+                max: 22
             },
             pips: {
                 mode: 'count',
@@ -326,11 +356,59 @@ var FindTimesComponent = (function () {
                 stepped: true
             }
         };
+        this.buildingTimes = [];
     }
     FindTimesComponent.prototype.ngOnInit = function () {
     };
     FindTimesComponent.prototype.show = function (day) {
-        console.log(day);
+        var _this = this;
+        this.buildingTimes = [];
+        var left = 8;
+        var right = 21;
+        var arrSize = (right - left) * 12;
+        var offset = left * 12;
+        this.buildingService.getAll().subscribe(function (buildingList) {
+            for (var build in buildingList.OpenBuilding) {
+                var roomsJSON = buildingList.OpenBuilding[build].rooms;
+                for (var room in roomsJSON) {
+                    var arr = new Array(arrSize);
+                    var timesJSON = roomsJSON[room][day];
+                    var push = false;
+                    for (var time in timesJSON) {
+                        //console.log(buildingList.OpenBuilding[build].name+" | "+roomsJSON[room].name+" | "+timesJSON[time].st+"-"+timesJSON[time].et);
+                        for (var i = timesJSON[time].st / 5 - offset; i < timesJSON[time].et / 5 - offset; i++) {
+                            arr[i] = 1;
+                            push = true;
+                        }
+                    }
+                    if (push) {
+                        _this.buildingTimes.push({ building: buildingList.OpenBuilding[build].name, name: roomsJSON[room].name, room: arr });
+                    }
+                }
+            }
+            document.getElementById("table").style.display = "block";
+        }, function (err) {
+            console.log(err);
+        });
+        // this.buildingService.getAll().subscribe(buildingList => {
+        //   let roomsJSON = buildingList.OpenBuilding[0].rooms;
+        //   for (var room in roomsJSON)
+        //   {
+        //     var arr = new Array();
+        //     let timesJSON = roomsJSON[room][day];
+        //     for (var time in timesJSON)
+        //     {
+        //       for (var i = timesJSON[time].st / 5 - 96; i < timesJSON[time].et / 5 - 96; i++)
+        //       {
+        //         arr[i] = 1;
+        //       }
+        //     }
+        //     this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+        //   }
+        // },
+        // err => {
+        //   console.log(err);
+        // });
     };
     FindTimesComponent.prototype.onChange = function (value) {
         console.log('Value changed to', value);
@@ -343,9 +421,10 @@ FindTimesComponent = __decorate([
         template: __webpack_require__(196),
         styles: [__webpack_require__(181)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
 ], FindTimesComponent);
 
+var _a;
 //# sourceMappingURL=find-times.component.js.map
 
 /***/ }),
@@ -355,7 +434,7 @@ FindTimesComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
@@ -577,7 +656,7 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(40);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavbarComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -632,7 +711,7 @@ var _a, _b, _c, _d;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
@@ -1044,7 +1123,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "table {\r\n    width : 2000px;\r\n    height : auto;\r\n}\r\n\r\ntr{\r\n  height: 20px;\r\n}\r\n\r\ntd{\r\n  border-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n    width : 100%;\r\n    height : 100%;\r\n    overflow : auto;\r\n    padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n    background-color : #81ea9d;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n    background-color : #ed5d50;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n\r\n}\r\n\r\n.left-column{\r\n position: -webkit-sticky;\r\n position: sticky;\r\n left: 0;\r\n background-color: #ffffff;\r\n width: 75px;\r\n border: 2px solid black;\r\n text-align: center;\r\n}\r\n\r\n.left-column:hover {\r\n  background-color: #76a8f7;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1211,21 +1290,21 @@ module.exports = "<p style=\"text-align: center;\">Find an Open Classroom</p>\n<
 /***/ 195:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  find-now works!\n</p>\n"
+module.exports = "<ul *ngFor=\"let rooms of buildingNow\">\n  <ul>{{rooms.building}}-{{rooms.name}}</ul>\n</ul>"
 
 /***/ }),
 
 /***/ 196:
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"text-align: center\">\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button> \n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button> \n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button> \n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\n</div>\n<nouislider [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\" style=\"margin-left: auto; margin-right: auto\"></nouislider>"
+module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button> \r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button> \r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button> \r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n<nouislider [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\" style=\"margin-left: auto; margin-right: auto\"></nouislider>\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <!--<td colspan=\"12\">12:00 AM</td>\r\n        <td colspan=\"12\">1:00 AM</td>\r\n        <td colspan=\"12\">2:00 AM</td>\r\n        <td colspan=\"12\">3:00 AM</td>\r\n        <td colspan=\"12\">4:00 AM</td>\r\n        <td colspan=\"12\">5:00 AM</td>\r\n        <td colspan=\"12\">6:00 AM</td>\r\n        <th colspan=\"12\">7:00 AM</th>\r\n        <th colspan=\"12\">8:00 AM</th>-->\r\n        <th colspan=\"12\">9:00 AM</th>\r\n        <th colspan=\"12\">10:00 AM</th>\r\n        <th colspan=\"12\">11:00 AM</th>\r\n        <th colspan=\"12\">12:00 PM</th>\r\n        <th colspan=\"12\">1:00 PM</th>\r\n        <th colspan=\"12\">2:00 PM</th>\r\n        <th colspan=\"12\">3:00 PM</th>\r\n        <th colspan=\"12\">4:00 PM</th>\r\n        <th colspan=\"12\">5:00 PM</th>\r\n        <th colspan=\"12\">6:00 PM</th>\r\n        <th colspan=\"12\">7:00 PM</th>\r\n        <th colspan=\"12\">8:00 PM</th>\r\n        <th colspan=\"12\">9:00 PM</th>\r\n        <!--<th colspan=\"12\">10:00 PM</th>\r\n        <th colspan=\"12\">11:00 PM</th>-->\r\n      </tr>\r\n      <tr class=\"classroom\" *ngFor=\"let rooms of buildingTimes\">\r\n        <th class=\"left-column\">{{rooms.building}}-{{rooms.name}}</th>\r\n        <!-- Potential place for index of for loop -->\r\n        <td *ngFor=\"let room of rooms?.room\" [ngClass]=\"room ? 'opentime' : 'closedtime'\"></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>"
 
 /***/ }),
 
 /***/ 197:
 /***/ (function(module, exports) {
 
-module.exports = "<!--<h2 class=\"page-header\">Open Buildings</h2>\r\n<form (submit)=\"onSubmit()\" id=\"input\" style=\"display: block\">\r\n  <div class=\"form-group\">\r\n    <label>Name</label>\r\n    <select class=\"form-control\" [(ngModel)]=\"name\" name=\"name\" >\r\n      <option selected disabled hidden>Choose here</option>\r\n      <option value=\"AS\">AS</option>\r\n      <option value=\"CBA\">CBA</option>\r\n      <option value=\"CTS\">CTS</option>\r\n      <option value=\"DC\">DC</option>\r\n      <option value=\"DESN\">DESN</option>\r\n      <option value=\"ECS\">ECS</option>\r\n      <option value=\"ED2\">ED2</option>\r\n      <option value=\"EED\">EED</option>\r\n      <option value=\"EN2\">EN2</option>\r\n      <option value=\"EN3\">EN3</option>\r\n      <option value=\"EN4\">EN4</option>\r\n      <option value=\"ET\">ET</option>\r\n      <option value=\"FA1\">FA1</option>\r\n      <option value=\"FA2\">FA2</option>\r\n      <option value=\"FA3\">FA3</option>\r\n      <option value=\"FA4\">FA4</option>\r\n      <option value=\"FCS\">FCS</option>\r\n      <option value=\"FLD\">FLD</option>\r\n      <option value=\"FO2\">FO2</option>\r\n      <option value=\"HHS1\">HHS1</option>\r\n      <option value=\"HSCI\">HSCI</option>\r\n      <option value=\"HSD\">HSD</option>\r\n      <option value=\"KIN\">KIN</option>\r\n      <option value=\"LA1\">LA1</option>\r\n      <option value=\"LA2\">LA2</option>\r\n      <option value=\"LA3\">LA3</option>\r\n      <option value=\"LA4\">LA4</option>\r\n      <option value=\"LA5\">LA5</option>\r\n      <option value=\"LAB\">LAB</option>\r\n      <option value=\"LCH\">LCH</option>\r\n      <option value=\"LH\">LH</option>\r\n      <option value=\"MHB\">MHB</option>\r\n      <option value=\"MIC\">MIC</option>\r\n      <option value=\"MLSC\">MLSC</option>\r\n      <option value=\"MM\">MM</option>\r\n      <option value=\"NUR\">NUR</option>\r\n      <option value=\"OFF\">OFF</option>\r\n      <option value=\"PH1\">PH1</option>\r\n      <option value=\"PSY\">PSY</option>\r\n      <option value=\"RNG\">RNG</option>\r\n      <option value=\"RLC\">RLC</option>\r\n      <option value=\"SPA\">SPA</option>\r\n      <option value=\"SWM\">SWM</option>\r\n      <option value=\"TA\">TA</option>\r\n      <option value=\"UMC\">UMC</option>\r\n      <option value=\"USU\">USU</option>\r\n      <option value=\"UT\">UT</option>\r\n      <option value=\"UTC\">UTC</option>\r\n      <option value=\"VEC\">VEC</option>\r\n  </select>\r\n    </div>\r\n  <div class=\"form-group\">\r\n    <label>Day</label>\r\n    <select class=\"form-control\" [(ngModel)]=\"day\" name=\"day\" >\r\n      <option value=\"omon\">Monday</option>\r\n      <option value=\"otue\">Tuesday</option>\r\n      <option value=\"owed\">Wednesday</option>\r\n      <option value=\"othu\">Thursday</option>\r\n    </select>\r\n  </div>\r\n  <input type=\"submit\" class=\"btn btn-primary\">  \r\n</form>-->\r\n\r\n<div class=\"form-group\">\r\n  <label>Name</label>\r\n  <select class=\"form-control\" [(ngModel)]=\"name\" name=\"name\">\r\n    <option selected disabled hidden>Choose here</option>\r\n    <option value=\"AS\">AS</option>\r\n    <option value=\"CBA\">CBA</option>\r\n    <option value=\"CTS\">CTS</option>\r\n    <option value=\"DC\">DC</option>\r\n    <option value=\"DESN\">DESN</option>\r\n    <option value=\"ECS\">ECS</option>\r\n    <option value=\"ED2\">ED2</option>\r\n    <option value=\"EED\">EED</option>\r\n    <option value=\"EN2\">EN2</option>\r\n    <option value=\"EN3\">EN3</option>\r\n    <option value=\"EN4\">EN4</option>\r\n    <option value=\"ET\">ET</option>\r\n    <option value=\"FA1\">FA1</option>\r\n    <option value=\"FA2\">FA2</option>\r\n    <option value=\"FA3\">FA3</option>\r\n    <option value=\"FA4\">FA4</option>\r\n    <option value=\"FCS\">FCS</option>\r\n    <option value=\"FLD\">FLD</option>\r\n    <option value=\"FO2\">FO2</option>\r\n    <option value=\"HHS1\">HHS1</option>\r\n    <option value=\"HSCI\">HSCI</option>\r\n    <option value=\"HSD\">HSD</option>\r\n    <option value=\"KIN\">KIN</option>\r\n    <option value=\"LA1\">LA1</option>\r\n    <option value=\"LA2\">LA2</option>\r\n    <option value=\"LA3\">LA3</option>\r\n    <option value=\"LA4\">LA4</option>\r\n    <option value=\"LA5\">LA5</option>\r\n    <option value=\"LAB\">LAB</option>\r\n    <option value=\"LCH\">LCH</option>\r\n    <option value=\"LH\">LH</option>\r\n    <option value=\"MHB\">MHB</option>\r\n    <option value=\"MIC\">MIC</option>\r\n    <option value=\"MLSC\">MLSC</option>\r\n    <option value=\"MM\">MM</option>\r\n    <option value=\"NUR\">NUR</option>\r\n    <option value=\"OFF\">OFF</option>\r\n    <option value=\"PH1\">PH1</option>\r\n    <option value=\"PSY\">PSY</option>\r\n    <option value=\"RNG\">RNG</option>\r\n    <option value=\"RLC\">RLC</option>\r\n    <option value=\"SPA\">SPA</option>\r\n    <option value=\"SWM\">SWM</option>\r\n    <option value=\"TA\">TA</option>\r\n    <option value=\"UMC\">UMC</option>\r\n    <option value=\"USU\">USU</option>\r\n    <option value=\"UT\">UT</option>\r\n    <option value=\"UTC\">UTC</option>\r\n    <option value=\"VEC\">VEC</option>\r\n  </select>\r\n</div>\r\n\r\n<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button> \r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button> \r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button> \r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <!--<td colspan=\"12\">12:00 AM</td>\r\n        <td colspan=\"12\">1:00 AM</td>\r\n        <td colspan=\"12\">2:00 AM</td>\r\n        <td colspan=\"12\">3:00 AM</td>\r\n        <td colspan=\"12\">4:00 AM</td>\r\n        <td colspan=\"12\">5:00 AM</td>\r\n        <td colspan=\"12\">6:00 AM</td>\r\n        <th colspan=\"12\">7:00 AM</th>-->\r\n        <th colspan=\"12\">8:00 AM</th>\r\n        <th colspan=\"12\">9:00 AM</th>\r\n        <th colspan=\"12\">10:00 AM</th>\r\n        <th colspan=\"12\">11:00 AM</th>\r\n        <th colspan=\"12\">12:00 PM</th>\r\n        <th colspan=\"12\">1:00 PM</th>\r\n        <th colspan=\"12\">2:00 PM</th>\r\n        <th colspan=\"12\">3:00 PM</th>\r\n        <th colspan=\"12\">4:00 PM</th>\r\n        <th colspan=\"12\">5:00 PM</th>\r\n        <th colspan=\"12\">6:00 PM</th>\r\n        <th colspan=\"12\">7:00 PM</th>\r\n        <th colspan=\"12\">8:00 PM</th>\r\n        <th colspan=\"12\">9:00 PM</th>\r\n        <!-- <th colspan=\"12\">10:00 PM</td> -->\r\n        <!--<td colspan=\"12\">11:00 PM</td>-->\r\n      </tr>\r\n      <tr class=\"classroom\" *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <!-- Potential place for index of for loop -->\r\n        <td *ngFor=\"let room of rooms?.room\" [ngClass]=\"room ? 'opentime' : 'closedtime'\"></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n<!--<input type=\"button\" class=\"btn btn-primary\" (click)=\"onBack()\" id=\"back\" style=\"display: none\" value=\"Back\">-->"
+module.exports = "<!--<h2 class=\"page-header\">Open Buildings</h2>\r\n<form (submit)=\"onSubmit()\" id=\"input\" style=\"display: block\">\r\n  <div class=\"form-group\">\r\n    <label>Name</label>\r\n    <select class=\"form-control\" [(ngModel)]=\"name\" name=\"name\" >\r\n      <option selected disabled hidden>Choose here</option>\r\n      <option value=\"AS\">AS</option>\r\n      <option value=\"CBA\">CBA</option>\r\n      <option value=\"CTS\">CTS</option>\r\n      <option value=\"DC\">DC</option>\r\n      <option value=\"DESN\">DESN</option>\r\n      <option value=\"ECS\">ECS</option>\r\n      <option value=\"ED2\">ED2</option>\r\n      <option value=\"EED\">EED</option>\r\n      <option value=\"EN2\">EN2</option>\r\n      <option value=\"EN3\">EN3</option>\r\n      <option value=\"EN4\">EN4</option>\r\n      <option value=\"ET\">ET</option>\r\n      <option value=\"FA1\">FA1</option>\r\n      <option value=\"FA2\">FA2</option>\r\n      <option value=\"FA3\">FA3</option>\r\n      <option value=\"FA4\">FA4</option>\r\n      <option value=\"FCS\">FCS</option>\r\n      <option value=\"FLD\">FLD</option>\r\n      <option value=\"FO2\">FO2</option>\r\n      <option value=\"HHS1\">HHS1</option>\r\n      <option value=\"HSCI\">HSCI</option>\r\n      <option value=\"HSD\">HSD</option>\r\n      <option value=\"KIN\">KIN</option>\r\n      <option value=\"LA1\">LA1</option>\r\n      <option value=\"LA2\">LA2</option>\r\n      <option value=\"LA3\">LA3</option>\r\n      <option value=\"LA4\">LA4</option>\r\n      <option value=\"LA5\">LA5</option>\r\n      <option value=\"LAB\">LAB</option>\r\n      <option value=\"LCH\">LCH</option>\r\n      <option value=\"LH\">LH</option>\r\n      <option value=\"MHB\">MHB</option>\r\n      <option value=\"MIC\">MIC</option>\r\n      <option value=\"MLSC\">MLSC</option>\r\n      <option value=\"MM\">MM</option>\r\n      <option value=\"NUR\">NUR</option>\r\n      <option value=\"OFF\">OFF</option>\r\n      <option value=\"PH1\">PH1</option>\r\n      <option value=\"PSY\">PSY</option>\r\n      <option value=\"RNG\">RNG</option>\r\n      <option value=\"RLC\">RLC</option>\r\n      <option value=\"SPA\">SPA</option>\r\n      <option value=\"SWM\">SWM</option>\r\n      <option value=\"TA\">TA</option>\r\n      <option value=\"UMC\">UMC</option>\r\n      <option value=\"USU\">USU</option>\r\n      <option value=\"UT\">UT</option>\r\n      <option value=\"UTC\">UTC</option>\r\n      <option value=\"VEC\">VEC</option>\r\n  </select>\r\n    </div>\r\n  <div class=\"form-group\">\r\n    <label>Day</label>\r\n    <select class=\"form-control\" [(ngModel)]=\"day\" name=\"day\" >\r\n      <option value=\"omon\">Monday</option>\r\n      <option value=\"otue\">Tuesday</option>\r\n      <option value=\"owed\">Wednesday</option>\r\n      <option value=\"othu\">Thursday</option>\r\n    </select>\r\n  </div>\r\n  <input type=\"submit\" class=\"btn btn-primary\">  \r\n</form>-->\r\n\r\n<div class=\"form-group\">\r\n  <label>Name</label>\r\n  <select class=\"form-control\" [(ngModel)]=\"name\" name=\"name\">\r\n    <option selected disabled hidden>Choose here</option>\r\n    <option value=\"AS\">AS</option>\r\n    <option value=\"CBA\">CBA</option>\r\n    <option value=\"CTS\">CTS</option>\r\n    <option value=\"DC\">DC</option>\r\n    <option value=\"DESN\">DESN</option>\r\n    <option value=\"ECS\">ECS</option>\r\n    <option value=\"ED2\">ED2</option>\r\n    <option value=\"EED\">EED</option>\r\n    <option value=\"EN2\">EN2</option>\r\n    <option value=\"EN3\">EN3</option>\r\n    <option value=\"EN4\">EN4</option>\r\n    <option value=\"ET\">ET</option>\r\n    <option value=\"FA1\">FA1</option>\r\n    <option value=\"FA2\">FA2</option>\r\n    <option value=\"FA3\">FA3</option>\r\n    <option value=\"FA4\">FA4</option>\r\n    <option value=\"FCS\">FCS</option>\r\n    <option value=\"FLD\">FLD</option>\r\n    <option value=\"FO2\">FO2</option>\r\n    <option value=\"HHS1\">HHS1</option>\r\n    <option value=\"HSCI\">HSCI</option>\r\n    <option value=\"HSD\">HSD</option>\r\n    <option value=\"KIN\">KIN</option>\r\n    <option value=\"LA1\">LA1</option>\r\n    <option value=\"LA2\">LA2</option>\r\n    <option value=\"LA3\">LA3</option>\r\n    <option value=\"LA4\">LA4</option>\r\n    <option value=\"LA5\">LA5</option>\r\n    <option value=\"LAB\">LAB</option>\r\n    <option value=\"LCH\">LCH</option>\r\n    <option value=\"LH\">LH</option>\r\n    <option value=\"MHB\">MHB</option>\r\n    <option value=\"MIC\">MIC</option>\r\n    <option value=\"MLSC\">MLSC</option>\r\n    <option value=\"MM\">MM</option>\r\n    <option value=\"NUR\">NUR</option>\r\n    <option value=\"OFF\">OFF</option>\r\n    <option value=\"PH1\">PH1</option>\r\n    <option value=\"PSY\">PSY</option>\r\n    <option value=\"RNG\">RNG</option>\r\n    <option value=\"RLC\">RLC</option>\r\n    <option value=\"SPA\">SPA</option>\r\n    <option value=\"SWM\">SWM</option>\r\n    <option value=\"TA\">TA</option>\r\n    <option value=\"UMC\">UMC</option>\r\n    <option value=\"USU\">USU</option>\r\n    <option value=\"UT\">UT</option>\r\n    <option value=\"UTC\">UTC</option>\r\n    <option value=\"VEC\">VEC</option>\r\n  </select>\r\n</div>\r\n\r\n<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button> \r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button> \r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button> \r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <!--<td colspan=\"12\">12:00 AM</td>\r\n        <td colspan=\"12\">1:00 AM</td>\r\n        <td colspan=\"12\">2:00 AM</td>\r\n        <td colspan=\"12\">3:00 AM</td>\r\n        <td colspan=\"12\">4:00 AM</td>\r\n        <td colspan=\"12\">5:00 AM</td>\r\n        <td colspan=\"12\">6:00 AM</td>\r\n        <th colspan=\"12\">7:00 AM</th>-->\r\n        <th colspan=\"12\">8:00 AM</th>\r\n        <th colspan=\"12\">9:00 AM</th>\r\n        <th colspan=\"12\">10:00 AM</th>\r\n        <th colspan=\"12\">11:00 AM</th>\r\n        <th colspan=\"12\">12:00 PM</th>\r\n        <th colspan=\"12\">1:00 PM</th>\r\n        <th colspan=\"12\">2:00 PM</th>\r\n        <th colspan=\"12\">3:00 PM</th>\r\n        <th colspan=\"12\">4:00 PM</th>\r\n        <th colspan=\"12\">5:00 PM</th>\r\n        <th colspan=\"12\">6:00 PM</th>\r\n        <th colspan=\"12\">7:00 PM</th>\r\n        <th colspan=\"12\">8:00 PM</th>\r\n        <th colspan=\"12\">9:00 PM</th>\r\n        <!-- <th colspan=\"12\">10:00 PM</th>\r\n        <th colspan=\"12\">11:00 PM</th>-->\r\n      </tr>\r\n      <tr class=\"classroom\" *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <!-- Potential place for index of for loop -->\r\n        <td *ngFor=\"let room of rooms?.room\" [ngClass]=\"room ? 'opentime' : 'closedtime'\"></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n<!--<input type=\"button\" class=\"btn btn-primary\" (click)=\"onBack()\" id=\"back\" style=\"display: none\" value=\"Back\">-->"
 
 /***/ }),
 
@@ -1279,7 +1358,76 @@ module.exports = __webpack_require__(96);
 
 /***/ }),
 
-/***/ 39:
+/***/ 32:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//Service module for building, class, and classroom queries
+
+
+
+
+var BuildingsService = (function () {
+    function BuildingsService(http) {
+        this.http = http;
+    }
+    BuildingsService.prototype.getBuildings = function (name) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/buildings', { name: name }).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
+    };
+    BuildingsService.prototype.getAll = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.get('http://localhost:3000/buildings', null).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+    };
+    BuildingsService.prototype.extractData = function (res) {
+        var body = res.json();
+        return body || {};
+    };
+    BuildingsService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Promise.reject(errMsg);
+    };
+    return BuildingsService;
+}());
+BuildingsService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], BuildingsService);
+
+var _a;
+//# sourceMappingURL=buildings.service.js.map
+
+/***/ }),
+
+/***/ 40:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1318,70 +1466,6 @@ ValidateService = __decorate([
 ], ValidateService);
 
 //# sourceMappingURL=validate.service.js.map
-
-/***/ }),
-
-/***/ 68:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-//Service module for building, class, and classroom queries
-
-
-
-
-var BuildingsService = (function () {
-    function BuildingsService(http) {
-        this.http = http;
-    }
-    BuildingsService.prototype.getBuildings = function (name) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/buildings', { name: name }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
-    };
-    BuildingsService.prototype.extractData = function (res) {
-        var body = res.json();
-        return body || {};
-    };
-    BuildingsService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Promise.reject(errMsg);
-    };
-    return BuildingsService;
-}());
-BuildingsService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], BuildingsService);
-
-var _a;
-//# sourceMappingURL=buildings.service.js.map
 
 /***/ }),
 
