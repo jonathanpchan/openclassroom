@@ -53,36 +53,38 @@ export class FindComponent implements OnInit {
     });
   }
 
-  // timeFormat(time)
-  // {
-  //   var t;
-  //   var minutes = time;
+  timeFormat(time)
+  {
+    var  minutes = time*5;//since we have minutes in 5 minute chunks
+    minutes += 480;//offset of 8 AM need to add 8 hours
+    time = minutes;//set original value of time
+    var t;
 
-  //   if(minutes>=780)    {
-  //     minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
-  //   }
-  //   // TODO: remove this for deployment as it's unneeded
-  //   else if(minutes < 60)    {
-  //     minutes+=720;//adding 12 hours if its before 1 AM
-  //   }
 
-  //   t = (minutes - minutes%60)/60 + ":";//calculating hours
+    if(minutes>=780)    {
+      minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
+    }
+    // // TODO: remove this for deployment as it's unneeded
+    // else if(minutes < 60)    {
+    //   minutes+=720;//adding 12 hours if its before 1 AM
+    // }
+    t = (minutes - minutes%60)/60 + ":";//calculating hours
 
-  //   if(minutes%60==0)    {//formating minutes toFixed and to Prevision dont work
-  //     t += "00";
-  //   }else    {
-  //     t += time%60;
-  //   }
+    if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
+      t += "0" + time%60;
+    }else    {
+      t += time%60;
+    }
 
-  //   if(time>720)    {//setting AM/PM based on the original time
-  //     t+= " PM";
-  //   }
-  //   else    {
-  //     t+= " AM";
-  //   }
+    if(time>720)    {//setting AM/PM based on the original time
+      t+= " PM";
+    }
+    else    {
+      t+= " AM";
+    }
 
-  //   return t;
-  // }
+    return t;
+  }
 
   onBack() {
     document.getElementById("input").style.display = "block";
@@ -93,6 +95,10 @@ export class FindComponent implements OnInit {
   getClass(value : any) : string {
     return 'opentime';
   }
+
+  getCell(x) {
+    console.log("Cell index is: " + x);
+}
 }
 
 class openRooms {

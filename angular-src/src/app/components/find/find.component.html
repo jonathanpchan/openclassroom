@@ -64,7 +64,7 @@
       <option value="othu">Thursday</option>
     </select>
   </div>
-  <input type="submit" class="btn btn-primary">  
+  <input type="submit" class="btn btn-primary">
 </form>-->
 
 <div class="form-group">
@@ -124,9 +124,9 @@
 </div>
 
 <div style="text-align: center">
-  <button (click) = "show('omon')" class="btn btn-primary" style="width:24%"> Monday</button> 
-  <button (click) = "show('otue')" class="btn btn-primary" style="width:24%"> Tuesday</button> 
-  <button (click) = "show('owed')" class="btn btn-primary" style="width:24%"> Wednesday</button> 
+  <button (click) = "show('omon')" class="btn btn-primary" style="width:24%"> Monday</button>
+  <button (click) = "show('otue')" class="btn btn-primary" style="width:24%"> Tuesday</button>
+  <button (click) = "show('owed')" class="btn btn-primary" style="width:24%"> Wednesday</button>
   <button (click) = "show('othu')" class="btn btn-primary" style="width:24%"> Thursday</button>
 </div>
 
@@ -163,7 +163,9 @@
       <tr class="classroom" *ngFor="let rooms of roomsList">
         <th class="left-column">{{name}}-{{rooms.name}}</th>
         <!-- Potential place for index of for loop -->
-        <td *ngFor="let room of rooms?.room" [ngClass]="room ? 'opentime' : 'closedtime'"></td>
+        <td class ="five-minute-chunk" *ngFor="let room of rooms?.room let i = index" [ngClass]="room ? 'opentime' : 'closedtime'">
+          <!-- <span class="time-tool-tip">{{timeFormat(i)}}</span> -->
+        </td>
       </tr>
     </tbody>
   </table>
