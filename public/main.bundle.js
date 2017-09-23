@@ -1,6 +1,6 @@
 webpackJsonp([1,4],{
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31,35 +31,35 @@ AppComponent = __decorate([
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_dashboard_dashboard_component__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_dashboard_dashboard_component__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_schedule_schedule_component__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_navbar_navbar_component__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_usermanual_usermanual_component__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_devguide_devguide_component__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_devguide_devguide_component__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_find_find_component__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_find_home_find_home_component__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_find_home_find_home_component__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_validate_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_buildings_service__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_buildings_service__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__ = __webpack_require__(108);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -147,7 +147,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 104:
+/***/ 105:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -183,7 +183,7 @@ DashboardComponent = __decorate([
 
 /***/ }),
 
-/***/ 105:
+/***/ 106:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -219,11 +219,13 @@ DevguideComponent = __decorate([
 
 /***/ }),
 
-/***/ 106:
+/***/ 107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__ = __webpack_require__(69);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindHomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -235,85 +237,63 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var FindHomeComponent = (function () {
-    function FindHomeComponent() {
+    function FindHomeComponent(buildingService, findNow) {
+        this.buildingService = buildingService;
+        this.findNow = findNow;
+        // All building names possible
+        this.buildingNames = [];
     }
-    FindHomeComponent.prototype.ngOnInit = function () { };
+    // 1) Display available building names
+    FindHomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.buildingService.getBuildingNames().subscribe(function (names) {
+            for (var name in names.OpenBuilding) {
+                _this.buildingNames.push(names.OpenBuilding[name].name);
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    // 2) Display option buttons 
+    FindHomeComponent.prototype.displayButtons = function () {
+        if (document.getElementById("buttons").style.display == "none") {
+            document.getElementById("buttons").style.display = "block";
+            document.getElementById("all").style.display = "none";
+            document.getElementById("table").style.display = "none";
+            document.getElementById("table-2").style.display = "none";
+            document.getElementById("now").style.display = "none";
+            document.getElementById("times").style.display = "none";
+        }
+    };
+    // 3) Display button depending on id
+    FindHomeComponent.prototype.displayOption = function (option) {
+        if (document.getElementById("buttons").style.display == "block") {
+            document.getElementById("buttons").style.display = "none";
+            document.getElementById(option).style.display = "block";
+            // if (option == "now")
+            // {
+            //   this.findNow.show(this.building);
+            // }
+        }
+    };
     return FindHomeComponent;
 }());
 FindHomeComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-home',
         template: __webpack_require__(194),
-        styles: [__webpack_require__(179)]
+        styles: [__webpack_require__(179)],
+        // Needed to function call the FindNowComponent
+        providers: [__WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]) === "function" && _b || Object])
 ], FindHomeComponent);
 
+var _a, _b;
 //# sourceMappingURL=find-home.component.js.map
-
-/***/ }),
-
-/***/ 107:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(32);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindNowComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var FindNowComponent = (function () {
-    function FindNowComponent(buildingService) {
-        this.buildingService = buildingService;
-        this.days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
-        this.buildingNow = [];
-    }
-    FindNowComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        // let day = this.days[new Date().getUTCDay()];
-        var day = this.days[1];
-        // let hour = new Date().getUTCHours();
-        var hour = 10 * 60;
-        this.buildingService.getAll().subscribe(function (buildingList) {
-            for (var build in buildingList.OpenBuilding) {
-                var roomsJSON = buildingList.OpenBuilding[build].rooms;
-                for (var room in roomsJSON) {
-                    var timesJSON = roomsJSON[room][day];
-                    for (var time in timesJSON) {
-                        //console.log(buildingList.OpenBuilding[build].name+" | "+roomsJSON[room].name+" | "+timesJSON[time].st+"-"+timesJSON[time].et);
-                        if (timesJSON[time].st <= hour && (timesJSON[time].et - hour) >= 30) {
-                            _this.buildingNow.push({ building: buildingList.OpenBuilding[build].name, name: roomsJSON[room].name });
-                        }
-                    }
-                }
-            }
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    return FindNowComponent;
-}());
-FindNowComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-find-now',
-        template: __webpack_require__(195),
-        styles: [__webpack_require__(180)]
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
-], FindNowComponent);
-
-var _a;
-//# sourceMappingURL=find-now.component.js.map
 
 /***/ }),
 
@@ -322,7 +302,7 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(20);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindTimesComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -338,15 +318,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var FindTimesComponent = (function () {
     function FindTimesComponent(buildingService) {
         this.buildingService = buildingService;
+        this.day = "";
+        // For displaying the times
+        this.times = ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM",
+            "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
+            "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM",
+            "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+            "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+            "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
+            "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
+            "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"];
+        this.tstart = 16;
+        this.tend = 44;
+        // For displaying the boxes
+        this.start = 8 * 12;
+        this.end = 22 * 12;
         this.timeSliderConfig = {
             behaviour: 'drag',
             connect: true,
-            start: [7, 22],
+            start: [8, 22],
             keyboard: true,
             step: 0.5,
             pageSteps: 2,
+            margin: 0.5,
             range: {
-                min: 7,
+                min: 8,
                 max: 22
             },
             pips: {
@@ -356,65 +352,94 @@ var FindTimesComponent = (function () {
                 stepped: true
             }
         };
-        this.buildingTimes = [];
+        this.roomsList = [];
+        this.buildingList = null;
     }
-    FindTimesComponent.prototype.ngOnInit = function () {
-    };
+    FindTimesComponent.prototype.ngOnInit = function () { };
+    // Show the table based on the day (BUILDING name should be provided)
     FindTimesComponent.prototype.show = function (day) {
         var _this = this;
-        this.buildingTimes = [];
-        var left = 8;
-        var right = 21;
-        var arrSize = (right - left) * 12;
-        var offset = left * 12;
-        this.buildingService.getAll().subscribe(function (buildingList) {
-            for (var build in buildingList.OpenBuilding) {
-                var roomsJSON = buildingList.OpenBuilding[build].rooms;
+        // Only run once when same button is pressed multiple times
+        if (this.day != day) {
+            // Query the database once
+            if (this.buildingList == null) {
+                this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
+                    _this.roomsList = [];
+                    var roomsJSON = buildingList.OpenBuilding[0].rooms;
+                    for (var room in roomsJSON) {
+                        var arr = new Array(288);
+                        var timesJSON = roomsJSON[room][day];
+                        for (var time in timesJSON) {
+                            for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
+                                arr[i] = 1;
+                            }
+                        }
+                        _this.roomsList.push({ name: roomsJSON[room].name, room: arr });
+                    }
+                    document.getElementById("table-2").style.display = "block";
+                    _this.day = day;
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+            else {
+                this.roomsList = [];
+                var roomsJSON = this.buildingList.OpenBuilding[0].rooms;
                 for (var room in roomsJSON) {
-                    var arr = new Array(arrSize);
+                    var arr = new Array(288);
                     var timesJSON = roomsJSON[room][day];
-                    var push = false;
                     for (var time in timesJSON) {
-                        //console.log(buildingList.OpenBuilding[build].name+" | "+roomsJSON[room].name+" | "+timesJSON[time].st+"-"+timesJSON[time].et);
-                        for (var i = timesJSON[time].st / 5 - offset; i < timesJSON[time].et / 5 - offset; i++) {
+                        for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
                             arr[i] = 1;
-                            push = true;
                         }
                     }
-                    if (push) {
-                        _this.buildingTimes.push({ building: buildingList.OpenBuilding[build].name, name: roomsJSON[room].name, room: arr });
-                    }
+                    this.roomsList.push({ name: roomsJSON[room].name, room: arr });
                 }
+                document.getElementById("table").style.display = "block";
+                this.day = day;
             }
-            document.getElementById("table").style.display = "block";
-        }, function (err) {
-            console.log(err);
-        });
-        // this.buildingService.getAll().subscribe(buildingList => {
-        //   let roomsJSON = buildingList.OpenBuilding[0].rooms;
-        //   for (var room in roomsJSON)
-        //   {
-        //     var arr = new Array();
-        //     let timesJSON = roomsJSON[room][day];
-        //     for (var time in timesJSON)
-        //     {
-        //       for (var i = timesJSON[time].st / 5 - 96; i < timesJSON[time].et / 5 - 96; i++)
-        //       {
-        //         arr[i] = 1;
-        //       }
-        //     }
-        //     this.roomsList.push({ name : roomsJSON[room].name, room : arr});
-        //   }
-        // },
-        // err => {
-        //   console.log(err);
-        // });
+        }
     };
+    FindTimesComponent.prototype.timeFormat = function (time) {
+        var minutes = time * 5; //since we have minutes in 5 minute chunks
+        minutes += 480; //offset of 8 AM need to add 8 hours
+        time = minutes; //set original value of time
+        var t;
+        if (minutes >= 780) {
+            minutes -= 720; //if its 13 o'clock you take off 12 hours or 720 mins
+        }
+        // // TODO: remove this for deployment as it's unneeded
+        // else if(minutes < 60)    {
+        //   minutes+=720;//adding 12 hours if its before 1 AM
+        // }
+        t = (minutes - minutes % 60) / 60 + ":"; //calculating hours
+        if (minutes % 60 < 10) {
+            t += "0" + time % 60;
+        }
+        else {
+            t += time % 60;
+        }
+        if (time > 720) {
+            t += " PM";
+        }
+        else {
+            t += " AM";
+        }
+        return t;
+    };
+    // Setting the values for the display change
     FindTimesComponent.prototype.onChange = function (value) {
-        console.log('Value changed to', value);
+        this.start = value[0] * 12;
+        this.end = value[1] * 12;
+        this.tstart = value[0] * 2;
+        this.tend = value[1] * 2;
     };
     return FindTimesComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], FindTimesComponent.prototype, "name", void 0);
 FindTimesComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-times',
@@ -434,9 +459,9 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -457,72 +482,102 @@ var FindComponent = (function () {
         this.buildingService = buildingService;
         this.router = router;
         this.flashMessage = flashMessage;
-        // day : string;
+        this.times = ["8:00 AM", "9:00 AM",
+            "10:00 AM", "11:00 AM", "12:00 PM",
+            "1:00 PM", "2:00 PM", "3:00 PM",
+            "4:00 PM", "5:00 PM", "6:00 PM",
+            "7:00 PM", "8:00 PM", "9:00 PM"];
         this.roomsList = [];
+        this.buildingList = null;
     }
     FindComponent.prototype.ngOnInit = function () { };
+    // Show the table based on the day (BUILDING name should be provided)
     FindComponent.prototype.show = function (day) {
         var _this = this;
-        console.log(this.name);
-        if (this.name == null) {
-            this.flashMessage.show('Please select the building', { cssClass: 'alert-danger', timeout: 3000 });
-            return false;
-        }
-        this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
-            _this.roomsList = [];
-            var roomsJSON = buildingList.OpenBuilding[0].rooms;
-            for (var room in roomsJSON) {
-                var arr = new Array(168);
-                var timesJSON = roomsJSON[room][day];
-                for (var time in timesJSON) {
-                    for (var i = timesJSON[time].st / 5 - 96; i < timesJSON[time].et / 5 - 96; i++) {
-                        arr[i] = 1;
+        // Only run once when same button is pressed multiple times
+        if (this.day != day) {
+            // Query the database once
+            if (this.buildingList == null) {
+                this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
+                    _this.roomsList = [];
+                    var roomsJSON = buildingList.OpenBuilding[0].rooms;
+                    for (var room in roomsJSON) {
+                        var arr = new Array(288);
+                        var timesJSON = roomsJSON[room][day];
+                        for (var time in timesJSON) {
+                            for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
+                                arr[i] = 1;
+                            }
+                        }
+                        _this.roomsList.push({ name: roomsJSON[room].name, room: arr });
                     }
-                }
-                _this.roomsList.push({ name: roomsJSON[room].name, room: arr });
+                    document.getElementById("table").style.display = "block";
+                    _this.day = day;
+                }, function (err) {
+                    console.log(err);
+                });
             }
-            // document.getElementById("input").style.display = "none";
-            document.getElementById("table").style.display = "block";
-            // document.getElementById("back").style.display = "block";
-        }, function (err) {
-            console.log(err);
-        });
+            else {
+                this.roomsList = [];
+                var roomsJSON = this.buildingList.OpenBuilding[0].rooms;
+                for (var room in roomsJSON) {
+                    var arr = new Array(288);
+                    var timesJSON = roomsJSON[room][day];
+                    for (var time in timesJSON) {
+                        for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
+                            arr[i] = 1;
+                        }
+                    }
+                    this.roomsList.push({ name: roomsJSON[room].name, room: arr });
+                }
+                document.getElementById("table").style.display = "block";
+                this.day = day;
+            }
+        }
     };
-    // timeFormat(time)
-    // {
-    //   var t;
-    //   var minutes = time;
-    //   if(minutes>=780)    {
-    //     minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
-    //   }
-    //   // TODO: remove this for deployment as it's unneeded
-    //   else if(minutes < 60)    {
-    //     minutes+=720;//adding 12 hours if its before 1 AM
-    //   }
-    //   t = (minutes - minutes%60)/60 + ":";//calculating hours
-    //   if(minutes%60==0)    {//formating minutes toFixed and to Prevision dont work
-    //     t += "00";
-    //   }else    {
-    //     t += time%60;
-    //   }
-    //   if(time>720)    {//setting AM/PM based on the original time
-    //     t+= " PM";
-    //   }
-    //   else    {
-    //     t+= " AM";
-    //   }
-    //   return t;
-    // }
-    FindComponent.prototype.onBack = function () {
-        document.getElementById("input").style.display = "block";
-        document.getElementById("table").style.display = "none";
-        document.getElementById("back").style.display = "none";
+    FindComponent.prototype.timeFormat = function (time) {
+        var minutes = time * 5; //since we have minutes in 5 minute chunks
+        minutes += 480; //offset of 8 AM need to add 8 hours
+        time = minutes; //set original value of time
+        var t;
+        if (minutes >= 780) {
+            minutes -= 720; //if its 13 o'clock you take off 12 hours or 720 mins
+        }
+        // // TODO: remove this for deployment as it's unneeded
+        // else if(minutes < 60)    {
+        //   minutes+=720;//adding 12 hours if its before 1 AM
+        // }
+        t = (minutes - minutes % 60) / 60 + ":"; //calculating hours
+        if (minutes % 60 < 10) {
+            t += "0" + time % 60;
+        }
+        else {
+            t += time % 60;
+        }
+        if (time > 720) {
+            t += " PM";
+        }
+        else {
+            t += " AM";
+        }
+        return t;
     };
     FindComponent.prototype.getClass = function (value) {
         return 'opentime';
     };
+    FindComponent.prototype.getCell = function (x) {
+        console.log("Cell index is: " + x);
+    };
     return FindComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], FindComponent.prototype, "name", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], FindComponent.prototype, "day", void 0);
 FindComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find',
@@ -589,7 +644,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -654,7 +709,7 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(40);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavbarComponent; });
@@ -713,7 +768,7 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(14);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
@@ -943,8 +998,8 @@ var environment = {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_jwt__);
@@ -1087,7 +1142,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".buttons\r\n{\r\n    display: none;\r\n}", ""]);
 
 // exports
 
@@ -1123,7 +1178,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "table {\r\n    width : 2000px;\r\n    height : auto;\r\n}\r\n\r\ntr{\r\n  height: 20px;\r\n}\r\n\r\ntd{\r\n  border-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n    width : 100%;\r\n    height : 100%;\r\n    overflow : auto;\r\n    padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n    background-color : #81ea9d;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n    background-color : #ed5d50;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n\r\n}\r\n\r\n.left-column{\r\n position: -webkit-sticky;\r\n position: sticky;\r\n left: 0;\r\n background-color: #ffffff;\r\n width: 75px;\r\n border: 2px solid black;\r\n text-align: center;\r\n}\r\n\r\n.left-column:hover {\r\n  background-color: #76a8f7;\r\n}\r\n", ""]);
+exports.push([module.i, "table {\r\n    width : 2000px;\r\n    height : auto;\r\n}\r\n\r\ntr{\r\n  height: 20px;\r\n}\r\n\r\ntd{\r\n  border-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n    width : 100%;\r\n    height : 100%;\r\n    overflow : auto;\r\n    padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n    background-color : #81ea9d;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n    background-color : #ed5d50;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n/*.five-minute-chunk{\r\n  visibility: hidden;\r\n}*/\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: auto;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  padding: 5px 0;\r\n\r\n  position: absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  z-index: 1;\r\n}\r\n\r\n.time-tool-tip{\r\n  visibility: hidden;\r\n}\r\n\r\n.five-minute-chunk:hover .time-tool-tip{\r\n    visibility: visible;\r\n  }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n.left-column{\r\n position: -webkit-sticky;\r\n position: sticky;\r\n left: 0;\r\n background-color: #ffffff;\r\n width: 100px;\r\n border: 2px solid black;\r\n text-align: center;\r\n}\r\n\r\n.left-column:hover {\r\n  background-color: #76a8f7;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1141,7 +1196,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "table {\r\n    width : 2000px;\r\n    height : auto;\r\n}\r\n\r\ntr{\r\n  height: 20px;\r\n}\r\n\r\ntd{\r\n  border-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n    width : 100%;\r\n    height : 100%;\r\n    overflow : auto;\r\n    padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n    background-color : #81ea9d;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n    background-color : #ed5d50;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n\r\n}\r\n\r\n.left-column{\r\n position: -webkit-sticky;\r\n position: sticky;\r\n left: 0;\r\n background-color: #ffffff;\r\n width: 75px;\r\n border: 2px solid black;\r\n text-align: center;\r\n}\r\n\r\n.left-column:hover {\r\n  background-color: #76a8f7;\r\n}\r\n", ""]);
+exports.push([module.i, "table {\r\n    width : 2000px;\r\n    height : auto;\r\n}\r\n\r\ntr{\r\n  height: 20px;\r\n}\r\n\r\ntd{\r\n  border-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n    width : 100%;\r\n    height : 100%;\r\n    overflow : auto;\r\n    padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n    background-color : #81ea9d;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n    background-color : #ed5d50;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n/*.five-minute-chunk{\r\n  visibility: hidden;\r\n}*/\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: auto;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  padding: 5px 0;\r\n\r\n  position: absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  z-index: 1;\r\n}\r\n\r\n.time-tool-tip{\r\n  visibility: hidden;\r\n}\r\n\r\n.five-minute-chunk:hover .time-tool-tip{\r\n    visibility: visible;\r\n  }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n.left-column{\r\n position: -webkit-sticky;\r\n position: sticky;\r\n left: 0;\r\n background-color: #ffffff;\r\n width: 100px;\r\n border: 2px solid black;\r\n text-align: center;\r\n}\r\n\r\n.left-column:hover {\r\n  background-color: #76a8f7;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1283,28 +1338,28 @@ module.exports = "<head>\r\n  <title> Developer Guide </title>\r\n</head>\r\n\r\
 /***/ 194:
 /***/ (function(module, exports) {
 
-module.exports = "<p style=\"text-align: center;\">Find an Open Classroom</p>\n<input type=\"button\" class=\"btn btn-primary\" routerLink=\"building\" id=\"back\" style=\"width : 33%\" value=\"By Building\">\n<input type=\"button\" class=\"btn btn-primary\" routerLink=\"now\" id=\"back\" style=\"width : 33%\" value=\"Right Now\">\n<input type=\"button\" class=\"btn btn-primary\" routerLink=\"time\" id=\"back\" style=\"width : 33%\" value=\"By Time\">"
+module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n  <p style=\"text-align: center; font-size: 4rem\" id=\"title\">Building</p>\r\n  <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n    <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n  </select>\r\n</div>\r\n\r\n<!-- 2) Button Select -->\r\n<div class=\"buttons\" id=\"buttons\" style=\"display: none\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" style=\"width : 33%\" value=\"All Rooms\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" style=\"width : 33%\" value=\"Right Now\">    \r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" style=\"width : 33%\" value=\"By Time\">\r\n</div>\r\n\r\n<!-- 3a) Get all rooms based on building and time -->\r\n<app-find id=\"all\" style=\"display: none\" name={{building}} day={{building}}></app-find>\r\n  \r\n<!-- 3b) Get all rooms based on building -->\r\n<app-find-now id=\"now\" style=\"display: none\"></app-find-now>\r\n\r\n<!-- 3c) Get all rooms based on building and time -->\r\n<app-find-times id=\"times\" style=\"display: none\" name={{building}}></app-find-times>\r\n  "
 
 /***/ }),
 
 /***/ 195:
 /***/ (function(module, exports) {
 
-module.exports = "<ul *ngFor=\"let rooms of buildingNow\">\n  <ul>{{rooms.building}}-{{rooms.name}}</ul>\n</ul>"
+module.exports = "TODO"
 
 /***/ }),
 
 /***/ 196:
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button> \r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button> \r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button> \r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n<nouislider [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\" style=\"margin-left: auto; margin-right: auto\"></nouislider>\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <!--<td colspan=\"12\">12:00 AM</td>\r\n        <td colspan=\"12\">1:00 AM</td>\r\n        <td colspan=\"12\">2:00 AM</td>\r\n        <td colspan=\"12\">3:00 AM</td>\r\n        <td colspan=\"12\">4:00 AM</td>\r\n        <td colspan=\"12\">5:00 AM</td>\r\n        <td colspan=\"12\">6:00 AM</td>\r\n        <th colspan=\"12\">7:00 AM</th>\r\n        <th colspan=\"12\">8:00 AM</th>-->\r\n        <th colspan=\"12\">9:00 AM</th>\r\n        <th colspan=\"12\">10:00 AM</th>\r\n        <th colspan=\"12\">11:00 AM</th>\r\n        <th colspan=\"12\">12:00 PM</th>\r\n        <th colspan=\"12\">1:00 PM</th>\r\n        <th colspan=\"12\">2:00 PM</th>\r\n        <th colspan=\"12\">3:00 PM</th>\r\n        <th colspan=\"12\">4:00 PM</th>\r\n        <th colspan=\"12\">5:00 PM</th>\r\n        <th colspan=\"12\">6:00 PM</th>\r\n        <th colspan=\"12\">7:00 PM</th>\r\n        <th colspan=\"12\">8:00 PM</th>\r\n        <th colspan=\"12\">9:00 PM</th>\r\n        <!--<th colspan=\"12\">10:00 PM</th>\r\n        <th colspan=\"12\">11:00 PM</th>-->\r\n      </tr>\r\n      <tr class=\"classroom\" *ngFor=\"let rooms of buildingTimes\">\r\n        <th class=\"left-column\">{{rooms.building}}-{{rooms.name}}</th>\r\n        <!-- Potential place for index of for loop -->\r\n        <td *ngFor=\"let room of rooms?.room\" [ngClass]=\"room ? 'opentime' : 'closedtime'\"></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>"
+module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n<nouislider [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\" style=\"margin-left: auto; margin-right: auto\"></nouislider>\r\n<div class=\"tablecontainer\" id=\"table-2\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <th colspan=\"12\" *ngFor=\"let time of times | slice:tstart:tend\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <td class =\"five-minute-chunk\" id=\"restrict-table\" *ngFor=\"let room of rooms?.room | slice:start:end let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{timeFormat(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n  "
 
 /***/ }),
 
 /***/ 197:
 /***/ (function(module, exports) {
 
-module.exports = "<!--<h2 class=\"page-header\">Open Buildings</h2>\r\n<form (submit)=\"onSubmit()\" id=\"input\" style=\"display: block\">\r\n  <div class=\"form-group\">\r\n    <label>Name</label>\r\n    <select class=\"form-control\" [(ngModel)]=\"name\" name=\"name\" >\r\n      <option selected disabled hidden>Choose here</option>\r\n      <option value=\"AS\">AS</option>\r\n      <option value=\"CBA\">CBA</option>\r\n      <option value=\"CTS\">CTS</option>\r\n      <option value=\"DC\">DC</option>\r\n      <option value=\"DESN\">DESN</option>\r\n      <option value=\"ECS\">ECS</option>\r\n      <option value=\"ED2\">ED2</option>\r\n      <option value=\"EED\">EED</option>\r\n      <option value=\"EN2\">EN2</option>\r\n      <option value=\"EN3\">EN3</option>\r\n      <option value=\"EN4\">EN4</option>\r\n      <option value=\"ET\">ET</option>\r\n      <option value=\"FA1\">FA1</option>\r\n      <option value=\"FA2\">FA2</option>\r\n      <option value=\"FA3\">FA3</option>\r\n      <option value=\"FA4\">FA4</option>\r\n      <option value=\"FCS\">FCS</option>\r\n      <option value=\"FLD\">FLD</option>\r\n      <option value=\"FO2\">FO2</option>\r\n      <option value=\"HHS1\">HHS1</option>\r\n      <option value=\"HSCI\">HSCI</option>\r\n      <option value=\"HSD\">HSD</option>\r\n      <option value=\"KIN\">KIN</option>\r\n      <option value=\"LA1\">LA1</option>\r\n      <option value=\"LA2\">LA2</option>\r\n      <option value=\"LA3\">LA3</option>\r\n      <option value=\"LA4\">LA4</option>\r\n      <option value=\"LA5\">LA5</option>\r\n      <option value=\"LAB\">LAB</option>\r\n      <option value=\"LCH\">LCH</option>\r\n      <option value=\"LH\">LH</option>\r\n      <option value=\"MHB\">MHB</option>\r\n      <option value=\"MIC\">MIC</option>\r\n      <option value=\"MLSC\">MLSC</option>\r\n      <option value=\"MM\">MM</option>\r\n      <option value=\"NUR\">NUR</option>\r\n      <option value=\"OFF\">OFF</option>\r\n      <option value=\"PH1\">PH1</option>\r\n      <option value=\"PSY\">PSY</option>\r\n      <option value=\"RNG\">RNG</option>\r\n      <option value=\"RLC\">RLC</option>\r\n      <option value=\"SPA\">SPA</option>\r\n      <option value=\"SWM\">SWM</option>\r\n      <option value=\"TA\">TA</option>\r\n      <option value=\"UMC\">UMC</option>\r\n      <option value=\"USU\">USU</option>\r\n      <option value=\"UT\">UT</option>\r\n      <option value=\"UTC\">UTC</option>\r\n      <option value=\"VEC\">VEC</option>\r\n  </select>\r\n    </div>\r\n  <div class=\"form-group\">\r\n    <label>Day</label>\r\n    <select class=\"form-control\" [(ngModel)]=\"day\" name=\"day\" >\r\n      <option value=\"omon\">Monday</option>\r\n      <option value=\"otue\">Tuesday</option>\r\n      <option value=\"owed\">Wednesday</option>\r\n      <option value=\"othu\">Thursday</option>\r\n    </select>\r\n  </div>\r\n  <input type=\"submit\" class=\"btn btn-primary\">  \r\n</form>-->\r\n\r\n<div class=\"form-group\">\r\n  <label>Name</label>\r\n  <select class=\"form-control\" [(ngModel)]=\"name\" name=\"name\">\r\n    <option selected disabled hidden>Choose here</option>\r\n    <option value=\"AS\">AS</option>\r\n    <option value=\"CBA\">CBA</option>\r\n    <option value=\"CTS\">CTS</option>\r\n    <option value=\"DC\">DC</option>\r\n    <option value=\"DESN\">DESN</option>\r\n    <option value=\"ECS\">ECS</option>\r\n    <option value=\"ED2\">ED2</option>\r\n    <option value=\"EED\">EED</option>\r\n    <option value=\"EN2\">EN2</option>\r\n    <option value=\"EN3\">EN3</option>\r\n    <option value=\"EN4\">EN4</option>\r\n    <option value=\"ET\">ET</option>\r\n    <option value=\"FA1\">FA1</option>\r\n    <option value=\"FA2\">FA2</option>\r\n    <option value=\"FA3\">FA3</option>\r\n    <option value=\"FA4\">FA4</option>\r\n    <option value=\"FCS\">FCS</option>\r\n    <option value=\"FLD\">FLD</option>\r\n    <option value=\"FO2\">FO2</option>\r\n    <option value=\"HHS1\">HHS1</option>\r\n    <option value=\"HSCI\">HSCI</option>\r\n    <option value=\"HSD\">HSD</option>\r\n    <option value=\"KIN\">KIN</option>\r\n    <option value=\"LA1\">LA1</option>\r\n    <option value=\"LA2\">LA2</option>\r\n    <option value=\"LA3\">LA3</option>\r\n    <option value=\"LA4\">LA4</option>\r\n    <option value=\"LA5\">LA5</option>\r\n    <option value=\"LAB\">LAB</option>\r\n    <option value=\"LCH\">LCH</option>\r\n    <option value=\"LH\">LH</option>\r\n    <option value=\"MHB\">MHB</option>\r\n    <option value=\"MIC\">MIC</option>\r\n    <option value=\"MLSC\">MLSC</option>\r\n    <option value=\"MM\">MM</option>\r\n    <option value=\"NUR\">NUR</option>\r\n    <option value=\"OFF\">OFF</option>\r\n    <option value=\"PH1\">PH1</option>\r\n    <option value=\"PSY\">PSY</option>\r\n    <option value=\"RNG\">RNG</option>\r\n    <option value=\"RLC\">RLC</option>\r\n    <option value=\"SPA\">SPA</option>\r\n    <option value=\"SWM\">SWM</option>\r\n    <option value=\"TA\">TA</option>\r\n    <option value=\"UMC\">UMC</option>\r\n    <option value=\"USU\">USU</option>\r\n    <option value=\"UT\">UT</option>\r\n    <option value=\"UTC\">UTC</option>\r\n    <option value=\"VEC\">VEC</option>\r\n  </select>\r\n</div>\r\n\r\n<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button> \r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button> \r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button> \r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <!--<td colspan=\"12\">12:00 AM</td>\r\n        <td colspan=\"12\">1:00 AM</td>\r\n        <td colspan=\"12\">2:00 AM</td>\r\n        <td colspan=\"12\">3:00 AM</td>\r\n        <td colspan=\"12\">4:00 AM</td>\r\n        <td colspan=\"12\">5:00 AM</td>\r\n        <td colspan=\"12\">6:00 AM</td>\r\n        <th colspan=\"12\">7:00 AM</th>-->\r\n        <th colspan=\"12\">8:00 AM</th>\r\n        <th colspan=\"12\">9:00 AM</th>\r\n        <th colspan=\"12\">10:00 AM</th>\r\n        <th colspan=\"12\">11:00 AM</th>\r\n        <th colspan=\"12\">12:00 PM</th>\r\n        <th colspan=\"12\">1:00 PM</th>\r\n        <th colspan=\"12\">2:00 PM</th>\r\n        <th colspan=\"12\">3:00 PM</th>\r\n        <th colspan=\"12\">4:00 PM</th>\r\n        <th colspan=\"12\">5:00 PM</th>\r\n        <th colspan=\"12\">6:00 PM</th>\r\n        <th colspan=\"12\">7:00 PM</th>\r\n        <th colspan=\"12\">8:00 PM</th>\r\n        <th colspan=\"12\">9:00 PM</th>\r\n        <!-- <th colspan=\"12\">10:00 PM</th>\r\n        <th colspan=\"12\">11:00 PM</th>-->\r\n      </tr>\r\n      <tr class=\"classroom\" *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <!-- Potential place for index of for loop -->\r\n        <td *ngFor=\"let room of rooms?.room\" [ngClass]=\"room ? 'opentime' : 'closedtime'\"></td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n<!--<input type=\"button\" class=\"btn btn-primary\" (click)=\"onBack()\" id=\"back\" style=\"display: none\" value=\"Back\">-->"
+module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <!-- Potential place for index of for loop -->\r\n        <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{timeFormat(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1319,6 +1374,80 @@ module.exports = "<div class=\"jumbotron text-center\">\r\n  <h1>Open Classroom<
 /***/ (function(module, exports) {
 
 module.exports = "<h2 class=\"page-header\">Login</h2>\r\n<form (submit)=\"onLoginSubmit()\">\r\n  <div class=\"form-group\">\r\n    <label>Email</label>\r\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"email\" name=\"email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label>Password</label>\r\n    <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\r\n  </div>\r\n  <input type=\"submit\" class=\"btn btn-primary\" value=\"Login\">\r\n</form>\r\n"
+
+/***/ }),
+
+/***/ 20:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//Service module for building, class, and classroom queries
+
+
+
+
+var BuildingsService = (function () {
+    function BuildingsService(http) {
+        this.http = http;
+    }
+    BuildingsService.prototype.getBuildings = function (name) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/buildings', { name: name }).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
+    };
+    BuildingsService.prototype.getAll = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.get('http://localhost:3000/buildings', null).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+    };
+    BuildingsService.prototype.getBuildingNames = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.get('http://localhost:3000/buildings/names', null).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+    };
+    BuildingsService.prototype.extractData = function (res) {
+        var body = res.json();
+        return body || {};
+    };
+    BuildingsService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Promise.reject(errMsg);
+    };
+    return BuildingsService;
+}());
+BuildingsService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], BuildingsService);
+
+var _a;
+//# sourceMappingURL=buildings.service.js.map
 
 /***/ }),
 
@@ -1353,77 +1482,8 @@ module.exports = "<head>\r\n  <title> User manual </title>\r\n</head>\r\n\r\n<di
 /***/ 238:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(96);
+module.exports = __webpack_require__(97);
 
-
-/***/ }),
-
-/***/ 32:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-//Service module for building, class, and classroom queries
-
-
-
-
-var BuildingsService = (function () {
-    function BuildingsService(http) {
-        this.http = http;
-    }
-    BuildingsService.prototype.getBuildings = function (name) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/buildings', { name: name }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
-    };
-    BuildingsService.prototype.getAll = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/buildings', null).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
-    };
-    BuildingsService.prototype.extractData = function (res) {
-        var body = res.json();
-        return body || {};
-    };
-    BuildingsService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Promise.reject(errMsg);
-    };
-    return BuildingsService;
-}());
-BuildingsService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], BuildingsService);
-
-var _a;
-//# sourceMappingURL=buildings.service.js.map
 
 /***/ }),
 
@@ -1469,7 +1529,84 @@ ValidateService = __decorate([
 
 /***/ }),
 
-/***/ 95:
+/***/ 69:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(20);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindNowComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var FindNowComponent = (function () {
+    function FindNowComponent(buildingService) {
+        this.buildingService = buildingService;
+        this.days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
+        this.roomsList = [];
+    }
+    FindNowComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        // let day = this.days[new Date().getUTCDay()];
+        this.day = this.days[new Date().getUTCDay()];
+        this.day = "x";
+        // let hour = new Date().getUTCHours();
+        var start = new Date().getUTCHours();
+        start = 8;
+        var end = start + 1;
+        if (this.day == "x" || start < 8 || end > 22) {
+            this.roomsList = [];
+            this.roomsList.push("No Currently Available Classrooms");
+        }
+        else {
+            this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
+                _this.roomsList = [];
+                var roomsJSON = buildingList.OpenBuilding[0].rooms;
+                for (var room in roomsJSON) {
+                    var timesJSON = roomsJSON[room][_this.day];
+                    for (var time in timesJSON) {
+                        if (timesJSON[time].st <= start && (timesJSON[time].et - (end + 1) >= 30)) {
+                            _this.roomsList.push({ building: buildingList.OpenBuilding[room].name, name: roomsJSON[room].name });
+                        }
+                    }
+                }
+                document.getElementById("now-data").style.display = "block";
+                return true;
+            }, function (err) {
+                console.log(err);
+            });
+        }
+        console.log(this.day);
+    };
+    return FindNowComponent;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], FindNowComponent.prototype, "name", void 0);
+FindNowComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-find-now',
+        template: __webpack_require__(195),
+        styles: [__webpack_require__(180)]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
+], FindNowComponent);
+
+var _a;
+//# sourceMappingURL=find-now.component.js.map
+
+/***/ }),
+
+/***/ 96:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -1478,19 +1615,19 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 95;
+webpackEmptyContext.id = 96;
 
 
 /***/ }),
 
-/***/ 96:
+/***/ 97:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(117);
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 // https://angular.io/api/common/DatePipe
 import { DatePipe } from '@angular/common';
 import {BuildingsService} from '../../services/buildings.service';
@@ -9,36 +9,50 @@ import {BuildingsService} from '../../services/buildings.service';
   styleUrls: ['./find-now.component.css']
 })
 export class FindNowComponent implements OnInit {
+  @Input() name : string;
   days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
-  buildingNow = [];
+  day : string;
+  roomsList = [];
 
   constructor(private buildingService : BuildingsService) { }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
     // let day = this.days[new Date().getUTCDay()];
-    let day = this.days[1];
+    this.day = this.days[new Date().getUTCDay()]
+    this.day = "x";
     // let hour = new Date().getUTCHours();
-    let hour = 10*60;
-    this.buildingService.getAll().subscribe(buildingList => {
-      for (var build in buildingList.OpenBuilding)
-      {
-        let roomsJSON = buildingList.OpenBuilding[build].rooms;
+    let start = new Date().getUTCHours();
+    start = 8;
+    let end = start + 1;
+    if (this.day == "x" || start < 8 || end > 22)
+    {
+      this.roomsList = [];
+      this.roomsList.push("No Currently Available Classrooms");
+    }
+    else 
+    {
+      this.buildingService.getBuildings(this.name).subscribe(buildingList => {
+        this.roomsList = [];
+        let roomsJSON = buildingList.OpenBuilding[0].rooms;
         for (var room in roomsJSON)
         {
-          let timesJSON = roomsJSON[room][day];
+          let timesJSON = roomsJSON[room][this.day];
           for (var time in timesJSON)
           {
-            //console.log(buildingList.OpenBuilding[build].name+" | "+roomsJSON[room].name+" | "+timesJSON[time].st+"-"+timesJSON[time].et);
-            if (timesJSON[time].st <= hour && (timesJSON[time].et - hour) >= 30)
+            if (timesJSON[time].st <= start && (timesJSON[time].et - (end + 1) >= 30))
             {
-              this.buildingNow.push({building : buildingList.OpenBuilding[build].name, name : roomsJSON[room].name})
+              this.roomsList.push({building : buildingList.OpenBuilding[room].name, name : roomsJSON[room].name})
             }
           }
         }
-      }
-    },
-    err => {
-      console.log(err);
-    });
+        document.getElementById("now-data").style.display = "block";
+        return true;
+      },
+      err => {
+        console.log(err);
+      });
+    }
+    console.log(this.day);
   }
 }

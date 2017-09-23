@@ -1,11 +1,38 @@
 webpackJsonp([2,4],{
 
+/***/ 100:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(175);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(95)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
 /***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
 // imports
-exports.i(__webpack_require__(81), "");
+exports.i(__webpack_require__(82), "");
 
 // module
 exports.push([module.i, "/* You can add global styles to this file, and also import other style files */", ""]);
@@ -18,8 +45,8 @@ exports.push([module.i, "/* You can add global styles to this file, and also imp
 /***/ 240:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(99);
-module.exports = __webpack_require__(98);
+__webpack_require__(100);
+module.exports = __webpack_require__(99);
 
 
 /***/ }),
@@ -81,7 +108,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 81:
+/***/ 82:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
@@ -96,7 +123,7 @@ exports.push([module.i, "/*! nouislider - 10.1.0 - 2017-07-28 13:09:54 */.noUi-t
 
 /***/ }),
 
-/***/ 94:
+/***/ 95:
 /***/ (function(module, exports) {
 
 /*
@@ -349,16 +376,16 @@ function updateLink(linkElement, obj) {
 
 /***/ }),
 
-/***/ 98:
+/***/ 99:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(81);
+var content = __webpack_require__(82);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(94)(content, {});
+var update = __webpack_require__(95)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -366,33 +393,6 @@ if(false) {
 	if(!content.locals) {
 		module.hot.accept("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./nouislider.min.css", function() {
 			var newContent = require("!!../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../postcss-loader/index.js!./nouislider.min.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(175);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(94)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css", function() {
-			var newContent = require("!!../node_modules/css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../node_modules/postcss-loader/index.js!./styles.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});

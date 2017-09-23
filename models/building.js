@@ -53,5 +53,9 @@ module.exports.getBuildings = function(Name, callback) {
 }
 
 module.exports.getAll = function(callback) {
-  BS.find().exec(callback);
+  BS.find({}, {_id : 0}).exec(callback);
+}
+
+module.exports.getBuildingNames = function(callback) {
+  BS.find({},{_id : 0, rooms : 0}).exec(callback);
 }

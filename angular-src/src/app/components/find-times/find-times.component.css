@@ -30,15 +30,44 @@ td{
     border: 2px solid black;
 }
 
-.five-minute-chunk{
+/*.five-minute-chunk{
+  visibility: hidden;
+}*/
 
+/*tool tip for each square*/
+.five-minute-chunk:hover .time-tool-tip{
+  width: auto;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  position: absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/
+  z-index: 1;
 }
+
+.time-tool-tip{
+  visibility: hidden;
+}
+
+.five-minute-chunk:hover .time-tool-tip{
+    visibility: visible;
+  }
+
+
+
+
+
+
+
+
 
 .left-column{
  position: sticky;
  left: 0;
  background-color: #ffffff;
- width: 75px;
+ width: 100px;
  border: 2px solid black;
  text-align: center;
 }

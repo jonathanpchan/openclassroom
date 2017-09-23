@@ -34,6 +34,19 @@ router.get('/', (req, res, next) => {
   });
 });
 
+// Get request getting all the documents
+router.get('/names', (req, res, next) => {
+  Building.getBuildingNames((err, OpenBuilding) => {
+    if(err) throw err;
+    if(OpenBuilding == "") { //if OpenBuilding is empty return false
+      return res.json({success: false, msg: 'OpenBuilding not found'});
+    }
+    else { //Otherwise will return a building and day?
+      return res.json({success: true, OpenBuilding});
+    }
+  });
+});
+
 // router.get('/building', passport.authenticate('jwt', {session:false}), (req, res, next) => {
 //   res.json({building: req.building});
 //});router.get()

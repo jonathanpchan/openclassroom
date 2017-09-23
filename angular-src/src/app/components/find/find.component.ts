@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {BuildingsService} from '../../services/buildings.service';
 import {Router} from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -10,47 +10,78 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 })
 
 export class FindComponent implements OnInit {
-  name : string;
-  // day : string;
+  // Needed to get the input from the 
+  @Input() name : string;
+  @Input() day : string;
+  times = ["8:00 AM", "9:00 AM", 
+          "10:00 AM", "11:00 AM", "12:00 PM", 
+          "1:00 PM", "2:00 PM", "3:00 PM", 
+          "4:00 PM", "5:00 PM", "6:00 PM", 
+          "7:00 PM", "8:00 PM", "9:00 PM"];
   roomsList = [];
+  buildingList = null;
 
   constructor(
-    private buildingService:BuildingsService,
-    private router:Router,
+    private buildingService : BuildingsService,
+    private router : Router,
     private flashMessage : FlashMessagesService
   ) {}
 
   ngOnInit() {}
-  show(day : string) {
-    console.log(this.name);
-    if(this.name == null){
-      this.flashMessage.show('Please select the building', {cssClass: 'alert-danger', timeout: 3000});
-      return false;
-    }
 
-    this.buildingService.getBuildings(this.name).subscribe(buildingList => {
-      this.roomsList = [];
-      let roomsJSON = buildingList.OpenBuilding[0].rooms;
-      for (var room in roomsJSON)
+  // Show the table based on the day (BUILDING name should be provided)
+  show(day : string) {
+    // Only run once when same button is pressed multiple times
+    if (this.day != day) 
+    {
+      // Query the database once
+      if (this.buildingList == null)
       {
-        var arr = new Array(168);
-        let timesJSON = roomsJSON[room][day];
-        for (var time in timesJSON)
-        {
-          for (var i = timesJSON[time].st / 5 - 96; i < timesJSON[time].et / 5 - 96; i++)
+        this.buildingService.getBuildings(this.name).subscribe(buildingList => {
+          this.roomsList = [];
+          let roomsJSON = buildingList.OpenBuilding[0].rooms;
+          for (var room in roomsJSON)
           {
-            arr[i] = 1;
+            var arr = new Array(288);
+            let timesJSON = roomsJSON[room][day];
+            for (var time in timesJSON)
+            {
+              for (var i = timesJSON[time].st / 5 ; i < timesJSON[time].et / 5; i++)
+              {
+                arr[i] = 1;
+              }
+            }
+            this.roomsList.push({ name : roomsJSON[room].name, room : arr});
           }
-        }
-        this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+          document.getElementById("table").style.display = "block";
+          this.day = day;
+        },
+        err => {
+          console.log(err);
+        });
       }
-      // document.getElementById("input").style.display = "none";
-      document.getElementById("table").style.display = "block";
-      // document.getElementById("back").style.display = "block";
-    },
-    err => {
-      console.log(err);
-    });
+      // Query the cache most of the time
+      else
+      {
+        this.roomsList = [];
+        let roomsJSON = this.buildingList.OpenBuilding[0].rooms;
+        for (var room in roomsJSON)
+        {
+          var arr = new Array(288);
+          let timesJSON = roomsJSON[room][day];
+          for (var time in timesJSON)
+          {
+            for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++)
+            {
+              arr[i] = 1;
+            }
+          }
+          this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+        }
+        document.getElementById("table").style.display = "block";
+        this.day = day;
+      }
+    }
   }
 
   timeFormat(time)
@@ -86,19 +117,13 @@ export class FindComponent implements OnInit {
     return t;
   }
 
-  onBack() {
-    document.getElementById("input").style.display = "block";
-    document.getElementById("table").style.display = "none";
-    document.getElementById("back").style.display = "none";
-  }
-
   getClass(value : any) : string {
     return 'opentime';
   }
 
   getCell(x) {
     console.log("Cell index is: " + x);
-}
+  }
 }
 
 class openRooms {
