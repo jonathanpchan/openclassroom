@@ -12,8 +12,8 @@ td{
 }
 
 .tablecontainer {
-    width : 100%;
-    height : 100%;
+    /*width : 100%;
+    height : 100%;*/
     overflow : auto;
     padding : 0, 0, 0, 0;
 }
@@ -30,38 +30,32 @@ td{
     border: 2px solid black;
 }
 
-/*.five-minute-chunk{
-  visibility: hidden;
-}*/
+.five-minute-chunk{
+  position: relative;
+}
 
 /*tool tip for each square*/
 .five-minute-chunk:hover .time-tool-tip{
-  width: auto;
+  width: 75px;
   background-color: black;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-
-  position: absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/
+  position:absolute;;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/
+  top: -20px;
+  left: 20px;
   z-index: 1;
+  visibility: visible;
+  /*display: block;*/
+
 }
 
 .time-tool-tip{
-  visibility: hidden;
+   visibility: hidden;
+   z-index: 20;
+
 }
-
-.five-minute-chunk:hover .time-tool-tip{
-    visibility: visible;
-  }
-
-
-
-
-
-
-
-
 
 .left-column{
  position: sticky;
