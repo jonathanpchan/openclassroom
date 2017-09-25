@@ -125,12 +125,7 @@ module.exports.addScheduleItem = function(eMail, u, callback) {
         if (err) {
             console.log("Something wrong when updating data!");
         }
-
-            User.find({ supportTicket: st }).toArray(function (err, docs) {
-                callback(docs);
-            });
-        use.schedule.sort(helperSort)
-
+         sort(eMail, setSchedule)
         User.find({email: eMail}, {schedule: 1, _id:0}, callback);
     })
 };
@@ -161,4 +156,32 @@ module.exports.editScheduleItem = function(eMail, objID, u, callback) {
             //User.find({email: eMail}, {schedule: 1, _id:0}, callback);
         }
     )
+}
+
+function sort(eMail, callback) {
+    User.find({email: eMail}, function(err, cursor) {
+        var arr = cursor[0].schedule.sort(helperSort)
+        //console.log(arr);
+        callback(arr, eMail);
+        //console.log(typeof(cursor[0].schedule))
+    });
+}
+function setSchedule(x, eMail){
+    console.log(x);
+    User.findOneAndUpdate(
+        {"email": eMail},
+        {
+            $set: {
+                "schedule": x
+            }
+        }, {new: true}, function(err) {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+        });
+    /**
+    us.find({email: eMail}, function (err, cursor) {
+        console.log(cursor[0].schedule);
+    });
+     **/
 }
