@@ -240,9 +240,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var FindHomeComponent = (function () {
-    function FindHomeComponent(buildingService, findNow) {
+    function FindHomeComponent(buildingService) {
         this.buildingService = buildingService;
-        this.findNow = findNow;
         // All building names possible
         this.buildingNames = [];
     }
@@ -273,14 +272,17 @@ var FindHomeComponent = (function () {
         if (document.getElementById("buttons").style.display == "block") {
             document.getElementById("buttons").style.display = "none";
             document.getElementById(option).style.display = "block";
-            // if (option == "now")
-            // {
-            //   this.findNow.show(this.building);
-            // }
+            if (option == "now") {
+                this.nowComponent.showNow();
+            }
         }
     };
     return FindHomeComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]) === "function" && _a || Object)
+], FindHomeComponent.prototype, "nowComponent", void 0);
 FindHomeComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-home',
@@ -289,7 +291,7 @@ FindHomeComponent = __decorate([
         // Needed to function call the FindNowComponent
         providers: [__WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _b || Object])
 ], FindHomeComponent);
 
 var _a, _b;
@@ -316,10 +318,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var FindTimesComponent = (function () {
+    // Need to pass argument so it can be used in functions below
     function FindTimesComponent(buildingService) {
         this.buildingService = buildingService;
-        this.day = "";
-        // For displaying the times
+        // Times displayed on the front end but currently only does 8 (inclusive) to 10 (exclusive). This can be filtered down.
         this.times = ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM",
             "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
             "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM",
@@ -328,9 +330,10 @@ var FindTimesComponent = (function () {
             "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
             "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
             "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"];
+        // Start and end values of the slider for AM/PM display
         this.tstart = 16;
         this.tend = 44;
-        // For displaying the boxes
+        // Start and end values for array display (in minutes) 
         this.start = 8 * 12;
         this.end = 22 * 12;
         this.timeSliderConfig = {
@@ -352,50 +355,84 @@ var FindTimesComponent = (function () {
                 stepped: true
             }
         };
-        this.roomsList = [];
+        // The list of all values from the building chosen ("cached")
         this.buildingList = null;
+        // The list that will be displayed after population in the show function
+        this.roomsList = [];
     }
     FindTimesComponent.prototype.ngOnInit = function () { };
-    // Show the table based on the day (BUILDING name should be provided)
+    /*
+    * Show the table based on the day (BUILDING name should be provided)
+    * 0) Reset the buildingList to null and set current day to "" if you "switch to a different room"
+    * 1) Is the day the same?
+    * 2) Is buildingList initialized to an array?
+    *    2a) Query the cache most of the time
+    *    3a) Create a temporary array and populate it with the start and end times per room
+    *    4a) Push temp array to the roomsList
+    * 3) Notify buildingService to get the buildings from MongoDB
+    * 4) Create a temporary array and populate it with the start and end times per room
+    * 5) Push temp array to the roomsList
+    * 6) Store in buildingList the query
+    */
     FindTimesComponent.prototype.show = function (day) {
         var _this = this;
-        // Only run once when same button is pressed multiple times
+        // 0) Re-initialize if navigate away from current page
+        if (document.getElementById("table-2").style.display == "none") {
+            this.buildingList = null;
+            this.day = "";
+        }
+        // 1) Only run once when same button is pressed multiple times
         if (this.day != day) {
-            // Query the database once
+            // 2) Query the database once ("cache the buildingList")
             if (this.buildingList == null) {
+                // Clear roomsList for new list
+                this.roomsList = [];
+                // 3) Notify buildingService to get the buildings from MongoDB
                 this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
-                    _this.roomsList = [];
+                    // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
                     var roomsJSON = buildingList.OpenBuilding[0].rooms;
                     for (var room in roomsJSON) {
+                        // 4) Size of array for 8AM (inclusive) to 10 PM (exclusive)
                         var arr = new Array(288);
+                        // timesJSON = [{ name, sec, days, location, st, et }]
                         var timesJSON = roomsJSON[room][day];
                         for (var time in timesJSON) {
+                            // Add 1's to values in the range of the times (increments of 5)
                             for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
                                 arr[i] = 1;
                             }
                         }
+                        // 5) Add to the roomsList
                         _this.roomsList.push({ name: roomsJSON[room].name, room: arr });
                     }
+                    // 6) Store in the buildingList ("cache")
+                    _this.buildingList = buildingList.OpenBuilding[0];
+                    // Display table
                     document.getElementById("table-2").style.display = "block";
+                    // Set the day
                     _this.day = day;
                 }, function (err) {
                     console.log(err);
                 });
             }
             else {
+                // Clear roomsList for new list
                 this.roomsList = [];
-                var roomsJSON = this.buildingList.OpenBuilding[0].rooms;
+                // { name, mon, tue, wed, thu, omon, otue, owed, othu }
+                var roomsJSON = this.buildingList.rooms;
                 for (var room in roomsJSON) {
+                    // 3a) Size of array for 8AM (inclusive) to 10 PM (exclusive)
                     var arr = new Array(288);
+                    // timesJSON = [{ name, sec, days, location, st, et }]
                     var timesJSON = roomsJSON[room][day];
                     for (var time in timesJSON) {
                         for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
                             arr[i] = 1;
                         }
                     }
+                    // 4a) Add to the roomsList
                     this.roomsList.push({ name: roomsJSON[room].name, room: arr });
                 }
-                document.getElementById("table").style.display = "block";
                 this.day = day;
             }
         }
@@ -427,7 +464,7 @@ var FindTimesComponent = (function () {
         }
         return t;
     };
-    // Setting the values for the display change
+    // On slider change, set start and end times for the times
     FindTimesComponent.prototype.onChange = function (value) {
         this.start = value[0] * 12;
         this.end = value[1] * 12;
@@ -440,6 +477,10 @@ __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __metadata("design:type", String)
 ], FindTimesComponent.prototype, "name", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], FindTimesComponent.prototype, "day", void 0);
 FindTimesComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-times',
@@ -478,59 +519,95 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var FindComponent = (function () {
+    // Need to pass arguments so it can be used in functions below
     function FindComponent(buildingService, router, flashMessage) {
         this.buildingService = buildingService;
         this.router = router;
         this.flashMessage = flashMessage;
+        // Times displayed on the front end but currently does 8 (inclusive) to 10 (exclusive). This can be filtered down.
         this.times = ["8:00 AM", "9:00 AM",
             "10:00 AM", "11:00 AM", "12:00 PM",
             "1:00 PM", "2:00 PM", "3:00 PM",
             "4:00 PM", "5:00 PM", "6:00 PM",
             "7:00 PM", "8:00 PM", "9:00 PM"];
-        this.roomsList = [];
+        // The list of all values from the building chosen ("cached")
         this.buildingList = null;
+        // The list that will be displayed after population in the show function
+        this.roomsList = [];
     }
     FindComponent.prototype.ngOnInit = function () { };
-    // Show the table based on the day (BUILDING name should be provided)
+    /*
+    * Show the table based on the day (BUILDING name should be provided)
+    * 0) Reset the buildingList to null and set current day to "" if you "switch to a different room"
+    * 1) Is the day the same?
+    * 2) Is buildingList initialized to an array?
+    *    2a) Query the cache most of the time
+    *    3a) Create a temporary array and populate it with the start and end times per room
+    *    4a) Push temp array to the roomsList
+    * 3) Notify buildingService to get the buildings from MongoDB
+    * 4) Create a temporary array and populate it with the start and end times per room
+    * 5) Push temp array to the roomsList
+    * 6) Store in buildingList the query
+    */
     FindComponent.prototype.show = function (day) {
         var _this = this;
-        // Only run once when same button is pressed multiple times
+        // 0) Re-initialize if navigate away from current page
+        if (document.getElementById("table").style.display == "none") {
+            this.buildingList = null;
+            this.day = "";
+        }
+        // 1) Only run once when same button is pressed multiple times
         if (this.day != day) {
-            // Query the database once
+            // 2) Query the database once ("cache the buildingList")
             if (this.buildingList == null) {
+                // Clear roomsList for new list
+                this.roomsList = [];
+                // 3) Notify buildingService to get the buildings from MongoDB
                 this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
-                    _this.roomsList = [];
+                    // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
                     var roomsJSON = buildingList.OpenBuilding[0].rooms;
                     for (var room in roomsJSON) {
+                        // 4) Size of array for 8AM (inclusive) to 10 PM (exclusive)
                         var arr = new Array(288);
+                        // timesJSON = [{ name, sec, days, location, st, et }]
                         var timesJSON = roomsJSON[room][day];
                         for (var time in timesJSON) {
+                            // Add 1's to values in the range of the times (increments of 5)
                             for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
                                 arr[i] = 1;
                             }
                         }
+                        // 5) Add to the roomsList
                         _this.roomsList.push({ name: roomsJSON[room].name, room: arr });
                     }
+                    // 6) Store in the buildingList ("cache")
+                    _this.buildingList = buildingList.OpenBuilding[0];
+                    // Display table
                     document.getElementById("table").style.display = "block";
+                    // Set the day
                     _this.day = day;
                 }, function (err) {
                     console.log(err);
                 });
             }
             else {
+                // Clear roomsList for new list
                 this.roomsList = [];
-                var roomsJSON = this.buildingList.OpenBuilding[0].rooms;
+                // { name, mon, tue, wed, thu, omon, otue, owed, othu }
+                var roomsJSON = this.buildingList.rooms;
                 for (var room in roomsJSON) {
+                    // 3a) Size of array for 8AM (inclusive) to 10 PM (exclusive)
                     var arr = new Array(288);
+                    // timesJSON = [{ name, sec, days, location, st, et }]
                     var timesJSON = roomsJSON[room][day];
                     for (var time in timesJSON) {
                         for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++) {
                             arr[i] = 1;
                         }
                     }
+                    // 4a) Add to the roomsList
                     this.roomsList.push({ name: roomsJSON[room].name, room: arr });
                 }
-                document.getElementById("table").style.display = "block";
                 this.day = day;
             }
         }
@@ -587,11 +664,6 @@ FindComponent = __decorate([
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], FindComponent);
 
-var openRooms = (function () {
-    function openRooms() {
-    }
-    return openRooms;
-}());
 var _a, _b, _c;
 //# sourceMappingURL=find.component.js.map
 
@@ -1196,7 +1268,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "table {\r\n    width : 2000px;\r\n    height : auto;\r\n}\r\n\r\ntr{\r\n  height: 20px;\r\n}\r\n\r\ntd{\r\n  border-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n    width : 100%;\r\n    height : 100%;\r\n    overflow : auto;\r\n    padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n    background-color : #81ea9d;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n    background-color : #ed5d50;\r\n    padding : 5px, 5px, 5px, 5px;\r\n    border: 2px solid black;\r\n}\r\n\r\n/*.five-minute-chunk{\r\n  visibility: hidden;\r\n}*/\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: auto;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  padding: 5px 0;\r\n\r\n  position: absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  z-index: 1;\r\n}\r\n\r\n.time-tool-tip{\r\n  visibility: hidden;\r\n}\r\n\r\n.five-minute-chunk:hover .time-tool-tip{\r\n    visibility: visible;\r\n  }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n.left-column{\r\n position: -webkit-sticky;\r\n position: sticky;\r\n left: 0;\r\n background-color: #ffffff;\r\n width: 100px;\r\n border: 2px solid black;\r\n text-align: center;\r\n}\r\n\r\n.left-column:hover {\r\n  background-color: #76a8f7;\r\n}\r\n", ""]);
+exports.push([module.i, "table {\r\n    width : 2000px;\r\n    height : auto;\r\n}\r\n\r\ntr{\r\n  height: 20px;\r\n}\r\n\r\ntd, th{\r\n  border-collapse: collapse;\r\n}\r\n\r\nth{\r\n}\r\n.tablecontainer {\r\n    /*width : 100%;\r\n    height : 100%;*/\r\n    overflow : auto;\r\n    padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n    background-color : #81ea9d;\r\n    border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n    background-color : #ed5d50;\r\n    border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: 75px;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  /*padding: 5px 0;*/\r\n  position:absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  top: -20px;\r\n  left: 20px;\r\n  z-index: 1;\r\n  visibility: visible;\r\n  display: block;\r\n\r\n}\r\n\r\n.time-tool-tip{\r\n   visibility: hidden;\r\n   z-index: 20;\r\n   display: none;\r\n\r\n}\r\n\r\n.left-column{\r\n position: -webkit-sticky;\r\n position: sticky;\r\n left: 0;\r\n top:-50;\r\n background-color: #ffffff;\r\n width: 100px;\r\n border: 2px solid black;\r\n text-align: center;\r\n z-index: 20;\r\n}\r\n\r\n.left-column:hover {\r\n  background-color: #76a8f7;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1338,14 +1410,14 @@ module.exports = "<head>\r\n  <title> Developer Guide </title>\r\n</head>\r\n\r\
 /***/ 194:
 /***/ (function(module, exports) {
 
-module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n  <p style=\"text-align: center; font-size: 4rem\" id=\"title\">Building</p>\r\n  <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n    <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n  </select>\r\n</div>\r\n\r\n<!-- 2) Button Select -->\r\n<div class=\"buttons\" id=\"buttons\" style=\"display: none\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" style=\"width : 33%\" value=\"All Rooms\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" style=\"width : 33%\" value=\"Right Now\">    \r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" style=\"width : 33%\" value=\"By Time\">\r\n</div>\r\n\r\n<!-- 3a) Get all rooms based on building and time -->\r\n<app-find id=\"all\" style=\"display: none\" name={{building}} day={{building}}></app-find>\r\n  \r\n<!-- 3b) Get all rooms based on building -->\r\n<app-find-now id=\"now\" style=\"display: none\"></app-find-now>\r\n\r\n<!-- 3c) Get all rooms based on building and time -->\r\n<app-find-times id=\"times\" style=\"display: none\" name={{building}}></app-find-times>\r\n  "
+module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n  <p style=\"text-align: center; font-size: 4rem\" id=\"title\">Building</p>\r\n  <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n    <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n  </select>\r\n</div>\r\n\r\n<!-- 2) Button Select -->\r\n<div class=\"buttons\" id=\"buttons\" style=\"display: none\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" style=\"width : 33%\" value=\"All Rooms\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" style=\"width : 33%\" value=\"Right Now\">    \r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" style=\"width : 33%\" value=\"By Time\">\r\n</div>\r\n\r\n<!-- 3a) Get all rooms based on building and time -->\r\n<app-find id=\"all\" style=\"display: none\" name={{building}} day={{building}}></app-find>\r\n  \r\n<!-- 3b) Get all rooms based on building -->\r\n<app-find-now id=\"now\" style=\"display: none\" name={{building}}></app-find-now>\r\n\r\n<!-- 3c) Get all rooms based on building and time -->\r\n<app-find-times id=\"times\" style=\"display: none\" name={{building}} day={{building}}></app-find-times>\r\n  "
 
 /***/ }),
 
 /***/ 195:
 /***/ (function(module, exports) {
 
-module.exports = "TODO"
+module.exports = "<h1 *ngIf=\"!show\" style=\"text-align: center\">No rooms currently available in {{name}}</h1>\r\n<h2 *ngFor=\"let room of roomsList\">\r\n    Room: {{room}}\r\n</h2>"
 
 /***/ }),
 
@@ -1359,7 +1431,7 @@ module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"sh
 /***/ 197:
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <!-- Potential place for index of for loop -->\r\n        <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{timeFormat(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n"
+module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{timeFormat(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1548,43 +1620,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var FindNowComponent = (function () {
+    // Need to pass argument so it can be used in functions below
     function FindNowComponent(buildingService) {
         this.buildingService = buildingService;
+        // Days the buildingService will query using
         this.days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
+        // The list that will be displayed after population in the show function
         this.roomsList = [];
     }
+    // Set the day once when navigating to the find classroom page
     FindNowComponent.prototype.ngOnInit = function () {
+        this.day = this.days[new Date().getDay()];
+    };
+    /*
+    * 1) Not "x" and between 8AM and 10 PM?
+    * 2) Notify buildingService to get the buildings from MongoDB
+    * 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
+    *
+    *
+    */
+    FindNowComponent.prototype.showNow = function () {
         var _this = this;
-        // let day = this.days[new Date().getUTCDay()];
-        this.day = this.days[new Date().getUTCDay()];
-        this.day = "x";
-        // let hour = new Date().getUTCHours();
-        var start = new Date().getUTCHours();
-        start = 8;
-        var end = start + 1;
-        if (this.day == "x" || start < 8 || end > 22) {
+        var st = new Date().getHours() * 60;
+        // 1) Not "x" and between 8 AM and 10 PM?
+        if (this.day != "x" && st >= 8 * 60 && st + 45 <= 22 * 60) {
+            // Clear roomsList for new list
             this.roomsList = [];
-            this.roomsList.push("No Currently Available Classrooms");
-        }
-        else {
+            // 2) Notify buildingService to get the buildings from MongoDB
             this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
-                _this.roomsList = [];
+                // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
                 var roomsJSON = buildingList.OpenBuilding[0].rooms;
                 for (var room in roomsJSON) {
+                    // timesJSON = [{ name, sec, days, location, st, et }]
                     var timesJSON = roomsJSON[room][_this.day];
                     for (var time in timesJSON) {
-                        if (timesJSON[time].st <= start && (timesJSON[time].et - (end + 1) >= 30)) {
-                            _this.roomsList.push({ building: buildingList.OpenBuilding[room].name, name: roomsJSON[room].name });
+                        // 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
+                        if ((st >= timesJSON[time].st && (st + 45) <= timesJSON[time].et) || (st < timesJSON[time].st && timesJSON[time] > (st + 60))) {
+                            _this.roomsList.push(roomsJSON[room].name);
                         }
                     }
                 }
-                document.getElementById("now-data").style.display = "block";
-                return true;
+                _this.show = true;
             }, function (err) {
                 console.log(err);
             });
         }
-        console.log(this.day);
+        else {
+            this.show = false;
+        }
     };
     return FindNowComponent;
 }());

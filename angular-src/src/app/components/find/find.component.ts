@@ -10,17 +10,23 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 })
 
 export class FindComponent implements OnInit {
-  // Needed to get the input from the 
+  // Values that are passed from Find-Home Component
   @Input() name : string;
   @Input() day : string;
+
+  // Times displayed on the front end but currently does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["8:00 AM", "9:00 AM", 
           "10:00 AM", "11:00 AM", "12:00 PM", 
           "1:00 PM", "2:00 PM", "3:00 PM", 
           "4:00 PM", "5:00 PM", "6:00 PM", 
           "7:00 PM", "8:00 PM", "9:00 PM"];
-  roomsList = [];
+  
+  // The list of all values from the building chosen ("cached")
   buildingList = null;
+  // The list that will be displayed after population in the show function
+  roomsList = [];
 
+  // Need to pass arguments so it can be used in functions below
   constructor(
     private buildingService : BuildingsService,
     private router : Router,
@@ -29,56 +35,89 @@ export class FindComponent implements OnInit {
 
   ngOnInit() {}
 
-  // Show the table based on the day (BUILDING name should be provided)
+  /* 
+  * Show the table based on the day (BUILDING name should be provided)
+  * 0) Reset the buildingList to null and set current day to "" if you "switch to a different room"
+  * 1) Is the day the same?
+  * 2) Is buildingList initialized to an array?
+  *    2a) Query the cache most of the time
+  *    3a) Create a temporary array and populate it with the start and end times per room
+  *    4a) Push temp array to the roomsList
+  * 3) Notify buildingService to get the buildings from MongoDB
+  * 4) Create a temporary array and populate it with the start and end times per room
+  * 5) Push temp array to the roomsList
+  * 6) Store in buildingList the query
+  */
   show(day : string) {
-    // Only run once when same button is pressed multiple times
+    // 0) Re-initialize if navigate away from current page
+    if (document.getElementById("table").style.display == "none")
+    {
+      this.buildingList = null;
+      this.day = "";
+    }
+    // 1) Only run once when same button is pressed multiple times
     if (this.day != day) 
     {
-      // Query the database once
+      // 2) Query the database once ("cache the buildingList")
       if (this.buildingList == null)
       {
+        // Clear roomsList for new list
+        this.roomsList = [];
+        // 3) Notify buildingService to get the buildings from MongoDB
         this.buildingService.getBuildings(this.name).subscribe(buildingList => {
-          this.roomsList = [];
+          // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
           let roomsJSON = buildingList.OpenBuilding[0].rooms;
-          for (var room in roomsJSON)
+          for (let room in roomsJSON)
           {
-            var arr = new Array(288);
+            // 4) Size of array for 8AM (inclusive) to 10 PM (exclusive)
+            let arr = new Array(288);
+            // timesJSON = [{ name, sec, days, location, st, et }]
             let timesJSON = roomsJSON[room][day];
-            for (var time in timesJSON)
+            for (let time in timesJSON)
             {
-              for (var i = timesJSON[time].st / 5 ; i < timesJSON[time].et / 5; i++)
+              // Add 1's to values in the range of the times (increments of 5)
+              for (let i = timesJSON[time].st / 5 ; i < timesJSON[time].et / 5; i++)
               {
                 arr[i] = 1;
               }
             }
+            // 5) Add to the roomsList
             this.roomsList.push({ name : roomsJSON[room].name, room : arr});
           }
+          // 6) Store in the buildingList ("cache")
+          this.buildingList = buildingList.OpenBuilding[0];
+          // Display table
           document.getElementById("table").style.display = "block";
+          // Set the day
           this.day = day;
         },
         err => {
           console.log(err);
         });
       }
-      // Query the cache most of the time
+      // 2a) Query the cache most of the time
       else
       {
+        // Clear roomsList for new list
         this.roomsList = [];
-        let roomsJSON = this.buildingList.OpenBuilding[0].rooms;
-        for (var room in roomsJSON)
+        // { name, mon, tue, wed, thu, omon, otue, owed, othu }
+        let roomsJSON = this.buildingList.rooms;
+        for (let room in roomsJSON)
         {
-          var arr = new Array(288);
+          // 3a) Size of array for 8AM (inclusive) to 10 PM (exclusive)
+          let arr = new Array(288);
+          // timesJSON = [{ name, sec, days, location, st, et }]
           let timesJSON = roomsJSON[room][day];
-          for (var time in timesJSON)
+          for (let time in timesJSON)
           {
-            for (var i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++)
+            for (let i = timesJSON[time].st / 5; i < timesJSON[time].et / 5; i++)
             {
               arr[i] = 1;
             }
           }
+          // 4a) Add to the roomsList
           this.roomsList.push({ name : roomsJSON[room].name, room : arr});
         }
-        document.getElementById("table").style.display = "block";
         this.day = day;
       }
     }
@@ -124,9 +163,4 @@ export class FindComponent implements OnInit {
   getCell(x) {
     console.log("Cell index is: " + x);
   }
-}
-
-class openRooms {
-  name : string;
-  openclass : [number];
 }

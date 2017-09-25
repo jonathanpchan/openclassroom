@@ -1,1 +1,4 @@
-TODO
+<h1 *ngIf="!show" style="text-align: center">No rooms currently available in {{name}}</h1>
+<h2 *ngFor="let room of roomsList">
+    Room: {{room}}
+</h2>

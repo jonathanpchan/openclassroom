@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-// https://angular.io/api/common/DatePipe
-import { DatePipe } from '@angular/common';
 import {BuildingsService} from '../../services/buildings.service';
 
 @Component({
@@ -9,50 +7,67 @@ import {BuildingsService} from '../../services/buildings.service';
   styleUrls: ['./find-now.component.css']
 })
 export class FindNowComponent implements OnInit {
+  // Value passed from Find-Home Component
   @Input() name : string;
+
+  // Days the buildingService will query using
   days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
   day : string;
+
+  // The list that will be displayed after population in the show function
   roomsList = [];
 
+  // Notifies the HTML to display the error message when out of hours
+  show : boolean;
+
+  // Need to pass argument so it can be used in functions below
   constructor(private buildingService : BuildingsService) { }
 
-  ngOnInit() 
-  {
-    // let day = this.days[new Date().getUTCDay()];
-    this.day = this.days[new Date().getUTCDay()]
-    this.day = "x";
-    // let hour = new Date().getUTCHours();
-    let start = new Date().getUTCHours();
-    start = 8;
-    let end = start + 1;
-    if (this.day == "x" || start < 8 || end > 22)
+  // Set the day once when navigating to the find classroom page
+  ngOnInit() { 
+    this.day = this.days[new Date().getDay()] 
+  }
+
+  /*
+  * 1) Not "x" and between 8AM and 10 PM?
+  * 2) Notify buildingService to get the buildings from MongoDB
+  * 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
+  *
+  *
+  */
+  showNow() {
+    let st = new Date().getHours() * 60;
+    // 1) Not "x" and between 8 AM and 10 PM?
+    if (this.day != "x" && st >= 8*60 && st+45 <= 22*60)
     {
+      // Clear roomsList for new list
       this.roomsList = [];
-      this.roomsList.push("No Currently Available Classrooms");
-    }
-    else 
-    {
+      // 2) Notify buildingService to get the buildings from MongoDB
       this.buildingService.getBuildings(this.name).subscribe(buildingList => {
-        this.roomsList = [];
+        // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
         let roomsJSON = buildingList.OpenBuilding[0].rooms;
-        for (var room in roomsJSON)
+        for (let room in roomsJSON)
         {
+          // timesJSON = [{ name, sec, days, location, st, et }]
           let timesJSON = roomsJSON[room][this.day];
-          for (var time in timesJSON)
+          for (let time in timesJSON)
           {
-            if (timesJSON[time].st <= start && (timesJSON[time].et - (end + 1) >= 30))
+            // 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
+            if ((st >= timesJSON[time].st && (st+45) <= timesJSON[time].et) || (st < timesJSON[time].st && timesJSON[time] > (st+60)))
             {
-              this.roomsList.push({building : buildingList.OpenBuilding[room].name, name : roomsJSON[room].name})
+              this.roomsList.push(roomsJSON[room].name);
             }
           }
         }
-        document.getElementById("now-data").style.display = "block";
-        return true;
+        this.show = true;
       },
       err => {
         console.log(err);
       });
     }
-    console.log(this.day);
+    else 
+    {
+      this.show = false;
+    }
   }
 }

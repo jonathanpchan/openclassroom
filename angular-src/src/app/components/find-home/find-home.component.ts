@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FindComponent } from '../find/find.component';
 import { BuildingsService } from '../../services/buildings.service';
 import { FindNowComponent } from '../find-now/find-now.component';
@@ -16,7 +16,10 @@ export class FindHomeComponent implements OnInit {
   // All building names possible
   buildingNames = [];
 
-  constructor(private buildingService : BuildingsService, private findNow : FindNowComponent) {}
+  // Access the used FindNowComponent to make the show function call
+  @ViewChild(FindNowComponent) nowComponent : FindNowComponent;
+
+  constructor(private buildingService : BuildingsService) {}
   
   // 1) Display available building names
   ngOnInit() { 
@@ -49,10 +52,10 @@ export class FindHomeComponent implements OnInit {
     {
       document.getElementById("buttons").style.display = "none";
       document.getElementById(option).style.display = "block";
-      // if (option == "now")
-      // {
-      //   this.findNow.show(this.building);
-      // }
+      if (option == "now")
+      {
+        this.nowComponent.showNow();
+      }
     }
   }
 }

@@ -14,7 +14,6 @@
       </tr>
       <tr *ngFor="let rooms of roomsList">
         <th class="left-column">{{name}}-{{rooms.name}}</th>
-        <!-- Potential place for index of for loop -->
         <td class ="five-minute-chunk" *ngFor="let room of rooms?.room | slice:96:264 let i = index " [ngClass]="room ? 'opentime' : 'closedtime'">
           <span class="time-tool-tip">{{timeFormat(i)}}</span><!-- this messes up the left column for some reason-->
         </td>
