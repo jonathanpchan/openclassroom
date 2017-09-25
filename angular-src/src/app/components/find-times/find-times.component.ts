@@ -148,38 +148,64 @@ export class FindTimesComponent implements OnInit {
     }
   }
 
-  timeFormat(time)
-  {
-    var  minutes = time*5;//since we have minutes in 5 minute chunks
-    minutes += 480;//offset of 8 AM need to add 8 hours
-    time = minutes;//set original value of time
-    var t;
-
-
-    if(minutes>=780)    {
-      minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
-    }
-    // // TODO: remove this for deployment as it's unneeded
-    // else if(minutes < 60)    {
-    //   minutes+=720;//adding 12 hours if its before 1 AM
-    // }
-    t = (minutes - minutes%60)/60 + ":";//calculating hours
-
-    if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
-      t += "0" + time%60;
-    }else    {
-      t += time%60;
-    }
-
-    if(time>720)    {//setting AM/PM based on the original time
-      t+= " PM";
-    }
-    else    {
-      t+= " AM";
+    // Adjust time in minutes to stringified time (No 12:00 AM)
+    timeFormat(time : number) : string
+    {
+      if (time/60 > 12)
+      {
+        if (time%60 > 10)
+        {
+          return (time/60-12)+":"+(time%60)+" PM";
+        }
+        else
+        {
+          return (time/60-12)+":0"+(time%60)+" PM";
+        }
+      }
+      else
+      {
+        if (time%60 > 10)
+        {
+          return (time/60)+":"+(time%60)+" AM";
+        }
+        else
+        {
+          return (time/60)+":0"+(time%60)+" AM";
+        } 
+      }
     }
 
-    return t;
-  }
+  // timeFormat(time)
+  // {
+  //   var  minutes = time*5;//since we have minutes in 5 minute chunks
+  //   minutes += 480;//offset of 8 AM need to add 8 hours
+  //   time = minutes;//set original value of time
+  //   var t;
+
+  //   if(minutes>=780)    {
+  //     minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
+  //   }
+  //   // // TODO: remove this for deployment as it's unneeded
+  //   // else if(minutes < 60)    {
+  //   //   minutes+=720;//adding 12 hours if its before 1 AM
+  //   // }
+  //   t = (minutes - minutes%60)/60 + ":";//calculating hours
+
+  //   if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
+  //     t += "0" + time%60;
+  //   }else    {
+  //     t += time%60;
+  //   }
+
+  //   if(time>720)    {//setting AM/PM based on the original time
+  //     t+= " PM";
+  //   }
+  //   else    {
+  //     t+= " AM";
+  //   }
+
+  //   return t;
+  // }
 
   // On slider change, set start and end times for the times
   onChange(value: number[]) {

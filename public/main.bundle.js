@@ -437,33 +437,52 @@ var FindTimesComponent = (function () {
             }
         }
     };
+    // Adjust time in minutes to stringified time (No 12:00 AM)
     FindTimesComponent.prototype.timeFormat = function (time) {
-        var minutes = time * 5; //since we have minutes in 5 minute chunks
-        minutes += 480; //offset of 8 AM need to add 8 hours
-        time = minutes; //set original value of time
-        var t;
-        if (minutes >= 780) {
-            minutes -= 720; //if its 13 o'clock you take off 12 hours or 720 mins
-        }
-        // // TODO: remove this for deployment as it's unneeded
-        // else if(minutes < 60)    {
-        //   minutes+=720;//adding 12 hours if its before 1 AM
-        // }
-        t = (minutes - minutes % 60) / 60 + ":"; //calculating hours
-        if (minutes % 60 < 10) {
-            t += "0" + time % 60;
+        if (time / 60 > 12) {
+            if (time % 60 > 10) {
+                return (time / 60 - 12) + ":" + (time % 60) + " PM";
+            }
+            else {
+                return (time / 60 - 12) + ":0" + (time % 60) + " PM";
+            }
         }
         else {
-            t += time % 60;
+            if (time % 60 > 10) {
+                return (time / 60) + ":" + (time % 60) + " AM";
+            }
+            else {
+                return (time / 60) + ":0" + (time % 60) + " AM";
+            }
         }
-        if (time > 720) {
-            t += " PM";
-        }
-        else {
-            t += " AM";
-        }
-        return t;
     };
+    // timeFormat(time)
+    // {
+    //   var  minutes = time*5;//since we have minutes in 5 minute chunks
+    //   minutes += 480;//offset of 8 AM need to add 8 hours
+    //   time = minutes;//set original value of time
+    //   var t;
+    //   if(minutes>=780)    {
+    //     minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
+    //   }
+    //   // // TODO: remove this for deployment as it's unneeded
+    //   // else if(minutes < 60)    {
+    //   //   minutes+=720;//adding 12 hours if its before 1 AM
+    //   // }
+    //   t = (minutes - minutes%60)/60 + ":";//calculating hours
+    //   if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
+    //     t += "0" + time%60;
+    //   }else    {
+    //     t += time%60;
+    //   }
+    //   if(time>720)    {//setting AM/PM based on the original time
+    //     t+= " PM";
+    //   }
+    //   else    {
+    //     t+= " AM";
+    //   }
+    //   return t;
+    // }
     // On slider change, set start and end times for the times
     FindTimesComponent.prototype.onChange = function (value) {
         this.start = value[0] * 12;
@@ -612,33 +631,52 @@ var FindComponent = (function () {
             }
         }
     };
+    // Adjust time in minutes to stringified time (No 12:00 AM)
     FindComponent.prototype.timeFormat = function (time) {
-        var minutes = time * 5; //since we have minutes in 5 minute chunks
-        minutes += 480; //offset of 8 AM need to add 8 hours
-        time = minutes; //set original value of time
-        var t;
-        if (minutes >= 780) {
-            minutes -= 720; //if its 13 o'clock you take off 12 hours or 720 mins
-        }
-        // // TODO: remove this for deployment as it's unneeded
-        // else if(minutes < 60)    {
-        //   minutes+=720;//adding 12 hours if its before 1 AM
-        // }
-        t = (minutes - minutes % 60) / 60 + ":"; //calculating hours
-        if (minutes % 60 < 10) {
-            t += "0" + time % 60;
+        if (time / 60 > 12) {
+            if (time % 60 > 10) {
+                return (time / 60 - 12) + ":" + (time % 60) + " PM";
+            }
+            else {
+                return (time / 60 - 12) + ":0" + (time % 60) + " PM";
+            }
         }
         else {
-            t += time % 60;
+            if (time % 60 > 10) {
+                return (time / 60) + ":" + (time % 60) + " AM";
+            }
+            else {
+                return (time / 60) + ":0" + (time % 60) + " AM";
+            }
         }
-        if (time > 720) {
-            t += " PM";
-        }
-        else {
-            t += " AM";
-        }
-        return t;
     };
+    // timeFormat(time)
+    // {
+    //   var  minutes = time*5;//since we have minutes in 5 minute chunks
+    //   minutes += 480;//offset of 8 AM need to add 8 hours
+    //   time = minutes;//set original value of time
+    //   var t;
+    //   if(minutes>=780)    {
+    //     minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
+    //   }
+    //   // // TODO: remove this for deployment as it's unneeded
+    //   // else if(minutes < 60)    {
+    //   //   minutes+=720;//adding 12 hours if its before 1 AM
+    //   // }
+    //   t = (minutes - minutes%60)/60 + ":";//calculating hours
+    //   if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
+    //     t += "0" + time%60;
+    //   }else    {
+    //     t += time%60;
+    //   }
+    //   if(time>720)    {//setting AM/PM based on the original time
+    //     t+= " PM";
+    //   }
+    //   else    {
+    //     t+= " AM";
+    //   }
+    //   return t;
+    // }
     FindComponent.prototype.getClass = function (value) {
         return 'opentime';
     };
@@ -1417,7 +1455,7 @@ module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n 
 /***/ 195:
 /***/ (function(module, exports) {
 
-module.exports = "<h1 *ngIf=\"!show\" style=\"text-align: center\">No rooms currently available in {{name}}</h1>\r\n<h2 *ngFor=\"let room of roomsList\">\r\n    Room: {{room}}\r\n</h2>"
+module.exports = "<h1 *ngIf=\"!show\" style=\"text-align: center\">No rooms currently available in {{name}}</h1>\r\n<h2 *ngFor=\"let room of roomsList\">\r\n    Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n</h2>"
 
 /***/ }),
 
@@ -1633,11 +1671,10 @@ var FindNowComponent = (function () {
         this.day = this.days[new Date().getDay()];
     };
     /*
+    * Gets the rooms that are open and display when they are open
     * 1) Not "x" and between 8AM and 10 PM?
     * 2) Notify buildingService to get the buildings from MongoDB
     * 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
-    *
-    *
     */
     FindNowComponent.prototype.showNow = function () {
         var _this = this;
@@ -1655,8 +1692,14 @@ var FindNowComponent = (function () {
                     var timesJSON = roomsJSON[room][_this.day];
                     for (var time in timesJSON) {
                         // 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
-                        if ((st >= timesJSON[time].st && (st + 45) <= timesJSON[time].et) || (st < timesJSON[time].st && timesJSON[time] > (st + 60))) {
-                            _this.roomsList.push(roomsJSON[room].name);
+                        if (st >= timesJSON[time].st && (st + 45) <= timesJSON[time].et) {
+                            _this.roomsList.push({ name: roomsJSON[room].name, st: _this.timeFormat(timesJSON[time].st), et: _this.timeFormat(timesJSON[time].et) });
+                        }
+                        else {
+                            // TODO: Eventually be open soon (30 minutes after the hour)
+                            if (st < timesJSON[time].st && timesJSON[time] > (st + 60)) {
+                                _this.roomsList.push({ name: roomsJSON[room].name, st: _this.timeFormat(timesJSON[time].st), et: _this.timeFormat(timesJSON[time].et) });
+                            }
                         }
                     }
                 }
@@ -1667,6 +1710,25 @@ var FindNowComponent = (function () {
         }
         else {
             this.show = false;
+        }
+    };
+    // Adjust time in minutes to stringified time (No 12:00 AM)
+    FindNowComponent.prototype.timeFormat = function (time) {
+        if (time / 60 > 12) {
+            if (time % 60 > 10) {
+                return (time / 60 - 12) + ":" + (time % 60) + " PM";
+            }
+            else {
+                return (time / 60 - 12) + ":0" + (time % 60) + " PM";
+            }
+        }
+        else {
+            if (time % 60 > 10) {
+                return (time / 60) + ":" + (time % 60) + " AM";
+            }
+            else {
+                return (time / 60) + ":0" + (time % 60) + " AM";
+            }
         }
     };
     return FindNowComponent;

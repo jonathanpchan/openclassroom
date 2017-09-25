@@ -29,11 +29,10 @@ export class FindNowComponent implements OnInit {
   }
 
   /*
+  * Gets the rooms that are open and display when they are open
   * 1) Not "x" and between 8AM and 10 PM?
   * 2) Notify buildingService to get the buildings from MongoDB
   * 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
-  *
-  *
   */
   showNow() {
     let st = new Date().getHours() * 60;
@@ -53,9 +52,17 @@ export class FindNowComponent implements OnInit {
           for (let time in timesJSON)
           {
             // 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
-            if ((st >= timesJSON[time].st && (st+45) <= timesJSON[time].et) || (st < timesJSON[time].st && timesJSON[time] > (st+60)))
+            if (st >= timesJSON[time].st && (st+45) <= timesJSON[time].et)
             {
-              this.roomsList.push(roomsJSON[room].name);
+              this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
+            }
+            else
+            {
+              // TODO: Eventually be open soon (30 minutes after the hour)
+              if (st < timesJSON[time].st && timesJSON[time] > (st+60))
+              {
+                this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
+              }
             }
           }
         }
@@ -70,4 +77,62 @@ export class FindNowComponent implements OnInit {
       this.show = false;
     }
   }
-}
+
+  // Adjust time in minutes to stringified time (No 12:00 AM)
+  timeFormat(time : number) : string
+  {
+    if (time/60 > 12)
+    {
+      if (time%60 > 10)
+      {
+        return (time/60-12)+":"+(time%60)+" PM";
+      }
+      else
+      {
+        return (time/60-12)+":0"+(time%60)+" PM";
+      }
+    }
+    else
+    {
+      if (time%60 > 10)
+      {
+        return (time/60)+":"+(time%60)+" AM";
+      }
+      else
+      {
+        return (time/60)+":0"+(time%60)+" AM";
+      } 
+    }
+  }
+
+  //   let  minutes = time*5;//since we have minutes in 5 minute chunks
+  //   minutes += 480;//offset of 8 AM need to add 8 hours
+  //   time = minutes;//set original value of time
+  //   var t;
+
+
+  //   if(minutes>=780)    {
+  //     minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
+  //   }
+  //   // // TODO: remove this for deployment as it's unneeded
+  //   // else if(minutes < 60)    {
+  //   //   minutes+=720;//adding 12 hours if its before 1 AM
+  //   // }
+  //   t = (minutes - minutes%60)/60 + ":";//calculating hours
+
+  //   if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
+  //     t += "0" + time%60;
+  //   }else    {
+  //     t += time%60;
+  //   }
+
+  //   if(time>720)    {//setting AM/PM based on the original time
+  //     t+= " PM";
+  //   }
+  //   else    {
+  //     t+= " AM";
+  //   }
+
+  //   return t;
+  // }
+ }
