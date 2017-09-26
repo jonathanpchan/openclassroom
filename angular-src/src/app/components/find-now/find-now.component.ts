@@ -55,6 +55,7 @@ export class FindNowComponent implements OnInit {
             if (st >= timesJSON[time].st && (st+45) <= timesJSON[time].et)
             {
               this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
+              this.show = true;
             }
             else
             {
@@ -62,11 +63,11 @@ export class FindNowComponent implements OnInit {
               if (st < timesJSON[time].st && timesJSON[time] > (st+60))
               {
                 this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
+                this.show = true;
               }
             }
           }
         }
-        this.show = true;
       },
       err => {
         console.log(err);
