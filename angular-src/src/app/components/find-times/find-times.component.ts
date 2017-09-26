@@ -151,7 +151,7 @@ export class FindTimesComponent implements OnInit {
   displayToolTip(time)
   {
     var  minutes = time*5;//since we have minutes in 5 minute chunks
-    minutes += 480;//offset of 8 AM need to add 8 hours
+    minutes += this.start*5;//offset of start value * 5
     time = minutes;//set original value of time
     var t;
 
