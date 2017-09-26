@@ -10,7 +10,7 @@
     <tbody>
       <tr>
         <th></th>
-        <th colspan="12" *ngFor="let time of times | slice:tstart:tend">{{time}}</th>
+        <th colspan="6" *ngFor="let time of times | slice:tstart:tend">{{time}}</th>
       </tr>
       <tr *ngFor="let rooms of roomsList">
         <th class="left-column">{{name}}-{{rooms.name}}</th>
@@ -21,4 +21,3 @@
     </tbody>
   </table>
 </div>
-  
