@@ -26,6 +26,7 @@ import {FlashMessagesModule} from 'angular2-flash-messages';
 import {BuildingsService} from './services/buildings.service';
 import { FindNowComponent } from './components/find-now/find-now.component';
 import { FindTimesComponent } from './components/find-times/find-times.component';
+import { CourseComponent } from './components/course/course.component';
 
 // Routes for the components (will be protected later)
 const appRoutes: Routes = [
@@ -57,7 +58,8 @@ const appRoutes: Routes = [
     NouisliderComponent,
     FindHomeComponent,
     FindNowComponent,
-    FindTimesComponent
+    FindTimesComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,
