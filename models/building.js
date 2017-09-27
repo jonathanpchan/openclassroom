@@ -38,7 +38,7 @@ RS = module.exports = mongoose.model('Room', RoomSchema );
 // Export ClassSection schema
 CS = module.exports = mongoose.model('Class', ClassSectionSchema);
 
-// Export BS as BS and RS as RS, CSS as CSS
+// Export BS as BS and RS as RS, CS as CS
 module.exports = {
   CS: CS,
   BS: BS,
