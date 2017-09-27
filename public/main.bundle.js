@@ -748,6 +748,7 @@ var FindHomeComponent = (function () {
         }, function (err) {
             console.log(err);
         });
+        this.buildingNames.sort();
     };
     // 2) Display option buttons 
     FindHomeComponent.prototype.displayButtons = function () {
