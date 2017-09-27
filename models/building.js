@@ -59,6 +59,7 @@ module.exports.getAll = function(callback) {
   BS.find({}, {_id : 0}).exec(callback);
 }
 
+// Get Building Names sorted by name
 module.exports.getBuildingNames = function(callback) {
-  BS.find({},{_id : 0, rooms : 0}).exec(callback);
+  BS.find({},{_id : 0, rooms : 0}).sort({ name : 1 }).exec(callback);
 }
