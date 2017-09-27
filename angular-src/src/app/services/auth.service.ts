@@ -39,14 +39,14 @@ export class AuthService {
     return this.http.get('users/schedule', {headers: headers}).map(res => res.json());
   }
 
-  getBuildingList(){
-    let headers = new Headers();
-    // this.loadToken();
-    // headers.append('Authorization', this.authToken);
-    headers.append('Content-Type','application/json');
-    //return this.http.get('http://localhost:3000/buildings', {headers: headers}).map(res => res.json());
-    return this.http.get('buildings', {headers: headers}).map(res => res.json());
-  }
+  // getBuildingList(){
+  //   let headers = new Headers();
+  //   // this.loadToken();
+  //   // headers.append('Authorization', this.authToken);
+  //   headers.append('Content-Type','application/json');
+  //   //return this.http.get('http://localhost:3000/buildings', {headers: headers}).map(res => res.json());
+  //   return this.http.get('buildings', {headers: headers}).map(res => res.json());
+  // }
 
   loadToken(){
      const token = localStorage.getItem('id_token');

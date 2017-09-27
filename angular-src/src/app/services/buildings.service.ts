@@ -18,14 +18,14 @@ export class BuildingsService {
 
   getAll() : Observable<any> {
     let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.get('http://localhost:3000/buildings', null).map(res => res.json()).catch(this.handleError);
-    // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+    //return this.http.get('http://localhost:3000/buildings', null).map(res => res.json()).catch(this.handleError);
+    return this.http.get('buildings', null).map(res => res.json()).catch(this.handleError);
   }
 
   getBuildingNames() : Observable<any> {
     let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.get('http://localhost:3000/buildings/names', null).map(res => res.json()).catch(this.handleError);
-    // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+    //return this.http.get('http://localhost:3000/buildings/names', null).map(res => res.json()).catch(this.handleError);
+    return this.http.get('buildings/names', null).map(res => res.json()).catch(this.handleError);
   }
 
   private extractData(res: Response) {
