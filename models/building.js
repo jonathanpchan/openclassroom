@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Class Section Schema
@@ -39,7 +38,7 @@ RS = module.exports = mongoose.model('Room', RoomSchema );
 // Export ClassSection schema
 CS = module.exports = mongoose.model('Class', ClassSectionSchema);
 
-// Export BS as BS and RS as RS, CSS as CSS
+// Export BS as BS and RS as RS, CS as CS
 module.exports = {
   CS: CS,
   BS: BS,
@@ -52,6 +51,14 @@ module.exports.addBuilding = function(newBuilding) {
 }
 
 // Gets the Buildings based on BuildingSchema name
- module.exports.getBuildings = function(Name, callback) {
-    BS.find({name: Name}, {_id : 0}).exec(callback);
-  }
+module.exports.getBuildings = function(Name, callback) {
+  BS.find({name: Name}, {_id : 0}).exec(callback);
+}
+
+module.exports.getAll = function(callback) {
+  BS.find({}, {_id : 0}).exec(callback);
+}
+
+module.exports.getBuildingNames = function(callback) {
+  BS.find({},{_id : 0, rooms : 0}).exec(callback);
+}

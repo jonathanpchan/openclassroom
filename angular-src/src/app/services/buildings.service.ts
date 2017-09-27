@@ -16,6 +16,18 @@ export class BuildingsService {
     return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
   }
 
+  getAll() : Observable<any> {
+    let headers = new Headers({'Content-Type' : 'application/json' });
+    return this.http.get('http://localhost:3000/buildings', null).map(res => res.json()).catch(this.handleError);
+    // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+  }
+
+  getBuildingNames() : Observable<any> {
+    let headers = new Headers({'Content-Type' : 'application/json' });
+    return this.http.get('http://localhost:3000/buildings/names', null).map(res => res.json()).catch(this.handleError);
+    // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body || {};

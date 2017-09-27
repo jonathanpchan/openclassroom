@@ -1,5 +1,6 @@
 /*
-syed hussain, csulb, cecs 491
+    syed hussain, csulb, cecs 491a&b
+    nicholas sugimoto, csulb, cecs 491b
 */
 test = true // turn this to false to see all errors (should be flase in general)
 var fs = require('fs');
@@ -19,7 +20,11 @@ console.log = function(d) { //
 };
 //pipe output to file end
 
+// For processing buildings
 var arr = []
+// For processing courses
+var courseList = []
+var initCourseList = []
 
 
 $ = cheerio.load(fs.readFileSync('fulllisting.html'));
@@ -95,18 +100,26 @@ $('.courseBlock').each( function(i, e)     {
         else if (target.attr('class') == 'sectionTable') {
             row = target.children().next()
             while( row.html() != null){
-
+                // Course code
                 sec = row.children().next().html();
-                //console.log(sec + " " + typeof sec)
+                // M, TuTh, W, F
                 day = row.children().next().next().next().next().html();
+                // #:##-#:##PM
                 time = row.children().next().next().next().next().next().html()
+                // Make sure there's spacing between AM and PM
+                time = time.replace("PM", " PM")
+                time = time.replace("AM", " AM")
+                // ECS 416
                 room = row.children().next().next().next().next().next().next().next().html()
+                // Kobata K
+                prof = row.children().next().next().next().next().next().next().next().next().html()
                 row = row.next()
 
                 if (!(room == "TBA" || room == "ONLINE ONLY" || room == "ONLINE-ONLY" || time == "TBA"
                         || sec == "&#xA0;"
                 )){
                     arr.push(new classSection(name, sec, day, time, room))
+                    initCourseList.push({"name": name, "course" : sec, "day" : day, "time" : time, "location" : room, "prof" : prof})
                 }
             }
             target = target.next();
@@ -372,7 +385,47 @@ function processBuildings(values, key, map){
 //actual function call
 bmap.forEach(processBuildings)
 
-//console.log(buildcount)
+//------------------Process courses-------------------------
+var title = ""
+var tempCourseList = []
+for (var i = 0; i < initCourseList.length; i++)
+{
+    // Split into [0] = COURSE NAME and [1] = COURSE #
+    let split = initCourseList[i].name.split(" ");
+    // Initial Case
+    if (i == 0)
+    {
+        initCourseList[i].name = split[1]
+        tempCourseList.push(initCourseList[i])
+        title = split[0]
+    }
+    // Common Case
+    else if (i != initCourseList[i].length - 1)
+    {
+        // Push if same name
+        if (title == split[0])
+        {
+            initCourseList[i].name = split[1]
+            tempCourseList.push(initCourseList[i])
+        }
+        // Push to courseList and reinitialize if different name
+        else
+        {
+            courseList.push({"name" : title, courses : tempCourseList})
+            title = split[0]
+            tempCourseList = []
+            initCourseList[i].name = split[1]
+            tempCourseList.push(initCourseList[i])
+        }
+    }
+    // End Case
+    else
+    {
+        initCourseList[i].name = split[1]
+        tempCourseList.push(initCourseList[i])
+        courseList.push({"name" : title, courses : tempCourseList})
+    }
+}
 
 console.log("Processing took: " + (Date.now() - t2) + "ms" )
 console.log("Total took: " + (Date.now() - t1) + "ms")
@@ -402,7 +455,7 @@ function insertToDB(){
         console.log('Database not connected:');
     })
 
-
+    //--------Insert Buildings into database----------------
     // Require building model to access add function
     const build = require('../models/building');
     // Grab the schema used by said model
@@ -472,14 +525,23 @@ function insertToDB(){
 
     bmap.forEach(dbAddBuildings)
 
-    bs.collection.insert(fullDBArr, onInsert)
+    bs.collection.insert(fullDBArr, onInsert('Buildings'))
 
-    function onInsert(err) {
+    //--------Insert Courses into database----------------
+    // Require building model to access add function
+    const course = require('../models/course');
+    // Grab the schema used by said model
+    const cs = mongoose.model('Courses', course.CS.schema)
+    cs.collection.drop()
+
+    cs.collection.insert(courseList, onInsert('Courses'))
+
+    function onInsert(name, err) {
          if (err) {
             // TODO: handle error 
-            console.log("Error on insert")
+            console.log("Error on inserting: "+name)
          } else {
-            console.info('Buildings were successfully stored.');
+            console.info(name+' were successfully stored.');
         }
     } 
     // Close the database

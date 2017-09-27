@@ -56,7 +56,7 @@ router.post('/authenticate', (req, res, next) => {
       if(err) throw err;
       // If it matches, add more fields and return that data
       if(isMatch){
-        // https://stackoverflow.com/questions/46115993/mean-app-error-expected-object
+        // https://stackoverflow.com/questions/46115993/mean-app-error-expected-object 
         const token = jwt.sign({data : user}, config.secret, {
           expiresIn: 604800 // 1 week
         });
@@ -84,3 +84,42 @@ router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res
 });
 
 module.exports = router;
+
+router.post('/getschedule', (req, res) =>{
+  if (req.body.user.name){
+    User.getUserSchedule(req.body.user.email, (err, sched) =>{
+      return res.json(sched);
+    })
+  }
+  else{
+    return res.json({error: "bad request"});
+  }
+})
+
+// if/else
+router.post('/addschedule', (req, res) => {
+  //return res.json(req.body.email);
+    if(req.body.user.email){
+      User.addScheduleItem(req.body.user.email, req.body.u, (err, course) => {
+        console.log(course);
+        return res.json(course);
+      })
+    }
+    else{
+      return res.json({error: "Bad Request"});
+  }
+})
+
+// if/else
+router.post('/editschedule', (req, res) => {
+    //return res.json(req.body.email);
+    if(req.body.user.name){
+     User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
+         console.log(course);
+          return res.json(course);
+     })
+    }else{
+      return res.json(({error: "Bad Request"}))
+    }
+})
+

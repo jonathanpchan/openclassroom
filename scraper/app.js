@@ -46,6 +46,45 @@ um.collection.insert({
 //     console.log(cbb);
 // })
 
+/**
+module.exports.addScheduleItem = function(eMail, u, callback) {
+    User.findOneAndUpdate(
+        {"email": eMail},
+        {
+            $push: {
+                "schedule": {
+                    "name": u.name,
+                    "sec": u.sec,
+                    "days": u.days,
+                    "location": u.location,
+                    "st": u.st,
+                    "et": u.et
+                }
+            }
+        }, {new: true}, function(err) {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+
+            User.find({ supportTicket: st }).toArray(function (err, docs) {
+                callback(docs);
+            });
+            use.schedule.sort(helperSort)
+
+            User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+        })
+};
+**/
+
+var x = [];
+function helperSort(a,b) {
+    //console.log(a.time + " - " + b.time + " = " )
+    return (a.sh - b.sh)
+}
+
+us.find({email: "jon@random.com"}).toArray(function (err, docs) {
+    x = docs;
+}).exec(x.sort(helperSort))
 
 mongoose.connection.close(function() {
     console.log('Disconnected from database'); })
