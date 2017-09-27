@@ -31,7 +31,6 @@ export class FindHomeComponent implements OnInit {
     err => {
       console.log(err);
     });
-    this.buildingNames.sort();
   }
 
   // 2) Display option buttons 
