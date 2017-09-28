@@ -1,3 +1,7 @@
-<p>
-  course works!
-</p>
+<!-- 1) Building Select -->
+<div class="form-group">
+  <h1 style="text-align: center;" id="title">Add a Course</h1>
+  <select class="form-control" [(ngModel)]="course" name="course"> <!--(focus)="displayButtons($event)">-->
+    <option *ngFor="let courseName of courseNames"> {{courseName}} </option>
+  </select>
+</div>

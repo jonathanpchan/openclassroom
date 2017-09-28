@@ -27,7 +27,6 @@ module.exports = {
 
 //Finds courses based on subject and course name; ex: BIOL 200
 module.exports.findCourses = function(subj, crs, callback) {
-
     CS.aggregate([
         // Filter possible documents
         { "$match": { "name" : subj } },
@@ -48,3 +47,8 @@ module.exports.findCourses = function(subj, crs, callback) {
         }}
     ], callback)
 };
+
+// Gets the Buildings based on BuildingSchema name
+module.exports.getCourseNames = function(callback) {
+  CS.find({}, {_id : 0, courses : 0}).sort({ name : 1}).exec(callback);
+}

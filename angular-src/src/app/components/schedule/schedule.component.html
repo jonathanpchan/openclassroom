@@ -1,7 +1,43 @@
 <div *ngIf="user">
-  <h2 class="page-header">My Schedule</h2>
-  <ul class="list-group">
-    <li class= "list-group-item">Username: {{user.username}}</li>
-    <li class= "list-group-item">Email: {{user.email}}</li>
-  </ul>
-</div>
+    <!-- <h2 class="page-header">My Schedule</h2> -->
+    <h1 style="text-align: center;" id="title">My Schedule</h1>
+    <ul class="list-group">
+      <li class= "list-group-item">Username: {{user.username}}</li>
+      <li class= "list-group-item">Email: {{user.email}}</li>
+    </ul>
+    <table class="table-striped, table-bordered" style="width : 100%">
+      <thead></thead>
+      <tbody>
+        <tr>
+          <td>NAME</td>
+          <td>CLASS #</td>
+          <td>DAYS</td>
+          <td>TIME</td>
+          <td>LOCATION</td>
+          <td>INSTRUCTOR</td>
+        </tr>
+        <td *ngIf="schedule; else display" colspan="6" style="border : solid 1px black; vertical-align: top; height:30rem">No Courses</td>
+        <ng-template #display>
+          <tr>
+            <td>A</td>
+            <td>B</td>
+            <td>C</td>
+            <td>D</td>
+            <td>E</td>
+            <td>F</td>
+          </tr>
+          <tr>
+            <td>A</td>
+            <td>B</td>
+            <td>C</td>
+            <td>D</td>
+            <td>E</td>
+            <td>F</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+  <input type="button" class="btn btn-primary" style="width : 33%" value="Add Course">
+  <app-course></app-course>
+  

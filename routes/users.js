@@ -6,8 +6,8 @@ const config = require('../config/database');
 const User = require('../models/user');
 const Building = require('../models/building');
 const mongoose = require('mongoose');
-const course = require('../models/course');
-const CS = mongoose.model('Courses', course.CS.Schema);
+const Course = require('../models/course');
+const CS = mongoose.model('Courses', Course.CS.Schema);
 
 
 // Register POST request
@@ -133,7 +133,7 @@ router.post('/editschedule', (req, res) => {
 //Finds courses using a subject and course number
 router.post('/findcourses', (req, res) => {
     if(req.body.user.email){
-      course.findCourses(req.body.subj, req.body.crs, (err, x) =>
+      Course.findCourses(req.body.subj, req.body.crs, (err, x) =>
     {
         console.log(x[0])
     return res.json(x)
@@ -142,3 +142,16 @@ router.post('/findcourses', (req, res) => {
     return res.json(({error: "Bad Request"}))
 }
 })
+
+// Get request getting all the documents
+router.get('/names', (req, res, next) => {
+  Course.getCourseNames((err, Courses) => {
+    if(err) throw err;
+    if(Courses == "") { //if Courses is empty return false
+      return res.json({success: false, msg: 'Courses not found'});
+    }
+    else { //Otherwise will return names of courses
+      return res.json({success: true, Courses});
+    }
+  });
+});
