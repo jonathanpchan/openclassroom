@@ -48,6 +48,15 @@ export class AuthService {
     // return this.http.get('buildings', {headers: headers}).map(res => res.json());
   }
 
+  getCourseNames(){
+    let headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    headers.append('Content-Type','application/json');
+    return this.http.get('http://localhost:3000/users/names', {headers: headers}).map(res => res.json());
+    //return this.http.get('users/coursenames', {headers: headers}).map(res => res.json());
+  }
+
   loadToken(){
      const token = localStorage.getItem('id_token');
      this.authToken = token;
