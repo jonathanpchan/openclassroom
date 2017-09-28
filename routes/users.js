@@ -6,6 +6,8 @@ const config = require('../config/database');
 const User = require('../models/user');
 const Building = require('../models/building');
 const mongoose = require('mongoose');
+const course = require('../models/course');
+const CS = mongoose.model('Courses', course.CS.Schema);
 
 
 // Register POST request
@@ -100,24 +102,24 @@ router.post('/getschedule', (req, res) =>{
   }
 })
 
-// if/else
-router.post('/addschedule', (req, res) => {
+//POST Request to route 'adding a schedule item to a user's schedule'
+router.post('/addschedule', (req, res) => { //request and response
   //return res.json(req.body.email);
-    if(req.body.user.email){
-      User.addScheduleItem(req.body.user.email, req.body.u, (err, course) => {
-        console.log(course);
-        return res.json(course);
+    if(req.body.user.email){ //check if valid request
+      User.addScheduleItem(req.body.email, req.body.crsID (err, courses) => { //callback function that returns list of courses
+        console.log(courses); //display for testing
+        return res.json(courses); //display for testing
       })
     }
     else{
-      return res.json({error: "Bad Request"});
+      return res.json({error: "Bad Request"}); //bad request
   }
 })
 
-// if/else
+//POST Request to route 'editing a schedule item from a user's schedule'
 router.post('/editschedule', (req, res) => {
     //return res.json(req.body.email);
-    if(req.body.user.name){
+    if(req.body.user.email){
      User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
          console.log(course);
           return res.json(course);
@@ -127,3 +129,15 @@ router.post('/editschedule', (req, res) => {
     }
 })
 
+//Finds courses using a subject and course number
+router.post('/findcourses', (req, res) => {
+    if(req.body.user.email){
+      course.findCourses(req.body.subj, req.body.crs, (err, x) =>
+    {
+        console.log(x[0])
+    return res.json(x)
+})
+} else {
+    return res.json(({error: "Bad Request"}))
+}
+})

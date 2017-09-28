@@ -4,6 +4,8 @@ const config = require('../config/database');
 const build = require('../models/building');
 const CS = mongoose.model('Class', build.CS.Schema);
 const Schema = mongoose.Schema;
+const classes = require('../models/course');
+const CSS = mongoose.model('Courses', classes.CS.Schema);
 var ObjectId = require('mongodb').ObjectID;
 
 // User Schema
@@ -102,12 +104,8 @@ module.exports.addScheduleItem = function(eMail, u, callback) {
 };
 **/
 
-function helperSort(a,b) {
-    //console.log(a.time + " - " + b.time + " = " )
-    return (a.sh - b.sh)
-}
+module.exports.addScheduleItem = function(eMail, crsID, callback) {
 
-module.exports.addScheduleItem = function(eMail, u, callback) {
     User.findOneAndUpdate(
         {"email": eMail},
         {
@@ -125,7 +123,7 @@ module.exports.addScheduleItem = function(eMail, u, callback) {
         if (err) {
             console.log("Something wrong when updating data!");
         }
-         sort(eMail, setSchedule)
+        sort(eMail, setSchedule)
         User.find({email: eMail}, {schedule: 1, _id:0}, callback);
     })
 };
@@ -158,6 +156,13 @@ module.exports.editScheduleItem = function(eMail, objID, u, callback) {
     )
 }
 
+
+//Helper functions to help sort schedule
+function helperSort(a,b) {
+    //console.log(a.time + " - " + b.time + " = " )
+    return (a.sh - b.sh)
+}
+
 function sort(eMail, callback) {
     User.find({email: eMail}, function(err, cursor) {
         var arr = cursor[0].schedule.sort(helperSort)
@@ -166,6 +171,7 @@ function sort(eMail, callback) {
         //console.log(typeof(cursor[0].schedule))
     });
 }
+
 function setSchedule(x, eMail){
     console.log(x);
     User.findOneAndUpdate(

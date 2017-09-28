@@ -24,3 +24,27 @@ CS = module.exports = mongoose.model('Courses', CoursesSchema);
 module.exports = {
   CS: CS
 }
+
+//Finds courses based on subject and course name; ex: BIOL 200
+module.exports.findCourses = function(subj, crs, callback) {
+
+    CS.aggregate([
+        // Filter possible documents
+        { "$match": { "name" : subj } },
+
+        // Unwind the array to denormalize
+        { "$unwind": "$courses" },
+
+        // Match specific array elements
+        { "$match": { "courses.name": crs } },
+
+        // project only course IDs
+        { "$project": {"courses.course": 1} },
+
+        // Group back to array form
+        { "$group": {
+            "_id": "$_id",
+            "courses": { "$push": "$courses" }
+        }}
+    ], callback)
+};
