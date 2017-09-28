@@ -2,39 +2,42 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
+//Vote object to track users votes on certain fields
+const Vote = mongoose.Schema({
+    vote: {type: Number},
+    user: {type: String}
+})
+
 //Comments for each room's page schema
 const CommentsSchema = mongoose.Schema({
-    poster: {type: String},
+    username: {type: String},
     uVote: {type: Number},
     dVote: {type: Number},
+    votes: {type: [Vote]},
     content: {type: String},
     date:{type: Date},
-    tags:{ //thinking of "tags" that user can check when posting a comment
-        stFriendly: {type: Boolean},
-        isClean: {type: Boolean},
-        isSmelly: {type: Boolean},
-        hasAC: {type: Boolean},
-    }
 })
 
 //Room Information schema
 const RoomInfoSchema = mongoose.Schema({
+    /** NEEDS TO BE UPDATED W/ NEW SCHEMA
     validRoom:{ //need to discuss how to make this property for multiple open times
         uVote: {type: Number},
-        dVote: {type: Number}
+        dVote: {type: Number},
+        votes: {type: [Vote]},
     },
+     **/
     hasOutlets: {
         uVote: {type: Number},
-        dVote: {type: Number}
+        dVote: {type: Number},
+        votes: {type: [Vote]},
     },
-    whiteBoard: {type: Boolean}, //upvote downvote?? T/F for now
-    size: {
-        sml: {type: Number}, //voting for each size
-        med: {type: Number},
-        lrg: {type: Number}
+    whiteBoard: {
+        uVote: {type: Number},
+        dVote: {type: Number},
+        votes: {type: [Vote]},
     },
     comments: {type: [UserComments] },
-    roomImg: {type: String}
 });
 
 // Export room info schema
