@@ -106,14 +106,14 @@ router.post('/getschedule', (req, res) =>{
 router.post('/addschedule', (req, res) => { //request and response
   //return res.json(req.body.email);
     if(req.body.user.email){ //check if valid request
-      User.addScheduleItem(req.body.email, req.body.crsID (err, courses) => { //callback function that returns list of courses
+      User.addScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
         console.log(courses); //display for testing
         return res.json(courses); //display for testing
       })
     }
     else{
       return res.json({error: "Bad Request"}); //bad request
-  }
+    }
 })
 
 //POST Request to route 'editing a schedule item from a user's schedule'
@@ -124,7 +124,8 @@ router.post('/editschedule', (req, res) => {
          console.log(course);
           return res.json(course);
      })
-    }else{
+    }
+    else{
       return res.json(({error: "Bad Request"}))
     }
 })
