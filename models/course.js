@@ -3,8 +3,8 @@ const config = require('../config/database');
 
 // Class Section Schema
 const CourseSchema = mongoose.Schema({
-  name : {type: String},
-  course : {type: String},
+  num : {type: String},
+  sec : {type: String},
   day : {type: String},
   time : {type: String},
   room : {type: String},
@@ -35,10 +35,10 @@ module.exports.findCourses = function(subj, crs, callback) {
         { "$unwind": "$courses" },
 
         // Match specific array elements
-        { "$match": { "courses.name": crs } },
+        { "$match": { "courses.num": crs } },
 
         // project only course IDs
-        { "$project": {"courses.course": 1} },
+        { "$project": {"courses.sec": 1} },
 
         // Group back to array form
         { "$group": {

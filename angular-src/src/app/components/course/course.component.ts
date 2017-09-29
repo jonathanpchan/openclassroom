@@ -16,7 +16,7 @@ export class CourseComponent implements OnInit {
     this.courseNames = []
     this.authService.getCourseNames().subscribe(names => {
       for (let name in names.Courses) {
-        this.courseNames.push(names.Courses[name].name);
+        this.courseNames.push(names.Courses[name].name)
       }
     },
     err => {

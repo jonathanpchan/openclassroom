@@ -119,7 +119,7 @@ $('.courseBlock').each( function(i, e)     {
                         || sec == "&#xA0;"
                 )){
                     arr.push(new classSection(name, sec, day, time, room))
-                    initCourseList.push({"name": name, "course" : sec, "day" : day, "time" : time, "location" : room, "prof" : prof})
+                    initCourseList.push({"num": name, "sec" : sec, "day" : day, "time" : time, "location" : room, "prof" : prof})
                 }
             }
             target = target.next();
@@ -390,38 +390,42 @@ var title = ""
 var tempCourseList = []
 for (var i = 0; i < initCourseList.length; i++)
 {
-    // Split into [0] = COURSE NAME and [1] = COURSE #
-    let split = initCourseList[i].name.split(" ");
+    // CourseName ex. From "S/I 60" to "S/I "
+    let courseName = initCourseList[i].num.match(/^[a-zA-Z &/]*/)
+    // From "S/I " to "S/I"
+    courseName = courseName[0].substring(0, courseName[0].length-1)
+    // CourseNumber ex. From "S/I 60" to "60"
+    let courseNumber = initCourseList[i].num.replace(/^[a-zA-Z &/]*/, '')
     // Initial Case
     if (i == 0)
     {
-        initCourseList[i].name = split[1]
+        initCourseList[i].num = courseNumber
         tempCourseList.push(initCourseList[i])
-        title = split[0]
+        title = courseName
     }
     // Common Case
-    else if (i != initCourseList[i].length - 1)
+    else if (i != initCourseList[i].length - 1) 
     {
         // Push if same name
-        if (title == split[0])
+        if (title == courseName)
         {
-            initCourseList[i].name = split[1]
+            initCourseList[i].num = courseNumber
             tempCourseList.push(initCourseList[i])
         }
         // Push to courseList and reinitialize if different name
         else
         {
             courseList.push({"name" : title, courses : tempCourseList})
-            title = split[0]
+            title = courseName
             tempCourseList = []
-            initCourseList[i].name = split[1]
+            initCourseList[i].num = courseNumber
             tempCourseList.push(initCourseList[i])
         }
     }
     // End Case
     else
     {
-        initCourseList[i].name = split[1]
+        initCourseList[i].num = courseNumber
         tempCourseList.push(initCourseList[i])
         courseList.push({"name" : title, courses : tempCourseList})
     }
