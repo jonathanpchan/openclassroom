@@ -464,46 +464,86 @@ function insertToDB(){
     const build = require('../models/building');
     // Grab the schema used by said model
     const bs = mongoose.model('Building', build.BS.schema);
+    var rs = require('../models/roomInfo_classTimes');
+    var ri = mongoose.model('RoomInfoOpenTimes', rs.schema )
     bs.collection.drop()
+    ri.collection.drop()
+
+    var RoomInfo_classTimesARR = []
 
     var fullDBArr = []
 
     function dbAddBuildings(values1, key1, map1){
       //  console.log("adding : " + key1)
-        var dbRoomsInBuildingArr = []
+        var dbRoomsInBuildingArr = [];
         
             function dbAddRoomsToBuilding(values, key, map){
 
-            function DBrooms(arr){
-                tarr = []
-                for (let i in arr){
-                    tarr.push({
-                        name: arr[i].name,
-                        sec: arr[i].sec,
-                        days: arr[i].day,
-                        location: arr[i].location,
-                        st: arr[i].stimeInMin,
-                        et: arr[i].etimeInMin
-                    })
+                function DBrooms(arr){
+                    tarr = []
+                    for (let i in arr){
+                        tarr.push({
+                            name: arr[i].name,
+                            sec: arr[i].sec,
+                            days: arr[i].day,
+                            location: arr[i].location,
+                            st: arr[i].stimeInMin,
+                            et: arr[i].etimeInMin
+                        })
+
+                        
+                    }
+                    return tarr
+
                 }
-                return tarr
+                //new function for room info class times schema
+                function DBroomsForRoomInfo(otherArr){
+                    tarr2 = []
+                    for (let i in otherArr){
+                        tarr2.push({
+                            st: otherArr[i].stimeInMin,
+                            et: otherArr[i].etimeInMin,
+                            uVote:0,
+                            dVote:0,
+                            tVote:0
+                        })
+                    }
+                    return tarr2
+                }
+                
+                var mon1 = DBrooms(values.mon)
+                var tue1 = DBrooms(values.tue)
+                var wed1 = DBrooms(values.wed)
+                var thu1 = DBrooms(values.thu)
+                var omon1 = DBrooms(values.openTimesMon)
+                var otue1 = DBrooms(values.openTimesTue)
+                var owed1 = DBrooms(values.openTimesWed)
+                var othu1 = DBrooms(values.openTimesThu)
+                //new stuff for room info schema
+                var mon2 = DBroomsForRoomInfo(values.openTimesMon)
+                var tue2 = DBroomsForRoomInfo(values.openTimesTue)
+                var wed2 = DBroomsForRoomInfo(values.openTimesWed)
+                var thu2 = DBroomsForRoomInfo(values.openTimesThu)
 
-            }
-            
-            var mon1 = DBrooms(values.mon)
-            var tue1 = DBrooms(values.tue)
-            var wed1 = DBrooms(values.wed)
-            var thu1 = DBrooms(values.thu)
-            var omon1 = DBrooms(values.openTimesMon)
-            var otue1 = DBrooms(values.openTimesTue)
-            var owed1 = DBrooms(values.openTimesWed)
-            var othu1 = DBrooms(values.openTimesThu)
+                
+                dbRoomsInBuildingArr.push(
+                    {
+                        name: values.room, 
+                        mon : mon1, tue : tue1, wed : wed1, thu : thu1,
+                        omon : omon1, otue : otue1, owed : owed1, othu : thu1                    
+                    }
+                )
 
-            
-            dbRoomsInBuildingArr.push({name: values.room, 
-                                       mon : mon1, tue : tue1, wed : wed1, thu : thu1,
-                                       omon : omon1, otue : otue1, owed : owed1, othu : thu1
-                                    })
+                RoomInfo_classTimesARR.push(
+                    {
+                        building : key1,
+                        room: key,
+                        mon: mon2,
+                        tue: tue2,
+                        wed: wed2,
+                        thu: thu2
+                    }
+                )
             //dbRoomsInBuildingArr.push({name: values.room})
           
         }
@@ -530,6 +570,7 @@ function insertToDB(){
     bmap.forEach(dbAddBuildings)
 
     bs.collection.insert(fullDBArr, onInsert('Buildings'))
+    ri.collection.insert(RoomInfo_classTimesARR, onInsert('RoomInfoOpenTimes'))
 
     //--------Insert Courses into database----------------
     // Require building model to access add function
