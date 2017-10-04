@@ -4,7 +4,6 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
-const Building = require('../models/building');
 const mongoose = require('mongoose');
 const Course = require('../models/course');
 const CS = mongoose.model('Courses', Course.CS.Schema);
@@ -115,18 +114,18 @@ router.post('/addschedule', (req, res) => { //request and response
     }
 })
 
-//Finds courses using a subject and course number
-router.post('/findcourses', (req, res) => {
-    if(req.body.user.email){
-      Course.findCourses(req.body.subj, req.body.crs, (err, x) =>
-    {
-        console.log(x[0])
-    return res.json(x)
-})
-} else {
-    return res.json(({error: "Bad Request"}))
-}
-})
+// //Finds courses using a subject and course number
+// router.post('/findcourses', (req, res) => {
+//     if(req.body.user.email){
+//       Course.findCourses(req.body.subj, req.body.crs, (err, x) =>
+//     {
+//         console.log(x[0])
+//     return res.json(x)
+// })
+// } else {
+//     return res.json(({error: "Bad Request"}))
+// }
+// })
 
 // Get request getting all the documents
 router.get('/names', (req, res, next) => {
@@ -141,19 +140,15 @@ router.get('/names', (req, res, next) => {
   });
 });
 
-//OLD
-/**
- //POST Request to route 'editing a schedule item from a user's schedule'
- router.post('/editschedule', (req, res) => {
-    //return res.json(req.body.email);
-    if(req.body.user.email){
-     User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
-         console.log(course);
-          return res.json(course);
-     })
+// Get all courses for cache
+router.get('/courses', (req, res, next) => {
+  Course.getCourses((err, Courses) => {
+    if(err) throw err;
+    if(Courses == "") { //if Courses is empty return false
+      return res.json({success: false, msg: 'Courses not found'});
     }
-    else{
-      return res.json(({error: "Bad Request"}))
+    else { //Otherwise will return names of courses
+      return res.json({success: true, Courses});
     }
-})
- **/
+  });
+});

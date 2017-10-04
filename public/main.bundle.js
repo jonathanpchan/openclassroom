@@ -81,6 +81,14 @@ var AuthService = (function () {
         return this.http.get('http://localhost:3000/users/names', { headers: headers }).map(function (res) { return res.json(); });
         //return this.http.get('users/coursenames', {headers: headers}).map(res => res.json());
     };
+    AuthService.prototype.getCourses = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        // this.loadToken();
+        // headers.append('Authorization', this.authToken);
+        headers.append('Content-Type', 'application/json');
+        return this.http.get('http://localhost:3000/users/courses', { headers: headers }).map(function (res) { return res.json(); });
+        //return this.http.get('users/courses', {headers: headers}).map(res => res.json());
+    };
     AuthService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
         this.authToken = token;
@@ -636,18 +644,114 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var CourseComponent = (function () {
     function CourseComponent(authService) {
         this.authService = authService;
-        this.courseNames = [];
+        this.courseChoice = null;
+        this.confirm = false;
     }
     CourseComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.courseNames = [];
-        this.authService.getCourseNames().subscribe(function (names) {
+        this.courseNameOptions = [];
+        this.authService.getCourses().subscribe(function (names) {
             for (var name in names.Courses) {
-                _this.courseNames.push(names.Courses[name].name);
+                _this.courseNameOptions.push(names.Courses[name].name);
             }
         }, function (err) {
             console.log(err);
         });
+    };
+    CourseComponent.prototype.getCourseNumOptions = function () {
+        if (this.courseNameOptions != null) {
+            // Reset the data that is displayed
+            this.courseNumOptions = [];
+            this.courseChoiceOptions = null;
+            // Populate current course array to point to specific course name
+            this.currCourseName = this.courseAll;
+            for (var all in this.currCourseName) {
+                if (this.currCourseName[all].name == this.courseName) {
+                    this.currCourseName = this.currCourseName[all]["courses"];
+                    break;
+                }
+            }
+            // Populate the course num options from current course array
+            for (var courses in this.currCourseName) {
+                this.courseNumOptions.push(this.currCourseName[courses]["num"]);
+            }
+            // Made display sorted and unique
+            this.courseNumOptions = this.makeUnique(this.courseNumOptions.sort());
+        }
+    };
+    CourseComponent.prototype.getCourseChoiceOptions = function () {
+        if (this.courseNumOptions != null) {
+            this.courseChoiceOptions = [];
+            // Populate the choices the user can pick for the class they want to add
+            for (var courses in this.currCourseName) {
+                if (this.currCourseName[courses].num == this.courseNum) {
+                    this.courseChoiceOptions.push(this.currCourseName[courses]);
+                }
+            }
+            // Sort choices by section (no need to make unique since section number is unique)
+            this.courseChoiceOptions = this.courseChoiceOptions.sort(function (a, b) { return a.sec - b.sec; });
+        }
+    };
+    CourseComponent.prototype.change = function () {
+        console.log();
+    };
+    // Gets all courses and puts them into courseAll as "cache"
+    CourseComponent.prototype.cache = function () {
+        var _this = this;
+        if (this.courseAll == null) {
+            this.courseAll = [];
+            this.authService.getCourses().subscribe(function (all) {
+                for (var course in all.Courses) {
+                    _this.courseAll.push(all.Courses[course]);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        }
+    };
+    CourseComponent.prototype.getCurrItem = function () {
+        // for (let i in this.courseAll[this.courseName]["courses"]) {
+        //   if (this.courseAll[this.courseName]["courses"][i].sec == this.courseChoiceOptions) {
+        //     this.currItem = this.courseAll[this.courseName]["courses"][i]
+        //     break;
+        //   }
+        // }
+    };
+    CourseComponent.prototype.onSubmit = function () {
+        if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) {
+            this.confirm = true;
+            console.log(this.courseChoice);
+            this.confirmMessage = this.courseName + " " + this.courseChoice.num + " Class # " + this.courseChoice.sec + " " + this.courseChoice.day + " " + this.courseChoice.time + " " + this.courseChoice.location;
+            // (TEMP) Get the email of the user
+            var email = localStorage.getItem('user');
+            email = JSON.parse(email).email;
+        }
+    };
+    CourseComponent.prototype.addClick = function (answer) {
+        if (answer) {
+            console.log("A");
+        }
+        else {
+            // Reset
+            this.courseNumOptions = null;
+            this.courseChoiceOptions = null;
+            this.courseChoice = null;
+            this.confirm = false;
+        }
+    };
+    // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
+    // Take a SORTED array, determine unique values, and then return
+    CourseComponent.prototype.makeUnique = function (arr) {
+        var tempArr = arr;
+        for (var i = 1; i < tempArr.length;) {
+            if (tempArr[i - 1] === tempArr[i]) {
+                tempArr.splice(i, 1);
+            }
+            else {
+                i++;
+            }
+        }
+        return tempArr;
     };
     return CourseComponent;
 }());
@@ -1874,7 +1978,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <app-navbar class
 /* 194 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n  <h1 style=\"text-align: center;\" id=\"title\">Add a Course</h1>\r\n  <select class=\"form-control\" [(ngModel)]=\"course\" name=\"course\"> <!--(focus)=\"displayButtons($event)\">-->\r\n    <option *ngFor=\"let courseName of courseNames\"> {{courseName}} </option>\r\n  </select>\r\n</div>"
+module.exports = "<form *ngIf=\"!confirm\">\r\n  <div class=\"form-group\">\r\n    <!-- 1) Choosing the course name -->\r\n    <h1 style=\"text-align: center\">Add a Course</h1>\r\n    <h2>Department</h2>\r\n    <select class=\"form-control\" style=\"text-align: center\" [(ngModel)]=\"courseName\" name=\"courseName\" (focus)=\"cache()\" (change)=\"getCourseNumOptions()\">\r\n      <option selected hidden></option>\r\n      <option *ngFor=\"let cname of courseNameOptions\">{{cname}}</option>\r\n    </select>\r\n\r\n    <!-- 2) Choosing the course number -->\r\n    <div *ngIf=\"courseNumOptions\">\r\n      <h2>Course Number</h2>\r\n      <select class=\"form-control\" style=\"text-align: center\" [(ngModel)]=\"courseNum\" name=\"courseNum\" (change)=\"getCourseChoiceOptions()\">\r\n        <option selected hidden></option>\r\n        <option *ngFor=\"let cid of courseNumOptions\"> {{cid}}</option>\r\n      </select>\r\n    </div>\r\n\r\n    <!-- 3) Finally choosing a class -->\r\n    <div *ngIf=\"courseChoiceOptions\">\r\n      <h2>Course</h2>\r\n      <select class=\"form-control\" style=\"text-align: center\" [(ngModel)]=\"courseChoice\" name=\"courseChoice\" (change)=\"change()\">\r\n        <option selected hidden></option>\r\n        <option *ngFor=\"let cchoice of courseChoiceOptions\" [ngValue]=\"cchoice\"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"onSubmit()\">\r\n</form>\r\n\r\n<div *ngIf=\"confirm\" id=\"confirm\" style=\"text-align: center\">\r\n  <h1>Are you sure you want to add?</h1>\r\n  <h2>{{confirmMessage}}</h2>\r\n  <div>\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"addClick(true)\">\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"addClick(false)\">\r\n  </div>\r\n</div>"
 
 /***/ }),
 /* 195 */

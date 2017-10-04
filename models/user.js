@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
+// DO NOT DELETE. THIS IS NECESSARY FOR GET REQUESTS.
+const build = require('../models/building');
 const classes = require('../models/course');
 const CS = mongoose.model('Courses', classes.CS.Schema);
 var ObjectId = require('mongodb').ObjectID;
@@ -15,7 +17,6 @@ const UserSchema = mongoose.Schema({
   regdate: { type: Date, required: true },
   emailVerified: {type: Boolean, required: false},
   schedule: {type: [CS.schema] }
-
 });
 
 // Export User Schema
