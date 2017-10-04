@@ -104,8 +104,7 @@ router.post('/getschedule', (req, res) =>{
 
 //POST Request to route 'adding a schedule item to a user's schedule'
 router.post('/addschedule', (req, res) => { //request and response
-  //return res.json(req.body.email);
-    if(req.body.user.email){ //check if valid request
+    if(req.body.email){ //check if valid request
       User.addScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
         console.log(courses); //display for testing
         return res.json(courses); //display for testing
@@ -113,20 +112,6 @@ router.post('/addschedule', (req, res) => { //request and response
     }
     else{
       return res.json({error: "Bad Request"}); //bad request
-    }
-})
-
-//POST Request to route 'editing a schedule item from a user's schedule'
-router.post('/editschedule', (req, res) => {
-    //return res.json(req.body.email);
-    if(req.body.user.email){
-     User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
-         console.log(course);
-          return res.json(course);
-     })
-    }
-    else{
-      return res.json(({error: "Bad Request"}))
     }
 })
 
@@ -155,3 +140,20 @@ router.get('/names', (req, res, next) => {
     }
   });
 });
+
+//OLD
+/**
+ //POST Request to route 'editing a schedule item from a user's schedule'
+ router.post('/editschedule', (req, res) => {
+    //return res.json(req.body.email);
+    if(req.body.user.email){
+     User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
+         console.log(course);
+          return res.json(course);
+     })
+    }
+    else{
+      return res.json(({error: "Bad Request"}))
+    }
+})
+ **/

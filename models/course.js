@@ -7,7 +7,7 @@ const CourseSchema = mongoose.Schema({
   sec : {type: String},
   day : {type: String},
   time : {type: String},
-  room : {type: String},
+  location : {type: String},
   prof : {type: String},
 });
 

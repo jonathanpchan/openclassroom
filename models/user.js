@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
-const build = require('../models/building');
-const CS = mongoose.model('Class', build.CS.Schema);
-const Schema = mongoose.Schema;
 const classes = require('../models/course');
-const CSS = mongoose.model('Courses', classes.CS.Schema);
+const CS = mongoose.model('Courses', classes.CS.Schema);
 var ObjectId = require('mongodb').ObjectID;
 
 // User Schema
@@ -105,26 +102,29 @@ module.exports.addScheduleItem = function(eMail, u, callback) {
 **/
 
 module.exports.addScheduleItem = function(eMail, crsID, callback) {
-
-    User.findOneAndUpdate(
+    CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
+        User.findOneAndUpdate(
         {"email": eMail},
         {
             $push: {
                 "schedule": {
-                    "name": u.name,
-                    "sec": u.sec,
-                    "days": u.days,
-                    "location": u.location,
-                    "st": u.st,
-                    "et": u.et
+                    name: x[0].name,
+                    courses: {
+                        num : x[0].courses[0].num,
+                        sec : x[0].courses[0].sec,
+                        day :  x[0].courses[0].day,
+                        time : x[0].courses[0].time,
+                        location : x[0].courses[0].location,
+                        prof : x[0].courses[0].prof
+                    }
                 }
             }
         }, {new: true}, function(err) {
-        if (err) {
-            console.log("Something wrong when updating data!");
-        }
-        sort(eMail, setSchedule)
-        User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+            User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+        })
     })
 };
 
