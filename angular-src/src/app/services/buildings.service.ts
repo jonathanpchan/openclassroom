@@ -10,16 +10,16 @@ import 'rxjs/add/operator/catch';
 export class BuildingsService {
   constructor(private http:Http) { }
 
-  getBuildings(name : String) : Observable<any> {
+  getBuilding(name : String) : Observable<any> {
     let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/buildings', {name}).map(res => res.json()).catch(this.handleError);
-    // return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
+    return this.http.post('http://localhost:3000/building', {name}).map(res => res.json()).catch(this.handleError);
+    // return this.http.post('building', {name}).map(res => res.json()).catch(this.handleError);
   }
 
-  getAll() : Observable<any> {
+  getBuildings() : Observable<any> {
     let headers = new Headers({'Content-Type' : 'application/json' });
     return this.http.get('http://localhost:3000/buildings', null).map(res => res.json()).catch(this.handleError);
-    // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+    // return this.http.get('buildings', null).map(res => res.json()).catch(this.handleError);
   }
 
   getBuildingNames() : Observable<any> {

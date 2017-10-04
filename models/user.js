@@ -109,14 +109,15 @@ module.exports.addScheduleItem = function(eMail, crsID, callback) {
         {
             $push: {
                 "schedule": {
-                    name: x[0].name,
+                    name: x.name,
                     courses: {
-                        num : x[0].courses[0].num,
-                        sec : x[0].courses[0].sec,
-                        day :  x[0].courses[0].day,
-                        time : x[0].courses[0].time,
-                        location : x[0].courses[0].location,
-                        prof : x[0].courses[0].prof
+                        // num : x[0].courses[0].num,
+                        // sec : x[0].courses[0].sec,
+                        // day :  x[0].courses[0].day,
+                        // time : x[0].courses[0].time,
+                        // location : x[0].courses[0].location,
+                        // prof : x[0].courses[0].prof
+                        num : "Hello"
                     }
                 }
             }

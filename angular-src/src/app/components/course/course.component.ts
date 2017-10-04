@@ -112,16 +112,19 @@ export class CourseComponent implements OnInit {
       this.confirm=true;
       console.log(this.courseChoice)
       this.confirmMessage = this.courseName+" "+this.courseChoice.num+" Class # "+this.courseChoice.sec+" "+this.courseChoice.day+" "+this.courseChoice.time+" "+this.courseChoice.location;
-      // (TEMP) Get the email of the user
-      let email = localStorage.getItem('user')
-      email = JSON.parse(email).email
+
     }
   }
 
   addClick(answer : boolean) {
     if (answer)
     {
-      console.log("A")
+      // (TEMP) Get the email of the user
+      let email = localStorage.getItem('user')
+      email = JSON.parse(email).email
+      console.log(this.courseChoice.sec)
+      this.authService.addScheduleItem(email, this.courseChoice.sec)
+      console.log("done")
     }
     else
     {

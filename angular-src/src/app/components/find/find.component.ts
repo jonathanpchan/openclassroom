@@ -64,7 +64,7 @@ export class FindComponent implements OnInit {
         // Clear roomsList for new list
         this.roomsList = [];
         // 3) Notify buildingService to get the buildings from MongoDB
-        this.buildingService.getBuildings(this.name).subscribe(buildingList => {
+        this.buildingService.getBuilding(this.name).subscribe(buildingList => {
           // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
           let roomsJSON = buildingList.OpenBuilding[0].rooms;
           for (let room in roomsJSON)

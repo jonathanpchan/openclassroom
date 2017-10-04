@@ -65,21 +65,13 @@ var AuthService = (function () {
         return this.http.get('http://localhost:3000/users/schedule', { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.get('users/schedule', {headers: headers}).map(res => res.json());
     };
-    AuthService.prototype.getBuildingList = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        // this.loadToken();
-        // headers.append('Authorization', this.authToken);
-        headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('buildings', {headers: headers}).map(res => res.json());
-    };
     AuthService.prototype.getCourseNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:3000/users/names', { headers: headers }).map(function (res) { return res.json(); });
-        //return this.http.get('users/coursenames', {headers: headers}).map(res => res.json());
+        return this.http.get('http://localhost:3000/users/courses/names', { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.get('users/courses/names', {headers: headers}).map(res => res.json());
     };
     AuthService.prototype.getCourses = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
@@ -87,7 +79,15 @@ var AuthService = (function () {
         // headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
         return this.http.get('http://localhost:3000/users/courses', { headers: headers }).map(function (res) { return res.json(); });
-        //return this.http.get('users/courses', {headers: headers}).map(res => res.json());
+        // return this.http.get('users/courses', {headers: headers}).map(res => res.json());
+    };
+    AuthService.prototype.addScheduleItem = function (email, sec) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        // this.loadToken();
+        // headers.append('Authorization', this.authToken);
+        headers.append('Content-Type', 'application/json');
+        return this.http.get('http://localhost:3000/users/addschedule', { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.get('users/addschedule', {headers: headers}).map(res => res.json());
     };
     AuthService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
@@ -149,15 +149,15 @@ var BuildingsService = (function () {
     function BuildingsService(http) {
         this.http = http;
     }
-    BuildingsService.prototype.getBuildings = function (name) {
+    BuildingsService.prototype.getBuilding = function (name) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/buildings', { name: name }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
+        return this.http.post('http://localhost:3000/building', { name: name }).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.post('building', {name}).map(res => res.json()).catch(this.handleError);
     };
-    BuildingsService.prototype.getAll = function () {
+    BuildingsService.prototype.getBuildings = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.get('http://localhost:3000/buildings', null).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings/times', null).map(res => res.json()).catch(this.handleError);
+        // return this.http.get('buildings', null).map(res => res.json()).catch(this.handleError);
     };
     BuildingsService.prototype.getBuildingNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
@@ -326,7 +326,7 @@ var FindNowComponent = (function () {
             // Clear roomsList for new list
             this.roomsList = [];
             // 2) Notify buildingService to get the buildings from MongoDB
-            this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
+            this.buildingService.getBuilding(this.name).subscribe(function (buildingList) {
                 // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
                 var roomsJSON = buildingList.OpenBuilding[0].rooms;
                 for (var room in roomsJSON) {
@@ -722,14 +722,16 @@ var CourseComponent = (function () {
             this.confirm = true;
             console.log(this.courseChoice);
             this.confirmMessage = this.courseName + " " + this.courseChoice.num + " Class # " + this.courseChoice.sec + " " + this.courseChoice.day + " " + this.courseChoice.time + " " + this.courseChoice.location;
-            // (TEMP) Get the email of the user
-            var email = localStorage.getItem('user');
-            email = JSON.parse(email).email;
         }
     };
     CourseComponent.prototype.addClick = function (answer) {
         if (answer) {
-            console.log("A");
+            // (TEMP) Get the email of the user
+            var email = localStorage.getItem('user');
+            email = JSON.parse(email).email;
+            console.log(this.courseChoice.sec);
+            this.authService.addScheduleItem(email, this.courseChoice.sec);
+            console.log("done");
         }
         else {
             // Reset
@@ -1006,7 +1008,7 @@ var FindTimesComponent = (function () {
                 // Clear roomsList for new list
                 this.roomsList = [];
                 // 3) Notify buildingService to get the buildings from MongoDB
-                this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
+                this.buildingService.getBuilding(this.name).subscribe(function (buildingList) {
                     // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
                     var roomsJSON = buildingList.OpenBuilding[0].rooms;
                     for (var room in roomsJSON) {
@@ -1180,7 +1182,7 @@ var FindComponent = (function () {
                 // Clear roomsList for new list
                 this.roomsList = [];
                 // 3) Notify buildingService to get the buildings from MongoDB
-                this.buildingService.getBuildings(this.name).subscribe(function (buildingList) {
+                this.buildingService.getBuilding(this.name).subscribe(function (buildingList) {
                     // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
                     var roomsJSON = buildingList.OpenBuilding[0].rooms;
                     for (var room in roomsJSON) {

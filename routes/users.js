@@ -105,8 +105,8 @@ router.post('/getschedule', (req, res) =>{
 router.post('/addschedule', (req, res) => { //request and response
     if(req.body.email){ //check if valid request
       User.addScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
-        console.log(courses); //display for testing
-        return res.json(courses); //display for testing
+        //console.log(courses); //display for testing
+        return res.json(courses);
       })
     }
     else{
@@ -128,7 +128,7 @@ router.post('/addschedule', (req, res) => { //request and response
 // })
 
 // Get request getting all the documents
-router.get('/names', (req, res, next) => {
+router.get('/courses/names', (req, res, next) => {
   Course.getCourseNames((err, Courses) => {
     if(err) throw err;
     if(Courses == "") { //if Courses is empty return false
