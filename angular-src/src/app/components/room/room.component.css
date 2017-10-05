@@ -1,0 +1,17 @@
+.day
+{
+  display:inline-block;
+}
+
+.feature{
+  display: inline-block;
+}
+
+.vote
+{
+  display:inline-block;
+}
+
+.comment{
+  display: inline-block;
+}
