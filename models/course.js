@@ -3,6 +3,7 @@ const config = require('../config/database');
 
 // Class Section Schema
 const CourseSchema = mongoose.Schema({
+  num : {type: String},
   sec : {type: String}, 
   day : {type: String}, 
   time : {type: String}, 

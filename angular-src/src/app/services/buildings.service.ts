@@ -12,8 +12,8 @@ export class BuildingsService {
 
   getBuilding(name : String) : Observable<any> {
     let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/building', {name}).map(res => res.json()).catch(this.handleError);
-    // return this.http.post('building', {name}).map(res => res.json()).catch(this.handleError);
+    return this.http.post('http://localhost:3000/buildings', {name}).map(res => res.json()).catch(this.handleError);
+    // return this.http.post('buildings', {name}).map(res => res.json()).catch(this.handleError);
   }
 
   getBuildings() : Observable<any> {
