@@ -106,7 +106,34 @@ router.post('/addschedule', (req, res) => { //request and response
     }
 })
 
+
 // Get all course names
+router.post('/schedule/delete', (req, res) => { //request and response
+    if(req.body.email){ //check if valid request
+    User.deleteScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
+        //console.log(courses); //display for testing
+        return res.json(courses);
+})
+}
+else{
+    return res.json({error: "Bad Request"}); //bad request
+}
+})
+// //Finds courses using a subject and course number
+// router.post('/findcourses', (req, res) => {
+//     if(req.body.user.email){
+//       Course.findCourses(req.body.subj, req.body.crs, (err, x) =>
+//     {
+//         console.log(x[0])
+//     return res.json(x)
+// })
+// } else {
+//     return res.json(({error: "Bad Request"}))
+// }
+// })
+
+// Get request getting all the documents
+
 router.get('/courses/names', (req, res, next) => {
   Course.getCourseNames((err, Courses) => {
     if(err) throw err;
