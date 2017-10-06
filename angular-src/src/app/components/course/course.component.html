@@ -20,7 +20,7 @@
     <!-- 3) Finally choosing a class -->
     <div *ngIf="courseChoiceOptions">
       <h2>Course</h2>
-      <select class="form-control" style="text-align: center" [(ngModel)]="courseChoice" name="courseChoice" (change)="change()">
+      <select class="form-control" style="text-align: center" [(ngModel)]="courseChoice" name="courseChoice">
         <option selected hidden></option>
         <option *ngFor="let cchoice of courseChoiceOptions" [ngValue]="cchoice"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>
       </select>

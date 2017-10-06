@@ -82,30 +82,22 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
-// Profile GET request
-router.post('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-  return res.json({user: req.user});
-  //return res.json({user: "bobbiii", email: "lolllerslol.com"});
-});
-
-module.exports = router;
-
-router.post('/getschedule', (req, res) =>{
-  if (req.body.user.name){
-    User.getUserSchedule(req.body.user.email, (err, sched) =>{
+// Get User Schedule based on email
+router.post('/schedule', (req, res) =>{
+  if (req.body.email) {
+    User.getSchedule(req.body.email, (err, sched) =>{
       return res.json(sched);
     })
   }
-  else{
-    return res.json({error: "bad request"});
+  else {
+    return res.json({error: "Bad request"});
   }
 })
 
-//POST Request to route 'adding a schedule item to a user's schedule'
+// Add a schedule item based on email and section #
 router.post('/addschedule', (req, res) => { //request and response
-    if(req.body.email){ //check if valid request
+  if(req.body.email){ //check if valid request
       User.addScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
-        //console.log(courses); //display for testing
         return res.json(courses);
       })
     }
@@ -114,20 +106,7 @@ router.post('/addschedule', (req, res) => { //request and response
     }
 })
 
-// //Finds courses using a subject and course number
-// router.post('/findcourses', (req, res) => {
-//     if(req.body.user.email){
-//       Course.findCourses(req.body.subj, req.body.crs, (err, x) =>
-//     {
-//         console.log(x[0])
-//     return res.json(x)
-// })
-// } else {
-//     return res.json(({error: "Bad Request"}))
-// }
-// })
-
-// Get request getting all the documents
+// Get all course names
 router.get('/courses/names', (req, res, next) => {
   Course.getCourseNames((err, Courses) => {
     if(err) throw err;
@@ -147,8 +126,10 @@ router.get('/courses', (req, res, next) => {
     if(Courses == "") { //if Courses is empty return false
       return res.json({success: false, msg: 'Courses not found'});
     }
-    else { //Otherwise will return names of courses
+    else { //Otherwise will all course documents
       return res.json({success: true, Courses});
     }
   });
 });
+
+module.exports = router;

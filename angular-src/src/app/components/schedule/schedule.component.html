@@ -16,28 +16,23 @@
           <td>LOCATION</td>
           <td>INSTRUCTOR</td>
         </tr>
-        <td *ngIf="schedule; else display" colspan="6" style="border : solid 1px black; vertical-align: top; height:30rem">No Courses</td>
+        <td *ngIf="!schedule; else display" colspan="6" style="border : solid 1px black; vertical-align: top; height:30rem">No Courses</td>
         <ng-template #display>
-          <tr>
-            <td>A</td>
-            <td>B</td>
-            <td>C</td>
-            <td>D</td>
-            <td>E</td>
-            <td>F</td>
-          </tr>
-          <tr>
-            <td>A</td>
-            <td>B</td>
-            <td>C</td>
-            <td>D</td>
-            <td>E</td>
-            <td>F</td>
+          <tr *ngFor="let sched of schedule">
+            <td>{{sched.name}} {{sched.courses[0].num}}</td>
+            <td>{{sched.courses[0].sec}}</td>
+            <td>{{sched.courses[0].day}}</td>
+            <td>{{sched.courses[0].time}}</td>
+            <td>{{sched.courses[0].location}}</td>
+            <td>{{sched.courses[0].prof}}</td>
           </tr>
         </ng-template>
       </tbody>
     </table>
   </div>
-  <input type="button" class="btn btn-primary" style="width : 33%" value="Add Course">
+  <input type="button" class="btn btn-primary" style="width : 33%" value="Add Course" (click)="clickAdd()">
+<div *ngIf="add">
   <app-course></app-course>
+</div>
+  
   

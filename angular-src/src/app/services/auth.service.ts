@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {tokenNotExpired} from 'angular2-jwt';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
@@ -9,20 +10,55 @@ export class AuthService {
   user: any;
   constructor(private http:Http) { }
 
+  //=========== User Registration ============
   registerUser(user){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
     return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
     // return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
   }
 
   authenticateUser(user){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
     return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers}).map(res => res.json());
     // return this.http.post('users/authenticate', user, {headers: headers}).map(res => res.json());
   }
 
+  //=========== Schedule =====================
+  getSchedule(email) : Observable<any> {
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    return this.http.post('http://localhost:3000/users/schedule', email, {headers : headers}).map(res => res.json());
+    // return this.http.post('users/schedule', email, {headers: headers}).map(res => res.json());
+  }
+
+  addScheduleItem(item) {
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    return this.http.post('http://localhost:3000/users/addschedule', item, {headers : headers}).map(res => res.json());
+    // return this.http.post('users/addschedule', item, {headers: headers}).map(res => res.json());
+  }
+
+  //=========== Courses ======================
+  getCourseNames(){
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
+    return this.http.get('http://localhost:3000/users/courses/names', {headers: headers}).map(res => res.json());
+    // return this.http.get('users/courses/names', {headers: headers}).map(res => res.json());
+  }
+
+  getCourses(){
+    // let headers = new Headers({ 'Content-Type' : 'application/json' });
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    let headers = new Headers({'Content-Type' : 'application/json' });
+    return this.http.get('http://localhost:3000/users/courses', {headers: headers}).map(res => res.json());
+    // return this.http.get('users/courses', {headers: headers}).map(res => res.json());
+  }
+
+  //=========== User Token ===================
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
     localStorage.setItem('user', JSON.stringify(user));
@@ -30,48 +66,12 @@ export class AuthService {
     this.user = user;
   }
 
-  getSchedule(){
-    let headers = new Headers();
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/users/schedule', {headers: headers}).map(res => res.json());
-    // return this.http.get('users/schedule', {headers: headers}).map(res => res.json());
+  loadToken() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
   }
 
-  getCourseNames(){
-    let headers = new Headers();
-    // this.loadToken();
-    // headers.append('Authorization', this.authToken);
-    headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/users/courses/names', {headers: headers}).map(res => res.json());
-    // return this.http.get('users/courses/names', {headers: headers}).map(res => res.json());
-  }
-
-  getCourses(){
-    let headers = new Headers();
-    // this.loadToken();
-    // headers.append('Authorization', this.authToken);
-    headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/users/courses', {headers: headers}).map(res => res.json());
-    // return this.http.get('users/courses', {headers: headers}).map(res => res.json());
-  }
-
-  addScheduleItem(email, sec) {
-    let headers = new Headers();
-    // this.loadToken();
-    // headers.append('Authorization', this.authToken);
-    headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/users/addschedule', {headers: headers}).map(res => res.json());
-    // return this.http.get('users/addschedule', {headers: headers}).map(res => res.json());
-  }
-
-  loadToken(){
-     const token = localStorage.getItem('id_token');
-     this.authToken = token;
-  }
-
-  loggedIn(){
+  loggedIn() {
     //need to read id_token due to some update
     return tokenNotExpired('id_token');
   }

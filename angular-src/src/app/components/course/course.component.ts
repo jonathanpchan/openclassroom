@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import {FlashMessagesService} from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-course',
@@ -19,7 +20,7 @@ export class CourseComponent implements OnInit {
   confirm : boolean = false
   confirmMessage : string
 
-  constructor(private authService : AuthService) { }
+  constructor(private authService : AuthService, private flashMessage : FlashMessagesService) { }
 
   ngOnInit() {
     this.courseNameOptions = []
@@ -77,10 +78,6 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  change() {
-    console.log()
-  }
-
   // Gets all courses and puts them into courseAll as "cache"
   cache() {
     if (this.courseAll == null)
@@ -97,43 +94,29 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  getCurrItem() {
-    // for (let i in this.courseAll[this.courseName]["courses"]) {
-    //   if (this.courseAll[this.courseName]["courses"][i].sec == this.courseChoiceOptions) {
-    //     this.currItem = this.courseAll[this.courseName]["courses"][i]
-    //     break;
-    //   }
-    // }
-  }
-
   onSubmit() {
     if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) 
     {
       this.confirm=true;
-      console.log(this.courseChoice)
       this.confirmMessage = this.courseName+" "+this.courseChoice.num+" Class # "+this.courseChoice.sec+" "+this.courseChoice.day+" "+this.courseChoice.time+" "+this.courseChoice.location;
-
     }
   }
 
   addClick(answer : boolean) {
     if (answer)
     {
-      // (TEMP) Get the email of the user
-      let email = localStorage.getItem('user')
-      email = JSON.parse(email).email
-      console.log(this.courseChoice.sec)
-      this.authService.addScheduleItem(email, this.courseChoice.sec)
-      console.log("done")
+      let coursePayload = {
+        email : JSON.parse(localStorage.getItem('user')).email,
+        crsID : this.courseChoice.sec
+      }
+      this.authService.addScheduleItem(coursePayload).subscribe();
+      this.flashMessage.show('Course successfully added', {cssClass: 'alert-success', timeout: 3000})
     }
-    else
-    {
-      // Reset
-      this.courseNumOptions = null;
-      this.courseChoiceOptions = null;
-      this.courseChoice = null;
-      this.confirm = false;
-    }
+    // Reset
+    this.courseNumOptions = null;
+    this.courseChoiceOptions = null;
+    this.courseChoice = null;
+    this.confirm = false;
   }
   
   // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript

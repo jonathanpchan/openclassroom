@@ -8,8 +8,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-  user:Object = {username : "sugi", email : "nlsugi10@gmail.com"};
-  schedule : Object[] = null;
+  user : JSON = JSON.parse(localStorage.getItem('user'))
+  schedule = null;
+  add : boolean = false;
+  delete : boolean = false;
 
   constructor(
     private authService:AuthService,
@@ -17,14 +19,22 @@ export class ScheduleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.authService.getSchedule().subscribe(schedule => {
-    //   this.user = schedule.user;
-    // },
-    // err => {
-    //   console.log(err);
-    //   return false;
-    // })
-    this.user['email'] = "me";
-    this.user['username'] = "Another";
+    let email = this.user["email"]
+    console.log(email)
+    this.authService.getSchedule({email : email}).subscribe(schedule => {
+      console.log(schedule)
+      this.schedule = schedule.schedule
+    },
+    err => {
+      console.log(err)
+    })
+  }
+
+  clickAdd() {
+    this.add = true;
+  }
+  
+  clickDelete() {
+    this.delete = true;
   }
 }
