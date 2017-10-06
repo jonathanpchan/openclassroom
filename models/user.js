@@ -91,6 +91,7 @@ module.exports.addScheduleItem = function(eMail, crsID, callback) {
     })
 };
 
+// Delete section number based on email and section #
 module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
     CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
         User.findOneAndUpdate(
@@ -107,34 +108,3 @@ module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
         })
     })
 };
-
-
-
-
-//editClass finds an objectID and then changes that objectID's contents by a modified class object.
-//for front end; was thinking that user clicks edit button -> edit button triggers page to save objectID of course object
-// -> user edits all fields -> submit sends all fields back as an object with objectID as well.
-module.exports.editScheduleItem = function(eMail, objID, u, callback) {
-    User.findOneAndUpdate(
-    {"email": eMail},
-    {
-      $push: {
-        "schedule": {
-          name: x[0].name,
-          courses: {
-            num : x[0].courses[0].num,
-            sec : x[0].courses[0].sec,
-            day :  x[0].courses[0].day,
-            time : x[0].courses[0].time,
-            location : x[0].courses[0].location,
-            prof : x[0].courses[0].prof
-          }
-        }
-      }
-    }, {new: true}, function(err) {
-      if (err) {
-          console.log("Something wrong when updating data!");
-      }
-      User.find({email: eMail}, {schedule: 1, _id:0}, callback);
-    })
-}

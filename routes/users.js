@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const Course = require('../models/course');
 const CS = mongoose.model('Courses', Course.CS.Schema);
 
-
 // Register POST request
 router.post('/register', (req, res, next) => {
   let newUser = new User({
@@ -95,45 +94,30 @@ router.post('/schedule', (req, res) =>{
 })
 
 // Add a schedule item based on email and section #
-router.post('/addschedule', (req, res) => { //request and response
+router.post('/schedule/add', (req, res) => { //request and response
   if(req.body.email){ //check if valid request
       User.addScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
         return res.json(courses);
       })
     }
-    else{
+    else {
       return res.json({error: "Bad Request"}); //bad request
     }
 })
 
-
-// Get all course names
+// Delete a schedule item based on email and section #
 router.post('/schedule/delete', (req, res) => { //request and response
-    if(req.body.email){ //check if valid request
+  if(req.body.email){ //check if valid request
     User.deleteScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
-        //console.log(courses); //display for testing
-        return res.json(courses);
+      return res.json(courses);
+    })
+  }
+  else {
+      return res.json({error: "Bad Request"}); //bad request
+  }
 })
-}
-else{
-    return res.json({error: "Bad Request"}); //bad request
-}
-})
-// //Finds courses using a subject and course number
-// router.post('/findcourses', (req, res) => {
-//     if(req.body.user.email){
-//       Course.findCourses(req.body.subj, req.body.crs, (err, x) =>
-//     {
-//         console.log(x[0])
-//     return res.json(x)
-// })
-// } else {
-//     return res.json(({error: "Bad Request"}))
-// }
-// })
 
 // Get request getting all the documents
-
 router.get('/courses/names', (req, res, next) => {
   Course.getCourseNames((err, Courses) => {
     if(err) throw err;

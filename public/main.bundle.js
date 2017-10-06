@@ -62,8 +62,15 @@ var AuthService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
-        return this.http.post('http://localhost:3000/users/addschedule', item, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/addschedule', item, {headers: headers}).map(res => res.json());
+        return this.http.post('http://localhost:3000/users/schedule/add', item, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('users/schedule/add', item, {headers: headers}).map(res => res.json());
+    };
+    AuthService.prototype.deleteScheduleItem = function (item) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        // this.loadToken();
+        // headers.append('Authorization', this.authToken);
+        return this.http.post('http://localhost:3000/users/schedule/delete', item, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('users/schedule/delete', item, {headers: headers}).map(res => res.json());
     };
     //=========== Courses ======================
     AuthService.prototype.getCourseNames = function () {
@@ -156,7 +163,7 @@ var BuildingsService = (function () {
     };
     BuildingsService.prototype.getBuildings = function () {
         return this.http.get('http://localhost:3000/buildings').map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.get('buildings', null).map(res => res.json()).catch(this.handleError);
+        // return this.http.get('buildings').map(res => res.json()).catch(this.handleError);
     };
     BuildingsService.prototype.getBuildingNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
@@ -528,7 +535,7 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_validate_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_auth_service__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_buildings_service__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__ = __webpack_require__(69);
@@ -631,7 +638,7 @@ AppModule = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CourseComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -654,6 +661,8 @@ var CourseComponent = (function () {
         this.confirm = false;
         this.afterConfirm = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
+    // ========== Get Options ===============
+    // Get the course names
     CourseComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.courseNameOptions = [];
@@ -665,6 +674,7 @@ var CourseComponent = (function () {
             console.log(err);
         });
     };
+    // Get the course numbers
     CourseComponent.prototype.getCourseNumOptions = function () {
         if (this.courseNameOptions != null) {
             // Reset the data that is displayed
@@ -683,9 +693,10 @@ var CourseComponent = (function () {
                 this.courseNumOptions.push(this.currCourseName[courses]["num"]);
             }
             // Made display sorted and unique
-            this.courseNumOptions = this.makeUnique(this.courseNumOptions.sort());
+            this.courseNumOptions = this.makeUnique(this.courseNumOptions);
         }
     };
+    // Get the course options
     CourseComponent.prototype.getCourseChoiceOptions = function () {
         if (this.courseNumOptions != null) {
             this.courseChoiceOptions = [];
@@ -695,8 +706,6 @@ var CourseComponent = (function () {
                     this.courseChoiceOptions.push(this.currCourseName[courses]);
                 }
             }
-            // Sort choices by section (no need to make unique since section number is unique)
-            this.courseChoiceOptions = this.courseChoiceOptions.sort(function (a, b) { return a.sec - b.sec; });
         }
     };
     // Gets all courses and puts them into courseAll as "cache"
@@ -713,22 +722,37 @@ var CourseComponent = (function () {
             });
         }
     };
+    // ========== Add ===============
+    // On submit, show alternative data (If missing data, then alert)
     CourseComponent.prototype.onSubmit = function () {
         if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) {
             this.confirm = true;
             this.confirmMessage = this.courseName + " " + this.courseChoice.num + " Class # " + this.courseChoice.sec + " " + this.courseChoice.day + " " + this.courseChoice.time + " " + this.courseChoice.location;
         }
+        else {
+            this.flashMessage.show('Please complete all course fields.', { cssClass: 'alert-danger', timeout: 3000 });
+        }
     };
+    // Determine what to do if add or cancel
     CourseComponent.prototype.addClick = function (answer) {
         if (answer) {
+            // Add on back end
             var coursePayload = {
                 email: JSON.parse(localStorage.getItem('user')).email,
                 crsID: this.courseChoice.sec
             };
             this.authService.addScheduleItem(coursePayload).subscribe();
-            this.flashMessage.show('Course successfully added', { cssClass: 'alert-success', timeout: 3000 });
+            // Add on front end
+            var temp = [];
+            temp.push(this.courseChoice);
+            var add = { name: this.courseName, courses: temp };
+            this.afterConfirm.emit(add);
+            // Output
+            this.flashMessage.show('Course successfully added.', { cssClass: 'alert-success', timeout: 3000 });
         }
-        this.afterConfirm.emit(true);
+        else {
+            this.afterConfirm.emit(false);
+        }
     };
     // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
     // Take a SORTED array, determine unique values, and then return
@@ -902,8 +926,7 @@ FindHomeComponent = __decorate([
         selector: 'app-find-home',
         template: __webpack_require__(199),
         styles: [__webpack_require__(182)],
-        // Needed to function call the FindNowComponent
-        providers: [__WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]]
+        providers: [__WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]] // Needed to function call the FindNowComponent
     }),
     __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _b || Object])
 ], FindHomeComponent);
@@ -1114,7 +1137,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1320,7 +1343,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1384,7 +1407,7 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(40);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavbarComponent; });
@@ -1408,17 +1431,21 @@ var NavbarComponent = (function () {
         this.router = router;
         this.flashMessage = flashMessage;
         this.validateService = validateService;
+        this.show = false; // store state
     }
-    NavbarComponent.prototype.ngOnInit = function () {
+    NavbarComponent.prototype.ngOnInit = function () { };
+    // Changes state of dropdown
+    NavbarComponent.prototype.toggle = function () {
+        this.show = !this.show;
     };
+    // On logout, show log out and navigate back to login
     NavbarComponent.prototype.onLogoutClick = function () {
         this.authService.logout();
-        this.flashMessage.show('You are logged out', {
+        this.flashMessage.show('You have logged out.', {
             cssClass: 'alert-success',
             timeout: 3000
         });
-        this.router.navigate(['/login']);
-        return false;
+        this.router.navigate(['/']);
     };
     return NavbarComponent;
 }());
@@ -1442,7 +1469,7 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(15);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
@@ -1563,6 +1590,8 @@ RoomComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScheduleComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1576,53 +1605,86 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ScheduleComponent = (function () {
-    function ScheduleComponent(authService, router) {
+    function ScheduleComponent(authService, router, flashMessage) {
         this.authService = authService;
         this.router = router;
+        this.flashMessage = flashMessage;
         this.user = JSON.parse(localStorage.getItem('user'));
         this.schedule = null;
         this.home = true;
         this.add = false;
         this.delete = false;
+        this.currItem = null;
     }
     ScheduleComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.schedule = [];
         var email = this.user["email"];
         this.authService.getSchedule({ email: email }).subscribe(function (schedule) {
             _this.schedule = schedule.schedule;
+            _this.schedule.sort(_this.sortByCourseName);
         }, function (err) {
             console.log(err);
         });
     };
+    // ========== Add ==================
+    // 1) Go to add
     ScheduleComponent.prototype.clickAdd = function () {
         this.add = true;
     };
-    // Delete
-    // 1) Go to prompt
+    // 2) Determine if you add or cancel
+    ScheduleComponent.prototype.onCourseAdd = function (confirm) {
+        if (confirm) {
+            this.schedule.push(confirm);
+            this.schedule.sort(this.sortByCourseName);
+        }
+        this.add = false;
+        this.delete = false;
+        this.home = true;
+    };
+    // ========== Delete ===============
+    // 1) Go to delete
     ScheduleComponent.prototype.clickDelete = function (index) {
         this.delete = true;
+        // Create Message
         var course = this.schedule[index];
-        var courseDetails = course.courses[0];
-        this.deleteMessage = course.name + " " + courseDetails.num + " Class # " + courseDetails.sec + " " + courseDetails.day + " " + courseDetails.time + " " + courseDetails.location;
+        var courseChoice = course.courses[0];
+        this.deleteMessage = course.name + " " + courseChoice.num + " Class # " + courseChoice.sec + " " + courseChoice.day + " " + courseChoice.time + " " + courseChoice.location;
+        // In preparation for delete
+        this.currItem = { index: index, crsID: courseChoice.sec };
     };
-    // Delete
     // 2) Determine if you delete or cancel
-    ScheduleComponent.prototype.deleteClick = function (confirm) {
+    ScheduleComponent.prototype.onCourseDelete = function (confirm) {
         if (confirm) {
+            var coursePayload = {
+                email: JSON.parse(localStorage.getItem('user')).email,
+                crsID: this.currItem.crsID
+            };
+            // Delete on back end
+            this.authService.deleteScheduleItem(coursePayload).subscribe();
+            // Delete on front end
+            this.schedule.splice(this.currItem.index, 1);
+            this.schedule.sort(this.sortByCourseName);
+            this.flashMessage.show('Course successfully removed', { cssClass: 'alert-success', timeout: 3000 });
         }
-        else {
-            this.delete = false;
-        }
+        this.delete = false;
     };
-    ScheduleComponent.prototype.onCourseConfirm = function (confirm) {
-        if (confirm) {
-            this.add = false;
-            this.delete = false;
-            this.home = true;
+    // Sort by Course, then Course Num, then by Course Sec
+    ScheduleComponent.prototype.sortByCourseName = function (a, b) {
+        // Name (ex. CECS)
+        if (a.name == b.name) {
+            // Number (ex. CECS 101 vs CECS 102)
+            if (a.courses[0].num == b.courses[0].num) {
+                return a.courses[0].sec - b.courses[0].sec;
+            }
+            else {
+                return a.courses[0].num > b.courses[0].num;
+            }
         }
         else {
-            console.log("ERROR");
+            return a.name > b.name;
         }
     };
     return ScheduleComponent;
@@ -1633,10 +1695,10 @@ ScheduleComponent = __decorate([
         template: __webpack_require__(208),
         styles: [__webpack_require__(191)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], ScheduleComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=schedule.component.js.map
 
 /***/ }),
@@ -1801,7 +1863,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, ".sticky-nav {\r\n    position:fixed; \r\n    top:0; \r\n    width:100%;\r\n    z-index: 100;\r\n}\r\n\r\n.content {\r\n    padding: 100px;\r\n}", ""]);
+exports.push([module.i, ".content {\r\n    padding: 100px;\r\n}", ""]);
 
 // exports
 
@@ -2053,7 +2115,7 @@ module.exports = module.exports.toString();
 /* 195 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <app-navbar class=\"sticky-nav\"></app-navbar>\r\n      <div class=\"content\">\r\n        <flash-messages></flash-messages>  \r\n        <router-outlet></router-outlet>\r\n      </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <app-navbar></app-navbar>\r\n      <div class=\"content\">\r\n        <flash-messages></flash-messages>  \r\n        <router-outlet></router-outlet>\r\n      </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 196 */
@@ -2113,7 +2175,7 @@ module.exports = "<h2 class=\"page-header\">Login</h2>\r\n<form (submit)=\"onLog
 /* 205 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modeled after: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_navbar_collapse&stacked=h-->\r\n\r\n<nav class=\"navbar navbar-default\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar\">\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" href=\"#\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" id=\"navbar\">\r\n      <ul class=\"nav navbar-nav\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findbuddy']\">Find Buddy</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li>\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\"><a (click)=\"onLogoutClick()\" href=\"#\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>\r\n"
+module.exports = "<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->\r\n\r\n<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" (click)=\"toggle()\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" href=\"#\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" [ngClass]=\"{ 'in' : show }\">\r\n      <ul class=\"nav navbar-nav\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findbuddy']\">Find Buddy</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li>\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\"><a (click)=\"onLogoutClick()\" href=\"#\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>"
 
 /***/ }),
 /* 206 */
@@ -2131,7 +2193,7 @@ module.exports = "\r\n<h1> Room Name </h1>\r\n\r\n<div class = \"timesection\">\
 /* 208 */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user && !add && !delete\">\r\n    <!-- <h2 class=\"page-header\">My Schedule</h2> -->\r\n    <h1 style=\"text-align: center;\" id=\"title\">My Schedule</h1>\r\n    <ul class=\"list-group\">\r\n      <li class= \"list-group-item\">Username: {{user.username}}</li>\r\n      <li class= \"list-group-item\">Email: {{user.email}}</li>\r\n    </ul>\r\n    <table class=\"table-striped, table-bordered\" style=\"width : 100%; border-color : solid black 1px\">\r\n      <thead></thead>\r\n      <tbody>\r\n        <tr>\r\n          <td>NAME</td>\r\n          <td>CLASS #</td>\r\n          <td>DAYS</td>\r\n          <td>TIME</td>\r\n          <td>LOCATION</td>\r\n          <td>INSTRUCTOR</td>\r\n        </tr>\r\n        <tr ng-if=\"schedule; else display\" *ngFor=\"let sched of schedule; let i = index\" colspan=\"6\">\r\n            <td>{{sched.name}} {{sched.courses[0].num}}</td>\r\n            <td>{{sched.courses[0].sec}}</td>\r\n            <td>{{sched.courses[0].day}}</td>\r\n            <td>{{sched.courses[0].time}}</td>\r\n            <td>{{sched.courses[0].location}}</td>\r\n            <td>{{sched.courses[0].prof}}</td>\r\n            <input type=\"button\" class=\"btn btn-primary\" style=\"width: 100%\" value=\"-\" (click)=\"clickDelete(i)\">\r\n          </tr>\r\n        <ng-template #display>\r\n          No Courses\r\n        </ng-template>\r\n      </tbody>\r\n    </table>\r\n  <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n</div>\r\n  \r\n<div *ngIf=\"user && add && !delete\">\r\n  <app-course (afterConfirm)=\"onCourseConfirm($event)\"></app-course>\r\n</div>\r\n\r\n<div *ngIf=\"user && !add && delete\" style=\"text-align: center\">\r\n  <h1>Are you sure you want to remove?</h1>\r\n  <h2>{{deleteMessage}}</h2>\r\n  <div>\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"deleteClick(true)\">\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"deleteClick(false)\">\r\n  </div>\r\n</div>\r\n  "
+module.exports = "<div *ngIf=\"user && !add && !delete\">\r\n    <h1 style=\"text-align: center;\" id=\"title\">About Me</h1>\r\n    <ul class=\"list-group\">\r\n      <li class= \"list-group-item\">Username: {{user.username}}</li>\r\n      <li class= \"list-group-item\">Email: {{user.email}}</li>\r\n    </ul>\r\n    <h1 style=\"text-align: center;\" id=\"title\">My Schedule</h1>\r\n    <table class=\"table-striped, table-bordered\" style=\"width : 100%; border-color : solid black 1px\">\r\n      <thead></thead>\r\n      <tbody>\r\n        <tr>\r\n          <td>NAME</td>\r\n          <td>CLASS #</td>\r\n          <td>DAYS</td>\r\n          <td>TIME</td>\r\n          <td>LOCATION</td>\r\n          <td>INSTRUCTOR</td>\r\n        </tr>\r\n        <ng-container *ngIf=\"schedule.length > 0\">\r\n          <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\">\r\n            <td>{{sched.name}} {{sched.courses[0].num}}</td>\r\n            <td>{{sched.courses[0].sec}}</td>\r\n            <td>{{sched.courses[0].day}}</td>\r\n            <td>{{sched.courses[0].time}}</td>\r\n            <td>{{sched.courses[0].location}}</td>\r\n            <td>{{sched.courses[0].prof}}</td>\r\n            <input type=\"button\" class=\"btn btn-primary\" style=\"width: 100%\" value=\"-\" (click)=\"clickDelete(i)\">\r\n          </tr>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!(schedule.length > 0)\">\r\n            No Courses\r\n        </ng-container>\r\n      </tbody>\r\n    </table>\r\n  <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n</div>\r\n  \r\n<div *ngIf=\"user && add && !delete\">\r\n  <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n</div>\r\n\r\n<div *ngIf=\"user && !add && delete\" style=\"text-align: center\">\r\n  <h1>Are you sure you want to remove?</h1>\r\n  <h2>{{deleteMessage}}</h2>\r\n  <div>\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"onCourseDelete(true)\">\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"onCourseDelete(false)\">\r\n  </div>\r\n</div>\r\n  "
 
 /***/ }),
 /* 209 */

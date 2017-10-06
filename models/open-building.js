@@ -34,6 +34,7 @@ module.exports = {
   OCS : OCS
 }
 
+// Get buildings by day
 module.exports.getBuildingsByDay = function(Name, Day, callback) {
   OBS.find({$and : [{name: Name}, {day: Day}]}, {_id : 0}).exec(callback);
 }

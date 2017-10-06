@@ -36,8 +36,16 @@ export class AuthService {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
-    return this.http.post('http://localhost:3000/users/addschedule', item, {headers : headers}).map(res => res.json());
-    // return this.http.post('users/addschedule', item, {headers: headers}).map(res => res.json());
+    return this.http.post('http://localhost:3000/users/schedule/add', item, {headers : headers}).map(res => res.json());
+    // return this.http.post('users/schedule/add', item, {headers: headers}).map(res => res.json());
+  }
+
+  deleteScheduleItem(item) {
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    return this.http.post('http://localhost:3000/users/schedule/delete', item, {headers : headers}).map(res => res.json());
+    // return this.http.post('users/schedule/delete', item, {headers: headers}).map(res => res.json());
   }
 
   //=========== Courses ======================

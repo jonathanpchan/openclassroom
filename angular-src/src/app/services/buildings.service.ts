@@ -18,7 +18,7 @@ export class BuildingsService {
 
   getBuildings() : Observable<any> {
     return this.http.get( 'http://localhost:3000/buildings').map(res => res.json()).catch(this.handleError);
-    // return this.http.get('buildings', null).map(res => res.json()).catch(this.handleError);
+    // return this.http.get('buildings').map(res => res.json()).catch(this.handleError);
   }
 
   getBuildingNames() : Observable<any> {

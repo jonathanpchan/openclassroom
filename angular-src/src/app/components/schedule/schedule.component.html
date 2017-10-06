@@ -1,10 +1,10 @@
 <div *ngIf="user && !add && !delete">
-    <!-- <h2 class="page-header">My Schedule</h2> -->
-    <h1 style="text-align: center;" id="title">My Schedule</h1>
+    <h1 style="text-align: center;" id="title">About Me</h1>
     <ul class="list-group">
       <li class= "list-group-item">Username: {{user.username}}</li>
       <li class= "list-group-item">Email: {{user.email}}</li>
     </ul>
+    <h1 style="text-align: center;" id="title">My Schedule</h1>
     <table class="table-striped, table-bordered" style="width : 100%; border-color : solid black 1px">
       <thead></thead>
       <tbody>
@@ -16,7 +16,8 @@
           <td>LOCATION</td>
           <td>INSTRUCTOR</td>
         </tr>
-        <tr ng-if="schedule; else display" *ngFor="let sched of schedule; let i = index" colspan="6">
+        <ng-container *ngIf="schedule.length > 0">
+          <tr *ngFor="let sched of schedule; let i = index;" colspan="6">
             <td>{{sched.name}} {{sched.courses[0].num}}</td>
             <td>{{sched.courses[0].sec}}</td>
             <td>{{sched.courses[0].day}}</td>
@@ -25,24 +26,25 @@
             <td>{{sched.courses[0].prof}}</td>
             <input type="button" class="btn btn-primary" style="width: 100%" value="-" (click)="clickDelete(i)">
           </tr>
-        <ng-template #display>
-          No Courses
-        </ng-template>
+        </ng-container>
+        <ng-container *ngIf="!(schedule.length > 0)">
+            No Courses
+        </ng-container>
       </tbody>
     </table>
   <input type="button" class="btn btn-primary" style="width : 33%" value="Add Course" (click)="clickAdd()">
 </div>
   
 <div *ngIf="user && add && !delete">
-  <app-course (afterConfirm)="onCourseConfirm($event)"></app-course>
+  <app-course (afterConfirm)="onCourseAdd($event)"></app-course>
 </div>
 
 <div *ngIf="user && !add && delete" style="text-align: center">
   <h1>Are you sure you want to remove?</h1>
   <h2>{{deleteMessage}}</h2>
   <div>
-    <input type="button" class="btn btn-primary" style="width : 33%" value="Yes" (click)="deleteClick(true)">
-    <input type="button" class="btn btn-primary" style="width : 33%" value="No" (click)="deleteClick(false)">
+    <input type="button" class="btn btn-primary" style="width : 33%" value="Yes" (click)="onCourseDelete(true)">
+    <input type="button" class="btn btn-primary" style="width : 33%" value="No" (click)="onCourseDelete(false)">
   </div>
 </div>
   

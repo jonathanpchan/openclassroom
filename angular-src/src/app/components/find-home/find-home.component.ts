@@ -7,8 +7,7 @@ import { FindNowComponent } from '../find-now/find-now.component';
   selector: 'app-find-home',
   templateUrl: './find-home.component.html',
   styleUrls: ['./find-home.component.css'],
-  // Needed to function call the FindNowComponent
-  providers: [FindNowComponent]
+  providers: [FindNowComponent] // Needed to function call the FindNowComponent
 })
 export class FindHomeComponent implements OnInit {
   // Chosen building to be queried (passed down components)

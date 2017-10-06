@@ -11,10 +11,13 @@ export class CourseComponent implements OnInit {
   courseName : string
   courseNameOptions : any[]
   currCourseName : any[]
+
   courseNum : string
   courseNumOptions : any[]
+  
   courseChoice = null
   courseChoiceOptions : any[]
+  
   courseAll : any[]
 
   confirm : boolean = false
@@ -23,10 +26,13 @@ export class CourseComponent implements OnInit {
 
   constructor(private authService : AuthService, private flashMessage : FlashMessagesService) { }
 
+  // ========== Get Options ===============
+  // Get the course names
   ngOnInit() {
     this.courseNameOptions = []
     this.authService.getCourses().subscribe(names => {
-      for (let name in names.Courses) {
+      for (let name in names.Courses) 
+      {
         this.courseNameOptions.push(names.Courses[name].name)
       }
     },
@@ -35,6 +41,7 @@ export class CourseComponent implements OnInit {
     });
   }
 
+  // Get the course numbers
   getCourseNumOptions() {
     if (this.courseNameOptions != null)
     {
@@ -58,10 +65,11 @@ export class CourseComponent implements OnInit {
       }
 
       // Made display sorted and unique
-      this.courseNumOptions = this.makeUnique(this.courseNumOptions.sort())
+      this.courseNumOptions = this.makeUnique(this.courseNumOptions)
     }
   }
 
+  // Get the course options
   getCourseChoiceOptions() {
     if (this.courseNumOptions != null)
     {
@@ -74,14 +82,12 @@ export class CourseComponent implements OnInit {
           this.courseChoiceOptions.push(this.currCourseName[courses])
         }
       }
-      // Sort choices by section (no need to make unique since section number is unique)
-      this.courseChoiceOptions = this.courseChoiceOptions.sort((a,b) => { return a.sec-b.sec })
     }
   }
 
   // Gets all courses and puts them into courseAll as "cache"
   cache() {
-    if (this.courseAll == null)
+    if (this.courseAll == null) 
     {
       this.courseAll = [];
       this.authService.getCourses().subscribe(all => {
@@ -95,35 +101,56 @@ export class CourseComponent implements OnInit {
     }
   }
 
+  // ========== Add ===============
+  // On submit, show alternative data (If missing data, then alert)
   onSubmit() {
     if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) 
     {
       this.confirm=true;
       this.confirmMessage = this.courseName+" "+this.courseChoice.num+" Class # "+this.courseChoice.sec+" "+this.courseChoice.day+" "+this.courseChoice.time+" "+this.courseChoice.location;
+    } 
+    else 
+    {
+      this.flashMessage.show('Please complete all course fields.', {cssClass: 'alert-danger', timeout: 3000})
     }
   }
 
+  // Determine what to do if add or cancel
   addClick(answer : boolean) {
-    if (answer)
+    if (answer) 
     {
+      // Add on back end
       let coursePayload = {
         email : JSON.parse(localStorage.getItem('user')).email,
         crsID : this.courseChoice.sec
       }
       this.authService.addScheduleItem(coursePayload).subscribe();
-      this.flashMessage.show('Course successfully added', {cssClass: 'alert-success', timeout: 3000})
+      // Add on front end
+      let temp = []
+      temp.push(this.courseChoice)
+      let add = {name: this.courseName, courses: temp}
+      this.afterConfirm.emit(add)
+      // Output
+      this.flashMessage.show('Course successfully added.', {cssClass: 'alert-success', timeout: 3000})
+    } 
+    else 
+    {
+      this.afterConfirm.emit(false)
     }
-    this.afterConfirm.emit(true)
   }
   
   // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
   // Take a SORTED array, determine unique values, and then return
   makeUnique(arr) {
     let tempArr = arr;
-    for (var i = 1; i < tempArr.length; ) {
-      if (tempArr[i-1] === tempArr[i]) {
+    for (var i = 1; i < tempArr.length; ) 
+    {
+      if (tempArr[i-1] === tempArr[i]) 
+      {
         tempArr.splice(i,1);
-      } else {
+      } 
+      else 
+      {
         i++;
       }
     }
