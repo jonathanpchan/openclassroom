@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 
@@ -19,6 +19,7 @@ export class CourseComponent implements OnInit {
 
   confirm : boolean = false
   confirmMessage : string
+  @Output() afterConfirm : EventEmitter<any> = new EventEmitter<any>()
 
   constructor(private authService : AuthService, private flashMessage : FlashMessagesService) { }
 
@@ -112,11 +113,7 @@ export class CourseComponent implements OnInit {
       this.authService.addScheduleItem(coursePayload).subscribe();
       this.flashMessage.show('Course successfully added', {cssClass: 'alert-success', timeout: 3000})
     }
-    // Reset
-    this.courseNumOptions = null;
-    this.courseChoiceOptions = null;
-    this.courseChoice = null;
-    this.confirm = false;
+    this.afterConfirm.emit(true)
   }
   
   // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript

@@ -652,6 +652,7 @@ var CourseComponent = (function () {
         this.flashMessage = flashMessage;
         this.courseChoice = null;
         this.confirm = false;
+        this.afterConfirm = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
     CourseComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -727,11 +728,7 @@ var CourseComponent = (function () {
             this.authService.addScheduleItem(coursePayload).subscribe();
             this.flashMessage.show('Course successfully added', { cssClass: 'alert-success', timeout: 3000 });
         }
-        // Reset
-        this.courseNumOptions = null;
-        this.courseChoiceOptions = null;
-        this.courseChoice = null;
-        this.confirm = false;
+        this.afterConfirm.emit(true);
     };
     // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
     // Take a SORTED array, determine unique values, and then return
@@ -749,16 +746,20 @@ var CourseComponent = (function () {
     };
     return CourseComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]) === "function" && _a || Object)
+], CourseComponent.prototype, "afterConfirm", void 0);
 CourseComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-course',
         template: __webpack_require__(196),
         styles: [__webpack_require__(179)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], CourseComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=course.component.js.map
 
 /***/ }),
@@ -1581,15 +1582,14 @@ var ScheduleComponent = (function () {
         this.router = router;
         this.user = JSON.parse(localStorage.getItem('user'));
         this.schedule = null;
+        this.home = true;
         this.add = false;
         this.delete = false;
     }
     ScheduleComponent.prototype.ngOnInit = function () {
         var _this = this;
         var email = this.user["email"];
-        console.log(email);
         this.authService.getSchedule({ email: email }).subscribe(function (schedule) {
-            console.log(schedule);
             _this.schedule = schedule.schedule;
         }, function (err) {
             console.log(err);
@@ -1598,8 +1598,32 @@ var ScheduleComponent = (function () {
     ScheduleComponent.prototype.clickAdd = function () {
         this.add = true;
     };
-    ScheduleComponent.prototype.clickDelete = function () {
+    // Delete
+    // 1) Go to prompt
+    ScheduleComponent.prototype.clickDelete = function (index) {
         this.delete = true;
+        var course = this.schedule[index];
+        var courseDetails = course.courses[0];
+        this.deleteMessage = course.name + " " + courseDetails.num + " Class # " + courseDetails.sec + " " + courseDetails.day + " " + courseDetails.time + " " + courseDetails.location;
+    };
+    // Delete
+    // 2) Determine if you delete or cancel
+    ScheduleComponent.prototype.deleteClick = function (confirm) {
+        if (confirm) {
+        }
+        else {
+            this.delete = false;
+        }
+    };
+    ScheduleComponent.prototype.onCourseConfirm = function (confirm) {
+        if (confirm) {
+            this.add = false;
+            this.delete = false;
+            this.home = true;
+        }
+        else {
+            console.log("ERROR");
+        }
     };
     return ScheduleComponent;
 }());
@@ -2107,7 +2131,7 @@ module.exports = "\r\n<h1> Room Name </h1>\r\n\r\n<div class = \"timesection\">\
 /* 208 */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user\">\r\n    <!-- <h2 class=\"page-header\">My Schedule</h2> -->\r\n    <h1 style=\"text-align: center;\" id=\"title\">My Schedule</h1>\r\n    <ul class=\"list-group\">\r\n      <li class= \"list-group-item\">Username: {{user.username}}</li>\r\n      <li class= \"list-group-item\">Email: {{user.email}}</li>\r\n    </ul>\r\n    <table class=\"table-striped, table-bordered\" style=\"width : 100%\">\r\n      <thead></thead>\r\n      <tbody>\r\n        <tr>\r\n          <td>NAME</td>\r\n          <td>CLASS #</td>\r\n          <td>DAYS</td>\r\n          <td>TIME</td>\r\n          <td>LOCATION</td>\r\n          <td>INSTRUCTOR</td>\r\n        </tr>\r\n        <td *ngIf=\"!schedule; else display\" colspan=\"6\" style=\"border : solid 1px black; vertical-align: top; height:30rem\">No Courses</td>\r\n        <ng-template #display>\r\n          <tr *ngFor=\"let sched of schedule\">\r\n            <td>{{sched.name}} {{sched.courses[0].num}}</td>\r\n            <td>{{sched.courses[0].sec}}</td>\r\n            <td>{{sched.courses[0].day}}</td>\r\n            <td>{{sched.courses[0].time}}</td>\r\n            <td>{{sched.courses[0].location}}</td>\r\n            <td>{{sched.courses[0].prof}}</td>\r\n          </tr>\r\n        </ng-template>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n  <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n<div *ngIf=\"add\">\r\n  <app-course></app-course>\r\n</div>\r\n  \r\n  "
+module.exports = "<div *ngIf=\"user && !add && !delete\">\r\n    <!-- <h2 class=\"page-header\">My Schedule</h2> -->\r\n    <h1 style=\"text-align: center;\" id=\"title\">My Schedule</h1>\r\n    <ul class=\"list-group\">\r\n      <li class= \"list-group-item\">Username: {{user.username}}</li>\r\n      <li class= \"list-group-item\">Email: {{user.email}}</li>\r\n    </ul>\r\n    <table class=\"table-striped, table-bordered\" style=\"width : 100%; border-color : solid black 1px\">\r\n      <thead></thead>\r\n      <tbody>\r\n        <tr>\r\n          <td>NAME</td>\r\n          <td>CLASS #</td>\r\n          <td>DAYS</td>\r\n          <td>TIME</td>\r\n          <td>LOCATION</td>\r\n          <td>INSTRUCTOR</td>\r\n        </tr>\r\n        <tr ng-if=\"schedule; else display\" *ngFor=\"let sched of schedule; let i = index\" colspan=\"6\">\r\n            <td>{{sched.name}} {{sched.courses[0].num}}</td>\r\n            <td>{{sched.courses[0].sec}}</td>\r\n            <td>{{sched.courses[0].day}}</td>\r\n            <td>{{sched.courses[0].time}}</td>\r\n            <td>{{sched.courses[0].location}}</td>\r\n            <td>{{sched.courses[0].prof}}</td>\r\n            <input type=\"button\" class=\"btn btn-primary\" style=\"width: 100%\" value=\"-\" (click)=\"clickDelete(i)\">\r\n          </tr>\r\n        <ng-template #display>\r\n          No Courses\r\n        </ng-template>\r\n      </tbody>\r\n    </table>\r\n  <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n</div>\r\n  \r\n<div *ngIf=\"user && add && !delete\">\r\n  <app-course (afterConfirm)=\"onCourseConfirm($event)\"></app-course>\r\n</div>\r\n\r\n<div *ngIf=\"user && !add && delete\" style=\"text-align: center\">\r\n  <h1>Are you sure you want to remove?</h1>\r\n  <h2>{{deleteMessage}}</h2>\r\n  <div>\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"deleteClick(true)\">\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"deleteClick(false)\">\r\n  </div>\r\n</div>\r\n  "
 
 /***/ }),
 /* 209 */
