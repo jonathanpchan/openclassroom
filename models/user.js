@@ -65,7 +65,6 @@ module.exports.getSchedule = function(email, callback) {
 
 // Add schedule item based on email and section #
 module.exports.addScheduleItem = function(eMail, crsID, callback) {
-  CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
     CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
         User.findOneAndUpdate(
         {"email": eMail},
@@ -138,5 +137,4 @@ module.exports.editScheduleItem = function(eMail, objID, u, callback) {
       }
       User.find({email: eMail}, {schedule: 1, _id:0}, callback);
     })
-  })
 }
