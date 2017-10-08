@@ -3,8 +3,15 @@
   display:inline-block;
 }
 
-.feature{
+.timeContainer{
   display: inline-block;
+  padding-right: 50px;
+}
+
+
+.featurecontainer{
+  display: inline-block;
+  padding-right: 50px;
 }
 
 .vote
@@ -14,4 +21,12 @@
 
 .comment{
   display: inline-block;
+}
+
+.roomName{
+  padding-bottom: 50px;
+}
+
+.commentcontainer{
+  padding-bottom: 20px;
 }

@@ -1,50 +1,53 @@
 
-<h1> Room Name </h1>
+<h1 class ="roomName">{{rooms.building}}-{{rooms.room}}</h1>
 
 <div class = "timesection">
 <h2>Open Times </h2>
 
-<div class = "daycontainer">
-<h3 class = "day">Monday -  loop Open from "time" to "time" </h3><!--what day are we displaying here? -->
-<p class = "vote">Monday Up</p>
-<p class = "vote">Monday Down</p>
+<h2>Monday</h2>
+<div class = "day"  *ngFor="let time of rooms.mon">
+<h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
+<p class = "uvote">Monday Upvotes - {{time.uVote}}</p>
+<p class = "dvote">Monday Down - {{time.dVote}}</p>
 </div>
 
-<div class = "daycontainer">
-<h3 class = "day">Tuesday -  loop Open from "time" to "time" </h3><!--what day are we displaying here? -->
-<p class = "vote">Tuesday Up</p>
-<p class = "vote">Tuesday Down</p>
+<h2>Tuesday</h2>
+<div class = "day" *ngFor="let time of rooms.tue">
+<h3 class = "timeContainer">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
+<p class = "uvote">Tuesday Up - {{time.uVote}}</p>
+<p class = "dvote">Tuesday Down - {{time.dVote}}</p>
 </div>
 
-<div class = "daycontainer">
-<h3 class = "day">Wednesday -  loop Open from "time" to "time" </h3><!--what day are we displaying here? -->
-<p class = "vote">Wednesday Up</p>
-<p class = "vote">Wednesday Down</p>
+<h2>Wednesday</h2>
+<div class = "day" *ngFor="let time of rooms.wed">
+<h3 class = "timeContainer">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
+<p class = "uvote">Wednesday Up - {{time.uVote}}</p>
+<p class = "dvote">Wednesday Down - {{time.dVote}}</p>
 </div>
 
-<div class = "daycontainer">
-<h3 class = "day">Thursday -  loop Open from "time" to "time" </h3><!--what day are we displaying here? -->
-<p class = "vote">Thursday Up</p>
-<p class = "vote">Thursday Down</p>
+<h2>Thursday</h2>
+<div class = "day" *ngFor="let time of rooms.thu">
+<h3 class = "timeContainer">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
+<p class = "uvote">Thursday Up - {{time.uVote}}</p>
+<p class = "dvote">Thursday Down - {{time.dVote}}</p>
 </div>
 
 </div>
 
 
 <div class = "featuresection">
-
 <h2>Features</h2>
 
 <div class = "featurecontainer">
 <h3 class = "feature">outlets</h3>
-<p class = "vote">outlets upvote</p>
-<p class = "vote">outlets downvote</p>
+<p class = "uvote">outlets upvote - {{rooms.hasOutlets.uVote}}</p>
+<p class = "dvote">outlets downvote - {{rooms.hasOutlets.dVote}}</p>
 </div>
 
 <div class = "featurecontainer">
 <h3 class = "feature">White Board</h3>
-<p class = "vote">White Board upvote</p>
-<p class = "vote">White Board downvote</p>
+<p class = "uvote">White Board upvote - {{rooms.whiteboard.uVote}}</p>
+<p class = "dvote">White Board downvote - {{rooms.whiteboard.dVote}}</p>
 </div>
 
 </div>
@@ -54,16 +57,13 @@
 
   <h2>Comments</h2>
 
-  <div class = "commentcontainer">
-  <p class = "comment"> comment 1</p>
-  <p class = "vote">comment upvote</p>
-  <p class = "vote">comment downvote</p>
-  </div>
+  <div class = "commentcontainer" *ngFor = "let comment of rooms.comments">
+  <p class = "comment">"{{comment.content}}"</p>
+  <p class = "comomentUser">{{comment.username}} </p>
+  <p class = "uvote">comment upvote - {{comment.uVote}}</p>
+  <p class = "dvote">comment downvote - {{comment.dVote}}</p>
+  <p class = "dvote">{{comment.date}}</p>
 
-  <div class = "commentcontainer">
-  <p class = "comment"> comment 2</p>
-  <p class = "vote">comment upvote</p>
-  <p class = "vote">comment downvote</p>
   </div>
 
 </div>
