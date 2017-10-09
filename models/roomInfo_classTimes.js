@@ -34,7 +34,7 @@ const RoomInfoOpenTimes = mongoose.Schema({
         uVote: {type: Number},
         dVote: {type: Number},
         tVote: {type: Number}
-    }],
+    }]
 })
 
 

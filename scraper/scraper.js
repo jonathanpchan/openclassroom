@@ -464,10 +464,11 @@ function insertToDB(){
     const build = require('../models/building');
     // Grab the schema used by said model
     const bs = mongoose.model('Building', build.BS.schema);
-    var rs = require('../models/roomInfo_classTimes');
-    var ri = mongoose.model('RoomInfoOpenTimes', rs.schema )
+    var rs = require('../models/roomInfo');
+    var ri = mongoose.model('RoomInfo', rs.schema )
     bs.collection.drop()
     ri.collection.drop()
+
 
     var RoomInfo_classTimesARR = []
 
@@ -505,7 +506,7 @@ function insertToDB(){
                             et: otherArr[i].etimeInMin,
                             uVote:0,
                             dVote:0,
-                            tVote:0
+                            //tVote:0
                         })
                     }
                     return tarr2
@@ -538,6 +539,14 @@ function insertToDB(){
                     {
                         building : key1,
                         room: key,
+                        hasOutlets: {
+                            uVote: 0,
+                            dVote: 0,
+                        },
+                        whiteBoard: {
+                            uVote: 0,
+                            dVote: 0,
+                        },
                         mon: mon2,
                         tue: tue2,
                         wed: wed2,
@@ -570,7 +579,7 @@ function insertToDB(){
     bmap.forEach(dbAddBuildings)
 
     bs.collection.insert(fullDBArr, onInsert('Buildings'))
-    ri.collection.insert(RoomInfo_classTimesARR, onInsert('RoomInfoOpenTimes'))
+    ri.collection.insert(RoomInfo_classTimesARR, onInsert('RoomInfo'))
 
     //--------Insert Courses into database----------------
     // Require building model to access add function

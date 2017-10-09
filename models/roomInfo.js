@@ -20,13 +20,8 @@ const CommentsSchema = mongoose.Schema({
 
 //Room Information schema
 const RoomInfoSchema = mongoose.Schema({
-    /** NEEDS TO BE UPDATED W/ NEW SCHEMA
-    validRoom:{ //need to discuss how to make this property for multiple open times
-        uVote: {type: Number},
-        dVote: {type: Number},
-        votes: {type: [Vote]},
-    },
-     **/
+    building: {type: String},
+    room: {type: String},
     hasOutlets: {
         uVote: {type: Number},
         dVote: {type: Number},
@@ -37,7 +32,35 @@ const RoomInfoSchema = mongoose.Schema({
         dVote: {type: Number},
         votes: {type: [Vote]},
     },
-    comments: {type: [UserComments] },
+    comments: {type: [CommentsSchema] },
+    mon : [{
+        st : {type: Number},
+        et : {type: Number},
+        uVote: {type: Number},
+        dVote: {type: Number},
+        votes: {type: [Vote]}
+    }],
+    tue : [{
+        st : {type: Number},
+        et : {type: Number},
+        uVote: {type: Number},
+        dVote: {type: Number},
+        votes: {type: [Vote]}
+    }],
+    wed : [{
+        st : {type: Number},
+        et : {type: Number},
+        uVote: {type: Number},
+        dVote: {type: Number},
+        votes: {type: [Vote]}
+    }],
+    thu : [{
+        st : {type: Number},
+        et : {type: Number},
+        uVote: {type: Number},
+        dVote: {type: Number},
+        votes: {type: [Vote]}
+    }]
 });
 
 // Export room info schema
@@ -45,9 +68,25 @@ RI = module.exports = mongoose.model('RoomInfo', RoomInfoSchema );
 // Export comments Schema
 UC = module.exports = mongoose.model('Comments', CommentsSchema ); //UC = user comments
 
-//Add comment function
-module.exports.addComment = function(){
+
+// return room info, no need to passalong votes array but do pass requested users vote
+module.exports.getRoomInfo = function(building, room, callback){
+    RI.findOne({$and: [{"building": building }, {"room": room}]}, callback)
+}
+
+//Add comment function on any fields
+module.exports.addComment = function(building, room, email, item, comment, callback){
+    console.log("hello")
+}
+
+module.exports.addComment = function(building, room, email, day, item, comment, callback){
+    console.log("hello")
+}
+
+module.exports.addVote = function(building, room, email, item, vote, callback){
 
 }
+
+
 
 

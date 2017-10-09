@@ -15,17 +15,14 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected:');
 })
 
-var rs = require('../models/roomInfo_classTimes');
-var ri = mongoose.model('RoomInfoOpenTimes', rs.schema )
+var rs = require('../models/roomInfo');
+var ri = mongoose.model('RoomInfo', rs.schema )
 
-ri.collection.insertOne({
-    "building": "VEC",
-    "room" : "101",
-    "mon" : [
-        {"st": 9, "et": 10, dVote : 100}
-    ]
-})
-
+var test = function(callback){
+    ri.findOne({$and: [{"building": "AS" }, {"room": "243"}]}, callback)
+    //ri.findOne({building: 'AS'},callback)
+}
+    test((err,x) => {console.log(x)})
 // um.collection.insert({
 
 //     "name" : "tom willis", 
