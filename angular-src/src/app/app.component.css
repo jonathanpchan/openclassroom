@@ -1,15 +1,25 @@
-.grid {
+.main-grid {
     display: grid;
     grid-template-columns: 2.5% 95% 2.5%;
-    grid-template-rows: 50px 100%;
+    grid-template-rows: 50px 50px 100%;
+    grid-template-areas: 
+        "nav    nav     nav"
+        "fm     fm      fm"
+        ".      ro      .";
+    text-align: center;
+    padding-bottom: 50px;
 }
 
-.grid app-navbar {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+.main-grid app-navbar {
+    grid-area: nav;
 }
 
-.grid div {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
+.main-grid flash-messages {
+    grid-area: fm;
+}
+
+/* Used to circumvent router-outlet issue */
+.main-grid div {
+    grid-area: ro;
+    border: 2px black solid;
 }

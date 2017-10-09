@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsermanualComponent } from './components/usermanual/usermanual.component';
@@ -34,7 +33,6 @@ const appRoutes: Routes = [
   {path:'', component: HomeComponent },
   {path:'register', component: RegisterComponent },
   {path:'login', component: LoginComponent },
-  {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
   {path:'usermanual', component: UsermanualComponent},
   {path:'devguide', component: DevguideComponent},
@@ -51,7 +49,6 @@ const appRoutes: Routes = [
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent,
     ScheduleComponent,
     UsermanualComponent,
     DevguideComponent,

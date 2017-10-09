@@ -1,0 +1,34 @@
+/* DEFAULT: For Phone */
+.home-grid {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 60% 40%;
+    grid-template-areas:
+        "jumbotron"
+        "content";
+    text-align: center;
+}
+
+.btn {
+    width: 20rem;
+}
+
+/* For Desktop 600px+ */
+@media (min-width: 600px) {    
+    .content {
+        display: grid;
+        grid-template-columns: 33.33% 33.33% 33.33%;
+        grid-template-areas: "col-1 col-2 col-3";
+    }
+}
+
+/* FOR TESTING */
+.jumbotron {
+    border: 2px red dotted
+}
+[class*='col-'] {
+    border: 2px green solid;
+}
+.content {
+    border: 2px blue dashed;
+}

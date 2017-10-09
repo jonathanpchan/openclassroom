@@ -19,7 +19,7 @@ webpackJsonp([1,4],[
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_jwt__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -135,7 +135,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(213);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -406,8 +406,8 @@ __decorate([
 FindNowComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-now',
-        template: __webpack_require__(200),
-        styles: [__webpack_require__(183)]
+        template: __webpack_require__(197),
+        styles: [__webpack_require__(181)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
 ], FindNowComponent);
@@ -463,7 +463,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(118);
 
 
 
@@ -502,8 +502,8 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-root',
-        template: __webpack_require__(195),
-        styles: [__webpack_require__(178)]
+        template: __webpack_require__(193),
+        styles: [__webpack_require__(177)]
     })
 ], AppComponent);
 
@@ -519,29 +519,28 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__ = __webpack_require__(112);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_dashboard_dashboard_component__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_schedule_schedule_component__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_navbar_navbar_component__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_usermanual_usermanual_component__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_devguide_devguide_component__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_find_find_component__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_find_home_find_home_component__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_validate_service__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_auth_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_buildings_service__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_course_course_component__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_room_room_component__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_validate_service__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__services_buildings_service__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_find_now_find_now_component__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_times_find_times_component__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_course_course_component__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_room_room_component__ = __webpack_require__(114);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -556,7 +555,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 // Automatically written in using "ng g component ________" in the components folder
-
 
 
 
@@ -582,15 +580,14 @@ var appRoutes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__["a" /* HomeComponent */] },
     { path: 'register', component: __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__["a" /* RegisterComponent */] },
     { path: 'login', component: __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__["a" /* LoginComponent */] },
-    { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_10__components_dashboard_dashboard_component__["a" /* DashboardComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__["a" /* AuthGuard */]] },
-    { path: 'schedule', component: __WEBPACK_IMPORTED_MODULE_11__components_schedule_schedule_component__["a" /* ScheduleComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__["a" /* AuthGuard */]] },
-    { path: 'usermanual', component: __WEBPACK_IMPORTED_MODULE_13__components_usermanual_usermanual_component__["a" /* UsermanualComponent */] },
-    { path: 'devguide', component: __WEBPACK_IMPORTED_MODULE_14__components_devguide_devguide_component__["a" /* DevguideComponent */] },
-    { path: 'findclassroom', component: __WEBPACK_IMPORTED_MODULE_16__components_find_home_find_home_component__["a" /* FindHomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__["a" /* AuthGuard */]] },
-    { path: 'findclassroom/now', component: __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__["a" /* FindNowComponent */] },
-    { path: 'findclassroom/building', component: __WEBPACK_IMPORTED_MODULE_15__components_find_find_component__["a" /* FindComponent */] },
-    { path: 'findclassroom/time', component: __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__["a" /* FindTimesComponent */] },
-    { path: 'room', component: __WEBPACK_IMPORTED_MODULE_25__components_room_room_component__["a" /* RoomComponent */] }
+    { path: 'schedule', component: __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__["a" /* ScheduleComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__["a" /* AuthGuard */]] },
+    { path: 'usermanual', component: __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__["a" /* UsermanualComponent */] },
+    { path: 'devguide', component: __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__["a" /* DevguideComponent */] },
+    { path: 'findclassroom', component: __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__["a" /* FindHomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__["a" /* AuthGuard */]] },
+    { path: 'findclassroom/now', component: __WEBPACK_IMPORTED_MODULE_21__components_find_now_find_now_component__["a" /* FindNowComponent */] },
+    { path: 'findclassroom/building', component: __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__["a" /* FindComponent */] },
+    { path: 'findclassroom/time', component: __WEBPACK_IMPORTED_MODULE_22__components_find_times_find_times_component__["a" /* FindTimesComponent */] },
+    { path: 'room', component: __WEBPACK_IMPORTED_MODULE_24__components_room_room_component__["a" /* RoomComponent */] }
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -604,27 +601,26 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__["a" /* HomeComponent */],
             __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__["a" /* LoginComponent */],
             __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__["a" /* RegisterComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__components_dashboard_dashboard_component__["a" /* DashboardComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__components_schedule_schedule_component__["a" /* ScheduleComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__components_usermanual_usermanual_component__["a" /* UsermanualComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__components_devguide_devguide_component__["a" /* DevguideComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__components_navbar_navbar_component__["a" /* NavbarComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__components_find_find_component__["a" /* FindComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__["a" /* ScheduleComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__["a" /* UsermanualComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__["a" /* DevguideComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__["a" /* NavbarComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__["a" /* FindComponent */],
             __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__["NouisliderComponent"],
-            __WEBPACK_IMPORTED_MODULE_16__components_find_home_find_home_component__["a" /* FindHomeComponent */],
-            __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__["a" /* FindNowComponent */],
-            __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__["a" /* FindTimesComponent */],
-            __WEBPACK_IMPORTED_MODULE_24__components_course_course_component__["a" /* CourseComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__components_room_room_component__["a" /* RoomComponent */]
+            __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__["a" /* FindHomeComponent */],
+            __WEBPACK_IMPORTED_MODULE_21__components_find_now_find_now_component__["a" /* FindNowComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__components_find_times_find_times_component__["a" /* FindTimesComponent */],
+            __WEBPACK_IMPORTED_MODULE_23__components_course_course_component__["a" /* CourseComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__components_room_room_component__["a" /* RoomComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormsModule"],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["HttpModule"],
             __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(appRoutes),
-            __WEBPACK_IMPORTED_MODULE_20_angular2_flash_messages__["FlashMessagesModule"]
+            __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__["FlashMessagesModule"]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_17__services_validate_service__["a" /* ValidateService */], __WEBPACK_IMPORTED_MODULE_18__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_19__guards_auth_guard__["a" /* AuthGuard */], __WEBPACK_IMPORTED_MODULE_21__services_buildings_service__["a" /* BuildingsService */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_16__services_validate_service__["a" /* ValidateService */], __WEBPACK_IMPORTED_MODULE_17__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__["a" /* AuthGuard */], __WEBPACK_IMPORTED_MODULE_20__services_buildings_service__["a" /* BuildingsService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -777,8 +773,8 @@ __decorate([
 CourseComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-course',
-        template: __webpack_require__(196),
-        styles: [__webpack_require__(179)]
+        template: __webpack_require__(194),
+        styles: [__webpack_require__(178)]
     }),
     __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], CourseComponent);
@@ -788,41 +784,6 @@ var _a, _b, _c;
 
 /***/ }),
 /* 106 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var DashboardComponent = (function () {
-    function DashboardComponent() {
-    }
-    DashboardComponent.prototype.ngOnInit = function () {
-    };
-    return DashboardComponent;
-}());
-DashboardComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-dashboard',
-        template: __webpack_require__(197),
-        styles: [__webpack_require__(180)]
-    }),
-    __metadata("design:paramtypes", [])
-], DashboardComponent);
-
-//# sourceMappingURL=dashboard.component.js.map
-
-/***/ }),
-/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -848,8 +809,8 @@ var DevguideComponent = (function () {
 DevguideComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-devguide',
-        template: __webpack_require__(198),
-        styles: [__webpack_require__(181)]
+        template: __webpack_require__(195),
+        styles: [__webpack_require__(179)]
     }),
     __metadata("design:paramtypes", [])
 ], DevguideComponent);
@@ -857,7 +818,7 @@ DevguideComponent = __decorate([
 //# sourceMappingURL=devguide.component.js.map
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -924,8 +885,8 @@ __decorate([
 FindHomeComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-home',
-        template: __webpack_require__(199),
-        styles: [__webpack_require__(182)],
+        template: __webpack_require__(196),
+        styles: [__webpack_require__(180)],
         providers: [__WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]] // Needed to function call the FindNowComponent
     }),
     __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _b || Object])
@@ -935,7 +896,7 @@ var _a, _b;
 //# sourceMappingURL=find-home.component.js.map
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1120,8 +1081,8 @@ __decorate([
 FindTimesComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-times',
-        template: __webpack_require__(201),
-        styles: [__webpack_require__(184)]
+        template: __webpack_require__(198),
+        styles: [__webpack_require__(182)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
 ], FindTimesComponent);
@@ -1130,7 +1091,7 @@ var _a;
 //# sourceMappingURL=find-times.component.js.map
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1287,8 +1248,8 @@ __decorate([
 FindComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find',
-        template: __webpack_require__(202),
-        styles: [__webpack_require__(185)]
+        template: __webpack_require__(199),
+        styles: [__webpack_require__(183)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], FindComponent);
@@ -1297,7 +1258,7 @@ var _a, _b, _c;
 //# sourceMappingURL=find.component.js.map
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1326,8 +1287,8 @@ var HomeComponent = (function () {
 HomeComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-home',
-        template: __webpack_require__(203),
-        styles: [__webpack_require__(186)]
+        template: __webpack_require__(200),
+        styles: [__webpack_require__(184)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object])
 ], HomeComponent);
@@ -1336,7 +1297,7 @@ var _a;
 //# sourceMappingURL=home.component.js.map
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1390,8 +1351,8 @@ var LoginComponent = (function () {
 LoginComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-login',
-        template: __webpack_require__(204),
-        styles: [__webpack_require__(187)]
+        template: __webpack_require__(201),
+        styles: [__webpack_require__(185)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], LoginComponent);
@@ -1400,7 +1361,7 @@ var _a, _b, _c;
 //# sourceMappingURL=login.component.js.map
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1452,8 +1413,8 @@ var NavbarComponent = (function () {
 NavbarComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-navbar',
-        template: __webpack_require__(205),
-        styles: [__webpack_require__(188)]
+        template: __webpack_require__(202),
+        styles: [__webpack_require__(186)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_validate_service__["a" /* ValidateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_validate_service__["a" /* ValidateService */]) === "function" && _d || Object])
 ], NavbarComponent);
@@ -1462,7 +1423,7 @@ var _a, _b, _c, _d;
 //# sourceMappingURL=navbar.component.js.map
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1535,8 +1496,8 @@ var RegisterComponent = (function () {
 RegisterComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-register',
-        template: __webpack_require__(206),
-        styles: [__webpack_require__(189)]
+        template: __webpack_require__(203),
+        styles: [__webpack_require__(187)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_validate_service__["a" /* ValidateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_validate_service__["a" /* ValidateService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _d || Object])
 ], RegisterComponent);
@@ -1545,7 +1506,7 @@ var _a, _b, _c, _d;
 //# sourceMappingURL=register.component.js.map
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1596,8 +1557,8 @@ var RoomComponent = (function () {
 RoomComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-room',
-        template: __webpack_require__(207),
-        styles: [__webpack_require__(190)]
+        template: __webpack_require__(204),
+        styles: [__webpack_require__(188)]
     }),
     __metadata("design:paramtypes", [])
 ], RoomComponent);
@@ -1605,7 +1566,7 @@ RoomComponent = __decorate([
 //# sourceMappingURL=room.component.js.map
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1714,8 +1675,8 @@ var ScheduleComponent = (function () {
 ScheduleComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-schedule',
-        template: __webpack_require__(208),
-        styles: [__webpack_require__(191)]
+        template: __webpack_require__(205),
+        styles: [__webpack_require__(189)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], ScheduleComponent);
@@ -1724,7 +1685,7 @@ var _a, _b, _c;
 //# sourceMappingURL=schedule.component.js.map
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1750,8 +1711,8 @@ var UsermanualComponent = (function () {
 UsermanualComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-usermanual',
-        template: __webpack_require__(209),
-        styles: [__webpack_require__(192)]
+        template: __webpack_require__(206),
+        styles: [__webpack_require__(190)]
     }),
     __metadata("design:paramtypes", [])
 ], UsermanualComponent);
@@ -1759,7 +1720,7 @@ UsermanualComponent = __decorate([
 //# sourceMappingURL=usermanual.component.js.map
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1803,7 +1764,7 @@ var _a, _b;
 //# sourceMappingURL=auth.guard.js.map
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1819,6 +1780,7 @@ var environment = {
 //# sourceMappingURL=environment.js.map
 
 /***/ }),
+/* 119 */,
 /* 120 */,
 /* 121 */,
 /* 122 */,
@@ -1876,16 +1838,32 @@ var environment = {
 /* 174 */,
 /* 175 */,
 /* 176 */,
-/* 177 */,
-/* 178 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
 // module
-exports.push([module.i, ".grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 2.5% 95% 2.5%;\r\n        grid-template-columns: 2.5% 95% 2.5%;\r\n    -ms-grid-rows: 50px 100%;\r\n        grid-template-rows: 50px 100%;\r\n}\r\n\r\n.grid app-navbar {\r\n    grid-column: 2 / 3;\r\n    grid-row: 1 / 2;\r\n}\r\n\r\n.grid div {\r\n    grid-column: 2 / 3;\r\n    grid-row: 2 / 3;\r\n}", ""]);
+exports.push([module.i, ".main-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 2.5% 95% 2.5%;\r\n        grid-template-columns: 2.5% 95% 2.5%;\r\n    -ms-grid-rows: 50px 50px 100%;\r\n        grid-template-rows: 50px 50px 100%;\r\n    grid-template-areas: \r\n        \"nav    nav     nav\"\r\n        \"fm     fm      fm\"\r\n        \".      ro      .\";\r\n    text-align: center;\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.main-grid app-navbar {\r\n    grid-area: nav;\r\n}\r\n\r\n.main-grid flash-messages {\r\n    grid-area: fm;\r\n}\r\n\r\n/* Used to circumvent router-outlet issue */\r\n.main-grid div {\r\n    grid-area: ro;\r\n    border: 2px black solid;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -1897,7 +1875,7 @@ module.exports = module.exports.toString();
 /* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -1914,12 +1892,12 @@ module.exports = module.exports.toString();
 /* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".buttons\r\n{\r\n    display: none;\r\n}", ""]);
 
 // exports
 
@@ -1931,7 +1909,7 @@ module.exports = module.exports.toString();
 /* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -1948,12 +1926,12 @@ module.exports = module.exports.toString();
 /* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
 // module
-exports.push([module.i, ".buttons\r\n{\r\n    display: none;\r\n}", ""]);
+exports.push([module.i, "table {\r\n  width : 2000px;\r\n  height : auto;\r\n}\r\n\r\ntr{\r\nheight: 20px;\r\n}\r\n\r\ntd{\r\nborder-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n  width : 100%;\r\n  height : 100%;\r\n  overflow : auto;\r\n  padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n  background-color : #81ea9d;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n  background-color : #ed5d50;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: 75px;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  /*padding: 5px 0;*/\r\n  position:absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  top: -20px;\r\n  left: 20px;\r\n  z-index: 1;\r\n  visibility: visible;\r\n  display: block;\r\n}\r\n\r\n.time-tool-tip{\r\nvisibility: hidden;\r\nz-index: 20;\r\n/* display: none; */ /* This is making the cells small. */\r\n}\r\n\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  visibility: visible;\r\n}\r\n\r\n.left-column{\r\nposition: -webkit-sticky;\r\nposition: sticky;\r\nleft: 0;\r\ntop: -50;\r\nbackground-color: #ffffff;\r\nwidth: 100px;\r\nborder: 2px solid black;\r\ntext-align: center;\r\nz-index: 20;\r\n}\r\n\r\n.left-column:hover {\r\nbackground-color: #76a8f7;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1965,7 +1943,41 @@ module.exports = module.exports.toString();
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
+// imports
+
+
+// module
+exports.push([module.i, "table {\r\n  width : 2000px;\r\n  height : auto;\r\n}\r\n\r\ntr{\r\nheight: 20px;\r\n}\r\n\r\ntd{\r\nborder-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n  width : 100%;\r\n  height : 100%;\r\n  overflow : auto;\r\n  padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n  background-color : #81ea9d;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n  background-color : #ed5d50;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: 75px;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  /*padding: 5px 0;*/\r\n  position:absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  top: -20px;\r\n  left: 20px;\r\n  z-index: 1;\r\n  visibility: visible;\r\n  display: block;\r\n}\r\n\r\n.time-tool-tip{\r\nvisibility: hidden;\r\nz-index: 20;\r\n/* display: none; */ /* This is making the cells small. */\r\n}\r\n\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  visibility: visible;\r\n}\r\n\r\n.left-column{\r\nposition: -webkit-sticky;\r\nposition: sticky;\r\nleft: 0;\r\ntop: -50;\r\nbackground-color: #ffffff;\r\nwidth: 100px;\r\nborder: 2px solid black;\r\ntext-align: center;\r\nz-index: 20;\r\n}\r\n\r\n.left-column:hover {\r\nbackground-color: #76a8f7;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 184 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+// imports
+
+
+// module
+exports.push([module.i, "/* DEFAULT: For Phone */\r\n.home-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 100%;\r\n        grid-template-columns: 100%;\r\n    -ms-grid-rows: 60% 40%;\r\n        grid-template-rows: 60% 40%;\r\n    grid-template-areas:\r\n        \"jumbotron\"\r\n        \"content\";\r\n    text-align: center;\r\n}\r\n\r\n.btn {\r\n    width: 20rem;\r\n}\r\n\r\n/* For Desktop 600px+ */\r\n@media (min-width: 600px) {    \r\n    .content {\r\n        display: -ms-grid;\r\n        display: grid;\r\n        -ms-grid-columns: 33.33% 33.33% 33.33%;\r\n            grid-template-columns: 33.33% 33.33% 33.33%;\r\n        grid-template-areas: \"col-1 col-2 col-3\";\r\n    }\r\n}\r\n\r\n/* FOR TESTING */\r\n.jumbotron {\r\n    border: 2px red dotted\r\n}\r\n[class*='col-'] {\r\n    border: 2px green solid;\r\n}\r\n.content {\r\n    border: 2px blue dashed;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -1979,44 +1991,10 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 184 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)();
-// imports
-
-
-// module
-exports.push([module.i, "table {\r\n  width : 2000px;\r\n  height : auto;\r\n}\r\n\r\ntr{\r\nheight: 20px;\r\n}\r\n\r\ntd{\r\nborder-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n  width : 100%;\r\n  height : 100%;\r\n  overflow : auto;\r\n  padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n  background-color : #81ea9d;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n  background-color : #ed5d50;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: 75px;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  /*padding: 5px 0;*/\r\n  position:absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  top: -20px;\r\n  left: 20px;\r\n  z-index: 1;\r\n  visibility: visible;\r\n  display: block;\r\n}\r\n\r\n.time-tool-tip{\r\nvisibility: hidden;\r\nz-index: 20;\r\n/* display: none; */ /* This is making the cells small. */\r\n}\r\n\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  visibility: visible;\r\n}\r\n\r\n.left-column{\r\nposition: -webkit-sticky;\r\nposition: sticky;\r\nleft: 0;\r\ntop: -50;\r\nbackground-color: #ffffff;\r\nwidth: 100px;\r\nborder: 2px solid black;\r\ntext-align: center;\r\nz-index: 20;\r\n}\r\n\r\n.left-column:hover {\r\nbackground-color: #76a8f7;\r\n}\r\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 185 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)();
-// imports
-
-
-// module
-exports.push([module.i, "table {\r\n  width : 2000px;\r\n  height : auto;\r\n}\r\n\r\ntr{\r\nheight: 20px;\r\n}\r\n\r\ntd{\r\nborder-collapse: collapse;\r\n}\r\n\r\n.tablecontainer {\r\n  width : 100%;\r\n  height : 100%;\r\n  overflow : auto;\r\n  padding : 0, 0, 0, 0;\r\n}\r\n\r\n.opentime {\r\n  background-color : #81ea9d;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.closedtime {\r\n  background-color : #ed5d50;\r\n  padding : 5px, 5px, 5px, 5px;\r\n  border: 2px solid black;\r\n}\r\n\r\n.five-minute-chunk{\r\n  position: relative;\r\n  z-index: 1;\r\n}\r\n\r\n/*tool tip for each square*/\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  width: 75px;\r\n  background-color: black;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 6px;\r\n  /*padding: 5px 0;*/\r\n  position:absolute;/*this is messing up when scrolling to the right, like wtih an offset for some reason*/\r\n  top: -20px;\r\n  left: 20px;\r\n  z-index: 1;\r\n  visibility: visible;\r\n  display: block;\r\n}\r\n\r\n.time-tool-tip{\r\nvisibility: hidden;\r\nz-index: 20;\r\n/* display: none; */ /* This is making the cells small. */\r\n}\r\n\r\n.five-minute-chunk:hover .time-tool-tip{\r\n  visibility: visible;\r\n}\r\n\r\n.left-column{\r\nposition: -webkit-sticky;\r\nposition: sticky;\r\nleft: 0;\r\ntop: -50;\r\nbackground-color: #ffffff;\r\nwidth: 100px;\r\nborder: 2px solid black;\r\ntext-align: center;\r\nz-index: 20;\r\n}\r\n\r\n.left-column:hover {\r\nbackground-color: #76a8f7;\r\n}\r\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
 /* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -2033,7 +2011,7 @@ module.exports = module.exports.toString();
 /* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -2050,12 +2028,12 @@ module.exports = module.exports.toString();
 /* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".day\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.timeContainer{\r\n  display: inline-block;\r\n  padding-right: 50px;\r\n}\r\n\r\n\r\n.featurecontainer{\r\n  display: inline-block;\r\n  padding-right: 50px;\r\n}\r\n\r\n.vote\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.comment{\r\n  display: inline-block;\r\n}\r\n\r\n.roomName{\r\n  padding-bottom: 50px;\r\n}\r\n\r\n.commentcontainer{\r\n  padding-bottom: 20px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -2067,7 +2045,7 @@ module.exports = module.exports.toString();
 /* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -2084,41 +2062,7 @@ module.exports = module.exports.toString();
 /* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)();
-// imports
-
-
-// module
-exports.push([module.i, ".day\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.timeContainer{\r\n  display: inline-block;\r\n  padding-right: 50px;\r\n}\r\n\r\n\r\n.featurecontainer{\r\n  display: inline-block;\r\n  padding-right: 50px;\r\n}\r\n\r\n.vote\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.comment{\r\n  display: inline-block;\r\n}\r\n\r\n.roomName{\r\n  padding-bottom: 50px;\r\n}\r\n\r\n.commentcontainer{\r\n  padding-bottom: 20px;\r\n}\r\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 191 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)();
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 192 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)();
+exports = module.exports = __webpack_require__(4)();
 // imports
 
 
@@ -2132,98 +2076,95 @@ exports.push([module.i, "\r\n", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 193 */,
-/* 194 */,
-/* 195 */
+/* 191 */,
+/* 192 */,
+/* 193 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"grid\">\r\n    <div>\r\n      <app-navbar></app-navbar>\r\n      <flash-messages></flash-messages>  \r\n      <router-outlet></router-outlet>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n    <app-navbar></app-navbar>\r\n    <flash-messages></flash-messages>  \r\n    <div> <!-- Used to circumvent router-outlet issue (left of actual grid) -->\r\n        <router-outlet></router-outlet>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 196 */
+/* 194 */
 /***/ (function(module, exports) {
 
 module.exports = "<form *ngIf=\"!confirm\">\r\n  <div class=\"form-group\">\r\n    <!-- 1) Choosing the course name -->\r\n    <h1 style=\"text-align: center\">Add a Course</h1>\r\n    <h2>Department</h2>\r\n    <select class=\"form-control\" style=\"text-align: center\" [(ngModel)]=\"courseName\" name=\"courseName\" (focus)=\"cache()\" (change)=\"getCourseNumOptions()\">\r\n      <option selected hidden></option>\r\n      <option *ngFor=\"let cname of courseNameOptions\">{{cname}}</option>\r\n    </select>\r\n\r\n    <!-- 2) Choosing the course number -->\r\n    <div *ngIf=\"courseNumOptions\">\r\n      <h2>Course Number</h2>\r\n      <select class=\"form-control\" style=\"text-align: center\" [(ngModel)]=\"courseNum\" name=\"courseNum\" (change)=\"getCourseChoiceOptions()\">\r\n        <option selected hidden></option>\r\n        <option *ngFor=\"let cid of courseNumOptions\"> {{cid}}</option>\r\n      </select>\r\n    </div>\r\n\r\n    <!-- 3) Finally choosing a class -->\r\n    <div *ngIf=\"courseChoiceOptions\">\r\n      <h2>Course</h2>\r\n      <select class=\"form-control\" style=\"text-align: center\" [(ngModel)]=\"courseChoice\" name=\"courseChoice\">\r\n        <option selected hidden></option>\r\n        <option *ngFor=\"let cchoice of courseChoiceOptions\" [ngValue]=\"cchoice\"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"onSubmit()\">\r\n</form>\r\n\r\n<div *ngIf=\"confirm\" id=\"confirm\" style=\"text-align: center\">\r\n  <h1>Are you sure you want to add?</h1>\r\n  <h2>{{confirmMessage}}</h2>\r\n  <div>\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"addClick(true)\">\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"addClick(false)\">\r\n  </div>\r\n</div>"
 
 /***/ }),
-/* 197 */
-/***/ (function(module, exports) {
-
-module.exports = "<h2 classs= \"page-header\">Dashboard</h2>\r\n<p>Set your schedule up here</p>\r\n"
-
-/***/ }),
-/* 198 */
+/* 195 */
 /***/ (function(module, exports) {
 
 module.exports = "<head>\r\n  <title> Developer Guide </title>\r\n</head>\r\n\r\n<div>\r\n  <h2 class=\"page-header\" style=\"text-align: center;\">Developer Guide</h2>\r\n  \r\n  <h3 class=\"header\"> [What is Open Classroom?] </h3>\r\n  <body>\r\n    As computer science students, we have personally had issues finding open rooms to study in. So we created an app to let students know what classrooms and labs are open. Currently students have no easy way to find this out. They have to chance upon a room or search physically till they find one. We provide a listing of what rooms are open to make the lives of students easier. In addition, students will soon be able to upload their schedules and Open Classroom will suggest where they can go to study. There are also social elements in the works, where students can find other people to study with whether they are in the same class or taking a different section. Chat functionality and note sharing are also on the way. A means for users updating erroneous information and having it user moderated will also be implemented. This application will surely increase the student’s knowledgebase of where they can prepare for their next exam or simply get the help they need in a free space devoid of professor involvement.\r\n  </body>\r\n  \r\n  <h3 class=\"header\"> [Features] </h3>\r\n  <body>\r\n    <u>Currently Live</u>\r\n    <ul>\r\n      <li>Signup</li>\r\n      <li>Login/Logout</li>\r\n      <li>Get Open Classroom by Building</li>\r\n    </ul>\r\n    <u>In Progress</u>\r\n    <ul>\r\n      <li>Open Classroom based on Schedule</li>\r\n      <li>User Schedule Building</li>\r\n      <li>User Chatroom</li>\r\n      <li>User Group Boards</li>\r\n      <li>File Transfer between Users</li>\r\n    </ul>\r\n  </body>\r\n  \r\n  <h3 class=\"header\"> [Setup] </h3>\r\n  <body>\r\n    You can install the Open Classroom application by downloading the source code directly and unzipping the contents into a folder. Alternatively, you can also fork project. As this is a MEAN stack application, you must <strong>install the 4 dependencies</strong>:\r\n    <ol type = \"1\">\r\n      <li> <strong>MongoDB</strong> (via website)</li>\r\n      <li> <strong>Angular 2.0</strong> (via npm install)</li>\r\n      <li> <strong>ExpressJS</strong> (via npm install)</li>\r\n      <li> <strong>NodeJS</strong> (via website)</li>\r\n    </ol>\r\n    Furthermore, you must <strong>install (\"ng install\") the node_modules folder</strong> into these 2 folders <strong>using a terminal at that path location</strong>:\r\n    <ol type = \"1\">\r\n      <li> \"openclassroom\" folder</li>\r\n      <li> \"openclassroom/angular-src\" folder</li>\r\n    </ol>\r\n\r\n    <u>Populate your MongoDB Database with Classroom Content</u>\r\n    <ol type = \"1\">\r\n      <li> Navigate where you installed MongoDB (default location: C:\\Program Files\\MongoDB\\Server\\3.4\\bin) and <strong>run \"mongod.exe\"</strong> or the <strong>\"mongod.exe\" shortcut</strong> in the scraper folder</li>\r\n      <li> Navigate to the \"scraper\" folder</li>\r\n      <li> In a terminal at this path location, run \"node scraper\"</li>\r\n    </ol>\r\n\r\n    <u>Run the Open Classroom Application on Localhost</u>\r\n    <ol type = \"1\">\r\n      <li> Make sure <strong>\"mongod.exe\"</strong> is running (if not, run \"mongod.exe\" as seen above) </li>\r\n      <li> Open a new terminal in the <strong>\"openclassroom\"</strong> folder</li>\r\n      <li> Use the command <strong>\"npm start\"</strong> or <strong>\"npm serve\"</strong> or <strong>\"nodemon\"</strong> (see dependencies) </li>\r\n      <li> <strong>Open a web browser</strong> (Chrome, Edge, Firefox, etc.) and go to <strong>\"localhost:3000\"</strong> </li>\r\n    </ol>\r\n  </body>\r\n  \r\n  <h3 class=\"header\"> [Dependencies] </h3>\r\n  <body>\r\n    <u>Open Classroom uses the MEAN stack</u>\r\n    <ul>\r\n      <li><a href=\"https://www.mongodb.com/download-center\"> MongoDB </a></li>\r\n      <li><a href=\"https://github.com/angular/angular-cli\"> Angular 2.0</a></li>\r\n      <li><a href=\"https://github.com/expressjs/express\"> ExpressJS </a></li>\r\n      <li><a href=\"https://nodejs.org/en/download/\"> NodeJS </a></li>\r\n    </ul>\r\n    <i>(Angular 2.0 and ExpressJS are installed using \"ng install\". MongoDB and NodeJS shall be installed from their respective websites.)</i> \r\n    <br>\r\n    <br>\r\n    <u>Helpful Applications</u>\r\n    <ul>\r\n      <li> <a href=\"https://nodemon.io/\">Nodemon</a> - an application that updates your project without having to restart \"npm start\" or \"ng serve\" </li>\r\n      <li> <a href=\"https://robomongo.org/\">Robomongo</a> - a MongoDB client that displays the data in your database (when connected)</li>\r\n    </ul>\r\n  </body>\r\n\r\n  <h3 class=\"header\"> [OpenClassroom Project Tree] </h3>\r\n  <body>\r\n    <ul>\r\n      <li>angular-src (where our angular project resides)\r\n        <ul>\r\n          <li>e2e (for testing)</li>\r\n          <li>node_modules (dependencies installed based on package.json)</li>\r\n          <li>src\r\n            <ul>\r\n              <li>app (where the pieces to make the application resides)\r\n                <ul>\r\n                  <li>components (modules that are added to the website)</li>\r\n                  <li>guards (protects routes)</li>\r\n                  <li>services (authenticate and distribute data)</li>\r\n                </ul>\r\n              </li>\r\n              <li>assets</li>\r\n              <li>environments</li>\r\n            </ul>\r\n          </li>\r\n        </ul>\r\n      </li>\r\n      <li>config (where JSON Web Token strategy and database is located)</li>\r\n      <li>models (what objects the project will be interacting with)</li>\r\n      <li>node_modules (dependencies installed based on package.json)</li>\r\n      <li>public (deployment files and starting page location)</li>\r\n      <li>routes (set up GET and POST requests here)</li>\r\n      <li>scraper (where CSULB population happens)\r\n        <ul>\r\n        <li>open-classroom-data (JSON file with pre-scraped buildings 2017)</li>\r\n        <li>node_modules (dependencies installed based on package.json)</li>\r\n        </ul>\r\n      </li>\r\n    </ul>\r\n  </body>\r\n\r\n  <h3 class=\"header\"> [How do I contribute?] </h3>\r\n  <body>\r\n    If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.\r\n    <ul>\r\n      <li>Source Code: <a href=\"https://github.com/jonathanpchan/openclassroom\">https://github.com/jonathanpchan/openclassroom</a></li>\r\n      <li>Issue Tracker: <a href=\"https://github.com/jonathanpchan/openclassroom/issues\">https://github.com/jonathanpchan/openclassroom/issues</a></li>\r\n    </ul>\r\n  </body>\r\n\r\n  <h3 class=\"header\"> [Support] </h3>\r\n  <body>\r\n    If you have any questions, feel free to contact us at <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com.</a> \r\n  </body>\r\n</div>\r\n"
 
 /***/ }),
-/* 199 */
+/* 196 */
 /***/ (function(module, exports) {
 
 module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n  <h1 style=\"text-align: center;\" id=\"title\">Building</h1>\r\n  <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n    <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n  </select>\r\n</div>\r\n\r\n<!-- 2) Button Select -->\r\n<div class=\"buttons\" id=\"buttons\" style=\"display: none\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" style=\"width : 33%\" value=\"All Rooms\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" style=\"width : 33%\" value=\"Right Now\">    \r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" style=\"width : 33%\" value=\"By Time\">\r\n</div>\r\n\r\n<!-- 3a) Get all rooms based on building and time -->\r\n<app-find id=\"all\" style=\"display: none\" name={{building}} day={{building}}></app-find>\r\n  \r\n<!-- 3b) Get all rooms based on building -->\r\n<app-find-now id=\"now\" style=\"display: none\" name={{building}}></app-find-now>\r\n\r\n<!-- 3c) Get all rooms based on building and time -->\r\n<app-find-times id=\"times\" style=\"display: none\" name={{building}} day={{building}}></app-find-times>\r\n  "
 
 /***/ }),
-/* 200 */
+/* 197 */
 /***/ (function(module, exports) {
 
 module.exports = "<h1 *ngIf=\"!show\" style=\"text-align: center\">No rooms currently available in {{name}}</h1>\r\n<h2 *ngFor=\"let room of roomsList\">\r\n    Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n</h2>"
 
 /***/ }),
-/* 201 */
+/* 198 */
 /***/ (function(module, exports) {
 
 module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n<nouislider [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\" style=\"margin-left: auto; margin-right: auto\"></nouislider>\r\n<div class=\"tablecontainer\" id=\"table-2\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <th colspan=\"6\" *ngFor=\"let time of times | slice:tstart:tend\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:start:end let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n"
 
 /***/ }),
-/* 202 */
+/* 199 */
 /***/ (function(module, exports) {
 
 module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" style=\"width:24%\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" style=\"width:24%\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" style=\"width:24%\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" style=\"width:24%\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th></th>\r\n        <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n"
 
 /***/ }),
-/* 203 */
+/* 200 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron text-center\">\r\n  <h1>Open Classroom</h1>\r\n  <p class=\"lead\">Find your study buddy here</p>\r\n  <div *ngIf = \"!authService.loggedIn()\">\r\n    <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> <a class=\"btn btn-default\" [routerLink]=\"['/login']\">Login</a>\r\n  </div>\r\n  <div *ngIf = \"authService.loggedIn()\">\r\n    <a class=\"btn btn-primary\" [routerLink]=\"['/findclassroom']\">Find Open Classroom</a> <a class=\"btn btn-default\">Find Study Buddy</a>\r\n  </div>\r\n\r\n  <div>\r\n    <p>\r\n      <br /><a [routerLink]=\"['/usermanual']\">User Manual</a> | <a [routerLink]=\"['/devguide']\">Dev Guide</a> \r\n      <!--<a *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"> for need authorization-->\r\n    </p>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-md-4\">\r\n    <h3>Find the Best Study Spot!</h3>\r\n    <p>Find open rooms by building or by schedule.</p>\r\n  </div>\r\n  <div class=\"col-md-4\">\r\n    <h3>Study with fellow Study Buddies!</h3>\r\n    <p>Find others in the same program to study with.</p>\r\n  </div>\r\n  <div class=\"col-md-4\">\r\n    <h3>Share Class Notes!</h3>\r\n    <p>Share notes to get an edge on the competition.</p>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<!DOCTYPE HTML>\r\n<html>\r\n  <body class=\"home-grid\">\r\n    <div class=\"jumbotron\">\r\n      <h1>Open Classroom</h1>\r\n      <p>Find your study buddy here</p>\r\n      \r\n      <div *ngIf = \"!authService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> <a class=\"btn btn-default\" [routerLink]=\"['/login']\">Login</a>\r\n      </div>\r\n      <div *ngIf = \"authService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/findclassroom']\">Find Open Classroom</a> <a class=\"btn btn-default\">Find Study Buddy</a>\r\n      </div>\r\n    \r\n      <div>\r\n        <p>\r\n          <br /><a [routerLink]=\"['/usermanual']\">User Manual</a> | <a [routerLink]=\"['/devguide']\">Dev Guide</a> \r\n        </p>\r\n      </div>\r\n    </div>\r\n    <!-- There's some space in the html somewhere here. -->\r\n    <div class=\"content\">\r\n      <div class=\"col-1\">\r\n        <h3>Find the Best Study Spot!</h3>\r\n        <p>Find open rooms by building or by schedule.</p>\r\n      </div>\r\n      <div class=\"col-2\">\r\n        <h3>Study with fellow Study Buddies!</h3>\r\n        <p>Find others in the same program to study with.</p>\r\n      </div>\r\n      <div class=\"col-3\">\r\n        <h3>Share Class Notes!</h3>\r\n        <p>Share notes to get an edge on the competition.</p>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 204 */
+/* 201 */
 /***/ (function(module, exports) {
 
 module.exports = "<h2 class=\"page-header\">Login</h2>\r\n<form (submit)=\"onLoginSubmit()\">\r\n  <div class=\"form-group\">\r\n    <label>Email</label>\r\n    <input type=\"text\" class=\"form-control\" [(ngModel)]=\"email\" name=\"email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label>Password</label>\r\n    <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\r\n  </div>\r\n  <input type=\"submit\" class=\"btn btn-primary\" value=\"Login\">\r\n</form>\r\n"
 
 /***/ }),
-/* 205 */
+/* 202 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->\r\n\r\n<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" (click)=\"toggle()\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" href=\"#\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" [ngClass]=\"{ 'in' : show }\">\r\n      <ul class=\"nav navbar-nav\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findbuddy']\">Find Buddy</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li>\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\"><a (click)=\"onLogoutClick()\" href=\"#\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>"
+module.exports = "<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->\r\n<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" (click)=\"toggle()\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" [ngClass]=\"{ 'in' : show }\">\r\n      <ul class=\"nav navbar-nav\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findbuddy']\">Find Buddy</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li>\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>"
 
 /***/ }),
-/* 206 */
+/* 203 */
 /***/ (function(module, exports) {
 
 module.exports = "<h2 class=\"page-header\">Register</h2>\r\n<form (submit)=\"onRegisterSubmit()\">\r\n  <div class=\"form-group\">\r\n    <label>Name</label>\r\n    <input type=\"text\" [(ngModel)]=\"name\" name=\"name\" class=\"form-control\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label>Username</label>\r\n    <input type=\"text\" [(ngModel)]=\"username\" name=\"username\" class=\"form-control\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label>Email</label>\r\n    <input type=\"text\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" >\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label>Password</label>\r\n    <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\">\r\n  </div>\r\n  <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n</form>\r\n"
 
 /***/ }),
-/* 207 */
+/* 204 */
 /***/ (function(module, exports) {
 
 module.exports = "\r\n<h1 class =\"roomName\">{{rooms.building}}-{{rooms.room}}</h1>\r\n\r\n<div class = \"timesection\">\r\n<h2>Open Times </h2>\r\n\r\n<h2>Monday</h2>\r\n<div class = \"day\"  *ngFor=\"let time of rooms.mon\">\r\n<h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Monday Upvotes - {{time.uVote}}</p>\r\n<p class = \"dvote\">Monday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n<h2>Tuesday</h2>\r\n<div class = \"day\" *ngFor=\"let time of rooms.tue\">\r\n<h3 class = \"timeContainer\">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Tuesday Up - {{time.uVote}}</p>\r\n<p class = \"dvote\">Tuesday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n<h2>Wednesday</h2>\r\n<div class = \"day\" *ngFor=\"let time of rooms.wed\">\r\n<h3 class = \"timeContainer\">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Wednesday Up - {{time.uVote}}</p>\r\n<p class = \"dvote\">Wednesday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n<h2>Thursday</h2>\r\n<div class = \"day\" *ngFor=\"let time of rooms.thu\">\r\n<h3 class = \"timeContainer\">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Thursday Up - {{time.uVote}}</p>\r\n<p class = \"dvote\">Thursday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"featuresection\">\r\n<h2>Features</h2>\r\n\r\n<div class = \"featurecontainer\">\r\n<h3 class = \"feature\">outlets</h3>\r\n<p class = \"uvote\">outlets upvote - {{rooms.hasOutlets.uVote}}</p>\r\n<p class = \"dvote\">outlets downvote - {{rooms.hasOutlets.dVote}}</p>\r\n</div>\r\n\r\n<div class = \"featurecontainer\">\r\n<h3 class = \"feature\">White Board</h3>\r\n<p class = \"uvote\">White Board upvote - {{rooms.whiteboard.uVote}}</p>\r\n<p class = \"dvote\">White Board downvote - {{rooms.whiteboard.dVote}}</p>\r\n</div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"commentsection\">\r\n\r\n  <h2>Comments</h2>\r\n\r\n  <div class = \"commentcontainer\" *ngFor = \"let comment of rooms.comments\">\r\n  <p class = \"comment\">\"{{comment.content}}\"</p>\r\n  <p class = \"comomentUser\">{{comment.username}} </p>\r\n  <p class = \"uvote\">comment upvote - {{comment.uVote}}</p>\r\n  <p class = \"dvote\">comment downvote - {{comment.dVote}}</p>\r\n  <p class = \"dvote\">{{comment.date}}</p>\r\n\r\n  </div>\r\n\r\n</div>\r\n"
 
 /***/ }),
-/* 208 */
+/* 205 */
 /***/ (function(module, exports) {
 
 module.exports = "<div *ngIf=\"user && !add && !delete\">\r\n    <h1 style=\"text-align: center;\" id=\"title\">About Me</h1>\r\n    <ul class=\"list-group\">\r\n      <li class= \"list-group-item\">Username: {{user.username}}</li>\r\n      <li class= \"list-group-item\">Email: {{user.email}}</li>\r\n    </ul>\r\n    <h1 style=\"text-align: center;\" id=\"title\">My Schedule</h1>\r\n    <table class=\"table-striped, table-bordered\" style=\"width : 100%; border-color : solid black 1px\">\r\n      <thead></thead>\r\n      <tbody>\r\n        <tr>\r\n          <td>NAME</td>\r\n          <td>CLASS #</td>\r\n          <td>DAYS</td>\r\n          <td>TIME</td>\r\n          <td>LOCATION</td>\r\n          <td>INSTRUCTOR</td>\r\n        </tr>\r\n        <ng-container *ngIf=\"schedule.length > 0\">\r\n          <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\">\r\n            <td>{{sched.name}} {{sched.courses[0].num}}</td>\r\n            <td>{{sched.courses[0].sec}}</td>\r\n            <td>{{sched.courses[0].day}}</td>\r\n            <td>{{sched.courses[0].time}}</td>\r\n            <td>{{sched.courses[0].location}}</td>\r\n            <td>{{sched.courses[0].prof}}</td>\r\n            <input type=\"button\" class=\"btn btn-primary\" style=\"width: 100%\" value=\"-\" (click)=\"clickDelete(i)\">\r\n          </tr>\r\n        </ng-container>\r\n        <ng-container *ngIf=\"!(schedule.length > 0)\">\r\n            No Courses\r\n        </ng-container>\r\n      </tbody>\r\n    </table>\r\n  <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n</div>\r\n  \r\n<div *ngIf=\"user && add && !delete\">\r\n  <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n</div>\r\n\r\n<div *ngIf=\"user && !add && delete\" style=\"text-align: center\">\r\n  <h1>Are you sure you want to remove?</h1>\r\n  <h2>{{deleteMessage}}</h2>\r\n  <div>\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"onCourseDelete(true)\">\r\n    <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"onCourseDelete(false)\">\r\n  </div>\r\n</div>\r\n  "
 
 /***/ }),
-/* 209 */
+/* 206 */
 /***/ (function(module, exports) {
 
 module.exports = "<head>\r\n  <title> User manual </title>\r\n</head>\r\n\r\n<div>\r\n  <h2 class=\"page-header\" style=\"text-align: center;\">User Manual</h2>\r\n  <h3 class=\"header\"> [Overview] </h3>\r\n  <p class= \"tab\">\r\n    <body>\r\n    For a student, finding the ideal place to study can be a reoccurring issue.\r\n    With the inception of OpenClassroom, our goal is to minimize students' already\r\n    high stress levels by a simple solution to finding optimal classrooms to study in.\r\n    Our application will be able to search for classrooms based on a specific time,\r\n    a specific building, or by a \"now\" function that will list all available classrooms\r\n    that are open at the time of query.\r\n  </body></p>\r\n  <h3 class=\"header\"> [Registration] </h3>\r\n  <body>\r\n  To register, you will need a valid e-mail address.\r\n</body>\r\n  <ol type = \"1\">\r\n    <li> Click on the register tab on the top right corner of the navigation bar. </li>\r\n    <li> Enter your name.</li>\r\n    <li> Enter a username. (Other users will be able to identify you by this.)</li>\r\n    <li> Enter a valid e-mail address.</li>\r\n    <li> Create a password.</li>\r\n    <li> Click submit!</li>\r\n    <li> Congratulations! You will now be able to login and access the services provided.</li>\r\n  </ol>\r\n\r\n  <h3 class=\"header\"> [Login] </h3>\r\n  <body>\r\n  To login, you will need to have a registered account.\r\n  </body>\r\n  <ol type = \"1\">\r\n    <li> Click on the login tab on the top right corner of the navigation bar. </li>\r\n    <li> Enter your e-mail address.</li>\r\n    <li> Enter your password.</li>\r\n    <li> Click submit!</li>\r\n  </ol>\r\n</div>\r\n\r\n<h3 class=\"header\"> [FAQ] </h3>\r\n<ol type = \"1\">\r\n  <li> When will the application be released to the public? </li>\r\n    <ul>\r\n      <li> We are looking to launch in December, 2017! </li>\r\n    </ul>\r\n  <li> How can I become a part of the development team? </li>\r\n    <ul>\r\n      <li> Please refer to our developer guide!  </li>\r\n    </ul>\r\n  <li> I can't login! What should I do?</li>\r\n    <ul>\r\n      <li> Please make sure you're using the credentials you created your account\r\n    with, and if you are still unable to access your account, please contact us at\r\n    <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com.</a>\r\n      </li>\r\n    </ul>\r\n</ol>\r\n"
 
 /***/ }),
+/* 207 */,
+/* 208 */,
+/* 209 */,
 /* 210 */,
 /* 211 */,
 /* 212 */,
@@ -2255,15 +2196,12 @@ module.exports = "<head>\r\n  <title> User manual </title>\r\n</head>\r\n\r\n<di
 /* 238 */,
 /* 239 */,
 /* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(97);
 
 
 /***/ })
-],[244]);
+],[241]);
 //# sourceMappingURL=main.bundle.js.map

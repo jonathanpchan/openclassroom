@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <body class="grid">
-    <div>
-      <app-navbar></app-navbar>
-      <flash-messages></flash-messages>  
-      <router-outlet></router-outlet>
+  <body class="main-grid">
+    <app-navbar></app-navbar>
+    <flash-messages></flash-messages>  
+    <div> <!-- Used to circumvent router-outlet issue (left of actual grid) -->
+        <router-outlet></router-outlet>
     </div>
   </body>
 </html>
