@@ -1567,7 +1567,29 @@ var RoomComponent = (function () {
     }
     RoomComponent.prototype.ngOnInit = function () {
         this.rooms = JSON.parse('{"res":[{"building":"VEC","room":"103","whiteboard":{"uVote":33,"dVote":12,"UserVote":0},"hasOutlets":{"uVote":3,"dVote":1,"UserVote":-1},"comments":[{"username":"Bob","uVote":5,"dVote":0,"UserVote":1,"content":"Good Room","date":"2017-11-05 9:30 AM"},{"username":"Greg","uVote":0,"dVote":15,"UserVote":0,"content":"No Whiteboard","date":"2017-12-05 10:25 AM"}],"mon":[{"st":915,"et":950,"uVote":1,"dVote":5},{"st":1100,"et":1150,"uVote":10,"dVote":5}],"tue":[{"st":600,"et":650,"uVote":3,"dVote":5},{"st":900,"et":950,"uVote":1,"dVote":2}],"wed":[{"st":915,"et":950,"uVote":2,"dVote":5},{"st":1100,"et":1150,"uVote":9,"dVote":5}],"thu":[{"st":600,"et":650,"uVote":11,"dVote":5},{"st":900,"et":950,"uVote":8,"dVote":5}]}]}');
+        this.rooms = this.rooms.res[0];
         console.log(this.rooms);
+    };
+    RoomComponent.prototype.timeFormat = function (time) {
+        var t;
+        var minutes = time;
+        if (minutes >= 780) {
+            minutes -= 720; //if its 13 o'clock you take off 12 hours or 720 mins
+        }
+        t = (minutes - minutes % 60) / 60 + ":"; //calculating hours
+        if (minutes % 60 == 0) {
+            t += "00";
+        }
+        else {
+            t += time % 60;
+        }
+        if (time > 720) {
+            t += " PM";
+        }
+        else {
+            t += " AM";
+        }
+        return t;
     };
     return RoomComponent;
 }());
@@ -1863,7 +1885,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, ".content {\r\n    padding: 100px;\r\n}", ""]);
+exports.push([module.i, ".grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 2.5% 95% 2.5%;\r\n        grid-template-columns: 2.5% 95% 2.5%;\r\n    -ms-grid-rows: 50px 100%;\r\n        grid-template-rows: 50px 100%;\r\n}\r\n\r\n.grid app-navbar {\r\n    grid-column: 2 / 3;\r\n    grid-row: 1 / 2;\r\n}\r\n\r\n.grid div {\r\n    grid-column: 2 / 3;\r\n    grid-row: 2 / 3;\r\n}", ""]);
 
 // exports
 
@@ -2067,7 +2089,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, ".day\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.feature{\r\n  display: inline-block;\r\n}\r\n\r\n.vote\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.comment{\r\n  display: inline-block;\r\n}\r\n", ""]);
+exports.push([module.i, ".day\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.timeContainer{\r\n  display: inline-block;\r\n  padding-right: 50px;\r\n}\r\n\r\n\r\n.featurecontainer{\r\n  display: inline-block;\r\n  padding-right: 50px;\r\n}\r\n\r\n.vote\r\n{\r\n  display:inline-block;\r\n}\r\n\r\n.comment{\r\n  display: inline-block;\r\n}\r\n\r\n.roomName{\r\n  padding-bottom: 50px;\r\n}\r\n\r\n.commentcontainer{\r\n  padding-bottom: 20px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -2115,7 +2137,7 @@ module.exports = module.exports.toString();
 /* 195 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <app-navbar></app-navbar>\r\n      <div class=\"content\">\r\n        <flash-messages></flash-messages>  \r\n        <router-outlet></router-outlet>\r\n      </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"grid\">\r\n    <div>\r\n      <app-navbar></app-navbar>\r\n      <flash-messages></flash-messages>  \r\n      <router-outlet></router-outlet>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 196 */
@@ -2187,7 +2209,7 @@ module.exports = "<h2 class=\"page-header\">Register</h2>\r\n<form (submit)=\"on
 /* 207 */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<h1> Room Name </h1>\r\n\r\n<div class = \"timesection\">\r\n<h2>Open Times </h2>\r\n\r\n<div class = \"daycontainer\">\r\n<h3 class = \"day\">Monday -  loop Open from \"time\" to \"time\" </h3><!--what day are we displaying here? -->\r\n<p class = \"vote\">Monday Up</p>\r\n<p class = \"vote\">Monday Down</p>\r\n</div>\r\n\r\n<div class = \"daycontainer\">\r\n<h3 class = \"day\">Tuesday -  loop Open from \"time\" to \"time\" </h3><!--what day are we displaying here? -->\r\n<p class = \"vote\">Tuesday Up</p>\r\n<p class = \"vote\">Tuesday Down</p>\r\n</div>\r\n\r\n<div class = \"daycontainer\">\r\n<h3 class = \"day\">Wednesday -  loop Open from \"time\" to \"time\" </h3><!--what day are we displaying here? -->\r\n<p class = \"vote\">Wednesday Up</p>\r\n<p class = \"vote\">Wednesday Down</p>\r\n</div>\r\n\r\n<div class = \"daycontainer\">\r\n<h3 class = \"day\">Thursday -  loop Open from \"time\" to \"time\" </h3><!--what day are we displaying here? -->\r\n<p class = \"vote\">Thursday Up</p>\r\n<p class = \"vote\">Thursday Down</p>\r\n</div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"featuresection\">\r\n\r\n<h2>Features</h2>\r\n\r\n<div class = \"featurecontainer\">\r\n<h3 class = \"feature\">outlets</h3>\r\n<p class = \"vote\">outlets upvote</p>\r\n<p class = \"vote\">outlets downvote</p>\r\n</div>\r\n\r\n<div class = \"featurecontainer\">\r\n<h3 class = \"feature\">White Board</h3>\r\n<p class = \"vote\">White Board upvote</p>\r\n<p class = \"vote\">White Board downvote</p>\r\n</div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"commentsection\">\r\n\r\n  <h2>Comments</h2>\r\n\r\n  <div class = \"commentcontainer\">\r\n  <p class = \"comment\"> comment 1</p>\r\n  <p class = \"vote\">comment upvote</p>\r\n  <p class = \"vote\">comment downvote</p>\r\n  </div>\r\n\r\n  <div class = \"commentcontainer\">\r\n  <p class = \"comment\"> comment 2</p>\r\n  <p class = \"vote\">comment upvote</p>\r\n  <p class = \"vote\">comment downvote</p>\r\n  </div>\r\n\r\n</div>\r\n"
+module.exports = "\r\n<h1 class =\"roomName\">{{rooms.building}}-{{rooms.room}}</h1>\r\n\r\n<div class = \"timesection\">\r\n<h2>Open Times </h2>\r\n\r\n<h2>Monday</h2>\r\n<div class = \"day\"  *ngFor=\"let time of rooms.mon\">\r\n<h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Monday Upvotes - {{time.uVote}}</p>\r\n<p class = \"dvote\">Monday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n<h2>Tuesday</h2>\r\n<div class = \"day\" *ngFor=\"let time of rooms.tue\">\r\n<h3 class = \"timeContainer\">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Tuesday Up - {{time.uVote}}</p>\r\n<p class = \"dvote\">Tuesday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n<h2>Wednesday</h2>\r\n<div class = \"day\" *ngFor=\"let time of rooms.wed\">\r\n<h3 class = \"timeContainer\">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Wednesday Up - {{time.uVote}}</p>\r\n<p class = \"dvote\">Wednesday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n<h2>Thursday</h2>\r\n<div class = \"day\" *ngFor=\"let time of rooms.thu\">\r\n<h3 class = \"timeContainer\">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->\r\n<p class = \"uvote\">Thursday Up - {{time.uVote}}</p>\r\n<p class = \"dvote\">Thursday Down - {{time.dVote}}</p>\r\n</div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"featuresection\">\r\n<h2>Features</h2>\r\n\r\n<div class = \"featurecontainer\">\r\n<h3 class = \"feature\">outlets</h3>\r\n<p class = \"uvote\">outlets upvote - {{rooms.hasOutlets.uVote}}</p>\r\n<p class = \"dvote\">outlets downvote - {{rooms.hasOutlets.dVote}}</p>\r\n</div>\r\n\r\n<div class = \"featurecontainer\">\r\n<h3 class = \"feature\">White Board</h3>\r\n<p class = \"uvote\">White Board upvote - {{rooms.whiteboard.uVote}}</p>\r\n<p class = \"dvote\">White Board downvote - {{rooms.whiteboard.dVote}}</p>\r\n</div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"commentsection\">\r\n\r\n  <h2>Comments</h2>\r\n\r\n  <div class = \"commentcontainer\" *ngFor = \"let comment of rooms.comments\">\r\n  <p class = \"comment\">\"{{comment.content}}\"</p>\r\n  <p class = \"comomentUser\">{{comment.username}} </p>\r\n  <p class = \"uvote\">comment upvote - {{comment.uVote}}</p>\r\n  <p class = \"dvote\">comment downvote - {{comment.dVote}}</p>\r\n  <p class = \"dvote\">{{comment.date}}</p>\r\n\r\n  </div>\r\n\r\n</div>\r\n"
 
 /***/ }),
 /* 208 */
