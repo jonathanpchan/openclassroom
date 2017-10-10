@@ -312,6 +312,8 @@ var FindNowComponent = (function () {
         this.days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
         // The list that will be displayed after population in the show function
         this.roomsList = [];
+        // Notifies the HTML to display the error message when out of hours
+        this.show = false;
     }
     // Set the day once when navigating to the find classroom page
     FindNowComponent.prototype.ngOnInit = function () {
@@ -349,6 +351,9 @@ var FindNowComponent = (function () {
                                 _this.roomsList.push({ name: roomsJSON[room].name, st: _this.timeFormat(timesJSON[time].st), et: _this.timeFormat(timesJSON[time].et) });
                                 _this.show = true;
                             }
+                            else {
+                                _this.show = false;
+                            }
                         }
                     }
                 }
@@ -359,6 +364,8 @@ var FindNowComponent = (function () {
         else {
             this.show = false;
         }
+        console.log(this.roomsList);
+        console.log(this.show);
     };
     // Adjust time in minutes to stringified time (No 12:00 AM)
     FindNowComponent.prototype.timeFormat = function (time) {
@@ -2105,7 +2112,7 @@ module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n 
 /* 197 */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 *ngIf=\"!show\" style=\"text-align: center\">No rooms currently available in {{name}}</h1>\r\n<h2 *ngFor=\"let room of roomsList\">\r\n    Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n</h2>"
+module.exports = "<h1 *ngIf=\"!show\" style=\"text-align: center\">No rooms currently available in {{name}}</h1>\r\n<ng-container *ngIf=\"show\">\r\n    <h2 *ngFor=\"let room of roomsList\">\r\n        Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n    </h2>\r\n</ng-container>\r\n"
 
 /***/ }),
 /* 198 */

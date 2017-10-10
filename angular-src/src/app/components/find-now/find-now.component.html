@@ -1,4 +1,6 @@
 <h1 *ngIf="!show" style="text-align: center">No rooms currently available in {{name}}</h1>
-<h2 *ngFor="let room of roomsList">
-    Room: {{room.name}} from {{room.st}} until {{room.et}}
-</h2>
+<ng-container *ngIf="show">
+    <h2 *ngFor="let room of roomsList">
+        Room: {{room.name}} from {{room.st}} until {{room.et}}
+    </h2>
+</ng-container>
