@@ -31,7 +31,9 @@
             </tr>
           </ng-container>
           <ng-container *ngIf="!(schedule.length > 0)">
-            No Courses
+            <tr>
+              <td colspan="6" style="text-align: left">No Courses</td>
+            </tr>
           </ng-container>
         </tbody>
       </table>
