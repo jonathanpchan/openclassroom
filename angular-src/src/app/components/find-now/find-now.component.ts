@@ -18,7 +18,7 @@ export class FindNowComponent implements OnInit {
   roomsList = [];
 
   // Notifies the HTML to display the error message when out of hours
-  show : boolean;
+  show : boolean = false;
 
   // Need to pass argument so it can be used in functions below
   constructor(private buildingService : BuildingsService) { }
@@ -65,6 +65,10 @@ export class FindNowComponent implements OnInit {
                 this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
                 this.show = true;
               }
+              else
+              { // Set to false if none match
+                this.show = false;
+              }
             }
           }
         }
@@ -77,6 +81,8 @@ export class FindNowComponent implements OnInit {
     {
       this.show = false;
     }
+    console.log(this.roomsList);
+    console.log(this.show);
   }
 
   // Adjust time in minutes to stringified time (No 12:00 AM)
