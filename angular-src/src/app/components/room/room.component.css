@@ -11,7 +11,7 @@
 .dayContainer{
   display: inline-block;
   /*padding is off when time block is a different length*/
-  padding-right: 20px;
+  /*padding-right: 20px;*/
 }
 
 .day{
@@ -22,11 +22,12 @@
       "tc tc tc "
       "uv dv .  ";
   grid-area: day;
+
 }
 
 .featurecontainer{
   display: inline-block;
-  padding-right: 20px;
+  /*padding-right: 20px;*/
 }
 
 .feature
@@ -51,28 +52,41 @@
 
 .uVote{
   grid-area: uv;
+  border: 1px solid blue;
+
 }
 
 .dVote{
   grid-area: dv;
+  border: 1px solid red;
+
 }
 
 .timeContainer{
   grid-area: tc;
+  border: 1px solid black;
+  padding: 0;
 }
 
 .featureName{
   grid-area: fn;
+  border: 1px solid black;
+
 }
 
 .comment{
   grid-area:cm;
+  border: 1px solid black;
+
 }
 
 .commentUser{
   grid-area: cu;
+  border: 1px solid black;
 }
 
 .date{
   grid-area:dt;
+  border: 1px solid violet;
+
 }

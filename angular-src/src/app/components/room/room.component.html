@@ -50,7 +50,7 @@
 <div class = "featureSection">
 <h2>Features</h2>
 
-  <div class = "featurecontainer">
+  <div class = "featureContainer">
     <div class = "feature">
       <h3 class = "featureName">outlets</h3>
       <p class = "uVote" (click)="outletUvote()">outlets upvote - {{rooms.hasOutlets.uVote}}</p>
@@ -58,9 +58,9 @@
     </div>
   </div>
 
-  <div class = "featurecontainer">
+  <div class = "featureContainer">
     <div class = "feature">
-      <h3>White Board</h3>
+      <h3 class = "featureName">White Board</h3>
       <p class = "uVote" (click)="wBoardUvote()">White Board upvote - {{rooms.whiteboard.uVote}}</p>
       <p class = "dVote" (click)="wBoardDvote()">White Board downvote - {{rooms.whiteboard.dVote}}</p>
     </div>
@@ -75,7 +75,7 @@
 
   <div class = "commentContainer" *ngFor = "let comment of rooms.comments">
     <p class = "comment">"{{comment.content}}"</p>
-    <p class = "comomentUser">{{comment.username}} </p>
+    <p class = "commentUser">{{comment.username}} </p>
     <p class = "uVote" (click)="commentUvote(comment.username)">comment upvote - {{comment.uVote}}</p>
     <p class = "dVote" (click)="commentDvote(comment.username)">comment downvote - {{comment.dVote}}</p>
     <p class = "date">{{comment.date}}</p>
