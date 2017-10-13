@@ -7,6 +7,18 @@ const classes = require('../models/course');
 const CS = mongoose.model('Courses', classes.CS.Schema);
 var ObjectId = require('mongodb').ObjectID;
 
+
+// Classes Schema
+const classesSchema = mongoose.Schema({
+    name: { type: String },
+    num : { type: String },
+    sec : { type: String },
+    day :  { type: String },
+    time : { type: String },
+    location : { type: String },
+    prof : { type: String }
+})
+
 // User Schema
 const UserSchema = mongoose.Schema({
   name: { type: String },
@@ -16,8 +28,9 @@ const UserSchema = mongoose.Schema({
   password: { type: String, required: true },
   regdate: { type: Date, required: true },
   emailVerified: {type: Boolean, required: false},
-  schedule: {type: [CS.schema] }
+  schedule: { type: [classesSchema] }
 });
+
 
 // Export User Schema
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -67,25 +80,24 @@ module.exports.getSchedule = function(email, callback) {
 module.exports.addScheduleItem = function(eMail, crsID, callback) {
     CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
         User.findOneAndUpdate(
-        {"email": eMail},
+        {"email" : eMail, "schedule.sec" : {$ne: crsID}},
         {
-            $push: {
+            $addToSet: {
                 "schedule": {
-                    name: x[0].name,
-                    courses: {
-                        num : x[0].courses[0].num,
-                        sec : x[0].courses[0].sec,
-                        day :  x[0].courses[0].day,
-                        time : x[0].courses[0].time,
-                        location : x[0].courses[0].location,
-                        prof : x[0].courses[0].prof
+                    "name": x[0].name,
+                    "num" : x[0].courses[0].num,
+                    "sec" : x[0].courses[0].sec,
+                    "day" :  x[0].courses[0].day,
+                    "time" : x[0].courses[0].time,
+                    "location" : x[0].courses[0].location,
+                    "prof" : x[0].courses[0].prof
                     }
                 }
-            }
-        }, {new: true}, function(err) {
+        }, {new: true}, function(err, doc) {
             if (err) {
-                console.log("Something wrong when adding a class!");
+                console.log("Something went wrong when adding a class!");
             }
+            console.log(doc);
             User.find({email: eMail}, {schedule: 1, _id:0}, callback);
         })
     })
@@ -93,18 +105,15 @@ module.exports.addScheduleItem = function(eMail, crsID, callback) {
 
 // Delete section number based on email and section #
 module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
-    CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
-        User.findOneAndUpdate(
-        {"email": eMail},
-            {
-                $pull : {
-                    "schedule": {"courses.0.sec": crsID}
-                }
-            }, {new: true}, function(err) {
+    User.findOneAndUpdate(
+        {"email": eMail}, {
+            $pull : {
+                "schedule" : { sec : crsID }
+            }
+        }, {new: true}, function(err) {
             if (err) {
-                console.log("Something wrong when deleting a class!");
+                console.log("Something went wrong when deleting a class!");
             }
             User.find({email: eMail}, {schedule: 1, _id:0}, callback);
         })
-    })
 };
