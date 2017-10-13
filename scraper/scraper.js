@@ -465,9 +465,9 @@ function insertToDB(){
     // Grab the schema used by said model
     const bs = mongoose.model('Building', build.BS.schema);
     var rs = require('../models/roomInfo');
-    var ri = mongoose.model('RoomInfo', rs.schema )
+    var ll = mongoose.model('RoomInfo', rs.RI.schema )
     bs.collection.drop()
-    ri.collection.drop()
+    ll.collection.drop()
 
 
     var RoomInfo_classTimesARR = []
@@ -579,7 +579,7 @@ function insertToDB(){
     bmap.forEach(dbAddBuildings)
 
     bs.collection.insert(fullDBArr, onInsert('Buildings'))
-    ri.collection.insert(RoomInfo_classTimesARR, onInsert('RoomInfo'))
+    ll.collection.insert(RoomInfo_classTimesARR, onInsert('RoomInfo'))
 
     //--------Insert Courses into database----------------
     // Require building model to access add function

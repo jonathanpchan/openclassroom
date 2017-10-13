@@ -1,69 +1,86 @@
 
+<html>
+
+
 <h1 class ="roomName">{{rooms.building}}-{{rooms.room}}</h1>
 
+<body>
+
 <div class = "timesection">
-<h2>Open Times </h2>
+  <h2>Open Times </h2>
 
-<h2>Monday</h2>
-<div class = "day"  *ngFor="let time of rooms.mon">
-<h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
-<p class = "uvote">Monday Upvotes - {{time.uVote}}</p>
-<p class = "dvote">Monday Down - {{time.dVote}}</p>
-</div>
+  <h2>Monday</h2>
+  <div class = "dayContainer" *ngFor="let time of rooms.mon">
+    <div class = "day">
+      <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
+      <p class = "uVote" (click)="monUvote()">Monday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="monDvote()">Monday Down - {{time.dVote}}</p>
+    </div>
+  </div>
 
-<h2>Tuesday</h2>
-<div class = "day" *ngFor="let time of rooms.tue">
-<h3 class = "timeContainer">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
-<p class = "uvote">Tuesday Up - {{time.uVote}}</p>
-<p class = "dvote">Tuesday Down - {{time.dVote}}</p>
-</div>
+  <h2>Tuesday</h2>
+  <div class = "dayContainer" *ngFor="let time of rooms.tue">
+    <div class = "day">
+      <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
+      <p class = "uVote" (click)="tueUvote()">Tuesday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="tueDvote()">Tuesday Down - {{time.dVote}}</p>
+    </div>
+  </div>
 
-<h2>Wednesday</h2>
-<div class = "day" *ngFor="let time of rooms.wed">
-<h3 class = "timeContainer">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
-<p class = "uvote">Wednesday Up - {{time.uVote}}</p>
-<p class = "dvote">Wednesday Down - {{time.dVote}}</p>
-</div>
+  <h2>Wednesday</h2>
+  <div class = "dayContainer" *ngFor="let time of rooms.wed">
+    <div class = "day">
+      <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
+      <p class = "uVote" (click)="wedUvote()">Wednesday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="wedDvote()">Wednesday Down - {{time.dVote}}</p>
+    </div>
+  </div>
 
-<h2>Thursday</h2>
-<div class = "day" *ngFor="let time of rooms.thu">
-<h3 class = "timeContainer">Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3><!--what day are we displaying here? -->
-<p class = "uvote">Thursday Up - {{time.uVote}}</p>
-<p class = "dvote">Thursday Down - {{time.dVote}}</p>
-</div>
-
-</div>
-
-
-<div class = "featuresection">
-<h2>Features</h2>
-
-<div class = "featurecontainer">
-<h3 class = "feature">outlets</h3>
-<p class = "uvote">outlets upvote - {{rooms.hasOutlets.uVote}}</p>
-<p class = "dvote">outlets downvote - {{rooms.hasOutlets.dVote}}</p>
-</div>
-
-<div class = "featurecontainer">
-<h3 class = "feature">White Board</h3>
-<p class = "uvote">White Board upvote - {{rooms.whiteboard.uVote}}</p>
-<p class = "dvote">White Board downvote - {{rooms.whiteboard.dVote}}</p>
-</div>
-
-</div>
-
-
-<div class = "commentsection">
-
-  <h2>Comments</h2>
-
-  <div class = "commentcontainer" *ngFor = "let comment of rooms.comments">
-  <p class = "comment">"{{comment.content}}"</p>
-  <p class = "comomentUser">{{comment.username}} </p>
-  <p class = "uvote">comment upvote - {{comment.uVote}}</p>
-  <p class = "dvote">comment downvote - {{comment.dVote}}</p>
-  <p class = "dvote">{{comment.date}}</p>
-
+  <h2>Thursday</h2>
+  <div class = "dayContainer" *ngFor="let time of rooms.thu">
+    <div class = "day">
+      <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
+      <p class = "uVote" (click)="thuUvote()">Thursday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="tueDvote()">Thursday Down - {{time.dVote}}</p>
+    </div>
   </div>
 
 </div>
+
+<div class = "featureSection">
+<h2>Features</h2>
+
+  <div class = "featureContainer">
+    <div class = "feature">
+      <h3 class = "featureName">outlets</h3>
+      <p class = "uVote" (click)="outletUvote()">outlets upvote - {{rooms.hasOutlets.uVote}}</p>
+      <p class = "dVote" (click)="outletDvote()">outlets downvote - {{rooms.hasOutlets.dVote}}</p>
+    </div>
+  </div>
+
+  <div class = "featureContainer">
+    <div class = "feature">
+      <h3 class = "featureName">White Board</h3>
+      <p class = "uVote" (click)="wBoardUvote()">White Board upvote - {{rooms.whiteboard.uVote}}</p>
+      <p class = "dVote" (click)="wBoardDvote()">White Board downvote - {{rooms.whiteboard.dVote}}</p>
+    </div>
+  </div>
+
+</div>
+
+
+<div class = "commentSection">
+
+  <h2>Comments</h2>
+
+  <div class = "commentContainer" *ngFor = "let comment of rooms.comments">
+    <p class = "comment">"{{comment.content}}"</p>
+    <p class = "commentUser">{{comment.username}} </p>
+    <p class = "uVote" (click)="commentUvote(comment.username)">comment upvote - {{comment.uVote}}</p>
+    <p class = "dVote" (click)="commentDvote(comment.username)">comment downvote - {{comment.dVote}}</p>
+    <p class = "date">{{comment.date}}</p>
+  </div>
+</div>
+
+</body>
+</html>

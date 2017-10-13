@@ -4,14 +4,14 @@
     <div *ngIf="user && !add && !delete">
       <h1 id="title">About Me</h1>
       <ul class="list-group">
-        <li class= "list-group-item">Username: {{user.username}}</li>
+        <li class= "list-group-item">Name: {{user.name}}</li>
         <li class= "list-group-item">Email: {{user.email}}</li>
       </ul>
       <h1 id="title">My Schedule</h1>
       <table class="table-striped, table-bordered" style="width : 100%; border-color : solid black 1px">
         <thead></thead>
         <tbody>
-          <tr>
+          <tr class="table-title">
             <td>NAME</td>
             <td>CLASS #</td>
             <td>DAYS</td>

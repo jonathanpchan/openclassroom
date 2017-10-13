@@ -68,6 +68,11 @@ RI = module.exports = mongoose.model('RoomInfo', RoomInfoSchema );
 // Export comments Schema
 UC = module.exports = mongoose.model('Comments', CommentsSchema ); //UC = user comments
 
+module.exports = {
+  RI: RI,
+  UC: UC
+}
+
 
 // return room info, no need to passalong votes array but do pass requested users vote
 module.exports.getRoomInfo = function(building, room, callback){
@@ -75,15 +80,15 @@ module.exports.getRoomInfo = function(building, room, callback){
 }
 
 //Add comment function on any fields
-module.exports.addComment = function(building, room, email, item, comment, callback){
+module.exports.addVote = function(building, room, email, item, vval, callback){
     console.log("hello")
 }
 
-module.exports.addComment = function(building, room, email, day, item, comment, callback){
-    console.log("hello")
+module.exports.addVote = function(building, room, email, day, item, vval, callback){
+    console.log("hello2")
 }
 
-module.exports.addVote = function(building, room, email, item, vote, callback){
+module.exports.addComment = function(building, room, foo, bar, callback){
 
 }
 

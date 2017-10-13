@@ -40,7 +40,8 @@ const appRoutes: Routes = [
   {path:'findclassroom/now', component: FindNowComponent},
   {path:'findclassroom/building', component: FindComponent},
   {path:'findclassroom/time', component: FindTimesComponent},
-  {path:'room', component: RoomComponent}
+  {path:'room', component: RoomComponent},
+  {path:'**', redirectTo: ''}
 ]
 
 @NgModule({
