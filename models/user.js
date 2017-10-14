@@ -97,8 +97,12 @@ module.exports.addScheduleItem = function(eMail, crsID, callback) {
             if (err) {
                 console.log("Something went wrong when adding a class!");
             }
-            console.log(doc);
-            User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+            if (doc == null) {
+                User.find({ _id: null }, {email: 0, schedule: 0}, callback)
+            }
+            else { 
+                User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+            }
         })
     })
 };

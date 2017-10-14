@@ -7,19 +7,22 @@ body {
 h1 {
     text-align: center;
     font-weight: bold;
-    padding-bottom: 1%;
 }
 
 /* https://www.w3schools.com/tags/tag_hn.asp */
 .table-title {
-    font-size: 1.5em;
-    text-align: center;
+    background-color: #d7d1c5; 
 }
 
-td {
-    padding-left: 10px;
-}
+.trash:hover { 
+    color: red; 
+} 
 
-tr:nth-child(even) {
-    background-color: lightyellow;
+.trash { 
+    background-color: white; 
+} 
+ 
+td { 
+    padding-left: 10px; 
+    border: 5px #eee solid; 
 }

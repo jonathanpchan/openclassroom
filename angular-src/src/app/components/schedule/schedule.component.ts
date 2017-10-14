@@ -55,7 +55,7 @@ export class ScheduleComponent implements OnInit {
     this.delete = true;
     // Create Message
     let course = this.schedule[index]
-    let courseChoice = course.courses[0];
+    let courseChoice = course;
     this.deleteMessage = course.name+" "+courseChoice.num+" Class # "+courseChoice.sec+" "+courseChoice.day+" "+courseChoice.time+" "+courseChoice.location;
     // In preparation for delete
     this.currItem = { index : index, crsID : courseChoice.sec};
@@ -80,19 +80,18 @@ export class ScheduleComponent implements OnInit {
   }
 
   // Sort by Course, then Course Num, then by Course Sec
-  sortByCourseName(a,b) 
-  {
+  sortByCourseName(a,b) {
     // Name (ex. CECS)
     if (a.name == b.name)
     {
       // Number (ex. CECS 101 vs CECS 102)
-      if (a.courses[0].num == b.courses[0].num)
+      if (a.num == b.num)
       {
-        return a.courses[0].sec-b.courses[0].sec
+        return a.sec-b.sec
       }
       else
       {
-        return a.courses[0].num > b.courses[0].num
+        return a.num > b.num
       }
     }
     else

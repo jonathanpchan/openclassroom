@@ -739,20 +739,26 @@ var CourseComponent = (function () {
     };
     // Determine what to do if add or cancel
     CourseComponent.prototype.addClick = function (answer) {
+        var _this = this;
         if (answer) {
             // Add on back end
             var coursePayload = {
                 email: JSON.parse(localStorage.getItem('user')).email,
                 crsID: this.courseChoice.sec
             };
-            this.authService.addScheduleItem(coursePayload).subscribe();
-            // Add on front end
-            var temp = [];
-            temp.push(this.courseChoice);
-            var add = { name: this.courseName, courses: temp };
-            this.afterConfirm.emit(add);
-            // Output
-            this.flashMessage.show('Course successfully added.', { cssClass: 'alert-success', timeout: 3000 });
+            this.authService.addScheduleItem(coursePayload).subscribe(function (success) {
+                if (success == null) {
+                    // Add on front end
+                    var add = { name: _this.courseName, num: _this.courseChoice.num, sec: _this.courseChoice.sec, day: _this.courseChoice.day, time: _this.courseChoice.Time, location: _this.courseChoice.location, prof: _this.courseChoice.prof };
+                    _this.afterConfirm.emit(add);
+                    // Output
+                    _this.flashMessage.show('Course successfully added.', { cssClass: 'alert-success', timeout: 3000 });
+                }
+                else {
+                    _this.flashMessage.show('Course already in schedule.', { cssClass: 'alert-danger', timeout: 3000 });
+                    _this.afterConfirm.emit(false);
+                }
+            });
         }
         else {
             this.afterConfirm.emit(false);
@@ -1537,7 +1543,7 @@ var RoomComponent = (function () {
     RoomComponent.prototype.ngOnInit = function () {
         this.rooms = JSON.parse('{"res":[{"building":"VEC","room":"103","whiteboard":{"uVote":33,"dVote":12,"UserVote":0},"hasOutlets":{"uVote":3,"dVote":1,"UserVote":-1},"comments":[{"username":"Bob","uVote":5,"dVote":0,"UserVote":1,"content":"Good Room","date":"2017-11-05 9:30 AM"},{"username":"Greg","uVote":0,"dVote":15,"UserVote":0,"content":"No Whiteboard","date":"2017-12-05 10:25 AM"}],"mon":[{"st":915,"et":950,"uVote":1,"dVote":5},{"st":1100,"et":1150,"uVote":10,"dVote":5}],"tue":[{"st":600,"et":650,"uVote":3,"dVote":5},{"st":900,"et":950,"uVote":1,"dVote":2}],"wed":[{"st":915,"et":950,"uVote":2,"dVote":5},{"st":1100,"et":1150,"uVote":9,"dVote":5}],"thu":[{"st":600,"et":650,"uVote":11,"dVote":5},{"st":900,"et":950,"uVote":8,"dVote":5}]}]}');
         this.rooms = this.rooms.res[0];
-        console.log(this.rooms);
+        //console.log(this.rooms);
     };
     RoomComponent.prototype.timeFormat = function (time) {
         var t;
@@ -1559,6 +1565,56 @@ var RoomComponent = (function () {
             t += " AM";
         }
         return t;
+    };
+    //TODO: add routes and information
+    //We Dont have a good way to get the day, so we need to separate these
+    //feature route will require email, building-room, vote, item)// feautres
+    //time route will require email, building-room, vote, (day, array index)// feautres
+    //comment route will require email, building-room, vote, (comment, array index)// feautres
+    //comment post route will require email, building-room, comment// feautres
+    RoomComponent.prototype.monUvote = function () {
+        console.log("Im upvoting Monday");
+        //+1 route(mon,1)
+    };
+    RoomComponent.prototype.monDvote = function () {
+        console.log("Im downvoting Monday");
+        //-1 route(mon,-1)
+    };
+    RoomComponent.prototype.tueUvote = function () {
+        console.log("Im upvoting Tuesday");
+    };
+    RoomComponent.prototype.tueDvote = function () {
+        console.log("Im downvoting Tuesday");
+    };
+    RoomComponent.prototype.wedUvote = function () {
+        console.log("Im upvoting Wednesday");
+    };
+    RoomComponent.prototype.wedDvote = function () {
+        console.log("Im downvoting Wednesday");
+    };
+    RoomComponent.prototype.thuUvote = function () {
+        console.log("Im upvoting Thursday");
+    };
+    RoomComponent.prototype.thuDvote = function () {
+        console.log("Im downvoting Thursday");
+    };
+    RoomComponent.prototype.outletUvote = function () {
+        console.log("Im upvoting Outlets");
+    };
+    RoomComponent.prototype.outletDvote = function () {
+        console.log("Im downvoting Outlets");
+    };
+    RoomComponent.prototype.wBoardUvote = function () {
+        console.log("Im upvoting White Board");
+    };
+    RoomComponent.prototype.wBoardDvote = function () {
+        console.log("Im downvoting White Board");
+    };
+    RoomComponent.prototype.commentUvote = function (username) {
+        console.log(username + " is upvoting a comment");
+    };
+    RoomComponent.prototype.commentDvote = function (username) {
+        console.log(username + " is downvoting a comment");
     };
     return RoomComponent;
 }());
@@ -1641,7 +1697,7 @@ var ScheduleComponent = (function () {
         this.delete = true;
         // Create Message
         var course = this.schedule[index];
-        var courseChoice = course.courses[0];
+        var courseChoice = course;
         this.deleteMessage = course.name + " " + courseChoice.num + " Class # " + courseChoice.sec + " " + courseChoice.day + " " + courseChoice.time + " " + courseChoice.location;
         // In preparation for delete
         this.currItem = { index: index, crsID: courseChoice.sec };
@@ -1667,11 +1723,11 @@ var ScheduleComponent = (function () {
         // Name (ex. CECS)
         if (a.name == b.name) {
             // Number (ex. CECS 101 vs CECS 102)
-            if (a.courses[0].num == b.courses[0].num) {
-                return a.courses[0].sec - b.courses[0].sec;
+            if (a.num == b.num) {
+                return a.sec - b.sec;
             }
             else {
-                return a.courses[0].num > b.courses[0].num;
+                return a.num > b.num;
             }
         }
         else {
@@ -1871,7 +1927,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "div { \r\n    text-align: center; \r\n}", ""]);
 
 // exports
 
@@ -1905,7 +1961,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, ".buttons\r\n{\r\n    display: none;\r\n}", ""]);
+exports.push([module.i, "h1 { \r\n    text-align: center; \r\n    font-weight: bold; \r\n} \r\n\r\n.buttons\r\n{\r\n    display: none;\r\n}", ""]);
 
 // exports
 
@@ -1973,7 +2029,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "/* DEFAULT: For Phone */\r\n.home-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 100%;\r\n        grid-template-columns: 100%;\r\n    -ms-grid-rows: 60% 40%;\r\n        grid-template-rows: 60% 40%;\r\n    grid-template-areas:\r\n        \"jumbotron\"\r\n        \"content\";\r\n    text-align: center;\r\n}\r\n\r\n.btn {\r\n    width: 20rem;\r\n}\r\n\r\n/* For Desktop 600px+ */\r\n@media (min-width: 600px) {    \r\n    .content {\r\n        display: -ms-grid;\r\n        display: grid;\r\n        -ms-grid-columns: 33.33% 33.33% 33.33%;\r\n            grid-template-columns: 33.33% 33.33% 33.33%;\r\n        grid-template-areas: \"col-1 col-2 col-3\";\r\n    }\r\n}\r\n\r\n/* FOR TESTING */\r\n.jumbotron {\r\n    border: 2px red dotted\r\n}\r\n[class*='col-'] {\r\n    border: 2px green solid;\r\n}\r\n.content {\r\n    border: 2px blue dashed;\r\n}", ""]);
+exports.push([module.i, "/* DEFAULT: For Phone */\r\n.home-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 100%;\r\n        grid-template-columns: 100%;\r\n    -ms-grid-rows: 60% 40%;\r\n        grid-template-rows: 60% 40%;\r\n    grid-template-areas:\r\n        \"jumbotron\"\r\n        \"content\";\r\n    text-align: center;\r\n}\r\n\r\nh1 { \r\n    font-weight: bold; \r\n} \r\n\r\n.btn {\r\n    width: 20rem;\r\n}\r\n\r\n/* For Desktop 600px+ */\r\n@media (min-width: 600px) {    \r\n    .content {\r\n        display: -ms-grid;\r\n        display: grid;\r\n        -ms-grid-columns: 33.33% 33.33% 33.33%;\r\n            grid-template-columns: 33.33% 33.33% 33.33%;\r\n        grid-template-areas: \"col-1 col-2 col-3\";\r\n    }\r\n}\r\n\r\n/* FOR TESTING */\r\n.jumbotron {\r\n    border: 2px red dotted\r\n}\r\n[class*='col-'] {\r\n    border: 2px green solid;\r\n}\r\n.content {\r\n    border: 2px blue dashed;\r\n}", ""]);
 
 // exports
 
@@ -2041,7 +2097,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, ".roomName{\r\n  padding-bottom: 50px;\r\n}\r\n\r\n/*.dayContainer{\r\n  display: grid;\r\n  grid-template-columns: 50%, 50%;\r\n  grid-gap: 25px\r\n}*/\r\n\r\n.dayContainer{\r\n  display: inline-block;\r\n  /*padding is off when time block is a different length*/\r\n  padding-right: 20px;\r\n}\r\n\r\n.day{\r\n  display: -ms-grid;\r\n  display: grid;\r\n  -ms-grid-columns: 1fr 1fr 1fr;\r\n      grid-template-columns: 1fr 1fr 1fr;\r\n  -ms-grid-rows: 75% 25%;\r\n      grid-template-rows: 75% 25%;\r\n  grid-template-areas:\r\n      \"tc tc tc \"\r\n      \"uv dv .  \";\r\n  grid-area: day;\r\n}\r\n\r\n.featurecontainer{\r\n  display: inline-block;\r\n  padding-right: 20px;\r\n}\r\n\r\n.feature\r\n{\r\n  display: -ms-grid;\r\n  display: grid;\r\n  -ms-grid-columns: 1fr 1fr 1fr;\r\n      grid-template-columns: 1fr 1fr 1fr;\r\n  -ms-grid-rows: 75% 25%;\r\n      grid-template-rows: 75% 25%;\r\n  grid-template-areas:\r\n      \"fn fn fn \"\r\n      \"uv dv .  \";\r\n}\r\n\r\n.commentContainer{\r\n  display: -ms-grid;\r\n  display: grid;\r\n  -ms-grid-columns: 5% 15% 15% 1fr;\r\n      grid-template-columns: 5% 15% 15% 1fr;\r\n  -ms-grid-rows: 25% 75%;\r\n      grid-template-rows: 25% 75%;\r\n  grid-template-areas:\r\n      \"cu uv dv dt\"\r\n      \"cm cm cm cm\";\r\n  padding-bottom: 10px;\r\n}\r\n\r\n.uVote{\r\n  grid-area: uv;\r\n}\r\n\r\n.dVote{\r\n  grid-area: dv;\r\n}\r\n\r\n.timeContainer{\r\n  grid-area: tc;\r\n}\r\n\r\n.featureName{\r\n  grid-area: fn;\r\n}\r\n\r\n.comment{\r\n  grid-area:cm;\r\n}\r\n\r\n.commentUser{\r\n  grid-area: cu;\r\n}\r\n\r\n.date{\r\n  grid-area:dt;\r\n}\r\n", ""]);
+exports.push([module.i, ".roomName{\r\n  padding-bottom: 50px;\r\n}\r\n\r\n/*.dayContainer{\r\n  display: grid;\r\n  grid-template-columns: 50%, 50%;\r\n  grid-gap: 25px\r\n}*/\r\n\r\n.dayContainer{\r\n  display: inline-block;\r\n  /*padding is off when time block is a different length*/\r\n  /*padding-right: 20px;*/\r\n}\r\n\r\n.day{\r\n  display: -ms-grid;\r\n  display: grid;\r\n  -ms-grid-columns: 1fr 1fr 1fr;\r\n      grid-template-columns: 1fr 1fr 1fr;\r\n  -ms-grid-rows: 75% 25%;\r\n      grid-template-rows: 75% 25%;\r\n  grid-template-areas:\r\n      \"tc tc tc \"\r\n      \"uv dv .  \";\r\n  grid-area: day;\r\n\r\n}\r\n\r\n.featurecontainer{\r\n  display: inline-block;\r\n  /*padding-right: 20px;*/\r\n}\r\n\r\n.feature\r\n{\r\n  display: -ms-grid;\r\n  display: grid;\r\n  -ms-grid-columns: 1fr 1fr 1fr;\r\n      grid-template-columns: 1fr 1fr 1fr;\r\n  -ms-grid-rows: 75% 25%;\r\n      grid-template-rows: 75% 25%;\r\n  grid-template-areas:\r\n      \"fn fn fn \"\r\n      \"uv dv .  \";\r\n}\r\n\r\n.commentContainer{\r\n  display: -ms-grid;\r\n  display: grid;\r\n  -ms-grid-columns: 5% 15% 15% 1fr;\r\n      grid-template-columns: 5% 15% 15% 1fr;\r\n  -ms-grid-rows: 25% 75%;\r\n      grid-template-rows: 25% 75%;\r\n  grid-template-areas:\r\n      \"cu uv dv dt\"\r\n      \"cm cm cm cm\";\r\n  padding-bottom: 10px;\r\n}\r\n\r\n.uVote{\r\n  grid-area: uv;\r\n  border: 1px solid blue;\r\n\r\n}\r\n\r\n.dVote{\r\n  grid-area: dv;\r\n  border: 1px solid red;\r\n\r\n}\r\n\r\n.timeContainer{\r\n  grid-area: tc;\r\n  border: 1px solid black;\r\n  padding: 0;\r\n}\r\n\r\n.featureName{\r\n  grid-area: fn;\r\n  border: 1px solid black;\r\n\r\n}\r\n\r\n.comment{\r\n  grid-area:cm;\r\n  border: 1px solid black;\r\n\r\n}\r\n\r\n.commentUser{\r\n  grid-area: cu;\r\n  border: 1px solid black;\r\n}\r\n\r\n.date{\r\n  grid-area:dt;\r\n  border: 1px solid violet;\r\n\r\n}\r\n", ""]);
 
 // exports
 
@@ -2058,7 +2114,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "body {\r\n    padding-left: 2.5%;\r\n    padding-right: 2.5%;\r\n    padding-bottom: 2.5%;\r\n}\r\n\r\nh1 {\r\n    text-align: center;\r\n    font-weight: bold;\r\n    padding-bottom: 1%;\r\n}\r\n\r\n/* https://www.w3schools.com/tags/tag_hn.asp */\r\n.table-title {\r\n    font-size: 1.5em;\r\n    text-align: center;\r\n}\r\n\r\ntd {\r\n    padding-left: 10px;\r\n}\r\n\r\ntr:nth-child(even) {\r\n    background-color: lightyellow;\r\n}", ""]);
+exports.push([module.i, "body {\r\n    padding-left: 2.5%;\r\n    padding-right: 2.5%;\r\n    padding-bottom: 2.5%;\r\n}\r\n\r\nh1 {\r\n    text-align: center;\r\n    font-weight: bold;\r\n}\r\n\r\n/* https://www.w3schools.com/tags/tag_hn.asp */\r\n.table-title {\r\n    background-color: #d7d1c5; \r\n}\r\n\r\n.trash:hover { \r\n    color: red; \r\n} \r\n\r\n.trash { \r\n    background-color: white; \r\n} \r\n \r\ntd { \r\n    padding-left: 10px; \r\n    border: 5px #eee solid; \r\n}", ""]);
 
 // exports
 
@@ -2131,7 +2187,7 @@ module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"sh
 /* 200 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE HTML>\r\n<html>\r\n  <body class=\"home-grid\">\r\n    <div class=\"jumbotron\">\r\n      <h1>Open Classroom</h1>\r\n      <p>Find your study buddy here</p>\r\n      \r\n      <div *ngIf = \"!authService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> <a class=\"btn btn-default\" [routerLink]=\"['/login']\">Login</a>\r\n      </div>\r\n      <div *ngIf = \"authService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/findclassroom']\">Find Open Classroom</a> <a class=\"btn btn-default\">Find Study Buddy</a>\r\n      </div>\r\n    \r\n      <div>\r\n        <p>\r\n          <br /><a [routerLink]=\"['/usermanual']\">User Manual</a> | <a [routerLink]=\"['/devguide']\">Dev Guide</a> \r\n        </p>\r\n      </div>\r\n    </div>\r\n    <!-- There's some space in the html somewhere here. -->\r\n    <div class=\"content\">\r\n      <div class=\"col-1\">\r\n        <h3>Find the Best Study Spot!</h3>\r\n        <p>Find open rooms by building or by schedule.</p>\r\n      </div>\r\n      <div class=\"col-2\">\r\n        <h3>Study with fellow Study Buddies!</h3>\r\n        <p>Find others in the same program to study with.</p>\r\n      </div>\r\n      <div class=\"col-3\">\r\n        <h3>Share Class Notes!</h3>\r\n        <p>Share notes to get an edge on the competition.</p>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE HTML>\r\n<html>\r\n  <body class=\"home-grid\">\r\n    <div class=\"jumbotron\">\r\n      <h1>Open Classroom</h1>\r\n      <h2>Find your study buddy here</h2> \r\n      \r\n      <div *ngIf = \"!authService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> <a class=\"btn btn-default\" [routerLink]=\"['/login']\">Login</a>\r\n      </div>\r\n      <div *ngIf = \"authService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/findclassroom']\">Find Open Classroom</a> <a class=\"btn btn-default\">Find Study Buddy</a>\r\n      </div>\r\n    \r\n      <div>\r\n        <p>\r\n          <br /><a [routerLink]=\"['/usermanual']\">User Manual</a> | <a [routerLink]=\"['/devguide']\">Dev Guide</a> \r\n        </p>\r\n      </div>\r\n    </div>\r\n    <!-- There's some space in the html somewhere here. -->\r\n    <div class=\"content\">\r\n      <div class=\"col-1\">\r\n        <h3>Find the Best Study Spot!</h3>\r\n        <p>Find open rooms by building or by schedule.</p>\r\n      </div>\r\n      <div class=\"col-2\">\r\n        <h3>Study with fellow Study Buddies!</h3>\r\n        <p>Find others in the same program to study with.</p>\r\n      </div>\r\n      <div class=\"col-3\">\r\n        <h3>Share Class Notes!</h3>\r\n        <p>Share notes to get an edge on the competition.</p>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 201 */
@@ -2155,13 +2211,13 @@ module.exports = "<h2 class=\"page-header\">Register</h2>\r\n<form (submit)=\"on
 /* 204 */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<html>\r\n\r\n\r\n<h1 class =\"roomName\">{{rooms.building}}-{{rooms.room}}</h1>\r\n\r\n<body>\r\n\r\n<div class = \"timesection\">\r\n  <h2>Open Times </h2>\r\n\r\n  <h2>Monday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.mon\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\">Monday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\">Monday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Tuesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.tue\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\">Tuesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\">Tuesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Wednesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.wed\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\">Wednesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\">Wednesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Thursday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.thu\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\">Thursday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\">Thursday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<div class = \"featureSection\">\r\n<h2>Features</h2>\r\n\r\n  <div class = \"featurecontainer\">\r\n    <div class = \"feature\">\r\n      <h3 class = \"featureName\">outlets</h3>\r\n      <p class = \"uVote\">outlets upvote - {{rooms.hasOutlets.uVote}}</p>\r\n      <p class = \"dVote\">outlets downvote - {{rooms.hasOutlets.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <div class = \"featurecontainer\">\r\n    <div class = \"feature\">\r\n      <h3>White Board</h3>\r\n      <p class = \"uVote\">White Board upvote - {{rooms.whiteboard.uVote}}</p>\r\n      <p class = \"dVote\">White Board downvote - {{rooms.whiteboard.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"commentSection\">\r\n\r\n  <h2>Comments</h2>\r\n\r\n  <div class = \"commentContainer\" *ngFor = \"let comment of rooms.comments\">\r\n    <p class = \"comment\">\"{{comment.content}}\"</p>\r\n    <p class = \"comomentUser\">{{comment.username}} </p>\r\n    <p class = \"uVote\">comment upvote - {{comment.uVote}}</p>\r\n    <p class = \"dVote\">comment downvote - {{comment.dVote}}</p>\r\n    <p class = \"date\">{{comment.date}}</p>\r\n  </div>\r\n</div>\r\n\r\n</body>\r\n</html>\r\n"
+module.exports = "\r\n<html>\r\n\r\n\r\n<h1 class =\"roomName\">{{rooms.building}}-{{rooms.room}}</h1>\r\n\r\n<body>\r\n\r\n<div class = \"timesection\">\r\n  <h2>Open Times </h2>\r\n\r\n  <h2>Monday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.mon\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"monUvote()\">Monday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"monDvote()\">Monday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Tuesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.tue\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"tueUvote()\">Tuesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"tueDvote()\">Tuesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Wednesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.wed\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"wedUvote()\">Wednesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"wedDvote()\">Wednesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Thursday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.thu\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"thuUvote()\">Thursday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"tueDvote()\">Thursday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<div class = \"featureSection\">\r\n<h2>Features</h2>\r\n\r\n  <div class = \"featureContainer\">\r\n    <div class = \"feature\">\r\n      <h3 class = \"featureName\">outlets</h3>\r\n      <p class = \"uVote\" (click)=\"outletUvote()\">outlets upvote - {{rooms.hasOutlets.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"outletDvote()\">outlets downvote - {{rooms.hasOutlets.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <div class = \"featureContainer\">\r\n    <div class = \"feature\">\r\n      <h3 class = \"featureName\">White Board</h3>\r\n      <p class = \"uVote\" (click)=\"wBoardUvote()\">White Board upvote - {{rooms.whiteboard.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"wBoardDvote()\">White Board downvote - {{rooms.whiteboard.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"commentSection\">\r\n\r\n  <h2>Comments</h2>\r\n\r\n  <div class = \"commentContainer\" *ngFor = \"let comment of rooms.comments\">\r\n    <p class = \"comment\">\"{{comment.content}}\"</p>\r\n    <p class = \"commentUser\">{{comment.username}} </p>\r\n    <p class = \"uVote\" (click)=\"commentUvote(comment.username)\">comment upvote - {{comment.uVote}}</p>\r\n    <p class = \"dVote\" (click)=\"commentDvote(comment.username)\">comment downvote - {{comment.dVote}}</p>\r\n    <p class = \"date\">{{comment.date}}</p>\r\n  </div>\r\n</div>\r\n\r\n</body>\r\n</html>\r\n"
 
 /***/ }),
 /* 205 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user && !add && !delete\">\r\n      <h1 id=\"title\">About Me</h1>\r\n      <ul class=\"list-group\">\r\n        <li class= \"list-group-item\">Name: {{user.name}}</li>\r\n        <li class= \"list-group-item\">Email: {{user.email}}</li>\r\n      </ul>\r\n      <h1 id=\"title\">My Schedule</h1>\r\n      <table class=\"table-striped, table-bordered\" style=\"width : 100%; border-color : solid black 1px\">\r\n        <thead></thead>\r\n        <tbody>\r\n          <tr class=\"table-title\">\r\n            <td>NAME</td>\r\n            <td>CLASS #</td>\r\n            <td>DAYS</td>\r\n            <td>TIME</td>\r\n            <td>LOCATION</td>\r\n            <td>INSTRUCTOR</td>\r\n          </tr>\r\n          <ng-container *ngIf=\"schedule.length > 0\">\r\n            <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\">\r\n              <td>{{sched.name}} {{sched.courses[0].num}}</td>\r\n              <td>{{sched.courses[0].sec}}</td>\r\n              <td>{{sched.courses[0].day}}</td>\r\n              <td>{{sched.courses[0].time}}</td>\r\n              <td>{{sched.courses[0].location}}</td>\r\n              <td>{{sched.courses[0].prof}}</td>\r\n              <input type=\"button\" class=\"btn btn-primary\" style=\"width: 100%\" value=\"-\" (click)=\"clickDelete(i)\">\r\n            </tr>\r\n          </ng-container>\r\n          <ng-container *ngIf=\"!(schedule.length > 0)\">\r\n            <tr>\r\n              <td colspan=\"6\" style=\"text-align: left\">No Courses</td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n      <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n    </div>\r\n      \r\n    <div *ngIf=\"user && add && !delete\">\r\n      <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n    </div>\r\n    \r\n    <div *ngIf=\"user && !add && delete\">\r\n      <h1>Are you sure you want to remove?</h1>\r\n      <h2>{{deleteMessage}}</h2>\r\n      <div>\r\n        <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"onCourseDelete(true)\">\r\n        <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"onCourseDelete(false)\">\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n\r\n  "
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user && !add && !delete\">\r\n      <h1>About Me</h1>\r\n      <ul class=\"list-group\">\r\n        <li class= \"list-group-item\">Name: {{user.name}}</li>\r\n        <li class= \"list-group-item\">Email: {{user.email}}</li>\r\n      </ul>\r\n      <h1>My Schedule</h1> \r\n      <table style=\"overflow: auto; width: 100%\">\r\n        <thead></thead>\r\n        <tbody>\r\n          <tr class=\"table-title\">\r\n            <td style=\"\"><h3>NAME</h3></td> \r\n            <td><h3>CLASS #</h3></td> \r\n            <td><h3>DAYS</h3></td> \r\n            <td><h3>TIME</h3></td> \r\n            <td><h3>LOCATION</h3></td> \r\n            <td><h3>INSTRUCTOR</h3></td> \r\n            <td style=\"background: white; width: 2.5%; border: none;\"></td> \r\n          </tr>\r\n          <ng-container *ngIf=\"schedule.length > 0\">\r\n            <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\">\r\n              <td style=\"border: 5px #eee solid\">{{sched.name}} {{sched.num}}</td> \r\n              <td style=\"border: 5px #eee solid\">{{sched.sec}}</td> \r\n              <td style=\"border: 5px #eee solid\">{{sched.day}}</td> \r\n              <td style=\"border: 5px #eee solid\">{{sched.time}}</td> \r\n              <td style=\"border: 5px #eee solid\">{{sched.location}}</td> \r\n              <td style=\"border: 5px #eee solid\">{{sched.prof}}</td> \r\n              <!-- https://getbootstrap.com/docs/3.3/components/ --> \r\n              <td style=\"border: 5px #eee solid; padding: 0;\"> \r\n                <button class=\"btn trash\" (click)=\"clickDelete(i)\"> \r\n                  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> \r\n                </button> \r\n              </td> \r\n            </tr>\r\n          </ng-container>\r\n          <ng-container *ngIf=\"!(schedule.length > 0)\">\r\n            <tr>\r\n              <td colspan=\"6\">No Courses</td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n      <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n    </div>\r\n      \r\n    <div *ngIf=\"user && add && !delete\">\r\n      <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n    </div>\r\n    \r\n    <div *ngIf=\"user && !add && delete\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to remove?</h1>\r\n      <h3>{{deleteMessage}}</h3>\r\n      <div>\r\n        <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"onCourseDelete(true)\">\r\n        <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"onCourseDelete(false)\">\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n\r\n  "
 
 /***/ }),
 /* 206 */

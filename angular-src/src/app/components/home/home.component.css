@@ -9,6 +9,10 @@
     text-align: center;
 }
 
+h1 { 
+    font-weight: bold; 
+} 
+
 .btn {
     width: 20rem;
 }

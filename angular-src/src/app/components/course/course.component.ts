@@ -124,14 +124,22 @@ export class CourseComponent implements OnInit {
         email : JSON.parse(localStorage.getItem('user')).email,
         crsID : this.courseChoice.sec
       }
-      this.authService.addScheduleItem(coursePayload).subscribe();
-      // Add on front end
-      let temp = []
-      temp.push(this.courseChoice)
-      let add = {name: this.courseName, courses: temp}
-      this.afterConfirm.emit(add)
-      // Output
-      this.flashMessage.show('Course successfully added.', {cssClass: 'alert-success', timeout: 3000})
+      this.authService.addScheduleItem(coursePayload).subscribe((success) =>
+      {
+        if (success == null)
+        {
+          // Add on front end
+          let add = {name: this.courseName, num: this.courseChoice.num, sec: this.courseChoice.sec, day: this.courseChoice.day, time: this.courseChoice.Time, location: this.courseChoice.location, prof: this.courseChoice.prof }
+          this.afterConfirm.emit(add)
+          // Output
+          this.flashMessage.show('Course successfully added.', {cssClass: 'alert-success', timeout: 3000})
+        }
+        else
+        {
+          this.flashMessage.show('Course already in schedule.', {cssClass: 'alert-danger', timeout: 3000})
+          this.afterConfirm.emit(false)
+        }
+      });
     } 
     else 
     {

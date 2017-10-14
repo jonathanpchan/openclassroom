@@ -3,7 +3,7 @@
   <body class="home-grid">
     <div class="jumbotron">
       <h1>Open Classroom</h1>
-      <p>Find your study buddy here</p>
+      <h2>Find your study buddy here</h2> 
       
       <div *ngIf = "!authService.loggedIn()">
         <a class="btn btn-primary" [routerLink]="['/register']">Register</a> <a class="btn btn-default" [routerLink]="['/login']">Login</a>
