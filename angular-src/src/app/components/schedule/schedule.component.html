@@ -14,21 +14,21 @@
           <thead></thead>
           <tbody>
             <tr class="table-title">
-              <td><h3>NAME</h3></td> 
-              <td><h3>CLASS #</h3></td> 
-              <td><h3>DAYS</h3></td> 
-              <td><h3>TIME</h3></td> 
-              <td><h3>LOCATION</h3></td> 
-              <td><h3>INSTRUCTOR</h3></td> 
+              <td style="min-width: 100px"><h3>NAME</h3></td> 
+              <td style="min-width: 125px"><h3>CLASS #</h3></td> 
+              <td style="min-width: 100px"><h3>DAYS</h3></td> 
+              <td style="min-width: 125px"><h3>TIME</h3></td> 
+              <td style="min-width: 150px"><h3>LOCATION</h3></td> 
+              <td style="min-width: 175px"><h3>INSTRUCTOR</h3></td> 
               <td *ngIf="schedule.length > 0" style="background: white; width: 2.5%; border: none;"></td> 
             </tr>
             <tr *ngFor="let sched of schedule; let i = index;" colspan="6">
-              <td style="min-width: 100px">{{sched.name}} {{sched.num}}</td> 
-              <td style="min-width: 125px">{{sched.sec}}</td> 
-              <td style="min-width: 100px">{{sched.day}}</td> 
-              <td style="min-width: 125px">{{sched.time}}</td> 
-              <td style="min-width: 150px">{{sched.location}}</td> 
-              <td style="min-width: 175px">{{sched.prof}}</td> 
+              <td>{{sched.name}} {{sched.num}}</td> 
+              <td>{{sched.sec}}</td> 
+              <td>{{sched.day}}</td> 
+              <td>{{sched.time}}</td> 
+              <td>{{sched.location}}</td> 
+              <td>{{sched.prof}}</td> 
               <!-- https://getbootstrap.com/docs/3.3/components/ --> 
               <td style="padding: 0;"> 
                 <button class="btn trash" (click)="clickDelete(i)"> 
@@ -60,7 +60,7 @@
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> No
         </button>
         <button class="btn btn-default" style="width: 33%" (click)="onCourseDelete(true)">
-          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> No
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Yes
         </button>
       </div>
     </div>
