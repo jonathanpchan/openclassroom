@@ -4,8 +4,8 @@
     <div *ngIf="user && !add && !delete">
       <h1>About Me</h1>
       <ul class="list-group">
-        <li class= "list-group-item">Name: {{user.name}}</li>
-        <li class= "list-group-item">Email: {{user.email}}</li>
+        <li class="list-group-item">Name: {{user.name}}</li>
+        <li class="list-group-item">Email: {{user.email}}</li>
       </ul>
       <h1>My Schedule</h1> 
       <!-- <table class="tablecontainer"> -->
@@ -22,14 +22,14 @@
             <td style="background: white; width: 2.5%; border: none;"></td> 
           </tr>
           <tr *ngFor="let sched of schedule; let i = index;" colspan="6">
-            <td style="border: 5px #eee solid">{{sched.name}} {{sched.num}}</td> 
-            <td style="border: 5px #eee solid">{{sched.sec}}</td> 
-            <td style="border: 5px #eee solid">{{sched.day}}</td> 
-            <td style="border: 5px #eee solid">{{sched.time}}</td> 
-            <td style="border: 5px #eee solid">{{sched.location}}</td> 
-            <td style="border: 5px #eee solid">{{sched.prof}}</td> 
+            <td style="min-width: 100px">{{sched.name}} {{sched.num}}</td> 
+            <td style="min-width: 125px">{{sched.sec}}</td> 
+            <td style="min-width: 100px">{{sched.day}}</td> 
+            <td style="min-width: 125px">{{sched.time}}</td> 
+            <td style="min-width: 150px">{{sched.location}}</td> 
+            <td style="min-width: 175px">{{sched.prof}}</td> 
             <!-- https://getbootstrap.com/docs/3.3/components/ --> 
-            <td style="border: 5px #eee solid; padding: 0;"> 
+            <td style="padding: 0;"> 
               <button class="btn trash" (click)="clickDelete(i)"> 
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
               </button> 

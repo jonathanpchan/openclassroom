@@ -35,7 +35,7 @@ exports = module.exports = __webpack_require__(4)();
 exports.i(__webpack_require__(82), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n\r\n.btn-primary {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n}\r\n\r\n.btn-primary:hover {\r\n    color: #333333;\r\n    background-color: #e5a400;\r\n    border: none;\r\n}\r\n\r\n.btn-default {\r\n    color: #edaa00;\r\n    background-color: #222222;\r\n    border: none;\r\n}\r\n\r\n.btn-default:hover {\r\n    color: #edaa00;\r\n    background-color: #111111;\r\n    border: none;\r\n}", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n\r\n.btn-primary {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n}\r\n\r\n.btn-primary:hover {\r\n    color: #333333;\r\n    background-color: #db9d00;\r\n    border: none;\r\n}\r\n\r\n.btn-primary:active {\r\n    color: #333333 !important;\r\n    background-color: #cc9200 !important;\r\n    border: none;\r\n}\r\n\r\n.btn-default {\r\n    color: #edaa00;\r\n    background-color: #333333;\r\n    border: none;\r\n}\r\n\r\n.btn-default:hover {\r\n    color: #edaa00;\r\n    background-color: #222222;\r\n    border: none;\r\n}\r\n\r\n.btn-default:active {\r\n    color: #edaa00 !important;\r\n    background-color: #000000 !important;\r\n    border: none;\r\n}", ""]);
 
 // exports
 

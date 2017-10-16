@@ -5,7 +5,7 @@ h1 {
 
 /* https://www.w3schools.com/tags/tag_hn.asp */
 .table-title {
-    background-color: #d7d1c5; 
+    background-color: #d7d1c5;
 }
 
 .trash { 
@@ -17,14 +17,12 @@ h1 {
 } 
 
 /* TODO - Figure out how to make the schedule adapt in size. */
-/* .tablecontainer {
-    display: block;
-    width : 100%;
+table {
+    display: block; 
     overflow: auto;
-} */
+}
   
 td { 
     padding-left: 10px; 
-    border: 5px #eee solid; 
-    border-collapse: collapse;
+    border: 5px #eee solid;
 }
