@@ -89,6 +89,7 @@ var AuthService = (function () {
     AuthService.prototype.getRoomInfo = function (building, room) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
     };
     //=========== User Token ===================
     AuthService.prototype.storeUserData = function (token, user) {

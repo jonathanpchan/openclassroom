@@ -28,7 +28,7 @@ export class AuthService {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
-    return this.http.post('http://localhost:3000/users/schedule', email, {headers : headers}).map(res => res.json());
+    return this.http.post('http://localhost:3000/users/schedule', email, {headers: headers}).map(res => res.json());
     // return this.http.post('users/schedule', email, {headers: headers}).map(res => res.json());
   }
 
@@ -36,7 +36,7 @@ export class AuthService {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
-    return this.http.post('http://localhost:3000/users/schedule/add', item, {headers : headers}).map(res => res.json());
+    return this.http.post('http://localhost:3000/users/schedule/add', item, {headers: headers}).map(res => res.json());
     // return this.http.post('users/schedule/add', item, {headers: headers}).map(res => res.json());
   }
 
@@ -44,7 +44,7 @@ export class AuthService {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
-    return this.http.post('http://localhost:3000/users/schedule/delete', item, {headers : headers}).map(res => res.json());
+    return this.http.post('http://localhost:3000/users/schedule/delete', item, {headers: headers}).map(res => res.json());
     // return this.http.post('users/schedule/delete', item, {headers: headers}).map(res => res.json());
   }
 
@@ -71,6 +71,7 @@ export class AuthService {
   getRoomInfo(building, room){
     let headers = new Headers({'Content-Type' : 'application/json' });
     return this.http.post('http://localhost:3000/roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
+    // return this.http.post('roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
   }
 
   //=========== User Token ===================

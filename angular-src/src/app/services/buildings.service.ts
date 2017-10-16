@@ -17,13 +17,13 @@ export class BuildingsService {
   }
 
   getBuildings() : Observable<any> {
-    return this.http.get( 'http://localhost:3000/buildings').map(res => res.json()).catch(this.handleError);
+    return this.http.get('http://localhost:3000/buildings').map(res => res.json()).catch(this.handleError);
     // return this.http.get('buildings').map(res => res.json()).catch(this.handleError);
   }
 
   getBuildingNames() : Observable<any> {
     let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.get( 'http://localhost:3000/buildings/names', {headers : headers}).map(res => res.json()).catch(this.handleError);
+    return this.http.get('http://localhost:3000/buildings/names', {headers : headers}).map(res => res.json()).catch(this.handleError);
     // return this.http.get('buildings/names', {headers : headers}).map(res => res.json()).catch(this.handleError);
   }
 
