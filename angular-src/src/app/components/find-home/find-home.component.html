@@ -8,10 +8,10 @@
 </div>
 
 <!-- 2) Button Select -->
-<div class="buttons" id="buttons" style="display: none">
-  <input type="button" class="btn btn-primary" (click)="displayOption('all')" style="width : 33%" value="All Rooms">
-  <input type="button" class="btn btn-primary" (click)="displayOption('now')" style="width : 33%" value="Right Now">
-  <input type="button" class="btn btn-primary" (click)="displayOption('times')" style="width : 33%" value="By Time">
+<div class="buttons" id="buttons" style="display: none; text-align: center;">
+  <input type="button" class="btn btn-primary" (click)="displayOption('all')" value="All Rooms">
+  <input type="button" class="btn btn-primary" (click)="displayOption('now')" value="Right Now">
+  <input type="button" class="btn btn-primary" (click)="displayOption('times')" value="By Time">
 </div>
 
 <!-- 3a) Get all rooms based on building and time -->
@@ -23,4 +23,4 @@
 <!-- 3c) Get all rooms based on building and time -->
 <app-find-times id="times" style="display: none" name={{building}} day={{building}}></app-find-times>
 
-<app-room id = "room" style="display: none"></app-room>
+<app-room id="room" style="display: none"></app-room>

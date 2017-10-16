@@ -3,17 +3,17 @@ h1 {
     font-weight: bold; 
 } 
 
-.buttons {
-    text-align: center;
-}
-
-.btn-primary {
-    width: 100%;
-    margin-bottom: 5px;
-}
-
-@media (min-width: 600px) {
-    .btn-primary {
-        width: 33%;
+.buttons { 
+    text-align: center; 
+} 
+ 
+.btn-primary { 
+    width: 100%; 
+    margin-bottom: 5px; 
+} 
+ 
+@media (min-width: 600px) { 
+    .btn-primary { 
+        width: 32%; 
     }
 }
