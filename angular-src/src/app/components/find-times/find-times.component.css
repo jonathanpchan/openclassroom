@@ -3,12 +3,12 @@ table {
   height : auto;
 }
 
-tr{
-height: 20px;
+tr {
+  height: 20px;
 }
 
-td{
-border-collapse: collapse;
+td {
+  border-collapse: collapse;
 }
 
 .tablecontainer {
@@ -52,26 +52,42 @@ border-collapse: collapse;
 }
 
 .time-tool-tip{
-visibility: hidden;
-z-index: 20;
-/* display: none; */ /* This is making the cells small. */
+  visibility: hidden;
+  z-index: 20;
+  /* display: none; */ /* This is making the cells small. */
 }
 
 .five-minute-chunk:hover .time-tool-tip{
   visibility: visible;
 }
 
-.left-column{
-position: sticky;
-left: 0;
-top: -50;
-background-color: #ffffff;
-width: 100px;
-border: 2px solid black;
-text-align: center;
-z-index: 20;
+.left-column {
+  position: sticky;
+  left: 0;
+  top: -50;
+  background-color: #ffffff;
+  width: 100px;
+  border: 2px solid black;
+  text-align: center;
+  z-index: 20;
 }
 
 .left-column:hover {
-background-color: #76a8f7;
+  background-color: #76a8f7;
+}
+
+.btn-primary {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+@media (min-width: 600px) {
+  .btn-primary {
+    width: 24%;
+  }
+}
+
+nouislider {
+  margin-left: auto; 
+  margin-right: auto;
 }

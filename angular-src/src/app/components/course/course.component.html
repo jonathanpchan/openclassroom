@@ -4,7 +4,7 @@
     <form *ngIf="!confirm">
       <div class="form-group">
         <!-- 1) Choosing the course name -->
-        <h1>Add a Course</h1>
+        <h1 style="text-align: center">Add a Course</h1>
         <h2>Department</h2>
         <select class="form-control" [(ngModel)]="courseName" name="courseName" (focus)="cache()" (change)="getCourseNumOptions()">
           <option selected hidden></option>
@@ -29,15 +29,26 @@
           </select>
         </div>
       </div>
-      <input type="button" class="btn btn-primary" style="width : 33%" value="Add Course" (click)="onSubmit()">
+      <div>
+        <button class="btn btn-primary cancel" (click)="onBack()">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+        </button>
+        <button class="btn btn-default submit" (click)="onSubmit()">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
+        </button>
+      </div>
     </form>
       
-    <div *ngIf="confirm" id="confirm">
+    <div *ngIf="confirm" id="confirm" style="text-align: center">
       <h1>Are you sure you want to add?</h1>
-      <h2>{{confirmMessage}}</h2>
+      <h2>{{courseName}} {{courseChoice.num}} Class #{{courseChoice.sec}} {{courseChoice.day}} {{courseChoice.time}} {{courseChoice.location}}</h2>
       <div>
-        <input type="button" class="btn btn-primary" style="width : 33%" value="Yes" (click)="addClick(true)">
-        <input type="button" class="btn btn-primary" style="width : 33%" value="No" (click)="addClick(false)">
+        <button class="btn btn-primary" style="width: 33%" (click)="addClick(false)">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> No
+        </button>
+        <button class="btn btn-default" style="width: 33%" (click)="addClick(true)">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Yes
+        </button>
       </div>
     </div>
   </body>

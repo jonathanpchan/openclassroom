@@ -1,9 +1,3 @@
-body {
-    padding-left: 2.5%;
-    padding-right: 2.5%;
-    padding-bottom: 2.5%;
-}
-
 h1 {
     text-align: center;
     font-weight: bold;
@@ -14,15 +8,23 @@ h1 {
     background-color: #d7d1c5; 
 }
 
-.trash:hover { 
-    color: red; 
-} 
-
 .trash { 
     background-color: white; 
 } 
  
+.trash:hover { 
+    color: red; 
+} 
+
+/* TODO - Figure out how to make the schedule adapt in size. */
+/* .tablecontainer {
+    display: block;
+    width : 100%;
+    overflow: auto;
+} */
+  
 td { 
     padding-left: 10px; 
     border: 5px #eee solid; 
+    border-collapse: collapse;
 }

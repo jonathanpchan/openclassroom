@@ -8,11 +8,12 @@
         <li class= "list-group-item">Email: {{user.email}}</li>
       </ul>
       <h1>My Schedule</h1> 
-      <table style="overflow: auto; width: 100%">
+      <!-- <table class="tablecontainer"> -->
+      <table>
         <thead></thead>
         <tbody>
           <tr class="table-title">
-            <td style=""><h3>NAME</h3></td> 
+            <td><h3>NAME</h3></td> 
             <td><h3>CLASS #</h3></td> 
             <td><h3>DAYS</h3></td> 
             <td><h3>TIME</h3></td> 
@@ -20,30 +21,29 @@
             <td><h3>INSTRUCTOR</h3></td> 
             <td style="background: white; width: 2.5%; border: none;"></td> 
           </tr>
-          <ng-container *ngIf="schedule.length > 0">
-            <tr *ngFor="let sched of schedule; let i = index;" colspan="6">
-              <td style="border: 5px #eee solid">{{sched.name}} {{sched.num}}</td> 
-              <td style="border: 5px #eee solid">{{sched.sec}}</td> 
-              <td style="border: 5px #eee solid">{{sched.day}}</td> 
-              <td style="border: 5px #eee solid">{{sched.time}}</td> 
-              <td style="border: 5px #eee solid">{{sched.location}}</td> 
-              <td style="border: 5px #eee solid">{{sched.prof}}</td> 
-              <!-- https://getbootstrap.com/docs/3.3/components/ --> 
-              <td style="border: 5px #eee solid; padding: 0;"> 
-                <button class="btn trash" (click)="clickDelete(i)"> 
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
-                </button> 
-              </td> 
-            </tr>
-          </ng-container>
-          <ng-container *ngIf="!(schedule.length > 0)">
-            <tr>
-              <td colspan="6">No Courses</td>
-            </tr>
-          </ng-container>
+          <tr *ngFor="let sched of schedule; let i = index;" colspan="6">
+            <td style="border: 5px #eee solid">{{sched.name}} {{sched.num}}</td> 
+            <td style="border: 5px #eee solid">{{sched.sec}}</td> 
+            <td style="border: 5px #eee solid">{{sched.day}}</td> 
+            <td style="border: 5px #eee solid">{{sched.time}}</td> 
+            <td style="border: 5px #eee solid">{{sched.location}}</td> 
+            <td style="border: 5px #eee solid">{{sched.prof}}</td> 
+            <!-- https://getbootstrap.com/docs/3.3/components/ --> 
+            <td style="border: 5px #eee solid; padding: 0;"> 
+              <button class="btn trash" (click)="clickDelete(i)"> 
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
+              </button> 
+            </td> 
+          </tr>
+          <tr>
+            <td colspan="6" style="padding: 0px">
+              <button class="btn btn-primary" style="width : 100%" value="Add Course" (click)="clickAdd()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <input type="button" class="btn btn-primary" style="width : 33%" value="Add Course" (click)="clickAdd()">
     </div>
       
     <div *ngIf="user && add && !delete">

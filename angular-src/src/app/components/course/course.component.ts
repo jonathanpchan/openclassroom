@@ -102,15 +102,19 @@ export class CourseComponent implements OnInit {
   }
 
   // ========== Add ===============
+  onBack() {
+    this.afterConfirm.emit(false);
+  }
+  
   // On submit, show alternative data (If missing data, then alert)
   onSubmit() {
     if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) 
     {
-      this.confirm=true;
-      this.confirmMessage = this.courseName+" "+this.courseChoice.num+" Class # "+this.courseChoice.sec+" "+this.courseChoice.day+" "+this.courseChoice.time+" "+this.courseChoice.location;
+      this.confirm = true;
     } 
     else 
     {
+      this.confirm = false;
       this.flashMessage.show('Please complete all course fields.', {cssClass: 'alert-danger', timeout: 3000})
     }
   }
@@ -126,18 +130,17 @@ export class CourseComponent implements OnInit {
       }
       this.authService.addScheduleItem(coursePayload).subscribe((success) =>
       {
-        if (success == null)
-        {
-          // Add on front end
-          let add = {name: this.courseName, num: this.courseChoice.num, sec: this.courseChoice.sec, day: this.courseChoice.day, time: this.courseChoice.Time, location: this.courseChoice.location, prof: this.courseChoice.prof }
-          this.afterConfirm.emit(add)
-          // Output
-          this.flashMessage.show('Course successfully added.', {cssClass: 'alert-success', timeout: 3000})
-        }
-        else
+        // Don't add to front end
+        if (success.length == 0)
         {
           this.flashMessage.show('Course already in schedule.', {cssClass: 'alert-danger', timeout: 3000})
           this.afterConfirm.emit(false)
+        }
+        else
+        {
+          let add = {name: this.courseName, num: this.courseChoice.num, sec: this.courseChoice.sec, day: this.courseChoice.day, time: this.courseChoice.time, location: this.courseChoice.location, prof: this.courseChoice.prof }
+          this.afterConfirm.emit(add)
+          this.flashMessage.show('Course successfully added.', {cssClass: 'alert-success', timeout: 3000})
         }
       });
     } 
