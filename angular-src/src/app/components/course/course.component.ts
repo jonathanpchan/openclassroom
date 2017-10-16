@@ -110,6 +110,7 @@ export class CourseComponent implements OnInit {
   onSubmit() {
     if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) 
     {
+      this.confirmMessage = this.courseName+" "+this.courseChoice.num+" Class # "+this.courseChoice.sec+" "+this.courseChoice.day+" "+this.courseChoice.time+" "+this.courseChoice.location; 
       this.confirm = true;
     } 
     else 

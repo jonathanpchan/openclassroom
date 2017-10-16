@@ -3,9 +3,19 @@ h1 {
     font-weight: bold;
 }
 
-/* https://www.w3schools.com/tags/tag_hn.asp */
 .table-title {
     background-color: #d7d1c5;
+}
+
+table {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: auto;
+}
+  
+td { 
+    padding-left: 10px; 
+    border: 5px #eee solid;
 }
 
 .trash { 
@@ -15,14 +25,3 @@ h1 {
 .trash:hover { 
     color: red; 
 } 
-
-/* TODO - Figure out how to make the schedule adapt in size. */
-table {
-    display: block; 
-    overflow: auto;
-}
-  
-td { 
-    padding-left: 10px; 
-    border: 5px #eee solid;
-}

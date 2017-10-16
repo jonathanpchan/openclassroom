@@ -168,8 +168,5 @@ export class FindComponent implements OnInit {
     document.getElementById("times").style.display = "none";
     document.getElementById("room").style.display = "block";
     console.log(building_name, room_num, email);
-
-
-
   }
 }

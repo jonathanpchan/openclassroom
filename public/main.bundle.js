@@ -8,10 +8,7 @@ webpackJsonp([1,4],[
 /* 6 */,
 /* 7 */,
 /* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88,6 +85,11 @@ var AuthService = (function () {
         return this.http.get('http://localhost:3000/users/courses', { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.get('users/courses', {headers: headers}).map(res => res.json());
     };
+    //=========== RoomInfo ======================
+    AuthService.prototype.getRoomInfo = function (building, room) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
+    };
     //=========== User Token ===================
     AuthService.prototype.storeUserData = function (token, user) {
         localStorage.setItem('id_token', token);
@@ -119,6 +121,9 @@ var _a;
 //# sourceMappingURL=auth.service.js.map
 
 /***/ }),
+/* 10 */,
+/* 11 */,
+/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
@@ -539,7 +544,7 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_validate_service__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__);
@@ -641,7 +646,7 @@ AppModule = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CourseComponent; });
@@ -733,6 +738,7 @@ var CourseComponent = (function () {
     // On submit, show alternative data (If missing data, then alert)
     CourseComponent.prototype.onSubmit = function () {
         if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) {
+            this.confirmMessage = this.courseName + " " + this.courseChoice.num + " Class # " + this.courseChoice.sec + " " + this.courseChoice.day + " " + this.courseChoice.time + " " + this.courseChoice.location;
             this.confirm = true;
         }
         else {
@@ -871,7 +877,7 @@ var FindHomeComponent = (function () {
             console.log(err);
         });
     };
-    // 2) Display option buttons 
+    // 2) Display option buttons
     FindHomeComponent.prototype.displayButtons = function () {
         if (document.getElementById("buttons").style.display == "none") {
             document.getElementById("buttons").style.display = "block";
@@ -880,6 +886,7 @@ var FindHomeComponent = (function () {
             document.getElementById("table-2").style.display = "none";
             document.getElementById("now").style.display = "none";
             document.getElementById("times").style.display = "none";
+            document.getElementById("room").style.display = "none";
         }
     };
     // 3) Display button depending on id
@@ -1251,6 +1258,18 @@ var FindComponent = (function () {
         }
         return t;
     };
+    FindComponent.prototype.getRoomInfo = function (building_name, room_num) {
+        var email = JSON.parse(localStorage.getItem('user')).email;
+        //hide everything else
+        document.getElementById("buttons").style.display = "none";
+        document.getElementById("all").style.display = "none";
+        document.getElementById("table").style.display = "none";
+        document.getElementById("table-2").style.display = "none";
+        document.getElementById("now").style.display = "none";
+        document.getElementById("times").style.display = "none";
+        document.getElementById("room").style.display = "block";
+        console.log(building_name, room_num, email);
+    };
     return FindComponent;
 }());
 __decorate([
@@ -1279,7 +1298,7 @@ var _a, _b, _c;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(9);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1318,7 +1337,7 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
@@ -1382,7 +1401,7 @@ var _a, _b, _c;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
@@ -1448,7 +1467,7 @@ var _a, _b, _c, _d;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(15);
@@ -1530,6 +1549,7 @@ var _a, _b, _c, _d;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(9);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoomComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1541,14 +1561,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var RoomComponent = (function () {
-    function RoomComponent() {
+    function RoomComponent(authService) {
+        this.authService = authService;
         this.rooms = null;
+        // this.building = buildingName;
+        // this.room = roomNum;
     }
     RoomComponent.prototype.ngOnInit = function () {
-        this.rooms = JSON.parse('{"res":[{"building":"VEC","room":"103","whiteboard":{"uVote":33,"dVote":12,"UserVote":0},"hasOutlets":{"uVote":3,"dVote":1,"UserVote":-1},"comments":[{"username":"Bob","uVote":5,"dVote":0,"UserVote":1,"content":"Good Room","date":"2017-11-05 9:30 AM"},{"username":"Greg","uVote":0,"dVote":15,"UserVote":0,"content":"No Whiteboard","date":"2017-12-05 10:25 AM"}],"mon":[{"st":915,"et":950,"uVote":1,"dVote":5},{"st":1100,"et":1150,"uVote":10,"dVote":5}],"tue":[{"st":600,"et":650,"uVote":3,"dVote":5},{"st":900,"et":950,"uVote":1,"dVote":2}],"wed":[{"st":915,"et":950,"uVote":2,"dVote":5},{"st":1100,"et":1150,"uVote":9,"dVote":5}],"thu":[{"st":600,"et":650,"uVote":11,"dVote":5},{"st":900,"et":950,"uVote":8,"dVote":5}]}]}');
-        this.rooms = this.rooms.res[0];
+        // this.rooms = JSON.parse('{"res":[{"building":"VEC","room":"103","whiteboard":{"uVote":33,"dVote":12,"UserVote":0},"hasOutlets":{"uVote":3,"dVote":1,"UserVote":-1},"comments":[{"username":"Bob","uVote":5,"dVote":0,"UserVote":1,"content":"Good Room","date":"2017-11-05 9:30 AM"},{"username":"Greg","uVote":0,"dVote":15,"UserVote":0,"content":"No Whiteboard","date":"2017-12-05 10:25 AM"}],"mon":[{"st":915,"et":950,"uVote":1,"dVote":5},{"st":1100,"et":1150,"uVote":10,"dVote":5}],"tue":[{"st":600,"et":650,"uVote":3,"dVote":5},{"st":900,"et":950,"uVote":1,"dVote":2}],"wed":[{"st":915,"et":950,"uVote":2,"dVote":5},{"st":1100,"et":1150,"uVote":9,"dVote":5}],"thu":[{"st":600,"et":650,"uVote":11,"dVote":5},{"st":900,"et":950,"uVote":8,"dVote":5}]}]}');
+        // this.rooms=this.rooms.res[0];
+        var _this = this;
+        this.building = "AS";
+        this.room = "233";
+        console.log(this.building, this.room);
         //console.log(this.rooms);
+        this.authService.getRoomInfo(this.building, this.room).subscribe(function (roomInfo) {
+            _this.rooms = roomInfo;
+            console.log(_this.rooms);
+            console.log("hello world");
+            console.log("has outlets " + _this.rooms.hasOutlets.uVote);
+        }, function (err) {
+            console.log(err);
+        });
     };
     RoomComponent.prototype.timeFormat = function (time) {
         var t;
@@ -1629,9 +1665,10 @@ RoomComponent = __decorate([
         template: __webpack_require__(204),
         styles: [__webpack_require__(188)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object])
 ], RoomComponent);
 
+var _a;
 //# sourceMappingURL=room.component.js.map
 
 /***/ }),
@@ -1640,7 +1677,7 @@ RoomComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
@@ -1795,7 +1832,7 @@ UsermanualComponent = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(9);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2119,7 +2156,7 @@ exports = module.exports = __webpack_require__(4)();
 
 
 // module
-exports.push([module.i, "h1 {\r\n    text-align: center;\r\n    font-weight: bold;\r\n}\r\n\r\n/* https://www.w3schools.com/tags/tag_hn.asp */\r\n.table-title {\r\n    background-color: #d7d1c5;\r\n}\r\n\r\n.trash { \r\n    background-color: white; \r\n} \r\n \r\n.trash:hover { \r\n    color: red; \r\n} \r\n\r\n/* TODO - Figure out how to make the schedule adapt in size. */\r\ntable {\r\n    display: block; \r\n    overflow: auto;\r\n}\r\n  \r\ntd { \r\n    padding-left: 10px; \r\n    border: 5px #eee solid;\r\n}", ""]);
+exports.push([module.i, "h1 {\r\n    text-align: center;\r\n    font-weight: bold;\r\n}\r\n\r\n.table-title {\r\n    background-color: #d7d1c5;\r\n}\r\n\r\ntable {\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n    width: auto;\r\n}\r\n  \r\ntd { \r\n    padding-left: 10px; \r\n    border: 5px #eee solid;\r\n}\r\n\r\n.trash { \r\n    background-color: white; \r\n} \r\n \r\n.trash:hover { \r\n    color: red; \r\n} ", ""]);
 
 // exports
 
@@ -2156,7 +2193,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n 
 /* 194 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <form *ngIf=\"!confirm\">\r\n      <div class=\"form-group\">\r\n        <!-- 1) Choosing the course name -->\r\n        <h1 style=\"text-align: center\">Add a Course</h1>\r\n        <h2>Department</h2>\r\n        <select class=\"form-control\" [(ngModel)]=\"courseName\" name=\"courseName\" (focus)=\"cache()\" (change)=\"getCourseNumOptions()\">\r\n          <option selected hidden></option>\r\n          <option *ngFor=\"let cname of courseNameOptions\">{{cname}}</option>\r\n        </select>\r\n    \r\n        <!-- 2) Choosing the course number -->\r\n        <div *ngIf=\"courseNumOptions\">\r\n          <h2>Course Number</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseNum\" name=\"courseNum\" (change)=\"getCourseChoiceOptions()\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cid of courseNumOptions\"> {{cid}}</option>\r\n          </select>\r\n        </div>\r\n    \r\n        <!-- 3) Finally choosing a class -->\r\n        <div *ngIf=\"courseChoiceOptions\">\r\n          <h2>Course</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseChoice\" name=\"courseChoice\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cchoice of courseChoiceOptions\" [ngValue]=\"cchoice\"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div>\r\n        <button class=\"btn btn-primary cancel\" (click)=\"onBack()\">\r\n            <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span> Back\r\n        </button>\r\n        <button class=\"btn btn-default submit\" (click)=\"onSubmit()\">\r\n          <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Add Course\r\n        </button>\r\n      </div>\r\n    </form>\r\n      \r\n    <div *ngIf=\"confirm\" id=\"confirm\" style=\"text-align: center\">\r\n      <h1>Are you sure you want to add?</h1>\r\n      <h2>{{courseName}} {{courseChoice.num}} Class #{{courseChoice.sec}} {{courseChoice.day}} {{courseChoice.time}} {{courseChoice.location}}</h2>\r\n      <div>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"addClick(false)\">\r\n          <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n        <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"addClick(true)\">\r\n          <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <form *ngIf=\"!confirm\">\r\n      <div class=\"form-group\">\r\n        <!-- 1) Choosing the course name -->\r\n        <h1 style=\"text-align: center\">Add a Course</h1>\r\n        <h2>Department</h2>\r\n        <select class=\"form-control\" [(ngModel)]=\"courseName\" name=\"courseName\" (focus)=\"cache()\" (change)=\"getCourseNumOptions()\">\r\n          <option selected hidden></option>\r\n          <option *ngFor=\"let cname of courseNameOptions\">{{cname}}</option>\r\n        </select>\r\n    \r\n        <!-- 2) Choosing the course number -->\r\n        <div *ngIf=\"courseNumOptions\">\r\n          <h2>Course Number</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseNum\" name=\"courseNum\" (change)=\"getCourseChoiceOptions()\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cid of courseNumOptions\"> {{cid}}</option>\r\n          </select>\r\n        </div>\r\n    \r\n        <!-- 3) Finally choosing a class -->\r\n        <div *ngIf=\"courseChoiceOptions\">\r\n          <h2>Course</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseChoice\" name=\"courseChoice\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cchoice of courseChoiceOptions\" [ngValue]=\"cchoice\"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div>\r\n        <button class=\"btn btn-primary cancel\" (click)=\"onBack()\">\r\n            <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span> Back\r\n        </button>\r\n        <button class=\"btn btn-default submit\" (click)=\"onSubmit()\">\r\n          <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Add Course\r\n        </button>\r\n      </div>\r\n    </form>\r\n      \r\n    <div *ngIf=\"confirm\" id=\"confirm\" style=\"text-align: center\">\r\n      <h1>Are you sure you want to add?</h1>\r\n      <h2>{{confirmMessage}}</h2>\r\n      <div>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"addClick(false)\">\r\n          <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n        <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"addClick(true)\">\r\n          <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 195 */
@@ -2168,7 +2205,7 @@ module.exports = "<!DOCTYPE HTML>\r\n<html>\r\n  <head>\r\n    <title> Developer
 /* 196 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n  <h1 style=\"text-align: center;\" id=\"title\">Building</h1>\r\n  <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n    <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n  </select>\r\n</div>\r\n\r\n<!-- 2) Button Select -->\r\n<div class=\"buttons\" id=\"buttons\" style=\"display: none;\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" value=\"All Rooms\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" value=\"Right Now\">    \r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" value=\"By Time\">\r\n</div>\r\n\r\n<!-- 3a) Get all rooms based on building and time -->\r\n<app-find id=\"all\" style=\"display: none\" name={{building}} day={{building}}></app-find>\r\n  \r\n<!-- 3b) Get all rooms based on building -->\r\n<app-find-now id=\"now\" style=\"display: none\" name={{building}}></app-find-now>\r\n\r\n<!-- 3c) Get all rooms based on building and time -->\r\n<app-find-times id=\"times\" style=\"display: none\" name={{building}} day={{building}}></app-find-times>\r\n  "
+module.exports = "<!-- 1) Building Select -->\r\n<div class=\"form-group\">\r\n  <h1 style=\"text-align: center;\" id=\"title\">Building</h1>\r\n  <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n    <option style=\"display: none\"></option>\r\n    <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n  </select>\r\n</div>\r\n\r\n<!-- 2) Button Select -->\r\n<div class=\"buttons\" id=\"buttons\" style=\"display: none\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" style=\"width : 33%\" value=\"All Rooms\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" style=\"width : 33%\" value=\"Right Now\">\r\n  <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" style=\"width : 33%\" value=\"By Time\">\r\n</div>\r\n\r\n<!-- 3a) Get all rooms based on building and time -->\r\n<app-find id=\"all\" style=\"display: none\" name={{building}} day={{building}}></app-find>\r\n\r\n<!-- 3b) Get all rooms based on building -->\r\n<app-find-now id=\"now\" style=\"display: none\" name={{building}}></app-find-now>\r\n\r\n<!-- 3c) Get all rooms based on building and time -->\r\n<app-find-times id=\"times\" style=\"display: none\" name={{building}} day={{building}}></app-find-times>\r\n\r\n<app-room id = \"room\" style=\"display: none\"></app-room>\r\n"
 
 /***/ }),
 /* 197 */
@@ -2186,7 +2223,7 @@ module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"sh
 /* 199 */
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n        <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n"
+module.exports = "<div style=\"text-align: center\">\r\n  <button (click) = \"show('omon')\" class=\"btn btn-primary\" id=\"mon\"> Monday</button>\r\n  <button (click) = \"show('otue')\" class=\"btn btn-primary\" id=\"tue\"> Tuesday</button>\r\n  <button (click) = \"show('owed')\" class=\"btn btn-primary\" id=\"wed\"> Wednesday</button>\r\n  <button (click) = \"show('othu')\" class=\"btn btn-primary\" id=\"thu\"> Thursday</button>\r\n</div>\r\n\r\n<div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n  <table>\r\n    <tbody>\r\n      <tr>\r\n        <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n      </tr>\r\n      <tr *ngFor=\"let rooms of roomsList\">\r\n        <th class=\"left-column\"  (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n        <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n          <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n"
 
 /***/ }),
 /* 200 */
@@ -2204,7 +2241,7 @@ module.exports = "<h2 class=\"page-header\">Login</h2>\r\n<form (submit)=\"onLog
 /* 202 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->\r\n<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" (click)=\"toggle()\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" [ngClass]=\"{ 'in' : show }\">\r\n      <ul class=\"nav navbar-nav\" (click)=\"hideDropdown()\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findbuddy']\">Find Buddy</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li> -->\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\">\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li> -->\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>"
+module.exports = "<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->\r\n<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" (click)=\"toggle()\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" [ngClass]=\"{ 'in' : show }\">\r\n      <ul class=\"nav navbar-nav\" (click)=\"hideDropdown()\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findbuddy']\">Find Buddy</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li> -->\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\" (click)=\"hideDropdown()\">\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li> -->\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>"
 
 /***/ }),
 /* 203 */
@@ -2216,13 +2253,13 @@ module.exports = "<h2 class=\"page-header\">Register</h2>\r\n<form (submit)=\"on
 /* 204 */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<html>\r\n\r\n\r\n<h1 class =\"roomName\">{{rooms.building}}-{{rooms.room}}</h1>\r\n\r\n<body>\r\n\r\n<div class = \"timesection\">\r\n  <h2>Open Times </h2>\r\n\r\n  <h2>Monday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.mon\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"monUvote()\">Monday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"monDvote()\">Monday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Tuesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.tue\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"tueUvote()\">Tuesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"tueDvote()\">Tuesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Wednesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.wed\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"wedUvote()\">Wednesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"wedDvote()\">Wednesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Thursday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.thu\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"thuUvote()\">Thursday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"tueDvote()\">Thursday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<div class = \"featureSection\">\r\n<h2>Features</h2>\r\n\r\n  <div class = \"featureContainer\">\r\n    <div class = \"feature\">\r\n      <h3 class = \"featureName\">outlets</h3>\r\n      <p class = \"uVote\" (click)=\"outletUvote()\">outlets upvote - {{rooms.hasOutlets.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"outletDvote()\">outlets downvote - {{rooms.hasOutlets.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <div class = \"featureContainer\">\r\n    <div class = \"feature\">\r\n      <h3 class = \"featureName\">White Board</h3>\r\n      <p class = \"uVote\" (click)=\"wBoardUvote()\">White Board upvote - {{rooms.whiteboard.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"wBoardDvote()\">White Board downvote - {{rooms.whiteboard.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"commentSection\">\r\n\r\n  <h2>Comments</h2>\r\n\r\n  <div class = \"commentContainer\" *ngFor = \"let comment of rooms.comments\">\r\n    <p class = \"comment\">\"{{comment.content}}\"</p>\r\n    <p class = \"commentUser\">{{comment.username}} </p>\r\n    <p class = \"uVote\" (click)=\"commentUvote(comment.username)\">comment upvote - {{comment.uVote}}</p>\r\n    <p class = \"dVote\" (click)=\"commentDvote(comment.username)\">comment downvote - {{comment.dVote}}</p>\r\n    <p class = \"date\">{{comment.date}}</p>\r\n  </div>\r\n</div>\r\n\r\n</body>\r\n</html>\r\n"
+module.exports = "<html>\r\n\r\n\r\n<h1 class =\"roomName\">{{rooms.building}}-{{rooms.room}}</h1>\r\n\r\n<body>\r\n\r\n<div class = \"timesection\">\r\n  <h2>Open Times </h2>\r\n\r\n  <h2>Monday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.mon\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"monUvote()\">Monday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"monDvote()\">Monday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Tuesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.tue\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"tueUvote()\">Tuesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"tueDvote()\">Tuesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Wednesday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.wed\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"wedUvote()\">Wednesday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"wedDvote()\">Wednesday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <h2>Thursday</h2>\r\n  <div class = \"dayContainer\" *ngFor=\"let time of rooms.thu\">\r\n    <div class = \"day\">\r\n      <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n      <p class = \"uVote\" (click)=\"thuUvote()\">Thursday Up   - {{time.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"tueDvote()\">Thursday Down - {{time.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<div class = \"featureSection\">\r\n<h2>Features</h2>\r\n\r\n  <div class = \"featureContainer\">\r\n    <div class = \"feature\">\r\n      <h3 class = \"featureName\">outlets</h3>\r\n      <p class = \"uVote\" (click)=\"outletUvote()\">outlets upvote - {{rooms.hasOutlets.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"outletDvote()\">outlets downvote - {{rooms.hasOutlets.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n  <div class = \"featureContainer\">\r\n    <div class = \"feature\">\r\n      <h3 class = \"featureName\">White Board</h3>\r\n      <p class = \"uVote\" (click)=\"wBoardUvote()\">White Board upvote - {{rooms.whiteBoard.uVote}}</p>\r\n      <p class = \"dVote\" (click)=\"wBoardDvote()\">White Board downvote - {{rooms.whiteBoard.dVote}}</p>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n<div class = \"commentSection\">\r\n\r\n  <h2>Comments</h2>\r\n\r\n  <div class = \"commentContainer\" *ngFor = \"let comment of rooms.comments\">\r\n    <p class = \"comment\">\"{{comment.content}}\"</p>\r\n    <p class = \"commentUser\">{{comment.username}} </p>\r\n    <p class = \"uVote\" (click)=\"commentUvote(comment.username)\">comment upvote - {{comment.uVote}}</p>\r\n    <p class = \"dVote\" (click)=\"commentDvote(comment.username)\">comment downvote - {{comment.dVote}}</p>\r\n    <p class = \"date\">{{comment.date}}</p>\r\n  </div>\r\n</div>\r\n\r\n</body>\r\n</html>\r\n"
 
 /***/ }),
 /* 205 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user && !add && !delete\">\r\n      <h1>About Me</h1>\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\">Name: {{user.name}}</li>\r\n        <li class=\"list-group-item\">Email: {{user.email}}</li>\r\n      </ul>\r\n      <h1>My Schedule</h1> \r\n      <!-- <table class=\"tablecontainer\"> -->\r\n      <table>\r\n        <thead></thead>\r\n        <tbody>\r\n          <tr class=\"table-title\">\r\n            <td><h3>NAME</h3></td> \r\n            <td><h3>CLASS #</h3></td> \r\n            <td><h3>DAYS</h3></td> \r\n            <td><h3>TIME</h3></td> \r\n            <td><h3>LOCATION</h3></td> \r\n            <td><h3>INSTRUCTOR</h3></td> \r\n            <td style=\"background: white; width: 2.5%; border: none;\"></td> \r\n          </tr>\r\n          <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\">\r\n            <td style=\"min-width: 100px\">{{sched.name}} {{sched.num}}</td> \r\n            <td style=\"min-width: 125px\">{{sched.sec}}</td> \r\n            <td style=\"min-width: 100px\">{{sched.day}}</td> \r\n            <td style=\"min-width: 125px\">{{sched.time}}</td> \r\n            <td style=\"min-width: 150px\">{{sched.location}}</td> \r\n            <td style=\"min-width: 175px\">{{sched.prof}}</td> \r\n            <!-- https://getbootstrap.com/docs/3.3/components/ --> \r\n            <td style=\"padding: 0;\"> \r\n              <button class=\"btn trash\" (click)=\"clickDelete(i)\"> \r\n                <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> \r\n              </button> \r\n            </td> \r\n          </tr>\r\n          <tr>\r\n            <td colspan=\"6\" style=\"padding: 0px\">\r\n              <button class=\"btn btn-primary\" style=\"width : 100%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n                <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Add Course\r\n              </button>\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n      \r\n    <div *ngIf=\"user && add && !delete\">\r\n      <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n    </div>\r\n    \r\n    <div *ngIf=\"user && !add && delete\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to remove?</h1>\r\n      <h3>{{deleteMessage}}</h3>\r\n      <div>\r\n        <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"Yes\" (click)=\"onCourseDelete(true)\">\r\n        <input type=\"button\" class=\"btn btn-primary\" style=\"width : 33%\" value=\"No\" (click)=\"onCourseDelete(false)\">\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n\r\n  "
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user && !add && !delete\">\r\n      <h1>About Me</h1>\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\">Name: {{user.name}}</li>\r\n        <li class=\"list-group-item\">Email: {{user.email}}</li>\r\n      </ul>\r\n      <h1>My Schedule</h1> \r\n      <!-- <table class=\"tablecontainer\"> -->\r\n      <div style=\"overflow: auto\">\r\n        <table>\r\n          <thead></thead>\r\n          <tbody>\r\n            <tr class=\"table-title\">\r\n              <td><h3>NAME</h3></td> \r\n              <td><h3>CLASS #</h3></td> \r\n              <td><h3>DAYS</h3></td> \r\n              <td><h3>TIME</h3></td> \r\n              <td><h3>LOCATION</h3></td> \r\n              <td><h3>INSTRUCTOR</h3></td> \r\n              <td *ngIf=\"schedule.length > 0\" style=\"background: white; width: 2.5%; border: none;\"></td> \r\n            </tr>\r\n            <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\">\r\n              <td style=\"min-width: 100px\">{{sched.name}} {{sched.num}}</td> \r\n              <td style=\"min-width: 125px\">{{sched.sec}}</td> \r\n              <td style=\"min-width: 100px\">{{sched.day}}</td> \r\n              <td style=\"min-width: 125px\">{{sched.time}}</td> \r\n              <td style=\"min-width: 150px\">{{sched.location}}</td> \r\n              <td style=\"min-width: 175px\">{{sched.prof}}</td> \r\n              <!-- https://getbootstrap.com/docs/3.3/components/ --> \r\n              <td style=\"padding: 0;\"> \r\n                <button class=\"btn trash\" (click)=\"clickDelete(i)\"> \r\n                  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> \r\n                </button> \r\n              </td> \r\n            </tr>\r\n            <tr>\r\n              <td colspan=\"6\" style=\"padding: 0px\">\r\n                <button class=\"btn btn-primary\" style=\"width : 100%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n                  <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Add Course\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </div>\r\n      \r\n    <div *ngIf=\"user && add && !delete\">\r\n      <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n    </div>\r\n    \r\n    <div *ngIf=\"user && !add && delete\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to remove?</h1>\r\n      <h3>{{deleteMessage}}</h3>\r\n      <div>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"onCourseDelete(false)\">\r\n          <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n        <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"onCourseDelete(true)\">\r\n          <span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n\r\n  "
 
 /***/ }),
 /* 206 */

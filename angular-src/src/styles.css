@@ -19,6 +19,12 @@
     border: none;
 }
 
+.btn-primary:focus {
+    color: #edaa00;
+    background-color: #333333;
+    border: none;
+}
+
 .btn-default {
     color: #edaa00;
     background-color: #333333;
@@ -34,5 +40,11 @@
 .btn-default:active {
     color: #edaa00 !important;
     background-color: #000000 !important;
+    border: none;
+}
+
+.btn-default:focus {
+    color: #333333;
+    background-color: #edaa00;
     border: none;
 }

@@ -2,6 +2,7 @@
 <div class="form-group">
   <h1 style="text-align: center;" id="title">Building</h1>
   <select class="form-control" [(ngModel)]="building" name="building" (focus)="displayButtons($event)">
+    <option style="display: none"></option>
     <option *ngFor="let buildingName of buildingNames"> {{buildingName}} </option>
   </select>
 </div>

@@ -41,7 +41,7 @@
       
     <div *ngIf="confirm" id="confirm" style="text-align: center">
       <h1>Are you sure you want to add?</h1>
-      <h2>{{courseName}} {{courseChoice.num}} Class #{{courseChoice.sec}} {{courseChoice.day}} {{courseChoice.time}} {{courseChoice.location}}</h2>
+      <h2>{{confirmMessage}}</h2>
       <div>
         <button class="btn btn-primary" style="width: 33%" (click)="addClick(false)">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> No
