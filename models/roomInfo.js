@@ -88,8 +88,17 @@ module.exports.addVote = function(building, room, email, day, item, vval, callba
     console.log("hello2")
 }
 
-module.exports.addComment = function(building, room, foo, bar, callback){
-
+module.exports.addComment = function(building, room, uname, comment, callback){
+    RI.update(
+        {$and: [{"building": building }, {"room": room}]},
+        {$push: {"comments": {
+            username: uname,
+            uVote: 0,
+            dVote: 0,
+            content: comment,
+            date: Date.now()
+        }}}
+    ).exec()
 }
 
 
