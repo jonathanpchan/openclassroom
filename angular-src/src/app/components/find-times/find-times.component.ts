@@ -10,7 +10,7 @@ import { NouisliderComponent } from 'ng2-nouislider';
 export class FindTimesComponent implements OnInit {
   // Value passed from Find-Home Component
   @Input() name : string;
-  @Input() day : string;
+  day : string;
   
   // Times displayed on the front end but currently only does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM", 

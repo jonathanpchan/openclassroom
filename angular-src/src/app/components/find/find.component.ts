@@ -12,7 +12,7 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 export class FindComponent implements OnInit {
   // Values that are passed from Find-Home Component
   @Input() name : string;
-  @Input() day : string;
+  day : string;
 
   // Times displayed on the front end but currently does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["8:00 AM", "9:00 AM",
