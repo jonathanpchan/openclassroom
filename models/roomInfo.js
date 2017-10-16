@@ -5,12 +5,12 @@ const config = require('../config/database');
 //Vote object to track users votes on certain fields
 const Vote = mongoose.Schema({
     vote: {type: Number},
-    user: {type: String}
+    email: {type: String}
 })
 
 //Comments for each room's page schema
 const CommentsSchema = mongoose.Schema({
-    username: {type: String},
+    email: {type: String},
     uVote: {type: Number},
     dVote: {type: Number},
     votes: {type: [Vote]},
@@ -79,7 +79,11 @@ module.exports.getRoomInfo = function(building, room, callback){
     RI.findOne({$and: [{"building": building }, {"room": room}]}, callback)
 }
 
-//Add comment function on any fields
+//copy code
+//check mongoose close
+//make generic
+//add case is beggining for two thins
+//make routes
 module.exports.addVote = function(building, room, email, item, vval, callback){
     console.log("hello")
 }
@@ -88,11 +92,11 @@ module.exports.addVote = function(building, room, email, day, item, vval, callba
     console.log("hello2")
 }
 
-module.exports.addComment = function(building, room, uname, comment, callback){
+module.exports.addComment = function(building, room, newEmail, comment, callback){
     RI.update(
         {$and: [{"building": building }, {"room": room}]},
         {$push: {"comments": {
-            username: uname,
+            email: newEmail,
             uVote: 0,
             dVote: 0,
             content: comment,
