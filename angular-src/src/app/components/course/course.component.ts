@@ -102,15 +102,19 @@ export class CourseComponent implements OnInit {
   }
 
   // ========== Add ===============
+  onBack() {
+    this.afterConfirm.emit(false);
+  }
+  
   // On submit, show alternative data (If missing data, then alert)
   onSubmit() {
     if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) 
     {
-      this.confirm=true;
-      this.confirmMessage = this.courseName+" "+this.courseChoice.num+" Class # "+this.courseChoice.sec+" "+this.courseChoice.day+" "+this.courseChoice.time+" "+this.courseChoice.location;
+      this.confirm = true;
     } 
     else 
     {
+      this.confirm = false;
       this.flashMessage.show('Please complete all course fields.', {cssClass: 'alert-danger', timeout: 3000})
     }
   }

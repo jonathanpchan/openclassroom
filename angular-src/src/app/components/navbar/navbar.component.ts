@@ -25,6 +25,10 @@ export class NavbarComponent implements OnInit {
     this.show = !this.show;
   }
 
+  hideDropdown() {
+    this.show = false;
+  }
+
   // On logout, show log out and navigate back to login
   onLogoutClick() {
   this.authService.logout();

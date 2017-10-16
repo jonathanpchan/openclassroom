@@ -20,5 +20,5 @@
 /* Used to circumvent router-outlet issue */
 .main-grid div {
     grid-area: ro;
-    border: 2px black solid;
+    /* border: 2px black solid; */
 }

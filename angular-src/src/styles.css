@@ -1,2 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~nouislider/distribute/nouislider.min.css";
+
+.btn-primary {
+    color: #333333;
+    background-color: #edaa00;
+    border: none;
+}
+
+.btn-primary:hover {
+    color: #333333;
+    background-color: #e5a400;
+    border: none;
+}
+
+.btn-default {
+    color: #edaa00;
+    background-color: #222222;
+    border: none;
+}
+
+.btn-default:hover {
+    color: #edaa00;
+    background-color: #111111;
+    border: none;
+}
