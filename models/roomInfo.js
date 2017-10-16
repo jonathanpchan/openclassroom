@@ -76,7 +76,7 @@ module.exports = {
 
 // return room info, no need to passalong votes array but do pass requested users vote
 module.exports.getRoomInfo = function(building, room, callback){
-    RI.findOne({$and: [{"building": building }, {"room": room}]}, callback)
+    RI.findOne({$and: [{"building": building }, {"room": room}]} ,{_id : 0}, callback)
 }
 
 //copy code
@@ -104,7 +104,3 @@ module.exports.addComment = function(building, room, newEmail, comment, callback
         }}}
     ).exec()
 }
-
-
-
-

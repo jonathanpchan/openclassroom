@@ -19,9 +19,9 @@ export class FindHomeComponent implements OnInit {
   @ViewChild(FindNowComponent) nowComponent : FindNowComponent;
 
   constructor(private buildingService : BuildingsService) {}
-  
+
   // 1) Display available building names
-  ngOnInit() { 
+  ngOnInit() {
     this.buildingService.getBuildingNames().subscribe(names => {
       for (let name in names.OpenBuilding) {
         this.buildingNames.push(names.OpenBuilding[name].name);
@@ -32,7 +32,7 @@ export class FindHomeComponent implements OnInit {
     });
   }
 
-  // 2) Display option buttons 
+  // 2) Display option buttons
   displayButtons() {
     if (document.getElementById("buttons").style.display == "none")
     {
@@ -42,6 +42,8 @@ export class FindHomeComponent implements OnInit {
       document.getElementById("table-2").style.display = "none";
       document.getElementById("now").style.display = "none";
       document.getElementById("times").style.display = "none";
+      document.getElementById("room").style.display = "none";
+
     }
   }
 

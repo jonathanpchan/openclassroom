@@ -15,12 +15,12 @@ export class FindComponent implements OnInit {
   @Input() day : string;
 
   // Times displayed on the front end but currently does 8 (inclusive) to 10 (exclusive). This can be filtered down.
-  times = ["8:00 AM", "9:00 AM", 
-          "10:00 AM", "11:00 AM", "12:00 PM", 
-          "1:00 PM", "2:00 PM", "3:00 PM", 
-          "4:00 PM", "5:00 PM", "6:00 PM", 
+  times = ["8:00 AM", "9:00 AM",
+          "10:00 AM", "11:00 AM", "12:00 PM",
+          "1:00 PM", "2:00 PM", "3:00 PM",
+          "4:00 PM", "5:00 PM", "6:00 PM",
           "7:00 PM", "8:00 PM", "9:00 PM"];
-  
+
   // The list of all values from the building chosen ("cached")
   buildingList = null;
   // The list that will be displayed after population in the show function
@@ -35,7 +35,7 @@ export class FindComponent implements OnInit {
 
   ngOnInit() {}
 
-  /* 
+  /*
   * Show the table based on the day (BUILDING name should be provided)
   * 0) Reset the buildingList to null and set current day to "" if you "switch to a different room"
   * 1) Is the day the same?
@@ -56,7 +56,7 @@ export class FindComponent implements OnInit {
       this.day = "";
     }
     // 1) Only run once when same button is pressed multiple times
-    if (this.day != day) 
+    if (this.day != day)
     {
       // 2) Query the database once ("cache the buildingList")
       if (this.buildingList == null)
@@ -154,5 +154,22 @@ export class FindComponent implements OnInit {
     }
 
     return t;
+  }
+
+  getRoomInfo(building_name, room_num)
+  {
+    var email =  JSON.parse(localStorage.getItem('user')).email
+    //hide everything else
+    document.getElementById("buttons").style.display = "none";
+    document.getElementById("all").style.display = "none";
+    document.getElementById("table").style.display = "none";
+    document.getElementById("table-2").style.display = "none";
+    document.getElementById("now").style.display = "none";
+    document.getElementById("times").style.display = "none";
+    document.getElementById("room").style.display = "block";
+    console.log(building_name, room_num, email);
+
+
+
   }
 }

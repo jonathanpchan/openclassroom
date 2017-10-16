@@ -66,6 +66,13 @@ export class AuthService {
     // return this.http.get('users/courses', {headers: headers}).map(res => res.json());
   }
 
+  //=========== RoomInfo ======================
+
+  getRoomInfo(building, room){
+    let headers = new Headers({'Content-Type' : 'application/json' });
+    return this.http.post('http://localhost:3000/roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
+  }
+
   //=========== User Token ===================
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
