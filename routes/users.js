@@ -4,6 +4,9 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const mongoose = require('mongoose');
+const Course = require('../models/course');
+const CS = mongoose.model('Courses', Course.CS.Schema);
 
 // Register POST request
 router.post('/register', (req, res, next) => {
@@ -78,48 +81,66 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
-// Profile GET request
-router.get('/schedule', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-  res.json({user: req.user});
-});
-
-module.exports = router;
-
-router.post('/getschedule', (req, res) =>{
-  if (req.body.user.name){
-    User.getUserSchedule(req.body.user.email, (err, sched) =>{
+// Get User Schedule based on email
+router.post('/schedule', (req, res) =>{
+  if (req.body.email) {
+    User.getSchedule(req.body.email, (err, sched) =>{
       return res.json(sched);
     })
   }
-  else{
-    return res.json({error: "bad request"});
+  else {
+    return res.json({error: "Bad request"});
   }
 })
 
-// if/else
-router.post('/addschedule', (req, res) => {
-  //return res.json(req.body.email);
-    if(req.body.user.email){
-      User.addScheduleItem(req.body.user.email, req.body.u, (err, course) => {
-        console.log(course);
-        return res.json(course);
+// Add a schedule item based on email and section #
+router.post('/schedule/add', (req, res) => { //request and response
+  if(req.body.email){ //check if valid request
+      User.addScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
+        return res.json(courses);
       })
     }
-    else{
-      return res.json({error: "Bad Request"});
-  }
-})
-
-// if/else
-router.post('/editschedule', (req, res) => {
-    //return res.json(req.body.email);
-    if(req.body.user.name){
-     User.editScheduleItem(req.body.user.email, req.body.objID, req.body.u, (err, course) => {
-         console.log(course);
-          return res.json(course);
-     })
-    }else{
-      return res.json(({error: "Bad Request"}))
+    else {
+      return res.json({error: "Bad Request"}); //bad request
     }
 })
 
+// Delete a schedule item based on email and section #
+router.post('/schedule/delete', (req, res) => { //request and response
+  if(req.body.email){ //check if valid request
+    User.deleteScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
+      return res.json(courses);
+    })
+  }
+  else {
+      return res.json({error: "Bad Request"}); //bad request
+  }
+})
+
+// Get request getting all the documents
+router.get('/courses/names', (req, res, next) => {
+  Course.getCourseNames((err, Courses) => {
+    if(err) throw err;
+    if(Courses == "") { //if Courses is empty return false
+      return res.json({success: false, msg: 'Courses not found'});
+    }
+    else { //Otherwise will return names of courses
+      return res.json({success: true, Courses});
+    }
+  });
+});
+
+// Get all courses for cache
+router.get('/courses', (req, res, next) => {
+  Course.getCourses((err, Courses) => {
+    if(err) throw err;
+    if(Courses == "") { //if Courses is empty return false
+      return res.json({success: false, msg: 'Courses not found'});
+    }
+    else { //Otherwise will all course documents
+      return res.json({success: true, Courses});
+    }
+  });
+});
+
+module.exports = router;

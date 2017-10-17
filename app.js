@@ -18,6 +18,7 @@ const app = express();
 // Requires users and buildings from routes folder
 const users = require('./routes/users');
 const buildings = require('./routes/buildings');
+const roomInfo = require('./routes/roomInfoRoute');
 
 // Connect to database location
 mongoose.connect(config.database);
@@ -53,6 +54,7 @@ require('./config/passport')(passport);
 // 
 app.use('/users', users);
 app.use('/buildings', buildings);
+app.use('/roomInfo', roomInfo);
 
 // Index route
 app.get('/', (req, res) => {

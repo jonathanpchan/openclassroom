@@ -1,0 +1,12 @@
+h1 {
+    font-weight: bold;
+}
+
+.cancel {
+    float: left;
+}
+
+.submit {
+    width: 45%;
+    float: right;
+}

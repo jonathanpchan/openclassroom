@@ -1,10 +1,51 @@
-.sticky-nav {
-    position:fixed; 
-    top:0; 
-    width:100%;
-    z-index: 100;
+.main-grid {
+    display: grid;
+    grid-template-columns: 2.5% 95% 2.5%;
+    grid-template-rows: 50px 50px 100%;
+    grid-template-areas: 
+        "nav    nav     nav"
+        "fm     fm      fm"
+        ".      ro      .";
+    padding-bottom: 50px;
 }
 
-.content {
-    padding: 100px;
+.main-grid app-navbar {
+    grid-area: nav;
+}
+
+.main-grid flash-messages {
+    grid-area: fm;
+}
+
+/* Used to circumvent router-outlet issue */
+.main-grid div {
+    grid-area: ro;
+    /* border: 2px black solid; */
+}
+
+/* https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */
+.button-to-top {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 20px; /* Place the button 30px from the right */
+    z-index: 100; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #edaa00; /* Set a background color */
+    color: #333333; /* Text color */
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    border-radius: 10px; /* Rounded corners */
+    opacity: 0.6;
+}
+
+.button-to-top:hover {
+    opacity: 0.7;
+}
+
+.button-to-top:active {
+    opacity: 0.8;
 }

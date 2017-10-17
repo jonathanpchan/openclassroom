@@ -9,6 +9,8 @@ import {ValidateService } from '../../services/validate.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  show : boolean = false;   // store state
+
   constructor(
     private authService:AuthService,
     private router:Router,
@@ -16,16 +18,24 @@ export class NavbarComponent implements OnInit {
     private validateService: ValidateService
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  // Changes state of dropdown
+  toggle() {
+    this.show = !this.show;
   }
 
-onLogoutClick(){
+  hideDropdown() {
+    this.show = false;
+  }
+
+  // On logout, show log out and navigate back to login
+  onLogoutClick() {
   this.authService.logout();
-  this.flashMessage.show('You are logged out', {
+  this.flashMessage.show('You have logged out.', {
     cssClass:'alert-success',
     timeout:3000
   });
-    this.router.navigate(['/login'])
-    return false;
+    this.router.navigate(['/'])
   }
 }

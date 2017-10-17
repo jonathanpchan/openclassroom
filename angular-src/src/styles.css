@@ -1,2 +1,70 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~nouislider/distribute/nouislider.min.css";
+
+.btn-primary {
+    color: #333333;
+    background-color: #edaa00;
+    border: none;
+    opacity: 0.9;
+}
+
+.btn-primary:hover {
+    color: #333333;
+    background-color: #edaa00;
+    border: none;
+    opacity: 0.95;
+}
+
+.btn-primary:active {
+    color: #333333 !important;
+    background-color: #edaa00;
+    border: none;
+    opacity: 1;
+}
+
+.btn-primary:focus {
+    color: #333333 !important;
+    background-color: #edaa00 !important;
+    border: none;
+    opacity: 1;
+}
+
+.btn-default {
+    color: #edaa00;
+    background-color: #333333;
+    border: none;
+    opacity: 0.9;
+}
+
+.btn-default:hover {
+    color: #edaa00;
+    background-color: #333333;
+    border: none;
+    opacity: 0.95;
+}
+
+.btn-default:active {
+    color: #edaa00 !important;
+    background-color: #333333;
+    border: none;
+    opacity: 1;
+}
+
+.btn-default:focus {
+    color: #edaa00 !important;
+    background-color: #333333 !important;
+    border: none;
+    opacity: 1;
+}
+
+::-webkit-scrollbar {
+    height: 10px;
+}
+
+::-webkit-scrollbar-track:vertical {
+    background-color: #222222;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #edaa00;
+}

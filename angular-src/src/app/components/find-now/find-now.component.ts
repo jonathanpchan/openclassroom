@@ -18,7 +18,7 @@ export class FindNowComponent implements OnInit {
   roomsList = [];
 
   // Notifies the HTML to display the error message when out of hours
-  show : boolean;
+  show : boolean = false;
 
   // Need to pass argument so it can be used in functions below
   constructor(private buildingService : BuildingsService) { }
@@ -32,17 +32,17 @@ export class FindNowComponent implements OnInit {
   * Gets the rooms that are open and display when they are open
   * 1) Not "x" and between 8AM and 10 PM?
   * 2) Notify buildingService to get the buildings from MongoDB
-  * 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
+  * 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
   */
   showNow() {
     let st = new Date().getHours() * 60;
     // 1) Not "x" and between 8 AM and 10 PM?
-    if (this.day != "x" && st >= 8*60 && st+45 <= 22*60)
+    if (this.day != "x" && st >= 8*60 && st < 22*60)
     {
       // Clear roomsList for new list
       this.roomsList = [];
       // 2) Notify buildingService to get the buildings from MongoDB
-      this.buildingService.getBuildings(this.name).subscribe(buildingList => {
+      this.buildingService.getBuilding(this.name).subscribe(buildingList => {
         // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
         let roomsJSON = buildingList.OpenBuilding[0].rooms;
         for (let room in roomsJSON)
@@ -51,22 +51,15 @@ export class FindNowComponent implements OnInit {
           let timesJSON = roomsJSON[room][this.day];
           for (let time in timesJSON)
           {
-            // 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
-            if (st >= timesJSON[time].st && (st+45) <= timesJSON[time].et)
+            // 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
+            if (st >= timesJSON[time].st && (st+30) <= timesJSON[time].et)
             {
               this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
-              this.show = true;
-            }
-            else
-            {
-              // TODO: Eventually be open soon (30 minutes after the hour)
-              if (st < timesJSON[time].st && timesJSON[time] > (st+60))
-              {
-                this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
-                this.show = true;
-              }
             }
           }
+        }
+        if (this.roomsList.length > 0) {
+          this.show = true;
         }
       },
       err => {

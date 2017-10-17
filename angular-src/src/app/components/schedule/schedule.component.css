@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-title {
+    background-color: #d7d1c5;
+}
+
+table {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 99%;
+}
+  
+td { 
+    padding-left: 10px; 
+    border: 5px #eee solid;
+}
+
+.trash { 
+    background-color: white; 
+} 
+ 
+.trash:hover { 
+    color: red; 
+} 

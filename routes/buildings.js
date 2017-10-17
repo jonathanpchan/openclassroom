@@ -6,11 +6,11 @@ const config = require('../config/database');
 const Building = require('../models/building');
 const mongoose = require('mongoose');
 
-// Post request based on building name
+// Post name to get a building
 router.post('/', (req, res, next) => {
   const name = req.body.name;
   const day = req.body.day;
-  Building.getBuildings(name,(err, OpenBuilding) => {
+  Building.getBuilding(name,(err, OpenBuilding) => {
     if(err) throw err;
     if(OpenBuilding == "") { //if OpenBuilding is empty return false
       return res.json({success: false, msg: 'OpenBuilding not found'});
@@ -21,9 +21,9 @@ router.post('/', (req, res, next) => {
   });
 });
 
-// Get request getting all the documents
+// Get all buildings
 router.get('/', (req, res, next) => {
-  Building.getAll((err, OpenBuilding) => {
+  Building.getBuildings((err, OpenBuilding) => {
     if(err) throw err;
     if(OpenBuilding == "") { //if OpenBuilding is empty return false
       return res.json({success: false, msg: 'OpenBuilding not found'});
@@ -34,14 +34,14 @@ router.get('/', (req, res, next) => {
   });
 });
 
-// Get request getting all the documents
+// Get all building names
 router.get('/names', (req, res, next) => {
   Building.getBuildingNames((err, OpenBuilding) => {
     if(err) throw err;
     if(OpenBuilding == "") { //if OpenBuilding is empty return false
       return res.json({success: false, msg: 'OpenBuilding not found'});
     }
-    else { //Otherwise will return a building and day?
+    else { // Otherwise will building names
       return res.json({success: true, OpenBuilding});
     }
   });

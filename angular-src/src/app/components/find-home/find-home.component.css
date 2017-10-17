@@ -1,4 +1,19 @@
-.buttons
-{
-    display: none;
+h1 { 
+    text-align: center; 
+    font-weight: bold; 
+} 
+
+.buttons { 
+    text-align: center; 
+} 
+ 
+.btn-primary { 
+    width: 100%; 
+    margin-bottom: 5px; 
+} 
+ 
+@media (min-width: 600px) { 
+    .btn-primary { 
+        width: 32%; 
+    }
 }

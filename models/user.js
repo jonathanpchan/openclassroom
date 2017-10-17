@@ -1,6 +1,23 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
+// DO NOT DELETE. THIS IS NECESSARY FOR GET REQUESTS.
+const build = require('../models/building');
+const classes = require('../models/course');
+const CS = mongoose.model('Courses', classes.CS.Schema);
+var ObjectId = require('mongodb').ObjectID;
+
+
+// Classes Schema
+const classesSchema = mongoose.Schema({
+    name: { type: String },
+    num : { type: String },
+    sec : { type: String },
+    day :  { type: String },
+    time : { type: String },
+    location : { type: String },
+    prof : { type: String }
+})
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -8,8 +25,11 @@ const UserSchema = mongoose.Schema({
   email: { type: String, required: true },
   username: { type: String, required: true },
   password: { type: String, required: true },
-  regdate: { type: Date, required: true }
+  regdate: { type: Date, required: true },
+  emailVerified: {type: Boolean, required: false},
+  schedule: { type: [classesSchema] }
 });
+
 
 // Export User Schema
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -44,130 +64,63 @@ module.exports.addUser = function(newUser, callback){
 
 // Compare password for validation
 module.exports.comparePassword = function(candidatePassword, hash, callback){
-  bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
-    if(err) throw err;
-    callback(null, isMatch);
-  });
+    if(candidatePassword != null) {
+        bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+            if(err) throw err;
+        callback(null, isMatch);
+    })
+    } else {
+        callback(null, null);
+    }
 }
 
-/**
-// add should sort at end, idk if it needs to return the new list, prolly
-module.exports.addScheduleItem = function(eMail, u, callback) {
+// Get schedule based on email
+module.exports.getSchedule = function(email, callback) {
+  User.findOne({ email : email }, {schedule : 1, _id : 0}, callback);
+}
 
-   /** var u =
+// Add schedule item based on email and section #
+module.exports.addScheduleItem = function(eMail, crsID, callback) {
+    CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
+        User.findOneAndUpdate(
+        {"email" : eMail, "schedule.sec" : {$ne: crsID}},
         {
-            name: "ENG 5001",
-            sec: "3718",
-            days: "Tu",
-            location: "AS-230",
-            st: 960,
-            et: 1080
-        };
-
-    User.findOneAndUpdate(
-        {"email": eMail,
-         "schedule.name": objID},
-        {
-            $set: {
+            $addToSet: {
                 "schedule": {
-                    "name": u.name,
-                    "sec": u.sec,
-                    "days": u.days,
-                    "location": u.location,
-                    "st": u.st,
-                    "et": u.et
+                    "name": x[0].name,
+                    "num" : x[0].courses[0].num,
+                    "sec" : x[0].courses[0].sec,
+                    "day" :  x[0].courses[0].day,
+                    "time" : x[0].courses[0].time,
+                    "location" : x[0].courses[0].location,
+                    "prof" : x[0].courses[0].prof
+                    }
                 }
-            }
-        }, {new: true}, function(err) {
+        }, {new: true}, function(err, doc) {
             if (err) {
-                console.log("Something wrong when updating data!");
+                console.log("Something went wrong when adding a class!");
             }
-            User.find({email: eMail}, {schedule: 1, _id:0}, callback);
-        }
-    )
-};
-**/
-
-function helperSort(a,b) {
-    //console.log(a.time + " - " + b.time + " = " )
-    return (a.sh - b.sh)
-}
-
-module.exports.addScheduleItem = function(eMail, u, callback) {
-    User.findOneAndUpdate(
-        {"email": eMail},
-        {
-            $push: {
-                "schedule": {
-                    "name": u.name,
-                    "sec": u.sec,
-                    "days": u.days,
-                    "location": u.location,
-                    "st": u.st,
-                    "et": u.et
-                }
+            if (doc == null) {
+                User.find({ _id: null }, {email: 0, schedule: 0}, callback)
             }
-        }, {new: true}, function(err) {
-        if (err) {
-            console.log("Something wrong when updating data!");
-        }
-         sort(eMail, setSchedule)
-        User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+            else { 
+                User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+            }
+        })
     })
 };
 
-//editClass finds an objectID and then changes that objectID's contents by a modified class object.
-//for front end; was thinking that user clicks edit button -> edit button triggers page to save objectID of course object
-// -> user edits all fields -> submit sends all fields back as an object with objectID as well.
-module.exports.editScheduleItem = function(eMail, objID, u, callback) {
+// Delete section number based on email and section #
+module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
     User.findOneAndUpdate(
-        {
-            "email": eMail,
-            "schedule._id": ObjectId(objID)},
-        {
-            $set:
-                {
-                    "schedule.$.name": u.name,
-                    "schedule.$.sec": u.sec,
-                    "schedule.$.days": u.days,
-                    "schedule.$.location": u.location,
-                    "schedule.$.st": u.st,
-                    "schedule.$.et": u.et
-                }
-        }, {new: true}, function(err) {
-            if (err) {
-                console.log("Something wrong when updating data!");
-            }
-            //User.find({schedule: {"_id": ObjectId(objID)}}, {schedule: 1, _id:0}, callback);
-            //User.find({email: eMail}, {schedule: 1, _id:0}, callback);
-        }
-    )
-}
-
-function sort(eMail, callback) {
-    User.find({email: eMail}, function(err, cursor) {
-        var arr = cursor[0].schedule.sort(helperSort)
-        //console.log(arr);
-        callback(arr, eMail);
-        //console.log(typeof(cursor[0].schedule))
-    });
-}
-function setSchedule(x, eMail){
-    console.log(x);
-    User.findOneAndUpdate(
-        {"email": eMail},
-        {
-            $set: {
-                "schedule": x
+        {"email": eMail}, {
+            $pull : {
+                "schedule" : { sec : crsID }
             }
         }, {new: true}, function(err) {
             if (err) {
-                console.log("Something wrong when updating data!");
+                console.log("Something went wrong when deleting a class!");
             }
-        });
-    /**
-    us.find({email: eMail}, function (err, cursor) {
-        console.log(cursor[0].schedule);
-    });
-     **/
-}
+            User.find({email: eMail}, {schedule: 1, _id:0}, callback);
+        })
+};

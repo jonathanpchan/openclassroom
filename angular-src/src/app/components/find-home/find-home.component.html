@@ -1,24 +1,26 @@
 <!-- 1) Building Select -->
 <div class="form-group">
-  <p style="text-align: center; font-size: 4rem" id="title">Building</p>
+  <h1 style="text-align: center;" id="title">Building</h1>
   <select class="form-control" [(ngModel)]="building" name="building" (focus)="displayButtons($event)">
+    <option style="display: none"></option>
     <option *ngFor="let buildingName of buildingNames"> {{buildingName}} </option>
   </select>
 </div>
 
 <!-- 2) Button Select -->
-<div class="buttons" id="buttons" style="display: none">
-  <input type="button" class="btn btn-primary" (click)="displayOption('all')" style="width : 33%" value="All Rooms">
-  <input type="button" class="btn btn-primary" (click)="displayOption('now')" style="width : 33%" value="Right Now">    
-  <input type="button" class="btn btn-primary" (click)="displayOption('times')" style="width : 33%" value="By Time">
+<div class="buttons" id="buttons" style="display: none; text-align: center;">
+  <input type="button" class="btn btn-primary" (click)="displayOption('all')" value="All Rooms">
+  <input type="button" class="btn btn-primary" (click)="displayOption('now')" value="Right Now">
+  <input type="button" class="btn btn-primary" (click)="displayOption('times')" value="By Time">
 </div>
 
 <!-- 3a) Get all rooms based on building and time -->
-<app-find id="all" style="display: none" name={{building}} day={{building}}></app-find>
-  
+<app-find id="all" style="display: none" name={{building}}></app-find>
+
 <!-- 3b) Get all rooms based on building -->
 <app-find-now id="now" style="display: none" name={{building}}></app-find-now>
 
 <!-- 3c) Get all rooms based on building and time -->
-<app-find-times id="times" style="display: none" name={{building}} day={{building}}></app-find-times>
-  
+<app-find-times id="times" style="display: none" name={{building}}></app-find-times>
+
+<!-- <app-room id="room" style="display: none"></app-room> -->

@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsermanualComponent } from './components/usermanual/usermanual.component';
@@ -27,20 +26,22 @@ import {BuildingsService} from './services/buildings.service';
 import { FindNowComponent } from './components/find-now/find-now.component';
 import { FindTimesComponent } from './components/find-times/find-times.component';
 import { CourseComponent } from './components/course/course.component';
+// import { RoomComponent } from './components/room/room.component';
 
 // Routes for the components (will be protected later)
 const appRoutes: Routes = [
   {path:'', component: HomeComponent },
   {path:'register', component: RegisterComponent },
   {path:'login', component: LoginComponent },
-  {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
   {path:'usermanual', component: UsermanualComponent},
   {path:'devguide', component: DevguideComponent},
   {path:'findclassroom', component: FindHomeComponent, canActivate:[AuthGuard] },
   {path:'findclassroom/now', component: FindNowComponent},
   {path:'findclassroom/building', component: FindComponent},
-  {path:'findclassroom/time', component: FindTimesComponent}
+  {path:'findclassroom/time', component: FindTimesComponent},
+  // {path:'room', component: RoomComponent},
+  {path:'**', redirectTo: ''}
 ]
 
 @NgModule({
@@ -49,7 +50,6 @@ const appRoutes: Routes = [
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent,
     ScheduleComponent,
     UsermanualComponent,
     DevguideComponent,
@@ -59,7 +59,8 @@ const appRoutes: Routes = [
     FindHomeComponent,
     FindNowComponent,
     FindTimesComponent,
-    CourseComponent
+    CourseComponent,
+    // RoomComponent
   ],
   imports: [
     BrowserModule,

@@ -50,16 +50,17 @@ module.exports.addBuilding = function(newBuilding) {
     newBuilding.save();
 }
 
-// Gets the Buildings based on BuildingSchema name
-module.exports.getBuildings = function(Name, callback) {
+// Gets building based on name
+module.exports.getBuilding = function(Name, callback) {
   BS.find({name: Name}, {_id : 0}).exec(callback);
 }
 
-module.exports.getAll = function(callback) {
+// Gets all buildings
+module.exports.getBuildings = function(callback) {
   BS.find({}, {_id : 0}).exec(callback);
 }
 
-// Get Building Names sorted by name
+// Get all building names
 module.exports.getBuildingNames = function(callback) {
   BS.find({},{_id : 0, rooms : 0}).sort({ name : 1 }).exec(callback);
 }

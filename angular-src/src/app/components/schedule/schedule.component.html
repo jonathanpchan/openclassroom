@@ -1,7 +1,70 @@
-<div *ngIf="user">
-  <h2 class="page-header">My Schedule</h2>
-  <ul class="list-group">
-    <li class= "list-group-item">Username: {{user.username}}</li>
-    <li class= "list-group-item">Email: {{user.email}}</li>
-  </ul>
-</div>
+<!DOCTYPE html>
+<html>
+  <body>
+    <div *ngIf="user && !add && !delete">
+      <h1>About Me</h1>
+      <ul class="list-group">
+        <li class="list-group-item">Name: {{user.name}}</li>
+        <li class="list-group-item">Email: {{user.email}}</li>
+      </ul>
+      <h1>My Schedule</h1> 
+      <!-- <table class="tablecontainer"> -->
+      <div style="overflow: auto">
+        <table>
+          <thead></thead>
+          <tbody>
+            <tr class="table-title">
+              <td style="min-width: 100px"><h3>NAME</h3></td> 
+              <td style="min-width: 125px"><h3>CLASS #</h3></td> 
+              <td style="min-width: 100px"><h3>DAYS</h3></td> 
+              <td style="min-width: 125px"><h3>TIME</h3></td> 
+              <td style="min-width: 150px"><h3>LOCATION</h3></td> 
+              <td style="min-width: 175px"><h3>INSTRUCTOR</h3></td> 
+              <td *ngIf="schedule.length > 0" style="background: white; width: 2.5%; border: none;"></td> 
+            </tr>
+            <tr *ngFor="let sched of schedule; let i = index;" colspan="6">
+              <td>{{sched.name}} {{sched.num}}</td> 
+              <td>{{sched.sec}}</td> 
+              <td>{{sched.day}}</td> 
+              <td>{{sched.time}}</td> 
+              <td>{{sched.location}}</td> 
+              <td>{{sched.prof}}</td> 
+              <!-- https://getbootstrap.com/docs/3.3/components/ --> 
+              <td style="padding: 0;"> 
+                <button class="btn trash" (click)="clickDelete(i)"> 
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
+                </button> 
+              </td> 
+            </tr>
+            <tr>
+              <td colspan="6" style="padding: 0px">
+                <button class="btn btn-primary" style="width : 100%" value="Add Course" (click)="clickAdd()">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+      
+    <div *ngIf="user && add && !delete">
+      <app-course (afterConfirm)="onCourseAdd($event)"></app-course>
+    </div>
+    
+    <div *ngIf="user && !add && delete" style="text-align: center;"> 
+      <h1>Are you sure you want to remove?</h1>
+      <h3>{{deleteMessage}}</h3>
+      <div>
+        <button class="btn btn-primary" style="width: 33%" (click)="onCourseDelete(false)">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> No
+        </button>
+        <button class="btn btn-default" style="width: 33%" (click)="onCourseDelete(true)">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Yes
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
+
+  

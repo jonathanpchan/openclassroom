@@ -10,7 +10,7 @@ import { NouisliderComponent } from 'ng2-nouislider';
 export class FindTimesComponent implements OnInit {
   // Value passed from Find-Home Component
   @Input() name : string;
-  @Input() day : string;
+  day : string;
   
   // Times displayed on the front end but currently only does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM", 
@@ -89,7 +89,7 @@ export class FindTimesComponent implements OnInit {
         // Clear roomsList for new list
         this.roomsList = [];
         // 3) Notify buildingService to get the buildings from MongoDB
-        this.buildingService.getBuildings(this.name).subscribe(buildingList => {
+        this.buildingService.getBuilding(this.name).subscribe(buildingList => {
           // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
           let roomsJSON = buildingList.OpenBuilding[0].rooms;
           for (let room in roomsJSON)
@@ -170,7 +170,7 @@ export class FindTimesComponent implements OnInit {
       t += time%60;
     }
 
-    if(time>720)    {//setting AM/PM based on the original time
+    if(time>=720)    {//setting AM/PM based on the original time
       t+= " PM";
     }
     else    {

@@ -1,0 +1,92 @@
+.roomName{
+  padding-bottom: 50px;
+}
+
+/*.dayContainer{
+  display: grid;
+  grid-template-columns: 50%, 50%;
+  grid-gap: 25px
+}*/
+
+.dayContainer{
+  display: inline-block;
+  /*padding is off when time block is a different length*/
+  /*padding-right: 20px;*/
+}
+
+.day{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 75% 25%;
+  grid-template-areas:
+      "tc tc tc "
+      "uv dv .  ";
+  grid-area: day;
+
+}
+
+.featurecontainer{
+  display: inline-block;
+  /*padding-right: 20px;*/
+}
+
+.feature
+{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 75% 25%;
+  grid-template-areas:
+      "fn fn fn "
+      "uv dv .  ";
+}
+
+.commentContainer{
+  display: grid;
+  grid-template-columns: 5% 15% 15% 1fr;
+  grid-template-rows: 25% 75%;
+  grid-template-areas:
+      "cu uv dv dt"
+      "cm cm cm cm";
+  padding-bottom: 10px;
+}
+
+.uVote{
+  grid-area: uv;
+  border: 1px solid blue;
+
+}
+
+.dVote{
+  grid-area: dv;
+  border: 1px solid red;
+
+}
+
+.timeContainer{
+  grid-area: tc;
+  border: 1px solid black;
+  padding: 0;
+}
+
+.featureName{
+  grid-area: fn;
+  border: 1px solid black;
+
+}
+
+.comment{
+  grid-area:cm;
+  border: 1px solid black;
+
+}
+
+.commentUser{
+  grid-area: cu;
+  border: 1px solid black;
+}
+
+.date{
+  grid-area:dt;
+  border: 1px solid violet;
+
+}
