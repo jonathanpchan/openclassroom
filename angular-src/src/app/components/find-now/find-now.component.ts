@@ -61,6 +61,9 @@ export class FindNowComponent implements OnInit {
         if (this.roomsList.length > 0) {
           this.show = true;
         }
+        else {
+          this.show = false;
+        }
       },
       err => {
         console.log(err);

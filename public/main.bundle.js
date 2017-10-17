@@ -1900,6 +1900,9 @@ var FindNowComponent = (function () {
                 if (_this.roomsList.length > 0) {
                     _this.show = true;
                 }
+                else {
+                    _this.show = false;
+                }
             }, function (err) {
                 console.log(err);
             });
