@@ -170,7 +170,7 @@ export class FindTimesComponent implements OnInit {
       t += time%60;
     }
 
-    if(time>720)    {//setting AM/PM based on the original time
+    if(time>=720)    {//setting AM/PM based on the original time
       t+= " PM";
     }
     else    {

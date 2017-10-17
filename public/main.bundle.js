@@ -411,7 +411,7 @@ var FindHomeComponent = (function () {
             document.getElementById("table-2").style.display = "none";
             document.getElementById("now").style.display = "none";
             document.getElementById("times").style.display = "none";
-            document.getElementById("room").style.display = "none";
+            // document.getElementById("room").style.display = "none";
         }
     };
     // 3) Display button depending on id
@@ -602,7 +602,7 @@ var FindTimesComponent = (function () {
         else {
             t += time % 60;
         }
-        if (time > 720) {
+        if (time >= 720) {
             t += " PM";
         }
         else {
@@ -773,7 +773,7 @@ var FindComponent = (function () {
         else {
             t += time % 60;
         }
-        if (time > 720) {
+        if (time >= 720) {
             t += " PM";
         }
         else {
@@ -1874,13 +1874,13 @@ var FindNowComponent = (function () {
     * Gets the rooms that are open and display when they are open
     * 1) Not "x" and between 8AM and 10 PM?
     * 2) Notify buildingService to get the buildings from MongoDB
-    * 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
+    * 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
     */
     FindNowComponent.prototype.showNow = function () {
         var _this = this;
         var st = new Date().getHours() * 60;
         // 1) Not "x" and between 8 AM and 10 PM?
-        if (this.day != "x" && st >= 8 * 60 && st + 45 <= 22 * 60) {
+        if (this.day != "x" && st >= 8 * 60 && st < 22 * 60) {
             // Clear roomsList for new list
             this.roomsList = [];
             // 2) Notify buildingService to get the buildings from MongoDB
@@ -1891,22 +1891,14 @@ var FindNowComponent = (function () {
                     // timesJSON = [{ name, sec, days, location, st, et }]
                     var timesJSON = roomsJSON[room][_this.day];
                     for (var time in timesJSON) {
-                        // 3) Push room name if st >= timesJSON[time].st && (st+45) <= timesJSON[time].et OR st < timesJSON[time].st && timesJSON[time] > (st+60)
-                        if (st >= timesJSON[time].st && (st + 45) <= timesJSON[time].et) {
+                        // 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
+                        if (st >= timesJSON[time].st && (st + 30) <= timesJSON[time].et) {
                             _this.roomsList.push({ name: roomsJSON[room].name, st: _this.timeFormat(timesJSON[time].st), et: _this.timeFormat(timesJSON[time].et) });
-                            _this.show = true;
-                        }
-                        else {
-                            // TODO: Eventually be open soon (30 minutes after the hour)
-                            if (st < timesJSON[time].st && timesJSON[time] > (st + 60)) {
-                                _this.roomsList.push({ name: roomsJSON[room].name, st: _this.timeFormat(timesJSON[time].st), et: _this.timeFormat(timesJSON[time].et) });
-                                _this.show = true;
-                            }
-                            else {
-                                _this.show = false;
-                            }
                         }
                     }
+                }
+                if (_this.roomsList.length > 0) {
+                    _this.show = true;
                 }
             }, function (err) {
                 console.log(err);
@@ -1915,8 +1907,6 @@ var FindNowComponent = (function () {
         else {
             this.show = false;
         }
-        console.log(this.roomsList);
-        console.log(this.show);
     };
     // Adjust time in minutes to stringified time (No 12:00 AM)
     FindNowComponent.prototype.timeFormat = function (time) {

@@ -42,8 +42,7 @@ export class FindHomeComponent implements OnInit {
       document.getElementById("table-2").style.display = "none";
       document.getElementById("now").style.display = "none";
       document.getElementById("times").style.display = "none";
-      document.getElementById("room").style.display = "none";
-
+      // document.getElementById("room").style.display = "none";
     }
   }
 
