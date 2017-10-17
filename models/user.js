@@ -65,10 +65,14 @@ module.exports.addUser = function(newUser, callback){
 
 // Compare password for validation
 module.exports.comparePassword = function(candidatePassword, hash, callback){
-  bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
-    if(err) throw err;
-    callback(null, isMatch);
-  });
+    if(candidatePassword != null) {
+        bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+            if(err) throw err;
+        callback(null, isMatch);
+    })
+    } else {
+        callback(null, null);
+    }
 }
 
 // Get schedule based on email
