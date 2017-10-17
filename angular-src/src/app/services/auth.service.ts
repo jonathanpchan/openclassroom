@@ -13,14 +13,14 @@ export class AuthService {
   //=========== User Registration ============
   registerUser(user){
     let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
-    // return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
+    return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
   }
 
   authenticateUser(user){
     let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers}).map(res => res.json());
-    // return this.http.post('users/authenticate', user, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers}).map(res => res.json());
+    return this.http.post('users/authenticate', user, {headers: headers}).map(res => res.json());
   }
 
   //=========== Schedule =====================
@@ -28,24 +28,24 @@ export class AuthService {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
-    return this.http.post('http://localhost:3000/users/schedule', email, {headers: headers}).map(res => res.json());
-    // return this.http.post('users/schedule', email, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/users/schedule', email, {headers: headers}).map(res => res.json());
+    return this.http.post('users/schedule', email, {headers: headers}).map(res => res.json());
   }
 
   addScheduleItem(item) {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
-    return this.http.post('http://localhost:3000/users/schedule/add', item, {headers: headers}).map(res => res.json());
-    // return this.http.post('users/schedule/add', item, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/users/schedule/add', item, {headers: headers}).map(res => res.json());
+    return this.http.post('users/schedule/add', item, {headers: headers}).map(res => res.json());
   }
 
   deleteScheduleItem(item) {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
-    return this.http.post('http://localhost:3000/users/schedule/delete', item, {headers: headers}).map(res => res.json());
-    // return this.http.post('users/schedule/delete', item, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/users/schedule/delete', item, {headers: headers}).map(res => res.json());
+    return this.http.post('users/schedule/delete', item, {headers: headers}).map(res => res.json());
   }
 
   //=========== Courses ======================
@@ -53,8 +53,8 @@ export class AuthService {
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
     let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.get('http://localhost:3000/users/courses/names', {headers: headers}).map(res => res.json());
-    // return this.http.get('users/courses/names', {headers: headers}).map(res => res.json());
+    // return this.http.get('http://localhost:3000/users/courses/names', {headers: headers}).map(res => res.json());
+    return this.http.get('users/courses/names', {headers: headers}).map(res => res.json());
   }
 
   getCourses(){
@@ -62,16 +62,16 @@ export class AuthService {
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
     let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.get('http://localhost:3000/users/courses', {headers: headers}).map(res => res.json());
-    // return this.http.get('users/courses', {headers: headers}).map(res => res.json());
+    // return this.http.get('http://localhost:3000/users/courses', {headers: headers}).map(res => res.json());
+    return this.http.get('users/courses', {headers: headers}).map(res => res.json());
   }
 
   //=========== RoomInfo ======================
 
   getRoomInfo(building, room){
     let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
-    // return this.http.post('roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
+    return this.http.post('roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
   }
 
   //=========== User Token ===================

@@ -1305,57 +1305,57 @@ var AuthService = (function () {
     //=========== User Registration ============
     AuthService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/register', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/register', user, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/register', user, {headers: headers}).map(res => res.json());
+        return this.http.post('users/register', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/authenticate', user, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers}).map(res => res.json());
+        return this.http.post('users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     //=========== Schedule =====================
     AuthService.prototype.getSchedule = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
-        return this.http.post('http://localhost:3000/users/schedule', email, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/schedule', email, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/schedule', email, {headers: headers}).map(res => res.json());
+        return this.http.post('users/schedule', email, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.addScheduleItem = function (item) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
-        return this.http.post('http://localhost:3000/users/schedule/add', item, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/schedule/add', item, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/schedule/add', item, {headers: headers}).map(res => res.json());
+        return this.http.post('users/schedule/add', item, { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.deleteScheduleItem = function (item) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
-        return this.http.post('http://localhost:3000/users/schedule/delete', item, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/schedule/delete', item, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/schedule/delete', item, {headers: headers}).map(res => res.json());
+        return this.http.post('users/schedule/delete', item, { headers: headers }).map(function (res) { return res.json(); });
     };
     //=========== Courses ======================
     AuthService.prototype.getCourseNames = function () {
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/users/courses/names', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('users/courses/names', {headers: headers}).map(res => res.json());
+        // return this.http.get('http://localhost:3000/users/courses/names', {headers: headers}).map(res => res.json());
+        return this.http.get('users/courses/names', { headers: headers }).map(function (res) { return res.json(); });
     };
     AuthService.prototype.getCourses = function () {
         // let headers = new Headers({ 'Content-Type' : 'application/json' });
         // this.loadToken();
         // headers.append('Authorization', this.authToken);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/users/courses', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('users/courses', {headers: headers}).map(res => res.json());
+        // return this.http.get('http://localhost:3000/users/courses', {headers: headers}).map(res => res.json());
+        return this.http.get('users/courses', { headers: headers }).map(function (res) { return res.json(); });
     };
     //=========== RoomInfo ======================
     AuthService.prototype.getRoomInfo = function (building, room) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
+        return this.http.post('roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
     };
     //=========== User Token ===================
     AuthService.prototype.storeUserData = function (token, user) {
@@ -1745,17 +1745,17 @@ var BuildingsService = (function () {
     }
     BuildingsService.prototype.getBuilding = function (name) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/buildings', { name: name }, { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings', {name}, {headers : headers}).map(res => res.json()).catch(this.handleError);
+        // return this.http.post('http://localhost:3000/buildings', {name}, {headers : headers}).map(res => res.json()).catch(this.handleError);
+        return this.http.post('buildings', { name: name }, { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
     };
     BuildingsService.prototype.getBuildings = function () {
-        return this.http.get('http://localhost:3000/buildings').map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.get('buildings').map(res => res.json()).catch(this.handleError);
+        // return this.http.get('http://localhost:3000/buildings').map(res => res.json()).catch(this.handleError);
+        return this.http.get('buildings').map(function (res) { return res.json(); }).catch(this.handleError);
     };
     BuildingsService.prototype.getBuildingNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.get('buildings/names', {headers : headers}).map(res => res.json()).catch(this.handleError);
+        // return this.http.get('http://localhost:3000/buildings/names', {headers : headers}).map(res => res.json()).catch(this.handleError);
+        return this.http.get('buildings/names', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
     };
     BuildingsService.prototype.extractData = function (res) {
         var body = res.json();
