@@ -22,3 +22,30 @@
     grid-area: ro;
     /* border: 2px black solid; */
 }
+
+/* https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */
+.button-to-top {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 20px; /* Place the button 30px from the right */
+    z-index: 100; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #edaa00; /* Set a background color */
+    color: #333333; /* Text color */
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    border-radius: 10px; /* Rounded corners */
+    opacity: 0.6;
+}
+
+.button-to-top:hover {
+    opacity: 0.7;
+}
+
+.button-to-top:active {
+    opacity: 0.8;
+}

@@ -156,17 +156,17 @@ export class FindComponent implements OnInit {
     return t;
   }
 
-  getRoomInfo(building_name, room_num)
-  {
-    var email =  JSON.parse(localStorage.getItem('user')).email
-    //hide everything else
-    document.getElementById("buttons").style.display = "none";
-    document.getElementById("all").style.display = "none";
-    document.getElementById("table").style.display = "none";
-    document.getElementById("table-2").style.display = "none";
-    document.getElementById("now").style.display = "none";
-    document.getElementById("times").style.display = "none";
-    document.getElementById("room").style.display = "block";
-    console.log(building_name, room_num, email);
-  }
+  // getRoomInfo(building_name, room_num)
+  // {
+  //   var email =  JSON.parse(localStorage.getItem('user')).email
+  //   //hide everything else
+  //   document.getElementById("buttons").style.display = "none";
+  //   document.getElementById("all").style.display = "none";
+  //   document.getElementById("table").style.display = "none";
+  //   document.getElementById("table-2").style.display = "none";
+  //   document.getElementById("now").style.display = "none";
+  //   document.getElementById("times").style.display = "none";
+  //   document.getElementById("room").style.display = "block";
+  //   console.log(building_name, room_num, email);
+  // }
 }

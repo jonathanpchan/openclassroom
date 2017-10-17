@@ -5,46 +5,66 @@
     color: #333333;
     background-color: #edaa00;
     border: none;
+    opacity: 0.9;
 }
 
 .btn-primary:hover {
     color: #333333;
-    background-color: #db9d00;
+    background-color: #edaa00;
     border: none;
+    opacity: 0.95;
 }
 
 .btn-primary:active {
     color: #333333 !important;
-    background-color: #cc9200 !important;
+    background-color: #edaa00;
     border: none;
+    opacity: 1;
 }
 
 .btn-primary:focus {
-    color: #edaa00;
-    background-color: #333333;
+    color: #333333 !important;
+    background-color: #edaa00 !important;
     border: none;
+    opacity: 1;
 }
 
 .btn-default {
     color: #edaa00;
     background-color: #333333;
     border: none;
+    opacity: 0.9;
 }
 
 .btn-default:hover {
     color: #edaa00;
-    background-color: #222222;
+    background-color: #333333;
     border: none;
+    opacity: 0.95;
 }
 
 .btn-default:active {
     color: #edaa00 !important;
-    background-color: #000000 !important;
+    background-color: #333333;
     border: none;
+    opacity: 1;
 }
 
 .btn-default:focus {
-    color: #333333;
-    background-color: #edaa00;
+    color: #edaa00 !important;
+    background-color: #333333 !important;
     border: none;
+    opacity: 1;
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+}
+
+::-webkit-scrollbar-track:vertical {
+    background-color: #222222;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #edaa00;
 }

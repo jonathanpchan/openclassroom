@@ -6,7 +6,7 @@ webpackJsonp([2,4],{
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(176);
+var content = __webpack_require__(175);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(95)(content, {});
@@ -27,7 +27,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 176:
+/***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
@@ -35,14 +35,14 @@ exports = module.exports = __webpack_require__(4)();
 exports.i(__webpack_require__(82), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n\r\n.btn-primary {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n}\r\n\r\n.btn-primary:hover {\r\n    color: #333333;\r\n    background-color: #db9d00;\r\n    border: none;\r\n}\r\n\r\n.btn-primary:active {\r\n    color: #333333 !important;\r\n    background-color: #cc9200 !important;\r\n    border: none;\r\n}\r\n\r\n.btn-primary:focus {\r\n    color: #edaa00;\r\n    background-color: #333333;\r\n    border: none;\r\n}\r\n\r\n.btn-default {\r\n    color: #edaa00;\r\n    background-color: #333333;\r\n    border: none;\r\n}\r\n\r\n.btn-default:hover {\r\n    color: #edaa00;\r\n    background-color: #222222;\r\n    border: none;\r\n}\r\n\r\n.btn-default:active {\r\n    color: #edaa00 !important;\r\n    background-color: #000000 !important;\r\n    border: none;\r\n}\r\n\r\n.btn-default:focus {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n}", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n\r\n.btn-primary {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n    opacity: 0.9;\r\n}\r\n\r\n.btn-primary:hover {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n    opacity: 0.95;\r\n}\r\n\r\n.btn-primary:active {\r\n    color: #333333 !important;\r\n    background-color: #edaa00;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n.btn-primary:focus {\r\n    color: #333333 !important;\r\n    background-color: #edaa00 !important;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n.btn-default {\r\n    color: #edaa00;\r\n    background-color: #333333;\r\n    border: none;\r\n    opacity: 0.9;\r\n}\r\n\r\n.btn-default:hover {\r\n    color: #edaa00;\r\n    background-color: #333333;\r\n    border: none;\r\n    opacity: 0.95;\r\n}\r\n\r\n.btn-default:active {\r\n    color: #edaa00 !important;\r\n    background-color: #333333;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n.btn-default:focus {\r\n    color: #edaa00 !important;\r\n    background-color: #333333 !important;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n::-webkit-scrollbar {\r\n    height: 5px;\r\n}\r\n\r\n::-webkit-scrollbar-track:vertical {\r\n    background-color: #222222;\r\n}\r\n\r\n::-webkit-scrollbar-thumb {\r\n    background-color: #edaa00;\r\n}", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 243:
+/***/ 240:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(100);
@@ -403,5 +403,5 @@ if(false) {
 
 /***/ })
 
-},[243]);
+},[240]);
 //# sourceMappingURL=styles.bundle.js.map
