@@ -52,13 +52,13 @@ mongoose.connection.on('error', () => {
 //     {$inc: {"whiteBoard.uVote" : 1}},
 // ).exec()
 var i =0;
-rr.update(
-    {$and: [{"building": "AS" }, {"room": "243"}]},
-    {$pull: {
-        "whiteBoard.votes" : {user : "tom2"}
-    }
-}
-).exec()
+// rr.update(
+//     {$and: [{"building": "AS" }, {"room": "243"}]},
+//     {$pull: {
+//         "whiteBoard.votes" : {user : "tom2"}
+//     }
+// }
+// ).exec()
 
 
 
@@ -74,9 +74,12 @@ rr.update(
 //refactor for email everywhere in model
 //all routes
 
+var building = "AS";
+var room = "243"
 var item = 'whiteBoard';
-var uname = "tom003";
+var uname = "tom002";
 var nvote = 1;
+
 
 //dont change these
 var found = -1;
@@ -84,11 +87,11 @@ var projection = item + '.votes'
 var holder = item
 //dont touch here .. danger!!!
 
-rr.findOne({$and: [{"building": "AS" }, {"room": "243"}]}, {[projection] :1}, (err, x) => {
+rr.findOne({$and: [{"building": building }, {"room": room}]}, {[projection] :1}, (err, x) => {
    //console.log(x.whiteBoard.votes[0].user)
    for (let i in x[item]['votes']){
       // console.log(i)
-       if (x[item].votes[i].user == uname){
+       if (x[item].votes[i].email == uname){
            found = i;
            console.log("found")
            break;
@@ -99,17 +102,17 @@ rr.findOne({$and: [{"building": "AS" }, {"room": "243"}]}, {[projection] :1}, (e
        console.log("inserting new")
        //add to votes arr
        rr.update(
-            {$and: [{"building": "AS" }, {"room": "243"}]},
-            {$push: {"whiteBoard.votes": {
+            {$and: [{"building": building}, {"room": room}]},
+            {$push: {[projection]: {
                 vote: nvote,
-                user: uname
+                email: uname
             }}},
             (err, x) => {
                 //update count
                 holder += nvote > 0 ? '.uVote' : '.dVote'
                 console.log("holder is: " + holder)
                 rr.update(
-                        {$and: [{"building": "AS" }, {"room": "243"}]},
+                        {$and: [{"building": building}, {"room": room}]},
                         {$inc: {[holder] : 1}},
                         (err,x) => {
                             mongoose.connection.close(function() {
@@ -124,16 +127,16 @@ rr.findOne({$and: [{"building": "AS" }, {"room": "243"}]}, {[projection] :1}, (e
        var oldVote =  x[item].votes[found].vote
        //remove old vote
        rr.update(
-        {$and: [{"building": "AS" }, {"room": "243"}]},
-        {$pull: {"whiteBoard.votes" : {user: uname}}},
+        {$and: [{"building": building }, {"room": room}]},
+        {$pull: {[projection] : {email: uname}}},
         (err, x) => {
 
             //add new vote
             rr.update(
-                {$and: [{"building": "AS" }, {"room": "243"}]},
-                {$push: {"whiteBoard.votes": {
+                {$and: [{"building": building }, {"room": room}]},
+                {$push: {[projection]: {
                     vote: nvote,
-                    user: uname
+                    email: uname
                 }}},
                 (err,x) => {
                     //only if vote is different do we update count
@@ -142,9 +145,11 @@ rr.findOne({$and: [{"building": "AS" }, {"room": "243"}]}, {[projection] :1}, (e
                         // dec one count and inc the other
                         var uVoteInc = nvote > 0 ? 1 : -1
                         var dVoteInc = - uVoteInc
+                        var item1 = item + ".uVote"
+                        var item2 = item + ".dVote"
                         rr.update(
-                            {$and: [{"building": "AS" }, {"room": "243"}]},
-                            {$inc: {"whiteBoard.uVote" : uVoteInc,"whiteBoard.dVote" : dVoteInc}},
+                            {$and: [{"building": building }, {"room": room}]},
+                            {$inc: {[item1] : uVoteInc,[item2] : dVoteInc}},
                             (err,x) => {
                                 mongoose.connection.close(function() {
                                     console.log('Disconnected from database'); })
@@ -154,13 +159,10 @@ rr.findOne({$and: [{"building": "AS" }, {"room": "243"}]}, {[projection] :1}, (e
                     }
                     else {mongoose.connection.close(function() {
                         console.log('Disconnected from database'); })}
-                })
-              
+                })      
         }
-       )
-      
+       )  
    }
-
 })
 
 
