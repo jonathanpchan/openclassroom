@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <form *ngIf="!confirm">
+    <div *ngIf="!confirm">
       <div class="form-group">
         <!-- 1) Choosing the course name -->
         <h1 style="text-align: center">Add a Course</h1>
@@ -37,7 +37,7 @@
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
         </button>
       </div>
-    </form>
+    </div>
       
     <div *ngIf="confirm" id="confirm" style="text-align: center">
       <h1>Are you sure you want to add?</h1>
