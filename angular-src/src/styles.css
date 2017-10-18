@@ -68,3 +68,7 @@
 ::-webkit-scrollbar-thumb {
     background-color: #edaa00;
 }
+
+/* https://github.com/moff/angular2-flash-messages/issues/22 */
+#flashMessages .flash-message { display:none; }
+#flashMessages .flash-message:last-child { display:block; }
