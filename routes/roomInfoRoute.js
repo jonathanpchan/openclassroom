@@ -41,7 +41,7 @@ router.post('/addComment', (req,res) => {
     if (building == null || room == null || email == null || comment == null)
         return res.json("Malformatted Request")
     RI.addComment(building, room, email, comment, (err,x) => {
-        return res.json(x.n>0?"comment added":"Malformatted Request")
+        return res.json(x.n>0?"comment added":"Nothing found")
     })
     
 })
