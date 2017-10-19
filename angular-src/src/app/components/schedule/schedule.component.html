@@ -13,7 +13,7 @@
           <thead></thead>
           <tbody>
             <tr class="table-title">
-              <td style="min-width: 100px"><h3>NAME</h3></td> 
+              <td class="left-column"><h3>NAME</h3></td> 
               <td style="min-width: 125px"><h3>CLASS #</h3></td> 
               <td style="min-width: 100px"><h3>DAYS</h3></td> 
               <td style="min-width: 125px"><h3>TIME</h3></td> 
@@ -21,8 +21,8 @@
               <td style="min-width: 175px"><h3>INSTRUCTOR</h3></td> 
               <td *ngIf="schedule.length > 0" style="background: white; width: 2.5%; border: none;"></td> 
             </tr>
-            <tr *ngFor="let sched of schedule; let i = index;" colspan="6">
-              <td>{{sched.name}} {{sched.num}}</td> 
+            <tr *ngFor="let sched of schedule; let i = index;" colspan="6" style="background-color: white">
+              <td class="left-column">{{sched.name}} {{sched.num}}</td> 
               <td>{{sched.sec}}</td> 
               <td>{{sched.day}}</td> 
               <td>{{sched.time}}</td> 

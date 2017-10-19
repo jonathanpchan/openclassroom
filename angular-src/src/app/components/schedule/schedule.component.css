@@ -18,6 +18,14 @@ td {
     border: 5px #eee solid;
 }
 
+.left-column {
+    position: sticky;
+    background-color: inherit;
+    left: 0px;
+    z-index: 20;
+    min-width: 100px;
+}
+
 .trash { 
     background-color: white; 
 } 
