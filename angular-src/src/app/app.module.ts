@@ -23,10 +23,12 @@ import {AuthService} from './services/auth.service';
 import {AuthGuard} from './guards/auth.guard';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {BuildingsService} from './services/buildings.service';
+import { ChatService } from './services/chat.service';
 import { FindNowComponent } from './components/find-now/find-now.component';
 import { FindTimesComponent } from './components/find-times/find-times.component';
 import { CourseComponent } from './components/course/course.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { StudybuddyComponent } from './components/studybuddy/studybuddy.component';
 // import { RoomComponent } from './components/room/room.component';
 
 // Routes for the components (will be protected later)
@@ -42,6 +44,7 @@ const appRoutes: Routes = [
   {path:'findclassroom/building', component: FindComponent},
   {path:'findclassroom/time', component: FindTimesComponent},
   {path:'chat', component: ChatComponent},
+  {path:'studybuddy', component: ChatComponent},
   // {path:'room', component: RoomComponent},
   {path:'**', redirectTo: ''}
 ]
@@ -63,6 +66,7 @@ const appRoutes: Routes = [
     FindTimesComponent,
     CourseComponent,
     ChatComponent,
+    StudybuddyComponent,
     // RoomComponent
   ],
   imports: [
@@ -72,7 +76,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard, BuildingsService],
+  providers: [ValidateService, AuthService, AuthGuard, BuildingsService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

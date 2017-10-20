@@ -1,3 +1,17 @@
-<p>
-  chat works!
-</p>
+<div>
+  Room #
+  <select [(ngModel)]="roomOption" (change)="initRoom(roomOption)">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+</div>
+<div style="height: 200px; overflow-y: auto; border: 1px black solid">
+  <div *ngFor="let message of messages">
+    {{message.text}}
+  </div>
+</div>
+
+<div>
+  <input [(ngModel)]="message" [ngModelOptions]="{standalone: true}" /><button (click)="sendMessage(currentRoom)">Send</button>
+</div>

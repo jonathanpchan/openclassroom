@@ -14,28 +14,17 @@ const passport = require('passport');
 const config = require('./config/database');
 // Require for routing
 const app = express();
+// Require for Chat Database
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
+// =============== Routes ========================
 // Requires users and buildings from routes folder
 const users = require('./routes/users');
 const buildings = require('./routes/buildings');
 const roomInfo = require('./routes/roomInfoRoute');
 
-// Connect to database location
-mongoose.connect(config.database);
-
-// Check to see if connected to database
-mongoose.connection.on('connected', () => {
-    console.log('Connected to database'+config.database);
-})
-// Check to see if connection failed
-mongoose.connection.on('error', () => {
-    console.log('Database not connected');
-})
-
-// Port Number
-const port = 3000; // For testing
-// const port = process.env.PORT || 8080; // For Deployment
-
+// =============== Set Paths ========================
 // Make route public so any domain can access it
 app.use(cors());
 
@@ -48,10 +37,11 @@ app.use(bodyParser.json());
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-// require the config file's passport which specifies authentication
+
+// Require the config file's passport which specifies authentication
 require('./config/passport')(passport);
 
-// 
+// The routes for the specific pages
 app.use('/users', users);
 app.use('/buildings', buildings);
 app.use('/roomInfo', roomInfo);
@@ -66,7 +56,57 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
+// =============== Main Database==================
+// Connect to database location
+mongoose.connect(config.database);
+
+// Check to see if connected to database
+mongoose.connection.on('connected', () => {
+    console.log('Connected to database'+config.database);
+})
+// Check to see if connection failed
+mongoose.connection.on('error', () => {
+    console.log('Database not connected');
+})
+
+// =============== Chat Database ====================
+io.on('connection', (socket) => {
+    // Says socket connected
+    console.log('Socket %s connected', socket.id);
+
+    // Say socket disconnected
+    socket.on('disconnect', () => {
+        console.log('Socket %s disconnected', socket.id)
+    });
+
+    // On emit 'join', join room
+    socket.on('join', (room) => {
+        socket.join(room);
+        console.log("Joined room #"+room)
+    })
+
+    // On emit 'add message', send to client a message
+    socket.on('add message', (room, message) => {
+        io.sockets.to(room).emit('message', {type: 'new message', text: message})
+    });
+
+    // On emit 'leave', leave room
+    socket.on('leave', (room) => {
+        socket.leave(room);
+    })
+});
+
+// =============== Listen to Ports ========================
+// Port Number
+const port = 3000; // For testing
+// const port = process.env.PORT || 8080; // For Deployment
+const chatPort = 4020;
+
 // Takes a port and starts up server
 app.listen(port, () => {
     console.log('Server started on port '+port);
+})
+// Starts up chat server on separate port
+http.listen(chatPort, () => {
+    console.log('Chat Server started on port '+chatPort);
 })
