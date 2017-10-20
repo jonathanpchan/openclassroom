@@ -26,6 +26,7 @@ import {BuildingsService} from './services/buildings.service';
 import { FindNowComponent } from './components/find-now/find-now.component';
 import { FindTimesComponent } from './components/find-times/find-times.component';
 import { CourseComponent } from './components/course/course.component';
+import { ChatComponent } from './components/chat/chat.component';
 // import { RoomComponent } from './components/room/room.component';
 
 // Routes for the components (will be protected later)
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
   {path:'findclassroom/now', component: FindNowComponent},
   {path:'findclassroom/building', component: FindComponent},
   {path:'findclassroom/time', component: FindTimesComponent},
+  {path:'chat', component: ChatComponent},
   // {path:'room', component: RoomComponent},
   {path:'**', redirectTo: ''}
 ]
@@ -60,6 +62,7 @@ const appRoutes: Routes = [
     FindNowComponent,
     FindTimesComponent,
     CourseComponent,
+    ChatComponent,
     // RoomComponent
   ],
   imports: [
