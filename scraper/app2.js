@@ -30,14 +30,18 @@ mongoose.connection.on('error', () => {
 //     console.log(x)
 // })
 
+var x = "comments"
+var pos = ".0"
+var proj = ".votes"
 
-// rr.update(
-//     {$and: [{"building": "AS" }, {"room": "243"}]},
-//     {$push: {"whiteBoard.votes": {
-//         vote: 1,
-//         user: "tom5"
-//     }}}
-// ).exec()
+var y = "comments.0.votes"
+rr.update(
+    {$and: [{"building": "AS" }, {"room": "243"}]},
+    {$push: {[y] : {
+        vote: 1,
+        email: "test"
+    }}}
+).exec()
 
 // rr.update(
 //     {$and: [{"building": "AS" }, {"room": "243"}]},
@@ -81,89 +85,89 @@ var uname = "tom002";
 var nvote = 1;
 
 
-//dont change these
-var found = -1;
-var projection = item + '.votes'
-var holder = item
-//dont touch here .. danger!!!
+// //dont change these
+// var found = -1;
+// var projection = item + '.votes'
+// var holder = item
+// //dont touch here .. danger!!!
 
-rr.findOne({$and: [{"building": building }, {"room": room}]}, {[projection] :1}, (err, x) => {
-   //console.log(x.whiteBoard.votes[0].user)
-   for (let i in x[item]['votes']){
-      // console.log(i)
-       if (x[item].votes[i].email == uname){
-           found = i;
-           console.log("found")
-           break;
-       }
-   }
-   // if user is not found
-   if (found == -1){
-       console.log("inserting new")
-       //add to votes arr
-       rr.update(
-            {$and: [{"building": building}, {"room": room}]},
-            {$push: {[projection]: {
-                vote: nvote,
-                email: uname
-            }}},
-            (err, x) => {
-                //update count
-                holder += nvote > 0 ? '.uVote' : '.dVote'
-                console.log("holder is: " + holder)
-                rr.update(
-                        {$and: [{"building": building}, {"room": room}]},
-                        {$inc: {[holder] : 1}},
-                        (err,x) => {
-                            mongoose.connection.close(function() {
-                                console.log('Disconnected from database'); })
-                        }
-                    )
-            }
-        )
-   }
+// rr.findOne({$and: [{"building": building }, {"room": room}]}, {[projection] :1}, (err, x) => {
+//    //console.log(x.whiteBoard.votes[0].user)
+//    for (let i in x[item]['votes']){
+//       // console.log(i)
+//        if (x[item].votes[i].email == uname){
+//            found = i;
+//            console.log("found")
+//            break;
+//        }
+//    }
+//    // if user is not found
+//    if (found == -1){
+//        console.log("inserting new")
+//        //add to votes arr
+//        rr.update(
+//             {$and: [{"building": building}, {"room": room}]},
+//             {$push: {[projection]: {
+//                 vote: nvote,
+//                 email: uname
+//             }}},
+//             (err, x) => {
+//                 //update count
+//                 holder += nvote > 0 ? '.uVote' : '.dVote'
+//                 console.log("holder is: " + holder)
+//                 rr.update(
+//                         {$and: [{"building": building}, {"room": room}]},
+//                         {$inc: {[holder] : 1}},
+//                         (err,x) => {
+//                             mongoose.connection.close(function() {
+//                                 console.log('Disconnected from database'); })
+//                         }
+//                     )
+//             }
+//         )
+//    }
 
-   else {
-       var oldVote =  x[item].votes[found].vote
-       //remove old vote
-       rr.update(
-        {$and: [{"building": building }, {"room": room}]},
-        {$pull: {[projection] : {email: uname}}},
-        (err, x) => {
+//    else {
+//        var oldVote =  x[item].votes[found].vote
+//        //remove old vote
+//        rr.update(
+//         {$and: [{"building": building }, {"room": room}]},
+//         {$pull: {[projection] : {email: uname}}},
+//         (err, x) => {
 
-            //add new vote
-            rr.update(
-                {$and: [{"building": building }, {"room": room}]},
-                {$push: {[projection]: {
-                    vote: nvote,
-                    email: uname
-                }}},
-                (err,x) => {
-                    //only if vote is different do we update count
-                    if (nvote != oldVote){
-                        console.log("non - matching vote")
-                        // dec one count and inc the other
-                        var uVoteInc = nvote > 0 ? 1 : -1
-                        var dVoteInc = - uVoteInc
-                        var item1 = item + ".uVote"
-                        var item2 = item + ".dVote"
-                        rr.update(
-                            {$and: [{"building": building }, {"room": room}]},
-                            {$inc: {[item1] : uVoteInc,[item2] : dVoteInc}},
-                            (err,x) => {
-                                mongoose.connection.close(function() {
-                                    console.log('Disconnected from database'); })
-                            }
-                        )
+//             //add new vote
+//             rr.update(
+//                 {$and: [{"building": building }, {"room": room}]},
+//                 {$push: {[projection]: {
+//                     vote: nvote,
+//                     email: uname
+//                 }}},
+//                 (err,x) => {
+//                     //only if vote is different do we update count
+//                     if (nvote != oldVote){
+//                         console.log("non - matching vote")
+//                         // dec one count and inc the other
+//                         var uVoteInc = nvote > 0 ? 1 : -1
+//                         var dVoteInc = - uVoteInc
+//                         var item1 = item + ".uVote"
+//                         var item2 = item + ".dVote"
+//                         rr.update(
+//                             {$and: [{"building": building }, {"room": room}]},
+//                             {$inc: {[item1] : uVoteInc,[item2] : dVoteInc}},
+//                             (err,x) => {
+//                                 mongoose.connection.close(function() {
+//                                     console.log('Disconnected from database'); })
+//                             }
+//                         )
 
-                    }
-                    else {mongoose.connection.close(function() {
-                        console.log('Disconnected from database'); })}
-                })      
-        }
-       )  
-   }
-})
+//                     }
+//                     else {mongoose.connection.close(function() {
+//                         console.log('Disconnected from database'); })}
+//                 })      
+//         }
+//        )  
+//    }
+// })
 
 
 

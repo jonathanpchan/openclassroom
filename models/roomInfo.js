@@ -169,9 +169,97 @@ module.exports.addVote = function(building, room, item, uname, nvote, callback){
     })
 }
 
-// module.exports.addVote = function(building, room, email, day, item, vval, callback){
-//     console.log("hello2")
-// }
+module.exports.addVote = function(building, room, item, pos, uname, nvote, callback){
+    //callback(null, "hello2")
+    var found = -1;
+    var projection = item + "." + pos + '.votes'
+    var holder = item + "." + pos
+
+    RI.findOne({$and: [{"building": building }, {"room": room}]}, (err, x) => {
+        if (x == null) {
+            callback("No such room or building")
+            return
+        } 
+        if (x[item] == null) {
+            callback("No such item")
+            return
+        }
+        if (pos > x[item].length -1) {
+            callback("Array out of bounds")
+            return
+        }
+        
+    //console.log(x.whiteBoard.votes[0].user)
+    for (let i in x[item][pos]['votes']){
+        // console.log(i)
+        if (x[item][pos].votes[i].email == uname){
+            found = i;
+            console.log("found")
+            break;
+        }
+    }
+
+    // if user is not found
+    if (found == -1){
+        console.log("inserting new")
+        //add to votes arr
+        RI.update(
+                {$and: [{"building": building}, {"room": room}]},
+                {$push: {[projection]: {
+                    vote: nvote,
+                    email: uname
+                }}},
+                (err, x) => {
+                    //update count
+                    holder += nvote > 0 ? '.uVote' : '.dVote'
+                    console.log("holder is: " + holder)
+                    RI.update(
+                            {$and: [{"building": building}, {"room": room}]},
+                            {$inc: {[holder] : 1}},
+                            (err,x) => {callback(err, "Success! First Vote added")}
+                        )
+                }
+            )
+    }
+
+    else {
+        var oldVote =  x[item][pos].votes[found].vote
+        //remove old vote
+        RI.update(
+            {$and: [{"building": building }, {"room": room}]},
+            {$pull: {[projection] : {email: uname}}},
+            (err, x) => {
+
+                //add new vote
+                RI.update(
+                    {$and: [{"building": building }, {"room": room}]},
+                    {$push: {[projection]: {
+                        vote: nvote,
+                        email: uname
+                    }}},
+                    (err,x) => {
+                        //only if vote is different do we update count
+                        if (nvote != oldVote){
+                            console.log("non - matching vote")
+                            // dec one count and inc the other
+                            var uVoteInc = nvote > 0 ? 1 : -1
+                            var dVoteInc = - uVoteInc
+                            var item1 = holder + ".uVote"
+                            var item2 = holder + ".dVote"
+                            RI.update(
+                                {$and: [{"building": building }, {"room": room}]},
+                                {$inc: {[item1] : uVoteInc,[item2] : dVoteInc}},
+                                (err,x) => {callback(err, "Success! Vote Change")}
+                            )
+
+                        }
+                        else {callback(err, "Success! Vote Updated")}
+                    })      
+            }
+        )  
+    }
+    })
+}
 
 module.exports.addComment = function(building, room, newEmail, comment, callback){
     RI.update(
