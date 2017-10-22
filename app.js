@@ -71,7 +71,7 @@ mongoose.connection.on('error', () => {
 
 // =============== Chat Database ====================
 io.on('connection', (socket) => {
-    // Says socket connected
+    // Say socket connected
     console.log('Socket %s connected', socket.id);
 
     // Say socket disconnected
@@ -80,20 +80,20 @@ io.on('connection', (socket) => {
     });
 
     // On emit 'join', join room
-    socket.on('join', (room) => {
-        socket.join(room);
-        console.log("Joined room #"+room)
+    socket.on('join room', (room) => {
+        if (socket.room != null) {
+            console.log("Socket %s left room #%s", socket.id, socket.room)
+            socket.leave(socket.room);
+        }
+        socket.room = room;
+        socket.join(socket.room)
+        console.log("Socket %s joined room #%s", socket.id, socket.room)
     })
 
     // On emit 'add message', send to client a message
     socket.on('add message', (room, message) => {
         io.sockets.to(room).emit('message', {type: 'new message', text: message})
     });
-
-    // On emit 'leave', leave room
-    socket.on('leave', (room) => {
-        socket.leave(room);
-    })
 });
 
 // =============== Listen to Ports ========================

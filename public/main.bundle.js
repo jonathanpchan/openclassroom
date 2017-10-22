@@ -243,29 +243,24 @@ var ChatComponent = (function () {
         }
     };
     ChatComponent.prototype.ngOnInit = function () { };
-    // 1) Step 1 is to connect to a room
-    ChatComponent.prototype.initRoom = function (room) {
+    // Join room (Leave room before joining new room)
+    ChatComponent.prototype.joinRoom = function (room) {
         var _this = this;
         // BELOW IS TESTING ITEM
         this.roomChange(this.currentRoom, room);
         // ABOVE IS TESTING ITEM
-        // If connected to a room
-        if (this.connection != null) {
-            console.log('Left Room #' + this.currentRoom);
-            this.connection.unsubscribe();
-        }
         // Set new room
         this.currentRoom = room;
-        console.log("Joined Room #" + this.currentRoom);
-        // Join new room
-        this.chatService.joinRoom(room);
+        this.chatService.joinRoom(this.currentRoom);
         // TODO: Logic for clearing the area and querying the database for previous messages
-        // Subscribe to messages of room
-        this.connection = this.chatService.getMessages().subscribe(function (message) {
-            _this.messages.push(message);
-        });
+        // Subscribe to the messages
+        if (this.connection == null) {
+            this.connection = this.chatService.getMessages().subscribe(function (message) {
+                _this.messages.push(message);
+            });
+        }
     };
-    // Sending messages REQUIRES INITROOM CALLED FIRST
+    // Send message (REQUIRES JOINROOM CALLED FIRST)
     ChatComponent.prototype.sendMessage = function (room) {
         if (this.connection == null) {
             console.log("Error: Need to choose a room before messaging");
@@ -276,10 +271,6 @@ var ChatComponent = (function () {
             // Clear message
             this.message = '';
         }
-    };
-    // This happens when you close the window
-    ChatComponent.prototype.ngOnDestroy = function () {
-        this.connection.unsubscribe();
     };
     return ChatComponent;
 }());
@@ -1849,7 +1840,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n 
 /***/ 233:
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n  Room #\r\n  <select [(ngModel)]=\"roomOption\" (change)=\"initRoom(roomOption)\">\r\n    <option value=\"1\">1</option>\r\n    <option value=\"2\">2</option>\r\n    <option value=\"3\">3</option>\r\n  </select>\r\n</div>\r\n<div style=\"height: 200px; overflow-y: auto; border: 1px black solid\">\r\n  <div *ngFor=\"let message of messages\">\r\n    {{message.text}}\r\n  </div>\r\n</div>\r\n\r\n<div>\r\n  <input [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\" /><button (click)=\"sendMessage(currentRoom)\">Send</button>\r\n</div>"
+module.exports = "<div>\r\n  Room #\r\n  <select [(ngModel)]=\"roomOption\" (change)=\"joinRoom(roomOption)\">\r\n    <option value=\"1\">1</option>\r\n    <option value=\"2\">2</option>\r\n    <option value=\"3\">3</option>\r\n  </select>\r\n</div>\r\n<div style=\"height: 200px; overflow-y: auto; border: 1px black solid\">\r\n  <div *ngFor=\"let message of messages\">\r\n    {{message.text}}\r\n  </div>\r\n</div>\r\n\r\n<div>\r\n  <input [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\" /><button (click)=\"sendMessage(currentRoom)\">Send</button>\r\n</div>"
 
 /***/ }),
 
@@ -2228,25 +2219,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ChatService = (function () {
-    // TODO: This may need changing when deploying to master
     function ChatService() {
         // How the user is communicating with the server
         this.socket = null;
     }
-    // Tell the server to join the room
+    // Tell the server to connect to server and join a room
     ChatService.prototype.joinRoom = function (room) {
+        // Connect once while on that page
         if (this.socket == null) {
             this.socket = __WEBPACK_IMPORTED_MODULE_2_socket_io_client__["connect"]("http://localhost:4020/");
         }
-        this.socket.emit('join', room);
-    };
-    // Tell the server to leave the room
-    ChatService.prototype.leaveRoom = function (room) {
-        this.socket.emit('leave', room);
+        this.socket.emit('join room', room);
     };
     // Tell the server to send a message to those in the room
     ChatService.prototype.sendMessage = function (room, message) {
-        console.log(room + " " + message);
         this.socket.emit('add message', room, message);
     };
     // Create an observable that will read off the next message when the user gets a message
@@ -2256,9 +2242,6 @@ var ChatService = (function () {
             _this.socket.on('message', function (data) {
                 observer.next(data);
             });
-            return function () {
-                _this.socket.disconnect();
-            };
         });
         return observable;
     };

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 
 @Component({
@@ -28,33 +28,27 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {}
 
-  // 1) Step 1 is to connect to a room
-  initRoom(room : any) {
+  // Join room (Leave room before joining new room)
+  joinRoom(room : any) {
     // BELOW IS TESTING ITEM
     this.roomChange(this.currentRoom, room)
     // ABOVE IS TESTING ITEM
-
-    // If connected to a room
-    if (this.connection != null) 
-    {
-      console.log('Left Room #'+this.currentRoom);
-      this.connection.unsubscribe();
-    }
+    
     // Set new room
     this.currentRoom = room;
-    console.log("Joined Room #"+this.currentRoom);
-    // Join new room
-    this.chatService.joinRoom(room);
+    this.chatService.joinRoom(this.currentRoom)
 
     // TODO: Logic for clearing the area and querying the database for previous messages
-    
-    // Subscribe to messages of room
-    this.connection = this.chatService.getMessages().subscribe((message : String) => {
-      this.messages.push(message);
-    })
+
+    // Subscribe to the messages
+    if (this.connection == null) {
+      this.connection = this.chatService.getMessages().subscribe((message : String) => {
+        this.messages.push(message);
+      })
+    }
   }
 
-  // Sending messages REQUIRES INITROOM CALLED FIRST
+  // Send message (REQUIRES JOINROOM CALLED FIRST)
   sendMessage(room : any) {
     if (this.connection == null) {
       console.log("Error: Need to choose a room before messaging")
@@ -65,10 +59,5 @@ export class ChatComponent implements OnInit {
       // Clear message
       this.message='';
     }
-  }
-
-  // This happens when you close the window
-  ngOnDestroy() {
-    this.connection.unsubscribe();
   }
 }

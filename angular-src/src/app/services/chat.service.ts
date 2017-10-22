@@ -7,25 +7,19 @@ export class ChatService {
   // How the user is communicating with the server
   private socket : any = null;
 
-  // TODO: This may need changing when deploying to master
-  constructor() {}
+  constructor() { }
 
-  // Tell the server to join the room
+  // Tell the server to connect to server and join a room
   joinRoom(room : any) {
+    // Connect once while on that page
     if (this.socket == null) {
       this.socket = io.connect("http://localhost:4020/");
     }
-    this.socket.emit('join', room);
-  }
-
-  // Tell the server to leave the room
-  leaveRoom(room : any) {
-    this.socket.emit('leave', room);
+    this.socket.emit('join room', room);
   }
 
   // Tell the server to send a message to those in the room
   sendMessage(room : any, message : String) {
-    console.log(room+" "+message)
     this.socket.emit('add message', room, message);
   }
 
@@ -35,9 +29,6 @@ export class ChatService {
       this.socket.on('message', (data) => {
         observer.next(data);
       })
-      return () => {
-        this.socket.disconnect();
-      }
     })
     return observable;
   }
