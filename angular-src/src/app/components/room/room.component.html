@@ -1,7 +1,6 @@
 <html>
 
-
-<h1 class ="roomName">{{rooms.building}}-{{rooms.room}}</h1>
+<h1 class ="roomName">{{rooms?.building}}-{{rooms?.room}}</h1>
 
 <body>
 
@@ -9,38 +8,38 @@
   <h2>Open Times </h2>
 
   <h2>Monday</h2>
-  <div class = "dayContainer" *ngFor="let time of rooms.mon">
+  <div class = "dayContainer" *ngFor="let time of rooms?.mon let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="monUvote()">Monday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="monDvote()">Monday Down - {{time.dVote}}</p>
+      <p class = "uVote" (click)="vote('mon', i, 1)">Monday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="vote('mon', i, -1)">Monday Down - {{time.dVote}}</p>
     </div>
   </div>
 
   <h2>Tuesday</h2>
-  <div class = "dayContainer" *ngFor="let time of rooms.tue">
+  <div class = "dayContainer" *ngFor="let time of rooms?.tue let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="tueUvote()">Tuesday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="tueDvote()">Tuesday Down - {{time.dVote}}</p>
+      <p class = "uVote" (click)="vote('tue', i, 1)">Tuesday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="vote('tue', i, -1)">Tuesday Down - {{time.dVote}}</p>
     </div>
   </div>
 
   <h2>Wednesday</h2>
-  <div class = "dayContainer" *ngFor="let time of rooms.wed">
+  <div class = "dayContainer" *ngFor="let time of rooms?.wed let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="wedUvote()">Wednesday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="wedDvote()">Wednesday Down - {{time.dVote}}</p>
+      <p class = "uVote" (click)="vote('wed', i, 1)">Wednesday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="vote('wed', i, -1)">Wednesday Down - {{time.dVote}}</p>
     </div>
   </div>
 
   <h2>Thursday</h2>
-  <div class = "dayContainer" *ngFor="let time of rooms.thu">
+  <div class = "dayContainer" *ngFor="let time of rooms?.thu let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="thuUvote()">Thursday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="tueDvote()">Thursday Down - {{time.dVote}}</p>
+      <p class = "uVote" (click)="vote('thu', i, 1)">Thursday Up   - {{time.uVote}}</p>
+      <p class = "dVote" (click)="vote('thu', i, -1)">Thursday Down - {{time.dVote}}</p>
     </div>
   </div>
 
@@ -50,33 +49,38 @@
 <h2>Features</h2>
 
   <div class = "featureContainer">
-    <div class = "feature">
+    <div class = "feature" *ngIf="loaded">
       <h3 class = "featureName">outlets</h3>
-      <p class = "uVote" (click)="outletUvote()">outlets upvote - {{rooms.hasOutlets.uVote}}</p>
-      <p class = "dVote" (click)="outletDvote()">outlets downvote - {{rooms.hasOutlets.dVote}}</p>
+      <p class = "uVote" (click)="vote('hasOutlets',-1, 1)">outlets upvote - {{rooms?.hasOutlets.uVote}}</p>
+      <p class = "dVote" (click)="vote('hasOutlets',-1, -1)">outlets downvote - {{rooms?.hasOutlets.dVote}}</p>
     </div>
   </div>
 
   <div class = "featureContainer">
-    <div class = "feature">
+    <div class = "feature" *ngIf="loaded">
       <h3 class = "featureName">White Board</h3>
-      <p class = "uVote" (click)="wBoardUvote()">White Board upvote - {{rooms.whiteBoard.uVote}}</p>
-      <p class = "dVote" (click)="wBoardDvote()">White Board downvote - {{rooms.whiteBoard.dVote}}</p>
+      <p class = "uVote" (click)="vote('whiteBoard', -1, 1)">White Board upvote - {{rooms?.whiteBoard.uVote}}</p>
+      <p class = "dVote" (click)="vote('whiteBoard', -1,-1)">White Board downvote - {{rooms?.whiteBoard.dVote}}</p>
     </div>
   </div>
 
 </div>
 
-
 <div class = "commentSection">
 
   <h2>Comments</h2>
 
-  <div class = "commentContainer" *ngFor = "let comment of rooms.comments">
+  <form (submit)="onCommentSubmit()">
+  Add Comment:
+  <input class="form-control" [(ngModel)]="comment" name="comment">
+  <input type="submit" class="btn btn-primary" value="submit">
+  </form>
+
+  <div class = "commentContainer" *ngFor = "let comment of rooms?.comments let i = index">
     <p class = "comment">"{{comment.content}}"</p>
     <p class = "commentUser">{{comment.username}} </p>
-    <p class = "uVote" (click)="commentUvote(comment.username)">comment upvote - {{comment.uVote}}</p>
-    <p class = "dVote" (click)="commentDvote(comment.username)">comment downvote - {{comment.dVote}}</p>
+    <p class = "uVote" (click)="vote('comments', i, 1)">comment upvote - {{comment.uVote}}</p>
+    <p class = "dVote" (click)="vote('comments', i, -1)">comment downvote - {{comment.dVote}}</p>
     <p class = "date">{{comment.date}}</p>
   </div>
 </div>
