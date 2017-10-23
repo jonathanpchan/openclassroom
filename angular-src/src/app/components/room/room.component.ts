@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 
 
@@ -7,32 +7,35 @@ import {AuthService} from '../../services/auth.service';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css']
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnChanges {
+  //inputs from find components
+  @Input() building: string = "";
+  @Input() room : string = "";
 
-  comment : string;
+  //data structure
   rooms = null;
-  building: string;
-  room : string;
+  loaded : boolean = false;
+
+  //other data do send in routes
+  comment : string;
   email : JSON = JSON.parse(localStorage.getItem('user'))["email"]
+
   constructor(private authService:AuthService){}
 
-  ngOnInit() {
-    // this.rooms = JSON.parse('{"res":[{"building":"VEC","room":"103","whiteboard":{"uVote":33,"dVote":12,"UserVote":0},"hasOutlets":{"uVote":3,"dVote":1,"UserVote":-1},"comments":[{"username":"Bob","uVote":5,"dVote":0,"UserVote":1,"content":"Good Room","date":"2017-11-05 9:30 AM"},{"username":"Greg","uVote":0,"dVote":15,"UserVote":0,"content":"No Whiteboard","date":"2017-12-05 10:25 AM"}],"mon":[{"st":915,"et":950,"uVote":1,"dVote":5},{"st":1100,"et":1150,"uVote":10,"dVote":5}],"tue":[{"st":600,"et":650,"uVote":3,"dVote":5},{"st":900,"et":950,"uVote":1,"dVote":2}],"wed":[{"st":915,"et":950,"uVote":2,"dVote":5},{"st":1100,"et":1150,"uVote":9,"dVote":5}],"thu":[{"st":600,"et":650,"uVote":11,"dVote":5},{"st":900,"et":950,"uVote":8,"dVote":5}]}]}');
-    // this.rooms=this.rooms.res[0];
-
-    this.building = "AS";
-    this.room = "233";
-
-    console.log(this.building,this.room);
-    //console.log(this.rooms);
-
+  ngOnChanges(){
+    // console.log("rooms changed\n\n\n\n\n");
+    // console.log(this.building,this.room);
     this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
       this.rooms = roomInfo;
-      console.log(this.rooms);
     },
     err => {
       console.log(err)
     })
+    //console.logthis.rooms
+    if(this.rooms != null)
+    {
+      this.loaded = true
+    }
   }
 
   timeFormat(time)
@@ -60,15 +63,6 @@ export class RoomComponent implements OnInit {
 
     return t;
   }
-
-
-  //TODO: add routes and information
-  //We Dont have a good way to get the day, so we need to separate these
-  //feature route will require email, building-room, vote, item)// feautres
-  //time route will require email, building-room, vote, (day, array index)// feautres
-  //comment route will require email, building-room, vote, (comment, array index)// feautres
-  //comment post route will require email, building-room, comment// feautres
-
 
   vote(item, pos, nVote)
   {
@@ -98,8 +92,4 @@ export class RoomComponent implements OnInit {
       }
     })
   }
-
-
-
-
 }

@@ -44,7 +44,6 @@ const appRoutes: Routes = [
   {path:'findclassroom/time', component: FindTimesComponent},
   {path:'chat', component: ChatComponent},
   {path:'studybuddy', component: StudybuddyComponent},
-  {path:'room', component: RoomComponent},
   {path:'**', redirectTo: ''}
 ]
 
