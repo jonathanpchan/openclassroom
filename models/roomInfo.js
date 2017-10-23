@@ -190,15 +190,18 @@ module.exports.addVote = function(building, room, item, pos, uname, nvote, callb
         }
         
     //console.log(x.whiteBoard.votes[0].user)
-    for (let i in x[item][pos]['votes']){
-        // console.log(i)
-        if (x[item][pos].votes[i].email == uname){
-            found = i;
-            console.log("found")
-            break;
+    if((x[item][pos]['votes']).length > 0){
+        for (let i in x[item][pos]['votes']){
+            // console.log(i)
+            if (x[item][pos].votes[i].email == uname){
+                found = i;
+                console.log("found")
+                break;
+            }
         }
+    
     }
-
+    
     // if user is not found
     if (found == -1){
         console.log("inserting new")
@@ -216,7 +219,8 @@ module.exports.addVote = function(building, room, item, pos, uname, nvote, callb
                     RI.update(
                             {$and: [{"building": building}, {"room": room}]},
                             {$inc: {[holder] : 1}},
-                            (err,x) => {callback(err, "Success! First Vote added")}
+                            (err,x) => {
+                                callback(err, "Success! First Vote added")}
                         )
                 }
             )
