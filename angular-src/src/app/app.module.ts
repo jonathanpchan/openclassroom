@@ -28,7 +28,7 @@ import { FindTimesComponent } from './components/find-times/find-times.component
 import { CourseComponent } from './components/course/course.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { StudybuddyComponent } from './components/studybuddy/studybuddy.component';
-// import { RoomComponent } from './components/room/room.component';
+import { RoomComponent } from './components/room/room.component';
 
 // Routes for the components (will be protected later)
 const appRoutes: Routes = [
@@ -44,7 +44,7 @@ const appRoutes: Routes = [
   {path:'findclassroom/time', component: FindTimesComponent},
   {path:'chat', component: ChatComponent},
   {path:'studybuddy', component: StudybuddyComponent},
-  // {path:'room', component: RoomComponent},
+  {path:'room', component: RoomComponent},
   {path:'**', redirectTo: ''}
 ]
 
@@ -66,7 +66,7 @@ const appRoutes: Routes = [
     CourseComponent,
     ChatComponent,
     StudybuddyComponent,
-    // RoomComponent
+    RoomComponent
   ],
   imports: [
     BrowserModule,

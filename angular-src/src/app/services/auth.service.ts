@@ -74,6 +74,29 @@ export class AuthService {
     // return this.http.post('roominfo/getRoomInfo', {building, room}, {headers: headers}).map(res => res.json());
   }
 
+  addComment(building, room, email, comment){
+    let headers = new Headers({'Content-Type' : 'application/json' });
+    return this.http.post('http://localhost:3000/roominfo/addComment', {building, room, email, comment}, {headers: headers}).map(res => res.json());
+    // return this.http.post('roominfo/addComment', {building, room, email, comment}, {headers: headers}).map(res => res.json());
+
+  }
+
+  addNestedVote(building, room, email, item, pos, nvote){
+    let headers = new Headers({'Content-Type' : 'application/json' });
+    return this.http.post('http://localhost:3000/roominfo/addVote', {building, room, email, item, pos, nvote}, {headers: headers}).map(res => res.json());
+    // return this.http.post(roominfo/addVote', {building, room, email, item, pos, nvote}, {headers: headers}).map(res => res.json());
+
+  }
+
+
+  addVote(building, room, email, item, nvote){
+    let headers = new Headers({'Content-Type' : 'application/json' });
+    return this.http.post('http://localhost:3000/roominfo/addVote', {building, room, email, item, nvote}, {headers: headers}).map(res => res.json());
+    // return this.http.post('roominfo/addVote', {building, room, email, item, nvote}, {headers: headers}).map(res => res.json());
+
+  }
+
+
   //=========== User Token ===================
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
