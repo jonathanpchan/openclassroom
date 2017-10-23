@@ -169,7 +169,7 @@ module.exports.addVote = function(building, room, item, uname, nvote, callback){
     })
 }
 
-module.exports.addVote = function(building, room, item, pos, uname, nvote, callback){
+module.exports.addNestedVote = function(building, room, item, pos, uname, nvote, callback){
     //callback(null, "hello2")
     var found = -1;
     var projection = item + "." + pos + '.votes'

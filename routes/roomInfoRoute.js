@@ -27,8 +27,8 @@ router.post('/addVote', (req,res) => {
     if (req.body.email == null) return res.json("Error: Missing Email")
     nvote = req.body.nvote>0?1:-1
     pos = req.body.pos;
-    if (pos != null) {
-        RI.addVote(building, room, item, pos, email, nvote, (err, x) => {
+    if (pos >= 0) {
+        RI.addNestedVote(building, room, item, pos, email, nvote, (err, x) => {
             return res.json(err?err:x);
         })
     }

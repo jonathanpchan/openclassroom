@@ -70,12 +70,12 @@ export class RoomComponent implements OnInit {
   //comment post route will require email, building-room, comment// feautres
 
 
-  nestedVote(item, pos, nVote)
+  vote(item, pos, nVote)
   {
     console.log("building - " + this.building + " room - " + this.room
               + " email - " + this.email +  " item - " + item + " pos - " + pos
               + " vote - " + nVote);
-    this.authService.addNestedVote(this.building, this.room, this.email, item, pos, nVote).subscribe(data => {
+    this.authService.addVote(this.building, this.room, this.email, item, pos, nVote).subscribe(data => {
       if(data.success){
         console.log("good vote")
       }
@@ -83,13 +83,6 @@ export class RoomComponent implements OnInit {
         console.log("no vote?")
       }
     });
-  }
-
-  vote(item, nVote)
-  {
-    console.log("building - " + this.building + " room - " + this.room
-              + " email - " + this.email +  " item - " + item + " vote - " + nVote);
-    //this.authService.addNestedVote(this.building, this.room, this.email, item, nVote);
   }
 
   onCommentSubmit()
