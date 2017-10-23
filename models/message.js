@@ -65,3 +65,10 @@ module.exports.saveMessage = function(sender, msg, ID, callback) {
             ME.find({ "_id": ObjectId(ID) }, {messages: 1}, callback)
         })
 }
+
+//Get array of messages from messages array
+module.exports.getMessages = function(ID, callback) {
+    if(ID != null) {
+        ME.find({"_id": ObjectId(ID)}, {messages: 1}, callback)
+    }
+}
