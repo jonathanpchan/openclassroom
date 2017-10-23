@@ -11,8 +11,9 @@ export class ChatComponent implements OnInit {
   messages: any = [];
   connection : any = null;
   message : String;
-
-  // BELOW IS TESTING ITEM
+  names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+  showChat: boolean = false;
+    // BELOW IS TESTING ITEM
   roomOption: any;
   roomChange(roomLeave, roomJoin) {
     if (roomLeave != null) {
@@ -59,5 +60,10 @@ export class ChatComponent implements OnInit {
       // Clear message
       this.message='';
     }
+  }
+
+  displayMsg(person : string){
+    this.showChat = true;
+    console.log(person);
   }
 }

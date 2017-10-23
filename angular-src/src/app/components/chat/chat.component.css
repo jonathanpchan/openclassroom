@@ -1,0 +1,26 @@
+.tablecontainer {
+    width : 17%;
+    height : 100%;
+    overflow : hidden;
+    padding : 0, 0, 0, 0;
+    float: left;
+    margin-right: 2%
+}
+
+.chatcontainer {
+    width : 100%;
+    top: auto;
+    float: center;
+    margin-right: 20%
+}
+
+.list-title {
+    background-color: #d7d1c5;
+}
+
+.scrollable {
+    width: 16.15%;
+    height: 90%;
+    overflow-y:scroll;
+    position : fixed
+}
