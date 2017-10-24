@@ -77,6 +77,13 @@ export class RoomComponent implements OnChanges {
         console.log("no vote?")
       }
     });
+
+    this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
+      this.rooms = roomInfo;
+    },
+    err => {
+      console.log(err)
+    });
   }
 
   onCommentSubmit()
@@ -91,5 +98,12 @@ export class RoomComponent implements OnChanges {
         console.log("no comment?")
       }
     })
+
+    this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
+      this.rooms = roomInfo;
+    },
+    err => {
+      console.log(err)
+    });
   }
 }
