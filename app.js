@@ -91,8 +91,8 @@ io.on('connection', (socket) => {
     })
 
     // On emit 'add message', send to client a message
-    socket.on('add message', (room, message) => {
-        io.sockets.to(room).emit('message', {type: 'new message', text: message})
+    socket.on('add message', (room, sender, message) => {
+        io.sockets.to(room).emit('message', {'room': room, 'sender': sender, text: message})
     });
 });
 

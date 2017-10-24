@@ -1,26 +1,89 @@
-.tablecontainer {
-    width : 17%;
-    height : 100%;
-    overflow : hidden;
-    padding : 0, 0, 0, 0;
-    float: left;
-    margin-right: 2%
+/* Containers and top bar to keep a window-like look */
+.container {
+    border: 2px black solid;
+    padding: 0;
+    margin: 0;
+    background: lightblue;
 }
 
-.chatcontainer {
-    width : 100%;
-    top: auto;
-    float: center;
-    margin-right: 20%
+.banner {
+    border-color: black;
+    border-style: solid;
+    border-width: 0 0 2px 0;
+    height: 50px;
+    margin: 0;
+    background-color: lightcoral;
+    text-align: right;
 }
 
-.list-title {
-    background-color: #d7d1c5;
+/* Sidebar where user can choose who to message */
+.msglist {
+    padding: 0;
+    height: 500px;
+    overflow: auto;
 }
 
-.scrollable {
-    width: 16.15%;
-    height: 90%;
-    overflow-y:scroll;
-    position : fixed
+.list-group-item {
+    padding:0;
+}
+
+.list-group-item button {
+    background: white;
+    padding: 10px;
+    margin: 0;
+    border: none;
+}
+
+.list-group-item button:focus {
+    background: red;
+}
+
+/* Interaction between the sender and sendee */
+.chatbox {
+    position: relative;
+    background-color: pink;
+    height: 500px;
+    padding: 0;
+}
+
+.msglog {
+    background-color: yellow;
+    height: 450px;
+    overflow: auto;
+}
+
+.sender p {
+    color: blue;
+}
+
+.sendee p {
+    color: red;
+}
+
+.announcer p {
+    font-style: italic;
+    text-align: center;
+}
+
+/* Where the user inputs message and sends it to sendee */
+.msgform {
+    position: absolute;
+    bottom: 0;
+    background-color: aquamarine;
+    height: 75px;
+    padding: 15px;
+}
+
+.text {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 0;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 0;
+    border: 1px solid transparent;
 }

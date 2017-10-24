@@ -5,7 +5,7 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class ChatService {
   // How the user is communicating with the server
-  private socket : any = null;
+  private socket : any;
 
   constructor() { }
 
@@ -19,8 +19,8 @@ export class ChatService {
   }
 
   // Tell the server to send a message to those in the room
-  sendMessage(room : any, message : String) {
-    this.socket.emit('add message', room, message);
+  sendMessage(room : any, sender: String, message : String) {
+    this.socket.emit('add message', room, sender, message);
   }
 
   // Create an observable that will read off the next message when the user gets a message

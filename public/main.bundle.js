@@ -233,26 +233,22 @@ var ChatComponent = (function () {
         this.chatService = chatService;
         this.messages = [];
         this.connection = null;
+        // BELOW IS TESTING ITEM
+        this.names = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+        this.roomOption = null;
     }
-    ChatComponent.prototype.roomChange = function (roomLeave, roomJoin) {
-        if (roomLeave != null) {
-            this.messages.push({ text: "You left room #" + roomLeave });
-        }
-        if (roomJoin != null) {
-            this.messages.push({ text: "You joined room #" + roomJoin });
-        }
-    };
     ChatComponent.prototype.ngOnInit = function () { };
     // Join room (Leave room before joining new room)
     ChatComponent.prototype.joinRoom = function (room) {
         var _this = this;
-        // BELOW IS TESTING ITEM
-        this.roomChange(this.currentRoom, room);
-        // ABOVE IS TESTING ITEM
         // Set new room
         this.currentRoom = room;
         this.chatService.joinRoom(this.currentRoom);
-        // TODO: Logic for clearing the area and querying the database for previous messages
+        // Clear the area and populate with some text (TODO: Query the database for previous messages)
+        this.messages = [];
+        this.messages.push({ room: this.currentRoom, sender: "announcer", text: "You joined room #" + this.currentRoom });
+        this.messages.push({ room: this.currentRoom, sender: "sendee", text: "Hardcoded code is great. It allows us to move forward." });
+        this.messages.push({ room: this.currentRoom, sender: "sender", text: "This will be a test to make sure that it will change to a different line. After running it, it turns out that it will word wrap. Happy days!" });
         // Subscribe to the messages
         if (this.connection == null) {
             this.connection = this.chatService.getMessages().subscribe(function (message) {
@@ -261,16 +257,22 @@ var ChatComponent = (function () {
         }
     };
     // Send message (REQUIRES JOINROOM CALLED FIRST)
-    ChatComponent.prototype.sendMessage = function (room) {
-        if (this.connection == null) {
-            console.log("Error: Need to choose a room before messaging");
+    ChatComponent.prototype.sendMessage = function () {
+        // Make sure there is a connection, there is a message, and the message is not just white space
+        if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+            console.log("Error: Cannot send message");
         }
         else {
+            // TEST CODE FOR SINGLE USER SENDING TO OTHER USER
+            var sender = "sender";
+            if (Math.random() > 0.5) {
+                sender = "sendee";
+            }
             // Send message to room with message
-            this.chatService.sendMessage(room, this.message);
-            // Clear message
-            this.message = '';
+            this.chatService.sendMessage(this.currentRoom, sender, this.message);
         }
+        // Clear message
+        this.message = '';
     };
     return ChatComponent;
 }());
@@ -1568,7 +1570,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, ".main-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 2.5% 95% 2.5%;\r\n        grid-template-columns: 2.5% 95% 2.5%;\r\n    -ms-grid-rows: 50px 50px 100%;\r\n        grid-template-rows: 50px 50px 100%;\r\n    grid-template-areas: \r\n        \"nav    nav     nav\"\r\n        \"fm     fm      fm\"\r\n        \".      ro      .\";\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.main-grid app-navbar {\r\n    grid-area: nav;\r\n}\r\n\r\n.main-grid flash-messages {\r\n    grid-area: fm;\r\n}\r\n\r\n/* Used to circumvent router-outlet issue */\r\n.main-grid div {\r\n    grid-area: ro;\r\n    /* border: 2px black solid; */\r\n}\r\n\r\n/* https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */\r\n.button-to-top {\r\n    display: none; /* Hidden by default */\r\n    position: fixed; /* Fixed/sticky position */\r\n    bottom: 20px; /* Place the button at the bottom of the page */\r\n    right: 20px; /* Place the button 30px from the right */\r\n    z-index: 100; /* Make sure it does not overlap */\r\n    border: none; /* Remove borders */\r\n    outline: none; /* Remove outline */\r\n    background-color: #edaa00; /* Set a background color */\r\n    color: #333333; /* Text color */\r\n    padding-right: 20px;\r\n    padding-top: 5px;\r\n    padding-bottom: 5px;\r\n    padding-left: 20px;\r\n    border-radius: 10px; /* Rounded corners */\r\n    opacity: 0.6;\r\n}\r\n\r\n.button-to-top:hover {\r\n    opacity: 0.7;\r\n}\r\n\r\n.button-to-top:active {\r\n    opacity: 0.8;\r\n}", ""]);
+exports.push([module.i, "html {\r\n    min-width: 320px;\r\n    min-height: 480px;\r\n}\r\n\r\n.main-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 2.5% 95% 2.5%;\r\n        grid-template-columns: 2.5% 95% 2.5%;\r\n    -ms-grid-rows: 50px 50px 100%;\r\n        grid-template-rows: 50px 50px 100%;\r\n    grid-template-areas: \r\n        \"nav    nav     nav\"\r\n        \"fm     fm      fm\"\r\n        \".      ro      .\";\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.main-grid app-navbar {\r\n    grid-area: nav;\r\n}\r\n\r\n.main-grid flash-messages {\r\n    grid-area: fm;\r\n}\r\n\r\n/* Used to circumvent router-outlet issue */\r\n.main-grid div {\r\n    grid-area: ro;\r\n    /* border: 2px black solid; */\r\n}\r\n\r\n/* https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */\r\n.button-to-top {\r\n    display: none; /* Hidden by default */\r\n    position: fixed; /* Fixed/sticky position */\r\n    bottom: 20px; /* Place the button at the bottom of the page */\r\n    right: 20px; /* Place the button 30px from the right */\r\n    z-index: 100; /* Make sure it does not overlap */\r\n    border: none; /* Remove borders */\r\n    outline: none; /* Remove outline */\r\n    background-color: #edaa00; /* Set a background color */\r\n    color: #333333; /* Text color */\r\n    padding-right: 20px;\r\n    padding-top: 5px;\r\n    padding-bottom: 5px;\r\n    padding-left: 20px;\r\n    border-radius: 10px; /* Rounded corners */\r\n    opacity: 0.6;\r\n}\r\n\r\n.button-to-top:hover {\r\n    opacity: 0.7;\r\n}\r\n\r\n.button-to-top:active {\r\n    opacity: 0.8;\r\n}", ""]);
 
 // exports
 
@@ -1586,7 +1588,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "/* Containers and top bar to keep a window-like look */\r\n.container {\r\n    border: 2px black solid;\r\n    padding: 0;\r\n    margin: 0;\r\n    background: lightblue;\r\n}\r\n\r\n.banner {\r\n    border-color: black;\r\n    border-style: solid;\r\n    border-width: 0 0 2px 0;\r\n    height: 50px;\r\n    margin: 0;\r\n    background-color: lightcoral;\r\n    text-align: right;\r\n}\r\n\r\n/* Sidebar where user can choose who to message */\r\n.msglist {\r\n    padding: 0;\r\n    height: 500px;\r\n    overflow: auto;\r\n}\r\n\r\n.list-group-item {\r\n    padding:0;\r\n}\r\n\r\n.list-group-item button {\r\n    background: white;\r\n    padding: 10px;\r\n    margin: 0;\r\n    border: none;\r\n}\r\n\r\n.list-group-item button:focus {\r\n    background: red;\r\n}\r\n\r\n/* Interaction between the sender and sendee */\r\n.chatbox {\r\n    position: relative;\r\n    background-color: pink;\r\n    height: 500px;\r\n    padding: 0;\r\n}\r\n\r\n.msglog {\r\n    background-color: yellow;\r\n    height: 450px;\r\n    overflow: auto;\r\n}\r\n\r\n.sender p {\r\n    color: blue;\r\n}\r\n\r\n.sendee p {\r\n    color: red;\r\n}\r\n\r\n.announcer p {\r\n    font-style: italic;\r\n    text-align: center;\r\n}\r\n\r\n/* Where the user inputs message and sends it to sendee */\r\n.msgform {\r\n    position: absolute;\r\n    bottom: 0;\r\n    background-color: aquamarine;\r\n    height: 75px;\r\n    padding: 15px;\r\n}\r\n\r\n.text {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}\r\n\r\n.btn-primary {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}", ""]);
 
 // exports
 
@@ -1840,7 +1842,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n 
 /***/ 233:
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n  Room #\r\n  <select [(ngModel)]=\"roomOption\" (change)=\"joinRoom(roomOption)\">\r\n    <option value=\"1\">1</option>\r\n    <option value=\"2\">2</option>\r\n    <option value=\"3\">3</option>\r\n  </select>\r\n</div>\r\n<div style=\"height: 200px; overflow-y: auto; border: 1px black solid\">\r\n  <div *ngFor=\"let message of messages\">\r\n    {{message.text}}\r\n  </div>\r\n</div>\r\n\r\n<div>\r\n  <input [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\" /><button (click)=\"sendMessage(currentRoom)\">Send</button>\r\n</div>"
+module.exports = "<div class=\"container col-xs-12\">\r\n  <div class=\"row col-xs-12 banner\">\r\n    <!-- Room #\r\n    <select [(ngModel)]=\"roomOption\" (change)=\"joinRoom(roomOption)\">\r\n      <option value=\"1\">1</option>\r\n      <option value=\"2\">2</option>\r\n      <option value=\"3\">3</option>\r\n    </select> -->\r\n  </div>\r\n  <div class=\"col-xs-3 msglist\">\r\n    <ul class=\"list-group\">\r\n      <li class=\"list-group-item\" *ngFor=\"let name of names\">\r\n        <button (click)=\"joinRoom(name)\" style=\"width:100%; height: 100%;\">{{name}}</button>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n  <div class=\"col-xs-9 chatbox\">\r\n    <div class=\"col-xs-12 msglog\">\r\n      <div *ngFor=\"let message of messages\" >\r\n        <div *ngIf=\"message.sender=='sendee'\"class=\"sendee\">\r\n          <p class=\"chatmsg\">{{message.text}}</p>\r\n        </div>\r\n        <div *ngIf=\"message.sender=='sender'\" class=\"sender\">\r\n          <p class=\"chatmsg\">{{message.text}}</p>\r\n        </div>\r\n        <div *ngIf=\"message.sender=='announcer'\" class=\"announcer\">\r\n          <p>{{message.text}}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <form class=\"col-xs-12 msgform\" (ngSubmit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"col-xs-11 text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"col-xs-1 btn btn-primary\" (click)=\"sendMessage()\">\r\n        <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2220,8 +2222,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ChatService = (function () {
     function ChatService() {
-        // How the user is communicating with the server
-        this.socket = null;
     }
     // Tell the server to connect to server and join a room
     ChatService.prototype.joinRoom = function (room) {
@@ -2232,8 +2232,8 @@ var ChatService = (function () {
         this.socket.emit('join room', room);
     };
     // Tell the server to send a message to those in the room
-    ChatService.prototype.sendMessage = function (room, message) {
-        this.socket.emit('add message', room, message);
+    ChatService.prototype.sendMessage = function (room, sender, message) {
+        this.socket.emit('add message', room, sender, message);
     };
     // Create an observable that will read off the next message when the user gets a message
     ChatService.prototype.getMessages = function () {

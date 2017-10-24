@@ -1,3 +1,8 @@
+html {
+    min-width: 320px;
+    min-height: 480px;
+}
+
 .main-grid {
     display: grid;
     grid-template-columns: 2.5% 95% 2.5%;

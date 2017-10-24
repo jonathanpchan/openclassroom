@@ -10,36 +10,27 @@ export class ChatComponent implements OnInit {
   currentRoom: any;
   messages: any = [];
   connection : any = null;
-  message : String;
+  message : String  ;
+  // BELOW IS TESTING ITEM
   names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
-  showChat: boolean = false;
-    // BELOW IS TESTING ITEM
-  roomOption: any;
-  roomChange(roomLeave, roomJoin) {
-    if (roomLeave != null) {
-      this.messages.push({text: "You left room #"+roomLeave})
-    }
-    if (roomJoin != null) {
-      this.messages.push({text: "You joined room #"+roomJoin})
-    }
-  }
+  roomOption: any = null;
   // ABOVE IS TESTING ITEM
 
   constructor(private chatService : ChatService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   // Join room (Leave room before joining new room)
   joinRoom(room : any) {
-    // BELOW IS TESTING ITEM
-    this.roomChange(this.currentRoom, room)
-    // ABOVE IS TESTING ITEM
-    
     // Set new room
     this.currentRoom = room;
     this.chatService.joinRoom(this.currentRoom)
 
-    // TODO: Logic for clearing the area and querying the database for previous messages
+    // Clear the area and populate with some text (TODO: Query the database for previous messages)
+    this.messages = [];
+    this.messages.push({room: this.currentRoom, sender: "announcer", text: "You joined room #"+this.currentRoom})
+    this.messages.push({room: this.currentRoom, sender: "sendee", text: "Hardcoded code is great. It allows us to move forward."})
+    this.messages.push({room: this.currentRoom, sender: "sender", text: "This will be a test to make sure that it will change to a different line. After running it, it turns out that it will word wrap. Happy days!"});
 
     // Subscribe to the messages
     if (this.connection == null) {
@@ -50,20 +41,19 @@ export class ChatComponent implements OnInit {
   }
 
   // Send message (REQUIRES JOINROOM CALLED FIRST)
-  sendMessage(room : any) {
-    if (this.connection == null) {
-      console.log("Error: Need to choose a room before messaging")
+  sendMessage() {
+    // Make sure there is a connection, there is a message, and the message is not just white space
+    if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+      console.log("Error: Cannot send message")
     }
     else {
+      // TEST CODE FOR SINGLE USER SENDING TO OTHER USER
+      let sender = "sender";
+      if (Math.random() > 0.5) { sender = "sendee" }
       // Send message to room with message
-      this.chatService.sendMessage(room, this.message);
-      // Clear message
-      this.message='';
+      this.chatService.sendMessage(this.currentRoom, sender, this.message);
     }
-  }
-
-  displayMsg(person : string){
-    this.showChat = true;
-    console.log(person);
+    // Clear message
+    this.message='';
   }
 }
