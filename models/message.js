@@ -13,7 +13,7 @@ const MessagesSchema = new mongoose.Schema({
     user_2 : {type : String},
     _id : {type : String},
     messages : {type : [MessageSchema]}
-    })
+})
 
 MSG = module.exports = mongoose.model('Messages', MessagesSchema);
 ME = module.exports = mongoose.model('Message', MessageSchema);
@@ -22,7 +22,6 @@ module.exports = {
     MSG : MSG,
     ME : ME
 }
-
 
 //Create a new user chat with two users and return _ID of the chat
 module.exports.createNewChat = function(user_1, user_2, callback){

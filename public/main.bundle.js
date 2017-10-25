@@ -85,10 +85,10 @@ AppComponent = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__);
@@ -103,11 +103,11 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__ = __webpack_require__(131);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_validate_service__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__services_buildings_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__services_buildings_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_chat_service__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__ = __webpack_require__(130);
@@ -215,6 +215,8 @@ AppModule = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -227,49 +229,71 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var ChatComponent = (function () {
     // ABOVE IS TESTING ITEM
-    function ChatComponent(chatService) {
+    function ChatComponent(chatService, flashMessage) {
         this.chatService = chatService;
+        this.flashMessage = flashMessage;
+        this.sender = JSON.parse(localStorage.getItem('user'))["name"];
+        this.sendee = null;
         this.messages = [];
         this.connection = null;
+        this.message = null;
         // BELOW IS TESTING ITEM
         this.names = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
-        this.roomOption = null;
     }
     ChatComponent.prototype.ngOnInit = function () { };
     // Join room (Leave room before joining new room)
-    ChatComponent.prototype.joinRoom = function (room) {
+    ChatComponent.prototype.joinRoom = function (sendee) {
         var _this = this;
-        // Set new room
-        this.currentRoom = room;
-        this.chatService.joinRoom(this.currentRoom);
-        // Clear the area and populate with some text (TODO: Query the database for previous messages)
-        this.messages = [];
-        this.messages.push({ room: this.currentRoom, sender: "announcer", text: "You joined room #" + this.currentRoom });
-        this.messages.push({ room: this.currentRoom, sender: "sendee", text: "Hardcoded code is great. It allows us to move forward." });
-        this.messages.push({ room: this.currentRoom, sender: "sender", text: "This will be a test to make sure that it will change to a different line. After running it, it turns out that it will word wrap. Happy days!" });
-        // Subscribe to the messages
-        if (this.connection == null) {
-            this.connection = this.chatService.getMessages().subscribe(function (message) {
-                _this.messages.push(message);
+        // Back join room
+        this.sendee = sendee;
+        this.chatService.createRoom(this.sender, sendee).subscribe(function (room) {
+            _this.currentRoom = room[0]._id;
+            // Front join room
+            _this.chatService.joinRoom(_this.currentRoom);
+            // Back get messages
+            _this.chatService.getMessages(_this.currentRoom).subscribe(function (messages) {
+                // Set new room
+                _this.messages = [];
+                // Populate messages
+                for (var message in messages[0].messages) {
+                    _this.messages.push(messages[0].messages[message]);
+                }
             });
-        }
+            // Subscribe to real time messages
+            // Front get messages
+            if (_this.connection == null) {
+                _this.connection = _this.chatService.getSubscription().subscribe(function (payload) {
+                    _this.messages.push(payload);
+                });
+            }
+            _this.message = '';
+        });
     };
     // Send message (REQUIRES JOINROOM CALLED FIRST)
     ChatComponent.prototype.sendMessage = function () {
         // Make sure there is a connection, there is a message, and the message is not just white space
         if (this.connection == null || this.message == null || this.message.trim().length == 0) {
-            console.log("Error: Cannot send message");
+            this.flashMessage.show('Cannot send message. Did you join a room?', { cssClass: 'alert-danger', timeout: 3000 });
         }
         else {
-            // TEST CODE FOR SINGLE USER SENDING TO OTHER USER
-            var sender = "sender";
-            if (Math.random() > 0.5) {
-                sender = "sendee";
-            }
             // Send message to room with message
-            this.chatService.sendMessage(this.currentRoom, sender, this.message);
+            this.chatService.sendMessage(this.currentRoom, this.sender, this.message).subscribe();
+        }
+        // Clear message
+        this.message = '';
+    };
+    // TODO: USED WHILE WE DO NOT HAVE THE REST OF THE FUNCTIONALITY OF OUR CODE
+    ChatComponent.prototype.stub = function () {
+        // Make sure there is a connection, there is a message, and the message is not just white space
+        if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+            this.flashMessage.show('Cannot send message. Did you join a room?', { cssClass: 'alert-danger', timeout: 3000 });
+        }
+        else {
+            // Send message to room with message
+            this.chatService.sendMessage(this.currentRoom, this.sendee, this.message).subscribe();
         }
         // Clear message
         this.message = '';
@@ -282,10 +306,10 @@ ChatComponent = __decorate([
         template: __webpack_require__(233),
         styles: [__webpack_require__(213)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object])
 ], ChatComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=chat.component.js.map
 
 /***/ }),
@@ -295,8 +319,8 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CourseComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -496,9 +520,9 @@ DevguideComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindHomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -587,7 +611,7 @@ var _a, _b, _c;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(26);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindTimesComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -779,9 +803,9 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -943,7 +967,7 @@ var _a, _b, _c;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(15);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -983,9 +1007,9 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1048,9 +1072,9 @@ var _a, _b, _c;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(45);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavbarComponent; });
@@ -1115,8 +1139,8 @@ var _a, _b, _c, _d;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(18);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
@@ -1198,9 +1222,9 @@ var _a, _b, _c, _d;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScheduleComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1391,7 +1415,7 @@ UsermanualComponent = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(15);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1430,12 +1454,29 @@ var _a, _b;
 
 /***/ }),
 
-/***/ 14:
+/***/ 140:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+// The file contents for the current environment will overwrite these during build.
+var environment = {
+    production: false
+};
+//# sourceMappingURL=environment.js.map
+
+/***/ }),
+
+/***/ 15:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(146);
@@ -1545,23 +1586,6 @@ var _a;
 
 /***/ }),
 
-/***/ 140:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-// The file contents for the current environment will overwrite these during build.
-var environment = {
-    production: false
-};
-//# sourceMappingURL=environment.js.map
-
-/***/ }),
-
 /***/ 212:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1588,7 +1612,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "/* Containers and top bar to keep a window-like look */\r\n.container {\r\n    border: 2px black solid;\r\n    padding: 0;\r\n    margin: 0;\r\n    background: lightblue;\r\n}\r\n\r\n.banner {\r\n    border-color: black;\r\n    border-style: solid;\r\n    border-width: 0 0 2px 0;\r\n    height: 50px;\r\n    margin: 0;\r\n    background-color: lightcoral;\r\n    text-align: right;\r\n}\r\n\r\n/* Sidebar where user can choose who to message */\r\n.msglist {\r\n    padding: 0;\r\n    height: 500px;\r\n    overflow: auto;\r\n}\r\n\r\n.list-group-item {\r\n    padding:0;\r\n}\r\n\r\n.list-group-item button {\r\n    background: white;\r\n    padding: 10px;\r\n    margin: 0;\r\n    border: none;\r\n}\r\n\r\n.list-group-item button:focus {\r\n    background: red;\r\n}\r\n\r\n/* Interaction between the sender and sendee */\r\n.chatbox {\r\n    position: relative;\r\n    background-color: pink;\r\n    height: 500px;\r\n    padding: 0;\r\n}\r\n\r\n.msglog {\r\n    background-color: yellow;\r\n    height: 450px;\r\n    overflow: auto;\r\n}\r\n\r\n.sender p {\r\n    color: blue;\r\n}\r\n\r\n.sendee p {\r\n    color: red;\r\n}\r\n\r\n.announcer p {\r\n    font-style: italic;\r\n    text-align: center;\r\n}\r\n\r\n/* Where the user inputs message and sends it to sendee */\r\n.msgform {\r\n    position: absolute;\r\n    bottom: 0;\r\n    background-color: aquamarine;\r\n    height: 75px;\r\n    padding: 15px;\r\n}\r\n\r\n.text {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}\r\n\r\n.btn-primary {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}", ""]);
+exports.push([module.i, "/* Containers and top bar to keep a window-like look */\r\n.container {\r\n    border: 2px black solid;\r\n    padding: 0;\r\n    margin: 0;\r\n    background: lightblue;\r\n}\r\n\r\n.banner {\r\n    border-color: black;\r\n    border-style: solid;\r\n    border-width: 0 0 2px 0;\r\n    height: 50px;\r\n    margin: 0;\r\n    background-color: lightcoral;\r\n    text-align: right;\r\n}\r\n\r\n.banner .announcer{\r\n    height: 50px;\r\n    font-style: italic;\r\n    text-align: center;\r\n    font-size: 30px;\r\n}\r\n\r\n/* Sidebar where user can choose who to message */\r\n.msglist {\r\n    padding: 0;\r\n    height: 500px;\r\n    overflow: auto;\r\n}\r\n\r\n.list-group-item {\r\n    padding:0;\r\n}\r\n\r\n.list-group-item button {\r\n    background: white;\r\n    padding: 10px;\r\n    margin: 0;\r\n    border: none;\r\n}\r\n\r\n/* Interaction between the sender and sendee */\r\n.chatbox {\r\n    position: relative;\r\n    background-color: pink;\r\n    height: 500px;\r\n    padding: 0;\r\n}\r\n\r\n.chatlogs {\r\n    background-color: yellow;\r\n    height: 425px;\r\n    overflow: auto;\r\n}\r\n\r\n.sender p {\r\n    color: blue;\r\n}\r\n\r\n.sendee p {\r\n    color: red;\r\n}\r\n\r\n/* Where the user inputs message and sends it to sendee */\r\n.chatboxform {\r\n    position: absolute;\r\n    bottom: 0;\r\n    background-color: aquamarine;\r\n    height: 75px;\r\n    padding: 15px;\r\n}\r\n\r\n.text {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}\r\n\r\n.btn-primary {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}", ""]);
 
 // exports
 
@@ -1842,7 +1866,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n 
 /***/ 233:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container col-xs-12\">\r\n  <div class=\"row col-xs-12 banner\">\r\n    <!-- Room #\r\n    <select [(ngModel)]=\"roomOption\" (change)=\"joinRoom(roomOption)\">\r\n      <option value=\"1\">1</option>\r\n      <option value=\"2\">2</option>\r\n      <option value=\"3\">3</option>\r\n    </select> -->\r\n  </div>\r\n  <div class=\"col-xs-3 msglist\">\r\n    <ul class=\"list-group\">\r\n      <li class=\"list-group-item\" *ngFor=\"let name of names\">\r\n        <button (click)=\"joinRoom(name)\" style=\"width:100%; height: 100%;\">{{name}}</button>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n  <div class=\"col-xs-9 chatbox\">\r\n    <div class=\"col-xs-12 msglog\">\r\n      <div *ngFor=\"let message of messages\" >\r\n        <div *ngIf=\"message.sender=='sendee'\"class=\"sendee\">\r\n          <p class=\"chatmsg\">{{message.text}}</p>\r\n        </div>\r\n        <div *ngIf=\"message.sender=='sender'\" class=\"sender\">\r\n          <p class=\"chatmsg\">{{message.text}}</p>\r\n        </div>\r\n        <div *ngIf=\"message.sender=='announcer'\" class=\"announcer\">\r\n          <p>{{message.text}}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <form class=\"col-xs-12 msgform\" (ngSubmit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"col-xs-11 text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"col-xs-1 btn btn-primary\" (click)=\"sendMessage()\">\r\n        <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container col-xs-12\">\r\n  <div class=\"row col-xs-12 banner\">\r\n    <div *ngIf=\"sendee!=null\" class=\"announcer\">You are chatting with {{sendee}}</div>\r\n  </div>\r\n  <div class=\"col-xs-3 msglist\">\r\n    <ul class=\"list-group\">\r\n      <li class=\"list-group-item\" *ngFor=\"let name of names\">\r\n        <button (click)=\"joinRoom(name)\" style=\"width:100%; height: 100%;\">{{name}}</button>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n  <div class=\"col-xs-9 chatbox\">\r\n    <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->\r\n    <div class=\"col-xs-12 chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n      <div *ngFor=\"let message of messages\">\r\n        <div *ngIf=\"message.sender!=sender\"class=\"sendee\">\r\n          <p class=\"chatmsg\">{{message.message}}</p>\r\n        </div>\r\n        <div *ngIf=\"message.sender==sender\" class=\"sender\">\r\n          <p class=\"chatmsg\">{{message.message}}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <form class=\"col-xs-12 chatboxform\" (submit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"col-xs-11 text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"col-xs-1 btn btn-primary\">\r\n        <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n  </div>\r\n</div>\r\n<button class=\"btn btn-default\" (click)=\"stub()\">Other user</button>\r\n"
 
 /***/ }),
 
@@ -1905,7 +1929,7 @@ module.exports = "<h2 class=\"page-header\">Login</h2>\r\n<form (submit)=\"onLog
 /***/ 242:
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->\r\n<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" (click)=\"toggle()\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" [ngClass]=\"{ 'in' : show }\">\r\n      <ul class=\"nav navbar-nav\" (click)=\"hideDropdown()\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findbuddy']\">Find Buddy</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li> -->\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\" (click)=\"hideDropdown()\">\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li> -->\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>"
+module.exports = "<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->\r\n<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"navbar-header\">\r\n      <button type=\"button\" class=\"navbar-toggle collapsed\" (click)=\"toggle()\">\r\n        <span class=\"sr-only\">Toggle navigation</span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n        <span class=\"icon-bar\"></span>\r\n      </button>\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n    </div>\r\n    <div class=\"collapse navbar-collapse\" [ngClass]=\"{ 'in' : show }\">\r\n      <ul class=\"nav navbar-nav\" (click)=\"hideDropdown()\">\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/chat']\">Messaging</a></li>\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/messages']\">Messages</a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/groups']\">Groups</a></li> -->\r\n      </ul>\r\n      <ul class=\"nav navbar-nav navbar-right\" (click)=\"hideDropdown()\">\r\n        <!-- <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/']\">Settings</a></li> -->\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/login']\">Login</a></li>\r\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a [routerLink]=\"['/register']\">Register </a></li>\r\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</nav>"
 
 /***/ }),
 
@@ -1937,12 +1961,12 @@ module.exports = "<head>\r\n  <title> User manual </title>\r\n</head>\r\n\r\n<bo
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(253);
@@ -2072,7 +2096,7 @@ ValidateService = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(26);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindNowComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2203,10 +2227,11 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_socket_io_client__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_socket_io_client__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_socket_io_client__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2220,38 +2245,65 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ChatService = (function () {
-    function ChatService() {
+    function ChatService(http) {
+        this.http = http;
     }
+    // Create the room based on user pair
+    ChatService.prototype.createRoom = function (sender, sendee) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        var payload = {
+            user_1: sender,
+            user_2: sendee
+        };
+        return this.http.post('http://localhost:3000/messages/create', payload, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('messages/create', payload, {headers: headers}).map(res => res.json());
+    };
     // Tell the server to connect to server and join a room
-    ChatService.prototype.joinRoom = function (room) {
+    ChatService.prototype.joinRoom = function (ID) {
         // Connect once while on that page
         if (this.socket == null) {
-            this.socket = __WEBPACK_IMPORTED_MODULE_2_socket_io_client__["connect"]("http://localhost:4020/");
+            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("http://localhost:4020/");
+            // TODO: Deployment route
         }
-        this.socket.emit('join room', room);
+        this.socket.emit('join room', ID);
     };
     // Tell the server to send a message to those in the room
-    ChatService.prototype.sendMessage = function (room, sender, message) {
-        this.socket.emit('add message', room, sender, message);
+    ChatService.prototype.sendMessage = function (ID, sender, message) {
+        this.socket.emit('add message', ID, sender, message);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        var payload = {
+            sender: sender,
+            msg: message,
+            ID: ID
+        };
+        return this.http.post('http://localhost:3000/messages/send', payload, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('messages/send', payload, {headers: headers}).map(res => res.json());
     };
     // Create an observable that will read off the next message when the user gets a message
-    ChatService.prototype.getMessages = function () {
+    ChatService.prototype.getSubscription = function () {
         var _this = this;
-        var observable = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Observable__["Observable"](function (observer) {
+        var observable = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
             _this.socket.on('message', function (data) {
                 observer.next(data);
             });
         });
         return observable;
     };
+    ChatService.prototype.getMessages = function (ID) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/messages/get', { ID: ID }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('messages/get', {ID: ID}, {headers: headers}).map(res => res.json());
+    };
     return ChatService;
 }());
 ChatService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
 ], ChatService);
 
+var _a;
 //# sourceMappingURL=chat.service.js.map
 
 /***/ })

@@ -23,6 +23,7 @@ const io = require('socket.io')(http);
 const users = require('./routes/users');
 const buildings = require('./routes/buildings');
 const roomInfo = require('./routes/roomInfoRoute');
+const messages = require('./routes/messages');
 
 // =============== Set Paths ========================
 // Make route public so any domain can access it
@@ -45,6 +46,7 @@ require('./config/passport')(passport);
 app.use('/users', users);
 app.use('/buildings', buildings);
 app.use('/roomInfo', roomInfo);
+app.use('/messages', messages); 
 
 // Index route
 app.get('/', (req, res) => {
@@ -91,8 +93,8 @@ io.on('connection', (socket) => {
     })
 
     // On emit 'add message', send to client a message
-    socket.on('add message', (room, sender, message) => {
-        io.sockets.to(room).emit('message', {'room': room, 'sender': sender, text: message})
+    socket.on('add message', (id, sender, message) => {
+        io.sockets.to(id).emit('message', {'sender': sender, 'timeStamp': new Date() ,'message': message})
     });
 });
 
@@ -100,7 +102,7 @@ io.on('connection', (socket) => {
 // Port Number
 const port = 3000; // For testing
 // const port = process.env.PORT || 8080; // For Deployment
-const chatPort = 4020;
+const chatPort = 4020; // TODO: Deployment route
 
 // Takes a port and starts up server
 app.listen(port, () => {

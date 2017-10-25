@@ -1,11 +1,6 @@
 <div class="container col-xs-12">
   <div class="row col-xs-12 banner">
-    <!-- Room #
-    <select [(ngModel)]="roomOption" (change)="joinRoom(roomOption)">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-    </select> -->
+    <div *ngIf="sendee!=null" class="announcer">You are chatting with {{sendee}}</div>
   </div>
   <div class="col-xs-3 msglist">
     <ul class="list-group">
@@ -15,24 +10,23 @@
     </ul>
   </div>
   <div class="col-xs-9 chatbox">
-    <div class="col-xs-12 msglog">
-      <div *ngFor="let message of messages" >
-        <div *ngIf="message.sender=='sendee'"class="sendee">
-          <p class="chatmsg">{{message.text}}</p>
+    <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->
+    <div class="col-xs-12 chatlogs" #chatlogs [scrollTop]="chatlogs.scrollHeight">
+      <div *ngFor="let message of messages">
+        <div *ngIf="message.sender!=sender"class="sendee">
+          <p class="chatmsg">{{message.message}}</p>
         </div>
-        <div *ngIf="message.sender=='sender'" class="sender">
-          <p class="chatmsg">{{message.text}}</p>
-        </div>
-        <div *ngIf="message.sender=='announcer'" class="announcer">
-          <p>{{message.text}}</p>
+        <div *ngIf="message.sender==sender" class="sender">
+          <p class="chatmsg">{{message.message}}</p>
         </div>
       </div>
     </div>
-    <form class="col-xs-12 msgform" (ngSubmit)="sendMessage()">
+    <form class="col-xs-12 chatboxform" (submit)="sendMessage()">
       <input type="text" class="col-xs-11 text" [(ngModel)]="message" [ngModelOptions]="{standalone: true}"/>
-      <button type="submit" class="col-xs-1 btn btn-primary" (click)="sendMessage()">
+      <button type="submit" class="col-xs-1 btn btn-primary">
         <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
       </button>
     </form>
   </div>
 </div>
+<button class="btn btn-default" (click)="stub()">Other user</button>

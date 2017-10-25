@@ -16,6 +16,13 @@
     text-align: right;
 }
 
+.banner .announcer{
+    height: 50px;
+    font-style: italic;
+    text-align: center;
+    font-size: 30px;
+}
+
 /* Sidebar where user can choose who to message */
 .msglist {
     padding: 0;
@@ -34,10 +41,6 @@
     border: none;
 }
 
-.list-group-item button:focus {
-    background: red;
-}
-
 /* Interaction between the sender and sendee */
 .chatbox {
     position: relative;
@@ -46,9 +49,9 @@
     padding: 0;
 }
 
-.msglog {
+.chatlogs {
     background-color: yellow;
-    height: 450px;
+    height: 425px;
     overflow: auto;
 }
 
@@ -60,13 +63,8 @@
     color: red;
 }
 
-.announcer p {
-    font-style: italic;
-    text-align: center;
-}
-
 /* Where the user inputs message and sends it to sendee */
-.msgform {
+.chatboxform {
     position: absolute;
     bottom: 0;
     background-color: aquamarine;

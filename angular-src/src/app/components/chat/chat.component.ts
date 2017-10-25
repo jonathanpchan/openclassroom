@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
+import {FlashMessagesService} from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-chat',
@@ -7,51 +8,73 @@ import { ChatService } from '../../services/chat.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  sender : String = JSON.parse(localStorage.getItem('user'))["name"];
+  sendee : String = null;
   currentRoom: any;
   messages: any = [];
   connection : any = null;
-  message : String  ;
+  message : String = null;
   // BELOW IS TESTING ITEM
   names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
-  roomOption: any = null;
   // ABOVE IS TESTING ITEM
 
-  constructor(private chatService : ChatService) { }
+  constructor(private chatService: ChatService, private flashMessage: FlashMessagesService) {}
 
   ngOnInit() { }
 
   // Join room (Leave room before joining new room)
-  joinRoom(room : any) {
-    // Set new room
-    this.currentRoom = room;
-    this.chatService.joinRoom(this.currentRoom)
+  joinRoom(sendee: string) {
+    // Back join room
+    this.sendee = sendee;
+    this.chatService.createRoom(this.sender, sendee).subscribe((room) => {
+      this.currentRoom = room[0]._id
 
-    // Clear the area and populate with some text (TODO: Query the database for previous messages)
-    this.messages = [];
-    this.messages.push({room: this.currentRoom, sender: "announcer", text: "You joined room #"+this.currentRoom})
-    this.messages.push({room: this.currentRoom, sender: "sendee", text: "Hardcoded code is great. It allows us to move forward."})
-    this.messages.push({room: this.currentRoom, sender: "sender", text: "This will be a test to make sure that it will change to a different line. After running it, it turns out that it will word wrap. Happy days!"});
-
-    // Subscribe to the messages
-    if (this.connection == null) {
-      this.connection = this.chatService.getMessages().subscribe((message : String) => {
-        this.messages.push(message);
+      // Front join room
+      this.chatService.joinRoom(this.currentRoom)
+      
+      // Back get messages
+      this.chatService.getMessages(this.currentRoom).subscribe((messages) => {
+        // Set new room
+        this.messages = []
+        // Populate messages
+        for (let message in messages[0].messages) {
+          this.messages.push(messages[0].messages[message])
+        }
       })
-    }
+      // Subscribe to real time messages
+      // Front get messages
+      if (this.connection == null) {
+        this.connection = this.chatService.getSubscription().subscribe((payload) => {
+          this.messages.push(payload);
+        })
+      }
+      this.message = '';
+    })
   }
 
   // Send message (REQUIRES JOINROOM CALLED FIRST)
   sendMessage() {
     // Make sure there is a connection, there is a message, and the message is not just white space
     if (this.connection == null || this.message == null || this.message.trim().length == 0) {
-      console.log("Error: Cannot send message")
+      this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000})
     }
     else {
-      // TEST CODE FOR SINGLE USER SENDING TO OTHER USER
-      let sender = "sender";
-      if (Math.random() > 0.5) { sender = "sendee" }
       // Send message to room with message
-      this.chatService.sendMessage(this.currentRoom, sender, this.message);
+      this.chatService.sendMessage(this.currentRoom, this.sender, this.message).subscribe();
+    }
+    // Clear message
+    this.message='';
+  }
+
+  // TODO: USED WHILE WE DO NOT HAVE THE REST OF THE FUNCTIONALITY OF OUR CODE
+  stub() {
+    // Make sure there is a connection, there is a message, and the message is not just white space
+    if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+      this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000});
+    }
+    else {
+      // Send message to room with message
+      this.chatService.sendMessage(this.currentRoom, this.sendee, this.message).subscribe();
     }
     // Clear message
     this.message='';
