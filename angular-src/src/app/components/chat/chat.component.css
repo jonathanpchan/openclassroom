@@ -1,87 +1,114 @@
-/* Containers and top bar to keep a window-like look */
-.container {
+.chat-grid {
+    display: grid;
+    grid-template-columns: 225px auto;
+    grid-template-rows: 50px auto 50px;
+    grid-template-areas: 
+        "msglist-title chat-title"
+        "msglist-users chat-logs"
+        "msglist-users chat-form";
     border: 2px black solid;
-    padding: 0;
-    margin: 0;
-    background: lightblue;
 }
 
-.banner {
-    border-color: black;
-    border-style: solid;
-    border-width: 0 0 2px 0;
-    height: 50px;
-    margin: 0;
-    background-color: lightcoral;
-    text-align: right;
-}
-
-.banner .announcer{
-    height: 50px;
-    font-style: italic;
-    text-align: center;
+.msglist-title {
+    grid-area: msglist-title;
+    border-right: 2px black solid;
+    border-bottom: 2px black solid;
+    background: blue;
+    color: white;
     font-size: 30px;
+    text-align: center;
+    min-width: 225px;
 }
 
-/* Sidebar where user can choose who to message */
-.msglist {
+.msglist-users {
+    grid-area: msglist-users;
+    border-right: 3px black solid;
+    background: white;
+    max-height: 450px;
+    margin: 0 -1px 0 0;
     padding: 0;
-    height: 500px;
+    list-style: none;
     overflow: auto;
 }
 
-.list-group-item {
-    padding:0;
+.msglist-user {
+    border-bottom: 2px black solid;
 }
 
-.list-group-item button {
-    background: white;
-    padding: 10px;
-    margin: 0;
-    border: none;
-}
-
-/* Interaction between the sender and sendee */
-.chatbox {
-    position: relative;
-    background-color: pink;
-    height: 500px;
-    padding: 0;
+.chat-title {
+    grid-area: chat-title;
+    border-bottom: 2px black solid;
+    background: green;
+    color: white;
+    font-size: 30px;
+    text-align: center;
 }
 
 .chatlogs {
-    background-color: yellow;
-    height: 425px;
+    grid-area: chat-logs;
+    background: yellow;
+    height: 400px;
+    min-width: 300px;
+    padding: 5px;
     overflow: auto;
 }
 
-.sender p {
-    color: blue;
+/* Messages of sender and sendee */
+.sender {
+    width: 100%;
+    background: purple;
 }
 
-.sendee p {
-    color: red;
+.sendee {
+    background: red;
+    width: 100%;
+    margin: 0 0 0 0;
 }
 
-/* Where the user inputs message and sends it to sendee */
-.chatboxform {
-    position: absolute;
-    bottom: 0;
-    background-color: aquamarine;
-    height: 75px;
-    padding: 15px;
+.chatmsg {
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 0 5px 5px 5px;
+    clear: both;
 }
 
-.text {
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 0;
-    border: 1px solid transparent;
+.sender .chatmsg {
+    float: right;
+    background: orange;
+    width: auto;
+    max-width: 75%;
 }
 
-.btn-primary {
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 0;
-    border: 1px solid transparent;
+.sendee .chatmsg {
+    float: left;
+    background: pink;
+    width: auto;
+    max-width: 75%;
+}
+
+/* Input of Messages */
+.chat-form {
+    grid-area: chat-form;
+    grid-template-columns: auto 75px;
+    grid-template-areas:
+        "chat-input chat-submit";
+    min-width: 300px;
+}
+.chat-input {
+    grid-area: chat-input;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    background: red;
+    color: white;
+    height: 100%;
+    margin: 0;
+}
+
+.chat-submit {
+    grid-area: chat-submit;
+    border-top: 2px black solid;
+    background: purple;
+    height: 100%;
+    padding: 0;
 }

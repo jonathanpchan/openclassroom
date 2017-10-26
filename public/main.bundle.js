@@ -238,10 +238,10 @@ var ChatComponent = (function () {
         this.sender = JSON.parse(localStorage.getItem('user'))["name"];
         this.sendee = null;
         this.messages = [];
-        this.connection = null;
         this.message = null;
+        this.connection = null;
         // BELOW IS TESTING ITEM
-        this.names = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+        this.names = ['jon', 'nick', 'syed']; //'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
     }
     ChatComponent.prototype.ngOnInit = function () { };
     // Join room (Leave room before joining new room)
@@ -275,7 +275,7 @@ var ChatComponent = (function () {
     // Send message (REQUIRES JOINROOM CALLED FIRST)
     ChatComponent.prototype.sendMessage = function () {
         // Make sure there is a connection, there is a message, and the message is not just white space
-        if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+        if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
             this.flashMessage.show('Cannot send message. Did you join a room?', { cssClass: 'alert-danger', timeout: 3000 });
         }
         else {
@@ -288,7 +288,7 @@ var ChatComponent = (function () {
     // TODO: USED WHILE WE DO NOT HAVE THE REST OF THE FUNCTIONALITY OF OUR CODE
     ChatComponent.prototype.stub = function () {
         // Make sure there is a connection, there is a message, and the message is not just white space
-        if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+        if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
             this.flashMessage.show('Cannot send message. Did you join a room?', { cssClass: 'alert-danger', timeout: 3000 });
         }
         else {
@@ -297,6 +297,10 @@ var ChatComponent = (function () {
         }
         // Clear message
         this.message = '';
+    };
+    ChatComponent.prototype.back = function () {
+        this.sendee = null;
+        this.messages = [];
     };
     return ChatComponent;
 }());
@@ -1612,7 +1616,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "/* Containers and top bar to keep a window-like look */\r\n.container {\r\n    border: 2px black solid;\r\n    padding: 0;\r\n    margin: 0;\r\n    background: lightblue;\r\n}\r\n\r\n.banner {\r\n    border-color: black;\r\n    border-style: solid;\r\n    border-width: 0 0 2px 0;\r\n    height: 50px;\r\n    margin: 0;\r\n    background-color: lightcoral;\r\n    text-align: right;\r\n}\r\n\r\n.banner .announcer{\r\n    height: 50px;\r\n    font-style: italic;\r\n    text-align: center;\r\n    font-size: 30px;\r\n}\r\n\r\n/* Sidebar where user can choose who to message */\r\n.msglist {\r\n    padding: 0;\r\n    height: 500px;\r\n    overflow: auto;\r\n}\r\n\r\n.list-group-item {\r\n    padding:0;\r\n}\r\n\r\n.list-group-item button {\r\n    background: white;\r\n    padding: 10px;\r\n    margin: 0;\r\n    border: none;\r\n}\r\n\r\n/* Interaction between the sender and sendee */\r\n.chatbox {\r\n    position: relative;\r\n    background-color: pink;\r\n    height: 500px;\r\n    padding: 0;\r\n}\r\n\r\n.chatlogs {\r\n    background-color: yellow;\r\n    height: 425px;\r\n    overflow: auto;\r\n}\r\n\r\n.sender p {\r\n    color: blue;\r\n}\r\n\r\n.sendee p {\r\n    color: red;\r\n}\r\n\r\n/* Where the user inputs message and sends it to sendee */\r\n.chatboxform {\r\n    position: absolute;\r\n    bottom: 0;\r\n    background-color: aquamarine;\r\n    height: 75px;\r\n    padding: 15px;\r\n}\r\n\r\n.text {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}\r\n\r\n.btn-primary {\r\n    display: inline-block;\r\n    padding: 10px 15px;\r\n    border-radius: 0;\r\n    border: 1px solid transparent;\r\n}", ""]);
+exports.push([module.i, ".chat-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 225px auto;\r\n        grid-template-columns: 225px auto;\r\n    -ms-grid-rows: 50px auto 50px;\r\n        grid-template-rows: 50px auto 50px;\r\n    grid-template-areas: \r\n        \"msglist-title chat-title\"\r\n        \"msglist-users chat-logs\"\r\n        \"msglist-users chat-form\";\r\n    border: 2px black solid;\r\n}\r\n\r\n.msglist-title {\r\n    grid-area: msglist-title;\r\n    border-right: 2px black solid;\r\n    border-bottom: 2px black solid;\r\n    background: blue;\r\n    color: white;\r\n    font-size: 30px;\r\n    text-align: center;\r\n    min-width: 225px;\r\n}\r\n\r\n.msglist-users {\r\n    grid-area: msglist-users;\r\n    border-right: 3px black solid;\r\n    background: white;\r\n    max-height: 450px;\r\n    margin: 0 -1px 0 0;\r\n    padding: 0;\r\n    list-style: none;\r\n    overflow: auto;\r\n}\r\n\r\n.msglist-user {\r\n    border-bottom: 2px black solid;\r\n}\r\n\r\n.chat-title {\r\n    grid-area: chat-title;\r\n    border-bottom: 2px black solid;\r\n    background: green;\r\n    color: white;\r\n    font-size: 30px;\r\n    text-align: center;\r\n}\r\n\r\n.chatlogs {\r\n    grid-area: chat-logs;\r\n    background: yellow;\r\n    height: 400px;\r\n    min-width: 300px;\r\n    padding: 5px;\r\n    overflow: auto;\r\n}\r\n\r\n/* Messages of sender and sendee */\r\n.sender {\r\n    width: 100%;\r\n    background: purple;\r\n}\r\n\r\n.sendee {\r\n    background: red;\r\n    width: 100%;\r\n    margin: 0 0 0 0;\r\n}\r\n\r\n.chatmsg {\r\n    border-radius: 5px;\r\n    margin-bottom: 5px;\r\n    padding: 0 5px 5px 5px;\r\n    clear: both;\r\n}\r\n\r\n.sender .chatmsg {\r\n    float: right;\r\n    background: orange;\r\n    width: auto;\r\n    max-width: 75%;\r\n}\r\n\r\n.sendee .chatmsg {\r\n    float: left;\r\n    background: pink;\r\n    width: auto;\r\n    max-width: 75%;\r\n}\r\n\r\n/* Input of Messages */\r\n.chat-form {\r\n    grid-area: chat-form;\r\n    -ms-grid-columns: auto 75px;\r\n        grid-template-columns: auto 75px;\r\n    grid-template-areas:\r\n        \"chat-input chat-submit\";\r\n    min-width: 300px;\r\n}\r\n.chat-input {\r\n    grid-area: chat-input;\r\n    border-color: black;\r\n    border-style: solid;\r\n    border-width: 2px 2px 0 0;\r\n    background: red;\r\n    color: white;\r\n    height: 100%;\r\n    margin: 0;\r\n}\r\n\r\n.chat-submit {\r\n    grid-area: chat-submit;\r\n    border-top: 2px black solid;\r\n    background: purple;\r\n    height: 100%;\r\n    padding: 0;\r\n}", ""]);
 
 // exports
 
@@ -1859,14 +1863,14 @@ module.exports = module.exports.toString();
 /***/ 232:
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n    <app-navbar></app-navbar>\r\n    <flash-messages></flash-messages>  \r\n    <div> <!-- Used to circumvent router-outlet issue (left of actual grid) -->\r\n        <router-outlet></router-outlet>\r\n    </div>\r\n    <button class=\"button-to-top\" (click)=\"toTop()\" id=\"to-top\">\r\n      <span class=\"glyphicon glyphicon-chevron-up\" aria-hidden=\"true\"></span>\r\n      <p>Top</p>\r\n    </button>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n    <app-navbar></app-navbar>\r\n    <flash-messages></flash-messages>\r\n    <router-outlet></router-outlet>\r\n    <button class=\"button-to-top\" (click)=\"toTop()\" id=\"to-top\">\r\n      <span class=\"glyphicon glyphicon-chevron-up\" aria-hidden=\"true\"></span>\r\n      <p>Top</p>\r\n    </button>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 
 /***/ 233:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container col-xs-12\">\r\n  <div class=\"row col-xs-12 banner\">\r\n    <div *ngIf=\"sendee!=null\" class=\"announcer\">You are chatting with {{sendee}}</div>\r\n  </div>\r\n  <div class=\"col-xs-3 msglist\">\r\n    <ul class=\"list-group\">\r\n      <li class=\"list-group-item\" *ngFor=\"let name of names\">\r\n        <button (click)=\"joinRoom(name)\" style=\"width:100%; height: 100%;\">{{name}}</button>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n  <div class=\"col-xs-9 chatbox\">\r\n    <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->\r\n    <div class=\"col-xs-12 chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n      <div *ngFor=\"let message of messages\">\r\n        <div *ngIf=\"message.sender!=sender\"class=\"sendee\">\r\n          <p class=\"chatmsg\">{{message.message}}</p>\r\n        </div>\r\n        <div *ngIf=\"message.sender==sender\" class=\"sender\">\r\n          <p class=\"chatmsg\">{{message.message}}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <form class=\"col-xs-12 chatboxform\" (submit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"col-xs-11 text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"col-xs-1 btn btn-primary\">\r\n        <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n  </div>\r\n</div>\r\n<button class=\"btn btn-default\" (click)=\"stub()\">Other user</button>\r\n"
+module.exports = "<html>\r\n  <head></head>\r\n  <body class=\"chat-grid\">\r\n    <div class=\"msglist-title\">OC Messenger</div>\r\n    <ul class=\"msglist-users\">\r\n      <li class=\"msglist-user\" *ngFor=\"let name of names\">\r\n        <button class=\"btn\" (click)=\"joinRoom(name)\" style=\"width: 100%; height: 100%;\">{{name}}</button>\r\n      </li>\r\n    </ul>\r\n    <div class=\"chat-title\">\r\n      <div *ngIf=\"sendee!=null\" class=\"announcer\">{{sendee}}</div>\r\n    </div>\r\n    <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->\r\n    <div class=\"chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n      <div *ngFor=\"let message of messages\">\r\n        <div *ngIf=\"message.sender!=sender\" class=\"chat sendee\">\r\n          <p class=\"chatmsg\">{{message.message}}</p>\r\n        </div>\r\n        <div *ngIf=\"message.sender==sender\" class=\"chat sender\">\r\n          <p class=\"chatmsg\">{{message.message}}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <form class=\"chat-form\" (submit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"col-xs-11 chat-input\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"col-xs-1 btn btn-primary chat-submit\">\r\n        <span class=\"glyphicon glyphicon-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n  </body>\r\n  <!-- For testing Purposes -->\r\n  <button class=\"btn btn-default\" style=\"float: right\" (click)=\"stub()\">Other user</button>\r\n</html>"
 
 /***/ }),
 

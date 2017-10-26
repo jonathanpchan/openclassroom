@@ -8,14 +8,14 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  sender : String = JSON.parse(localStorage.getItem('user'))["name"];
-  sendee : String = null;
+  sender: String = JSON.parse(localStorage.getItem('user'))["name"];
+  sendee: String = null;
   currentRoom: any;
   messages: any = [];
-  connection : any = null;
-  message : String = null;
+  message: String = null;
+  connection: any = null;
   // BELOW IS TESTING ITEM
-  names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+  names: string[] = ['jon', 'nick', 'syed'] //'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
   // ABOVE IS TESTING ITEM
 
   constructor(private chatService: ChatService, private flashMessage: FlashMessagesService) {}
@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit {
   // Send message (REQUIRES JOINROOM CALLED FIRST)
   sendMessage() {
     // Make sure there is a connection, there is a message, and the message is not just white space
-    if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+    if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
       this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000})
     }
     else {
@@ -69,7 +69,7 @@ export class ChatComponent implements OnInit {
   // TODO: USED WHILE WE DO NOT HAVE THE REST OF THE FUNCTIONALITY OF OUR CODE
   stub() {
     // Make sure there is a connection, there is a message, and the message is not just white space
-    if (this.connection == null || this.message == null || this.message.trim().length == 0) {
+    if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
       this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000});
     }
     else {
@@ -78,5 +78,10 @@ export class ChatComponent implements OnInit {
     }
     // Clear message
     this.message='';
+  }
+
+  back() {
+    this.sendee = null;
+    this.messages = [];
   }
 }
