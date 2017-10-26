@@ -1,5 +1,7 @@
 import { Component, OnChanges, Input} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
+import {FlashMessagesService} from 'angular2-flash-messages';
+
 
 
 @Component({
@@ -15,27 +17,32 @@ export class RoomComponent implements OnChanges {
   //data structure
   rooms = null;
   loaded : boolean = false;
+  empMon : boolean;
+  tuesday : boolean;
+  wednesday : boolean;
+  thursday : boolean;
 
   //other data do send in routes
   comment : string;
   email : JSON = JSON.parse(localStorage.getItem('user'))["email"]
 
-  constructor(private authService:AuthService){}
+  constructor(private authService:AuthService,
+              private flashMessage:FlashMessagesService){}
 
   ngOnChanges(){
-    // console.log("rooms changed\n\n\n\n\n");
-    // console.log(this.building,this.room);
+    console.log("new room " + this.building,this.room);
     this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
-      this.rooms = roomInfo;
+
+      if(roomInfo != null)
+      {
+        this.rooms = roomInfo;
+        this.loaded = true;
+      }
     },
     err => {
       console.log(err)
     })
-    //console.logthis.rooms
-    if(this.rooms != null)
-    {
-      this.loaded = true
-    }
+    console.log(this.rooms);
   }
 
   timeFormat(time)
@@ -50,7 +57,8 @@ export class RoomComponent implements OnChanges {
 
     if(minutes%60==0)    {//formating minutes toFixed and to Prevision dont work
       t += "00";
-    }else    {
+    }
+    else    {
       t += time%60;
     }
 
@@ -66,44 +74,55 @@ export class RoomComponent implements OnChanges {
 
   vote(item, pos, nVote)
   {
-    console.log("building - " + this.building + " room - " + this.room
-              + " email - " + this.email +  " item - " + item + " pos - " + pos
-              + " vote - " + nVote);
+    // console.log("building - " + this.building + " room - " + this.room
+    //           + " email - " + this.email +  " item - " + item + " pos - " + pos
+    //           + " vote - " + nVote);
     this.authService.addVote(this.building, this.room, this.email, item, pos, nVote).subscribe(data => {
       if(data.success){
+        //TODO update room info here instead
         console.log("good vote")
       }
       else{
-        console.log("no vote?")
+        //console.log("no vote?")
+        this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
+          this.rooms = roomInfo;
+        },
+        err => {
+          console.log(err)
+        });
       }
     });
 
-    this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
-      this.rooms = roomInfo;
-    },
-    err => {
-      console.log(err)
-    });
+
   }
 
   onCommentSubmit()
   {
-    console.log("building - " + this.building + " room - " + this.room + " email - " + this.email +
-              " comment - " + this.comment);
-    this.authService.addComment(this.building, this.room, this.email, this.comment).subscribe(data => {
-      if(data.success){
-        console.log("good")
-      }
-      else{
-        console.log("no comment?")
-      }
-    })
+    //check for empty comment here
+    // console.log("building - " + this.building + " room - " + this.room + " email - " + this.email +
+    //           " comment - " + this.comment);
 
-    this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
-      this.rooms = roomInfo;
-    },
-    err => {
-      console.log(err)
-    });
+    if(this.comment == "")    {
+      this.flashMessage.show('Please enter a comment before submitting', {cssClass: 'alert-danger', timeout: 3000});
+    }
+    else{
+      this.authService.addComment(this.building, this.room, this.email, this.comment).subscribe(data => {
+        if(data.success){
+          //TODO update room info here instead
+          console.log("good")
+        }
+        else{
+          console.log("no comment?")
+          this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
+            this.rooms = roomInfo;
+          },
+          err => {
+            console.log(err)
+          });
+        }
+      })
   }
+  this.comment = '';
+  }
+
 }

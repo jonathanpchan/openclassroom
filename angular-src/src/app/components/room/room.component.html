@@ -11,8 +11,12 @@
   <div class = "dayContainer" *ngFor="let time of rooms?.mon let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="vote('mon', i, 1)">Monday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="vote('mon', i, -1)">Monday Down - {{time.dVote}}</p>
+      <button type="button" class="uVote" class="btn btn-primary btn-md" (click)="vote('mon', i, 1)" >
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{time.uVote}}
+      </button>
+      <button type="button" class="dVote" class="btn btn-default btn-md" (click)="vote('mon', i, -1)" >
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{time.dVote}}
+      </button>
     </div>
   </div>
 
@@ -20,8 +24,12 @@
   <div class = "dayContainer" *ngFor="let time of rooms?.tue let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="vote('tue', i, 1)">Tuesday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="vote('tue', i, -1)">Tuesday Down - {{time.dVote}}</p>
+      <button type="button" class="uVote" class="btn btn-primary btn-md" (click)="vote('tue', i, 1)" >
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{time.uVote}}
+      </button>
+      <button type="button" class="dVote" class="btn btn-default btn-md" (click)="vote('tue', i, -1)" >
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{time.dVote}}
+      </button>
     </div>
   </div>
 
@@ -29,8 +37,12 @@
   <div class = "dayContainer" *ngFor="let time of rooms?.wed let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="vote('wed', i, 1)">Wednesday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="vote('wed', i, -1)">Wednesday Down - {{time.dVote}}</p>
+      <button type="button" class="uVote" class="btn btn-primary btn-md" (click)="vote('wed', i, 1)" >
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{time.uVote}}
+      </button>
+      <button type="button" class="dVote" class="btn btn-default btn-md" (click)="vote('wed', i, -1)" >
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{time.dVote}}
+      </button>
     </div>
   </div>
 
@@ -38,8 +50,12 @@
   <div class = "dayContainer" *ngFor="let time of rooms?.thu let i = index">
     <div class = "day">
       <h3 class = "timeContainer" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>
-      <p class = "uVote" (click)="vote('thu', i, 1)">Thursday Up   - {{time.uVote}}</p>
-      <p class = "dVote" (click)="vote('thu', i, -1)">Thursday Down - {{time.dVote}}</p>
+      <button type="button" class="uVote" class="btn btn-primary btn-md" (click)="vote('thu', i, 1)" >
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{time.uVote}}
+      </button>
+      <button type="button" class="dVote" class="btn btn-default btn-md" (click)="vote('thu', i, -1)" >
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{time.dVote}}
+      </button>
     </div>
   </div>
 
@@ -50,17 +66,25 @@
 
   <div class = "featureContainer">
     <div class = "feature" *ngIf="loaded">
-      <h3 class = "featureName">outlets</h3>
-      <p class = "uVote" (click)="vote('hasOutlets',-1, 1)">outlets upvote - {{rooms?.hasOutlets.uVote}}</p>
-      <p class = "dVote" (click)="vote('hasOutlets',-1, -1)">outlets downvote - {{rooms?.hasOutlets.dVote}}</p>
+      <h3 class = "featureName">Outlets</h3>
+      <button type="button" class="uVote" class="btn btn-primary btn-md" (click)="vote('hasOutlets', -1, 1)" >
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{rooms.hasOutlets.uVote}}
+      </button>
+      <button type="button" class="dVote" class="btn btn-default btn-md" (click)="vote('hasOutlets', -1, -1)" >
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{rooms.hasOutlets.dVote}}
+      </button>
     </div>
   </div>
 
   <div class = "featureContainer">
     <div class = "feature" *ngIf="loaded">
       <h3 class = "featureName">White Board</h3>
-      <p class = "uVote" (click)="vote('whiteBoard', -1, 1)">White Board upvote - {{rooms?.whiteBoard.uVote}}</p>
-      <p class = "dVote" (click)="vote('whiteBoard', -1,-1)">White Board downvote - {{rooms?.whiteBoard.dVote}}</p>
+      <button type="button" class="uVote" class="btn btn-primary btn-nd" (click)="vote('whiteBoard', -1, 1)" >
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{{rooms.whiteBoard.uVote}}
+      </button>
+      <button type="button" class="dVote" class="btn btn-default btn-md"(click)="vote('whiteBoard', -1, -1)" >
+        <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>{{rooms.whiteBoard.dVote}}
+      </button>
     </div>
   </div>
 
@@ -70,17 +94,21 @@
 
   <h2>Comments</h2>
 
-  <form (submit)="onCommentSubmit()">
-  Add Comment:
+  <form id = "commentBox" (submit)="onCommentSubmit()">
+  Add A Comment:
   <input class="form-control" [(ngModel)]="comment" name="comment">
-  <input type="submit" class="btn btn-primary" value="submit">
+  <input type="submit" class="btn btn-primary" value="Submit">
   </form>
 
   <div class = "commentContainer" *ngFor = "let comment of rooms?.comments let i = index">
     <p class = "comment">"{{comment.content}}"</p>
-    <p class = "commentUser">{{comment.username}} </p>
-    <p class = "uVote" (click)="vote('comments', i, 1)">comment upvote - {{comment.uVote}}</p>
-    <p class = "dVote" (click)="vote('comments', i, -1)">comment downvote - {{comment.dVote}}</p>
+    <p class = "commentUser">{{comment.email}} </p>
+    <button type="button" class="uVote" class="btn btn-primary btn-sm"  (click)="vote('comments', i, 1)" >
+      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> {{comment.uVote}}
+    </button>
+    <button type="button"  class="dVote" class="btn btn-default btn-sm" (click)="vote('comments', i, -1)" >
+      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> {{comment.dVote}}
+    </button>
     <p class = "date">{{comment.date}}</p>
   </div>
 </div>
