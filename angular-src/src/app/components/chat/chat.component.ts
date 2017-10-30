@@ -15,7 +15,9 @@ export class ChatComponent implements OnInit {
   message: String = null;
   connection: any = null;
   // BELOW IS TESTING ITEM
-  names: string[] = ['jon', 'nick', 'syed'] //'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+  // names must be initialized to an empty string
+  names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+  showBack: boolean = false;
   // ABOVE IS TESTING ITEM
 
   constructor(private chatService: ChatService, private flashMessage: FlashMessagesService) {}
@@ -26,6 +28,7 @@ export class ChatComponent implements OnInit {
   joinRoom(sendee: string) {
     // Back join room
     this.sendee = sendee;
+    this.showBack = true;
     this.chatService.createRoom(this.sender, sendee).subscribe((room) => {
       this.currentRoom = room[0]._id
 
@@ -54,6 +57,7 @@ export class ChatComponent implements OnInit {
 
   // Send message (REQUIRES JOINROOM CALLED FIRST)
   sendMessage() {
+    console.log(this.showBack);
     // Make sure there is a connection, there is a message, and the message is not just white space
     if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
       this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000})
@@ -82,6 +86,7 @@ export class ChatComponent implements OnInit {
 
   back() {
     this.sendee = null;
+    this.showBack = false;
     this.messages = [];
   }
 }
