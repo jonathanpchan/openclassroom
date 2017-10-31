@@ -1,3 +1,9 @@
-<p>
-  studybuddy works!
-</p>
+<h1 style="text-align: center">Pick A Course</h1>
+<select id="courseSelect" class="form-control" (change)="showBuddies()">
+  <option selected hidden></option>
+  <option *ngFor="let class of schedule"> {{class.name}} {{class.num}}</option>
+</select>
+
+<div id="studdyBuddies" style="display: none">
+  <h1>Potential Study Buddies For {{this.courseName}} {{this.courseNum}}</h1>
+</div>
