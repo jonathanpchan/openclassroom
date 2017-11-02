@@ -1,0 +1,26 @@
+/*.studyBuddies{
+  display: grid;
+  grid-template-columns:100%;
+  grid-gap: 5px;
+}*/
+
+/*switch to different layout at 600px min-width*/
+/*@media (min-width: 600px) {*/
+.studyBuddies{
+  display: grid;
+  grid-template-columns:repeat(4, 1fr);
+  grid-gap: 15px;
+}
+/*}*/
+
+.buddy{
+  /*grid-area:bd;*/
+  border: 1px solid black;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.courseTitle
+{
+  text-align: center;
+}

@@ -1,9 +1,18 @@
-<h1 style="text-align: center">Pick A Course</h1>
+<!-- <h1 style="text-align: center">Pick A Course</h1>
 <select id="courseSelect" class="form-control" (change)="showBuddies()">
   <option selected hidden></option>
   <option *ngFor="let class of schedule"> {{class.name}} {{class.num}}</option>
-</select>
+</select> -->
 
-<div id="studdyBuddies" style="display: none">
-  <h1>Potential Study Buddies For {{this.courseName}} {{this.courseNum}}</h1>
+
+<div *ngFor="let class of buddies">
+
+  <h1 class = "courseTitle">Potential Study Buddies For {{class.name}}</h1>
+  <div class="studdyBuddies">
+    <h3 class="buddy" *ngFor = "let buddy of class.buddies" (click)="message(buddy.name)">{{buddy.name}}</h3>
+  </div>
+  <!-- <h3 class="buddy" (click)="message()" >Ricky Bobby</h3>
+  <h3 class="buddy">Santa Claus</h3>
+  <h3 class="buddy">Lemony Snicket</h3>
+  <h3 class="buddy">Gandalf the Grey</h3> -->
 </div>
