@@ -75,6 +75,7 @@
     background: #edaa00;
     border-bottom: 1.5px black solid;
     border-right: 1px black solid;
+    min-width: 75px;
     height: 50px;
     margin: 0 !important;
     padding: 0 !important;
@@ -107,20 +108,21 @@
 .chatmsg {
     border-radius: 5px;
     clear: both;
+    border: 1.5px black solid;
     margin-bottom: 5px;
     padding: 0 5px 5px 5px;
 }
 
 .sender .chatmsg {
     float: right;
-    background: orange;
+    background: lightblue;
     max-width: 75%;
     width: auto;
 }
 
 .sendee .chatmsg {
     float: left;
-    background: pink;
+    background: lightgreen;
     max-width: 75%;
     width: auto;
 }
