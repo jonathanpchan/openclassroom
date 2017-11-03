@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head></head>
     <body class="grid">
@@ -15,7 +16,7 @@
       <div [ngClass]="sendee==null ? 'chat-hide' : 'chat'">
         <div class="chat-title">
           <button *ngIf="showBack" class="btn" [ngClass]="showBack ? 'back' : 'back-hide'" (click)="back()">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Back
+            <span class="fa fa-chevron-left" aria-hidden="true"></span>Back
           </button>
           <div class="announcer">{{sendee}}</div>
         </div>
@@ -33,7 +34,7 @@
       <form class="chat-form" (submit)="sendMessage()">
         <input type="text" class="chat-text" [(ngModel)]="message" [ngModelOptions]="{standalone: true}"/>
         <button type="submit" class="btn btn-primary chat-submit">
-          <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+          <span class="fa fa-send" aria-hidden="true"></span>
         </button>
       </form>
       </div>
