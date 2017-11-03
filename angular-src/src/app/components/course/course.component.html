@@ -4,7 +4,7 @@
     <div *ngIf="!confirm">
       <div class="form-group">
         <!-- 1) Choosing the course name -->
-        <h1 style="text-align: center">Add a Course</h1>
+        <h1>Add a Course</h1>
         <h2>Department</h2>
         <select class="form-control" [(ngModel)]="courseName" name="courseName" (focus)="cache()" (change)="getCourseNumOptions()">
           <option selected hidden></option>
@@ -31,10 +31,10 @@
       </div>
       <div>
         <button class="btn btn-primary cancel" (click)="onBack()">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+            <span class="fa fa-chevron-left" aria-hidden="true"></span> Back
         </button>
         <button class="btn btn-default submit" (click)="onSubmit()">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
+          <span class="fa fa-plus" aria-hidden="true"></span> Add Course
         </button>
       </div>
     </div>
@@ -44,10 +44,10 @@
       <h2>{{confirmMessage}}</h2>
       <div>
         <button class="btn btn-primary" style="width: 33%" (click)="addClick(false)">
-          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> No
+          <span class="fa fa-remove" aria-hidden="true"></span> No
         </button>
         <button class="btn btn-default btn-primary" style="width: 33%" (click)="addClick(true)">
-          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Yes
+          <span class="fa fa-check" aria-hidden="true"></span> Yes
         </button>
       </div>
     </div>

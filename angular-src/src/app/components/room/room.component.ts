@@ -38,11 +38,12 @@ export class RoomComponent implements OnChanges {
         this.rooms = roomInfo;
         this.loaded = true;
       }
+      console.log(this.rooms);
     },
     err => {
       console.log(err)
     })
-    console.log(this.rooms);
+
   }
 
   timeFormat(time)

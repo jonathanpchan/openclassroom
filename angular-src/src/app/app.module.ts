@@ -23,6 +23,7 @@ import {AuthService} from './services/auth.service';
 import {AuthGuard} from './guards/auth.guard';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {BuildingsService} from './services/buildings.service';
+import { ChatService } from './services/chat.service';
 import { FindNowComponent } from './components/find-now/find-now.component';
 import { FindTimesComponent } from './components/find-times/find-times.component';
 import { CourseComponent } from './components/course/course.component';
@@ -74,7 +75,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard, BuildingsService],
+  providers: [ValidateService, AuthService, AuthGuard, BuildingsService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

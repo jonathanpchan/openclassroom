@@ -11,6 +11,7 @@
     "bcryptjs": "*",
     "bluebird": "^3.5.0",
     "body-parser": "*",
+    "cheerio": "*",
     "cors": "*",
     "express": "*",
     "joi": "^10.4.1",
@@ -18,8 +19,8 @@
     "mongoose": "*",
     "passport": "*",
     "passport-jwt": "*",
-    "cheerio": "*",
-    "request": "*"
+    "request": "*",
+    "socket.io": "^2.0.3"
   },
   "author": "Syed Hussain, Jonathan Chan, Jonathan Nguyen, Nicholas Sugimoto",
   "license": "ISC",

@@ -2,12 +2,10 @@
 <html>
   <body class="main-grid">
     <app-navbar></app-navbar>
-    <flash-messages></flash-messages>  
-    <div> <!-- Used to circumvent router-outlet issue (left of actual grid) -->
-        <router-outlet></router-outlet>
-    </div>
+    <flash-messages></flash-messages>
+    <router-outlet></router-outlet>
     <button class="button-to-top" (click)="toTop()" id="to-top">
-      <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+      <span class="fa fa-chevron-up" aria-hidden="true"></span>
       <p>Top</p>
     </button>
   </body>

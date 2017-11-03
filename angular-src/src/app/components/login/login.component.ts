@@ -16,8 +16,7 @@ export class LoginComponent implements OnInit {
                 private router: Router,
                 private flashMessage: FlashMessagesService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onLoginSubmit(){
     const user = {
@@ -32,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['schedule']);
       }
       else{//don't show what was wrong, disallow brute forcing
-        this.flashMessage.show('No Match with that Email and Password' ,{cssClass: 'alert-danger', timeout: 3000})
+        this.flashMessage.show('No Match with that Email and Password' ,{cssClass: 'alert-danger', timeout: 300000})
         this.router.navigate(['login']);
       }
     })
