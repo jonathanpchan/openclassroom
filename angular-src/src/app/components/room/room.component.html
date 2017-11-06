@@ -5,7 +5,7 @@
     <h1 class ="roomName">{{rooms?.building}}-{{rooms?.room}}</h1>
     <div class = "timesection">
       <h2>Open Times </h2>
-    
+
       <h2>Monday</h2>
       <div class = "dayContainer" *ngFor="let time of rooms?.mon let i = index">
         <div class = "day">
@@ -16,23 +16,6 @@
           <button type="button" class="dVote" class="btn btn-default btn-md" (click)="vote('mon', i, -1)" >
             <span class="fa fa-thumbs-down" aria-hidden="true"></span>{{time.dVote}}
           </button>
-        </div>    
-        <div class = "featureSection">
-          <h2>Features</h2>
-          <div class = "featureContainer">
-            <div class = "feature">
-              <h3 class = "featureName">outlets</h3>
-              <p class = "uVote" (click)="outletUvote()">outlets upvote - {{rooms.hasOutlets.uVote}}</p>
-              <p class = "dVote" (click)="outletDvote()">outlets downvote - {{rooms.hasOutlets.dVote}}</p>
-            </div>
-          </div>
-          <div class = "featureContainer">
-            <div class = "feature">
-              <h3 class = "featureName">White Board</h3>
-              <p class = "uVote" (click)="wBoardUvote()">White Board upvote - {{rooms.whiteBoard.uVote}}</p>
-              <p class = "dVote" (click)="wBoardDvote()">White Board downvote - {{rooms.whiteBoard.dVote}}</p>
-            </div>
-          </div>
         </div>
       </div>
       <h2>Tuesday</h2>
@@ -45,16 +28,6 @@
           <button type="button" class="dVote" class="btn btn-default btn-md" (click)="vote('tue', i, -1)" >
             <span class="fa fa-thumbs-down" aria-hidden="true"></span>{{time.dVote}}
           </button>
-        </div>
-        <div class = "commentSection">
-          <h2>Comments</h2>
-          <div class = "commentContainer" *ngFor = "let comment of rooms.comments">
-            <p class = "comment">"{{comment.content}}"</p>
-            <p class = "commentUser">{{comment.username}} </p>
-            <p class = "uVote" (click)="commentUvote(comment.username)">comment upvote - {{comment.uVote}}</p>
-            <p class = "dVote" (click)="commentDvote(comment.username)">comment downvote - {{comment.dVote}}</p>
-            <p class = "date">{{comment.date}}</p>
-          </div>
         </div>
       </div>
       <h2>Wednesday</h2>
@@ -82,7 +55,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class = "featureSection">
       <h2>Features</h2>
       <div class = "featureContainer">
@@ -108,7 +81,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class = "commentSection">
       <h2>Comments</h2>
       <form id = "commentBox" (submit)="onCommentSubmit()">
