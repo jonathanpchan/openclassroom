@@ -11,9 +11,10 @@ const ClassSchema = new mongoose.Schema({
         // add full user schedule
         // add functionality to route to
         //replace an existing schedule when user updates
-        oTimes: {type: [String] },
+        oTimes: {type: [String]},
         buddies: {type: [String]}
-    }]
+    }],
+    isChanged : {type: Boolean, default: false}
 })
 
 //Subject schema
@@ -38,11 +39,11 @@ module.exports.getClass = function(sect, callback){
 };
 
 //route for later
-router.post('/test', (req,res, next) => {
-    Buddy.getClass(req.body.crsID, (err, cls) => {
-    return res.json({success: true, cls});
-})
-})
+// router.post('/test', (req,res, next) => {
+//     Buddy.getClass(req.body.crsID, (err, cls) => {
+//     return res.json({success: true, cls});
+// })
+// })
 //
 // module.exports.removeUser = function();
 

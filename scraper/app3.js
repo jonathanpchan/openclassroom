@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 var config = require('../config/database');
 const classes = require('../models/course');
 const CS = mongoose.model('Courses', classes.CS.Schema);
-const buddy = require('../models/classroom');
+const buddy = require('../models/StudyBuddyModel.js');
 const ds = mongoose.model('Dept', buddy.DS.Schema);
 
 
@@ -20,6 +20,9 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected:');
 })
 
+function closecon(){mongoose.connection.close(function() {
+    console.log('Disconnected from database'); })}  
+
 CS.find({}, (err, cbb) => {
     initArray = cbb;
     //console.log(initArray[0]);
@@ -33,7 +36,8 @@ CS.find({}, (err, cbb) => {
                 teacher : initArray[ii].courses[jj].prof,
                 num : initArray[ii].courses[jj].num,
                 sec : initArray[ii].courses[jj].sec,
-                users:[]
+                users:[],
+                isChanged: false
             }
             dept.courses.push(cls);
         }
@@ -41,15 +45,14 @@ CS.find({}, (err, cbb) => {
         newArr.push(dept);
     }
     for(kk = 0; kk < newArr.length; kk++) {
-        console.log(newArr[kk]);
+        //console.log(newArr[kk]);
     }
-    const buddy = require('../models/classroom');
+    const buddy = require('../models/StudyBuddyModel');
     const ds = mongoose.model('Dept', buddy.DS.Schema);
     ds.collection.drop();
     ds.collection.insert(newArr);
-})
+}).then(closecon)
 
-ds.find({ 'courses.sec' : '4222' }, {'courses.$.users' : 1}, (err,x) => {
-    console.log(x[0].courses[0].users);
-    //callback = x[0].courses[0].users
-})
+
+
+
