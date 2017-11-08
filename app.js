@@ -24,6 +24,7 @@ const users = require('./routes/users');
 const buildings = require('./routes/buildings');
 const roomInfo = require('./routes/roomInfoRoute');
 const messages = require('./routes/messages');
+const studyBuddy = require('./routes/studybuddies');
 
 // =============== Set Paths ========================
 // Make route public so any domain can access it
@@ -46,7 +47,8 @@ require('./config/passport')(passport);
 app.use('/users', users);
 app.use('/buildings', buildings);
 app.use('/roomInfo', roomInfo);
-app.use('/messages', messages); 
+app.use('/messages', messages);
+app.use('/studyBuddies', studyBuddy);
 
 // Index route
 app.get('/', (req, res) => {
