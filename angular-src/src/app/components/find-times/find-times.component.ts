@@ -32,21 +32,14 @@ export class FindTimesComponent implements OnInit {
   timeRange : number[];
   timeSliderConfig: any = {
     behaviour: 'drag',
-    connect: true,
-    start: [8, 22],
+    connect: true, // Show color to show they're connected
+    start: [8, 22], // Start at the edges
     keyboard: true,  // same as [keyboard]="true"
-    step: 0.5,
-    pageSteps: 2,
-    margin: 0.5,
+    step: 0.5, // What to go up by
+    margin: 0.5, // Make it so the smallest interval is 30 minutes apart
     range: {
-      min : 8, 
-      max : 22
-    },
-    pips: {
-      mode: 'count',
-      density: 2,
-      values: 6,
-      stepped: true
+      min : 8, // 8 AM start
+      max : 22 // 10 PM end
     }
   };
 
@@ -58,7 +51,10 @@ export class FindTimesComponent implements OnInit {
   // Need to pass argument so it can be used in functions below
   constructor(private buildingService:BuildingsService) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    document.getElementById('start').textContent  = this.times[this.tstart];
+    document.getElementById('end').textContent = this.times[this.tend];
+  }
 
   /* 
   * Show the table based on the day (BUILDING name should be provided)
@@ -186,5 +182,7 @@ export class FindTimesComponent implements OnInit {
     this.end = value[1]*12;
     this.tstart = value[0]*2;
     this.tend = value[1]*2;
+    document.getElementById('start').textContent  = this.times[this.tstart];
+    document.getElementById('end').textContent = this.times[this.tend];
   }
 }

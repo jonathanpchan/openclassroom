@@ -28,3 +28,9 @@ td {
 .trash:hover { 
     color: red; 
 } 
+
+.finalize {
+    border: none;
+    text-align: right;
+    padding-bottom: 5px;
+}

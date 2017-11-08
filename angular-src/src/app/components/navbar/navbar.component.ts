@@ -9,7 +9,7 @@ import {ValidateService } from '../../services/validate.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  show : boolean = false;   // store state
+  show : boolean = false; // Initially show hidden
 
   constructor(
     private authService:AuthService,
@@ -23,6 +23,11 @@ export class NavbarComponent implements OnInit {
   // Changes state of dropdown
   toggle() {
     this.show = !this.show;
+  }
+
+  // Line items call hide(), then toggle(), so to make sure it's false, start off true
+  hide() {
+    this.show = true;
   }
 
   // On logout, show log out and navigate back to login
