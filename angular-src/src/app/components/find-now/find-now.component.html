@@ -3,10 +3,13 @@
     <head></head>
     <body>
         <h1 *ngIf="!show">No rooms currently available in {{name}}</h1>
+        <div id="nowTimes">
         <ng-container *ngIf="show">
-            <h2 *ngFor="let room of roomsList">
+            <h2 *ngFor="let room of roomsList" (click)="showRoom(name, room.name)">
                 Room: {{room.name}} from {{room.st}} until {{room.et}}
             </h2>
         </ng-container>
+        </div>
+        <app-room id="room2" style="display: none" building={{buildingName}} room={{roomNumber}}></app-room>
     </body>
 </html>

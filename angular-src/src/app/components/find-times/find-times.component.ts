@@ -11,23 +11,23 @@ export class FindTimesComponent implements OnInit {
   // Value passed from Find-Home Component
   @Input() name : string;
   day : string;
-  
+
   // Times displayed on the front end but currently only does 8 (inclusive) to 10 (exclusive). This can be filtered down.
-  times = ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM", 
-            "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM", 
-            "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", 
-            "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", 
-            "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", 
-            "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",  
-            "6:00 PM","6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", 
+  times = ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM",
+            "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
+            "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM",
+            "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+            "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+            "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
+            "6:00 PM","6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
             "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"];
   // Start and end values of the slider for AM/PM display
   tstart : number = 16;
   tend : number = 44;
-  // Start and end values for array display (in minutes) 
+  // Start and end values for array display (in minutes)
   start : number = 8*12;
   end : number = 22*12;
-  
+
   // Configure the slider (as reference: http://tb.github.io/ng2-nouislider/)
   timeRange : number[];
   timeSliderConfig: any = {
@@ -48,6 +48,10 @@ export class FindTimesComponent implements OnInit {
   // The list that will be displayed after population in the show function
   roomsList = [];
 
+  //Arguments to pass to roomInfo
+  buildingName : String = "";
+  roomNumber : String = "";
+
   // Need to pass argument so it can be used in functions below
   constructor(private buildingService:BuildingsService) { }
 
@@ -56,7 +60,7 @@ export class FindTimesComponent implements OnInit {
     document.getElementById('end').textContent = this.times[this.tend];
   }
 
-  /* 
+  /*
   * Show the table based on the day (BUILDING name should be provided)
   * 0) Reset the buildingList to null and set current day to "" if you "switch to a different room"
   * 1) Is the day the same?
@@ -70,6 +74,8 @@ export class FindTimesComponent implements OnInit {
   * 6) Store in buildingList the query
   */
   show(day : string) {
+    document.getElementById("room3").style.display = "none";
+
     // 0) Re-initialize if navigate away from current page
     if (document.getElementById("table-2").style.display == "none")
     {
@@ -77,7 +83,7 @@ export class FindTimesComponent implements OnInit {
       this.day = "";
     }
     // 1) Only run once when same button is pressed multiple times
-    if (this.day != day) 
+    if (this.day != day)
     {
       // 2) Query the database once ("cache the buildingList")
       if (this.buildingList == null)
@@ -184,5 +190,25 @@ export class FindTimesComponent implements OnInit {
     this.tend = value[1]*2;
     document.getElementById('start').textContent  = this.times[this.tstart];
     document.getElementById('end').textContent = this.times[this.tend];
+  }
+
+  getRoomInfo(building_name, room_num)
+  {
+    var email =  JSON.parse(localStorage.getItem('user')).email
+
+    //set new inputs
+    this.buildingName = building_name;
+    this.roomNumber = room_num;
+    //hide table and show room
+    document.getElementById("table-2").style.display = "none";
+    document.getElementById("room3").style.display = "block";
+
+    //hide everything else
+    // document.getElementById("buttons").style.display = "none";
+    // document.getElementById("all").style.display = "none";
+    // document.getElementById("table-2").style.display = "none";
+    // document.getElementById("now").style.display = "none";
+    // document.getElementById("times").style.display = "none";
+
   }
 }

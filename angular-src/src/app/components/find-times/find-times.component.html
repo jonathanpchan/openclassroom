@@ -20,7 +20,7 @@
             <th colspan="6" *ngFor="let time of times | slice:tstart:tend">{{time}}</th>
           </tr>
           <tr *ngFor="let rooms of roomsList">
-            <th class="left-column">{{name}}-{{rooms.name}}</th>
+            <th class="left-column" (click)="getRoomInfo(name, rooms.name)">{{name}}-{{rooms.name}}</th>
             <td class ="five-minute-chunk" *ngFor="let room of rooms?.room | slice:start:end let i = index " [ngClass]="room ? 'opentime' : 'closedtime'">
               <span class="time-tool-tip">{{displayToolTip(i)}}</span> <!--this messes up the left column for some reason -->
             </td>
@@ -28,5 +28,7 @@
         </tbody>
       </table>
     </div>
+    <app-room id="room3" style="display: none" building={{buildingName}} room={{roomNumber}}></app-room>
+
   </body>
 </html>

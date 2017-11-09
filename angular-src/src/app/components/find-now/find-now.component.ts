@@ -20,11 +20,15 @@ export class FindNowComponent implements OnInit {
   // Notifies the HTML to display the error message when out of hours
   show : boolean = false;
 
+  //Arguments to pass to roomInfo
+  buildingName : String = "";
+  roomNumber : String = "";
+
   // Need to pass argument so it can be used in functions below
   constructor(private buildingService : BuildingsService) { }
 
   // Set the day once when navigating to the find classroom page
-  ngOnInit() { 
+  ngOnInit() {
     this.day = this.days[new Date().getDay()]
   }
 
@@ -35,6 +39,8 @@ export class FindNowComponent implements OnInit {
   * 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
   */
   showNow() {
+    document.getElementById("nowTimes").style.display = "block";
+
     let st = new Date().getHours() * 60;
     // 1) Not "x" and between 8 AM and 10 PM?
     if (this.day != "x" && st >= 8*60 && st < 22*60)
@@ -61,7 +67,7 @@ export class FindNowComponent implements OnInit {
         if (this.roomsList.length > 0) {
           this.show = true;
         }
-        else 
+        else
         {
           this.show = false;
         }
@@ -70,7 +76,7 @@ export class FindNowComponent implements OnInit {
         console.log(err);
       });
     }
-    else 
+    else
     {
       this.show = false;
     }
@@ -128,4 +134,13 @@ export class FindNowComponent implements OnInit {
       }
     }
   }
+
+  showRoom(room, number)
+  {
+    this.buildingName = room;
+    this.roomNumber = number;
+    document.getElementById("nowTimes").style.display = "none";
+    document.getElementById("room2").style.display = "block";
+  }
+
  }
