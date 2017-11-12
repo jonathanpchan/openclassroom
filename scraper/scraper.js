@@ -2,7 +2,7 @@
     syed hussain, csulb, cecs 491a&b
     nicholas sugimoto, csulb, cecs 491b
 */
-test = true // turn this to false to see all errors (should be flase in general)
+test = false // turn this to false to see all errors (should be flase in general)
 var fs = require('fs');
 var cheerio = require('cheerio');
 // Be explicit at its location
@@ -25,6 +25,7 @@ var arr = []
 // For processing courses
 var courseList = []
 var initCourseList = []
+var alldays = new Set();
 
 
 $ = cheerio.load(fs.readFileSync('fulllisting.html'));
@@ -34,6 +35,8 @@ function classSection(name, sec, day, time, room){
     this.name = name;
     this.sec = sec;
     this.day = day;
+    alldays.add(day);
+    
 
     //parse building and room
     this.location = room;
@@ -144,7 +147,7 @@ fs.writeFile("file.txt", arr2, function(err) {
 })
 */
 //console.log(arr)
-
+console.log(alldays)
 //-------------------------------make this a new file for processing-------------------------------
 //export primary array
 var bmap = new Map()
@@ -531,7 +534,7 @@ function insertToDB(){
                     {
                         name: values.room, 
                         mon : mon1, tue : tue1, wed : wed1, thu : thu1,
-                        omon : omon1, otue : otue1, owed : owed1, othu : thu1                    
+                        omon : omon1, otue : otue1, owed : owed1, othu : othu1                    
                     }
                 )
 

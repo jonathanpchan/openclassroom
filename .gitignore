@@ -6,3 +6,5 @@ angular-src/node_modules/
 
 scraper/debug\.log
 public/README.md
+
+models/sbmodeltemp\.js
