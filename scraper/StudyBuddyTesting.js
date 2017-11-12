@@ -30,12 +30,14 @@ function bulkAddUserstoStudyBuddyWithSchedule(){
         docs.forEach(function(element) {
             if (element.schedule.length > 0){
                 buddy.addUser(element.email, (err, msg) =>{
-                    console.log(element.email + " : " + err)
+                    console.log(element.email + " : " )
+                    if (err) {console.log(err)}
+                    else {console.log(msg)}
                 })
             }
                 
         }, this);
-    }).then(closecon)
+    })
 }
 
 function initStudyBudy() {CS.find({}, (err, cbb) => {
@@ -67,9 +69,16 @@ function initStudyBudy() {CS.find({}, (err, cbb) => {
 //add function
 //query user's schedule
 
+var myArgs = process.argv.slice(2);
+if (myArgs[0] == 1){
+    initStudyBudy()
+    console.log("initialized")
+}
+else{
+    bulkAddUserstoStudyBuddyWithSchedule()
+}
 
-//initStudyBudy()
-//bulkAddUserstoStudyBuddyWithSchedule()
+
 
 var test = "RS0@gmail.com"
 

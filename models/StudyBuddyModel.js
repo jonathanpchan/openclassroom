@@ -10,7 +10,7 @@ const BaseSched = new mongoose.Schema({
     day : {type: String}, 
     time : {type: String}, 
     stimeInMin : {type: Number},
-    stimeInMin : {type: Number},
+    etimeInMin : {type: Number},
     sh : {type: Number},
     room : {type: String}, 
     location : {type: String}, 
@@ -47,7 +47,7 @@ function placeByDay(arr , callback){
         return (a.sh - b.sh)
     }
     function timeFix(item){
-        if (!item.time) return;
+        //if (!item.time) return;
         var time = item.time;
         var period = time.substring(time.length - 2)
         var rawtime = time.substring(0, time.length - 2)
@@ -86,16 +86,22 @@ function placeByDay(arr , callback){
         item.sh = sh
         item.stimeInMin = (sh * 60) + sm
         item.etimeInMin = (eh * 60) + em
+        // WHY THE FUCKING FUCK FUCKING FUCKITTY FUCK FUCKING FUCK DID I HAVE TO DO THIS!!
+        var temp = {name : item.name, num : item.num, sec : item.sec, day : item.day, time : item.time, location : item.location,
+        prof : item.prof, sh : item.sh, stimeInMin : item.stimeInMin , etimeInMin : item.etimeInMin  }
+        //console.log(temp)
+        return temp
     }
     
     var arr2 = {omon: [], otue: [], owed: [], othu: []}
     //console.log(arr2)
-    arr.forEach(function(element) {
-        timeFix(element)
-    }, this);
+    // arr.forEach(function(element) {
+    //     element = timeFix(element)
+    //     //console.log(element)
+    // }, this);
 
-    for (let i in arr) {
-        t = arr[i]
+    for (var i =0; i < arr.length; i++) {
+        var t = timeFix(arr[i])
         if (t.day == "MWF"){
             arr2.omon.push(t)
             arr2.owed.push(t)
@@ -158,11 +164,12 @@ module.exports.addUser = function(eMail, callback) {
                     }
                 }, {new: true}, function(err, doc) {
                     if (err) {
-                        console.log("Something went wrong when adding a student!");
+                        callback("Something went wrong when adding a student!")
+                        //console.log("Something went wrong when adding a student!");
                     }
                     if (doc == null) {
-                        callback(null);
-                        console.log("Student is already in this section!");
+                        //callback("Student is already in this section!");
+                        //console.log("Student is already in this section!");
                     }
                     else {
                         //set flag to true + return success
@@ -174,7 +181,7 @@ module.exports.addUser = function(eMail, callback) {
 
         })
         
-    callback("worked? maybe")
+    callback(null , "worked? maybe")
     })
 };
 

@@ -9,16 +9,54 @@ mongoose.set('debug', true)
 
 
 
-//mongoose.Promise = global.Promise;
-mongoose.connect(config.database);
-// Check to see if connected to database
-mongoose.connection.on('connected', () => {
-    console.log('Connected to database');
-})
-// Check to see if connection failed
-mongoose.connection.on('error', () => {
-    console.log('Database not connected:');
-})
+// //mongoose.Promise = global.Promise;
+// mongoose.connect(config.database);
+// // Check to see if connected to database
+// mongoose.connection.on('connected', () => {
+//     console.log('Connected to database');
+// })
+// // Check to see if connection failed
+// mongoose.connection.on('error', () => {
+//     console.log('Database not connected:');
+// })
+
+// function fillArr(arr, st, et) {
+//     if (st < 8*60) st = 0
+//     else st = st - 8*60
+//     if (et > 20*60) et = 20*60 - 5
+//     else et = et - 8*60 
+//     for (var i =st/5; i < et/5; i++){
+//         arr[i] = 0;
+//     }
+// }
+
+// function helper(arr){
+//     var retArr = new Array(144)
+//     arr.forEach(function(elem) {
+//         fillArr(retArr, elem.stimeInMin, elem.etimeInMin)
+//     }, this)
+//     for (var i =0; i < retArr.length; i++){
+//         if (retArr[i] == undefined)
+//         retArr[i] = 1;
+//     }
+//     return retArr;
+// }
+
+// var arr = [{stimeInMin: 8*60, etimeInMin: 9*60},{stimeInMin: 13*60, etimeInMin: 14*60},{stimeInMin: 19*60, etimeInMin: 20*60}]
+// var arr2 = helper(arr)
+// var hour = 7
+// var minute =0;
+// for (var i =0; i < arr2.length; i++){
+//     if (i%12 == 0) hour += 1;
+//     minute = i%12 * 5
+//     console.log(i + " @ " + hour + ":" + minute + " == " + arr2[i])
+// }
+
+var arr = [{s: 1, b: 2}, {s: 11, b: 22}, {s: 111, b: 222}]
+arr[0].f = 0;
+console.log(arr)
+
+
 
 // var test = function(callback){
 //         rr.findOne({$and: [{"building": "AS" }, {"room": "243"}]}, {"comments":1}, callback)
@@ -30,18 +68,18 @@ mongoose.connection.on('error', () => {
 //     console.log(x)
 // })
 
-var x = "comments"
-var pos = ".0"
-var proj = ".votes"
+// var x = "comments"
+// var pos = ".0"
+// var proj = ".votes"
 
-var y = "comments.0.votes"
-rr.update(
-    {$and: [{"building": "AS" }, {"room": "243"}]},
-    {$push: {[y] : {
-        vote: 1,
-        email: "test"
-    }}}
-).exec()
+// var y = "comments.0.votes"
+// rr.update(
+//     {$and: [{"building": "AS" }, {"room": "243"}]},
+//     {$push: {[y] : {
+//         vote: 1,
+//         email: "test"
+//     }}}
+// ).exec()
 
 // rr.update(
 //     {$and: [{"building": "AS" }, {"room": "243"}]},
@@ -55,7 +93,7 @@ rr.update(
 //     {$and: [{"building": "AS" }, {"room": "243"}]},
 //     {$inc: {"whiteBoard.uVote" : 1}},
 // ).exec()
-var i =0;
+// var i =0;
 // rr.update(
 //     {$and: [{"building": "AS" }, {"room": "243"}]},
 //     {$pull: {
@@ -78,11 +116,11 @@ var i =0;
 //refactor for email everywhere in model
 //all routes
 
-var building = "AS";
-var room = "243"
-var item = 'whiteBoard';
-var uname = "tom002";
-var nvote = 1;
+// var building = "AS";
+// var room = "243"
+// var item = 'whiteBoard';
+// var uname = "tom002";
+// var nvote = 1;
 
 
 // //dont change these
