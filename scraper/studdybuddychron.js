@@ -142,7 +142,7 @@ function match(){
                         }
                         else id = mainArr[j].email + "+" + mainArr[i].email
 
-                        //id = hashCode(id)
+                        id = Buffer.from(id).toString('base64')
 
                         //add to buddies list
                         tempBuddies.push({id: id, score: counter, otherUser: mainArr[j].email})
