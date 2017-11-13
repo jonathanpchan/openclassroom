@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('../config/database');
 const user = require('../models/user');
-const us = mongoose.model('User', user.User.Schema);
+const us = mongoose.model('User', user.schema);
 
 //Class schema
 const BaseSched = new mongoose.Schema({
