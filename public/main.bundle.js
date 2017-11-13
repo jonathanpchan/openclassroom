@@ -578,6 +578,8 @@ var FindHomeComponent = (function () {
             document.getElementById("now").style.display = "none";
             document.getElementById("times").style.display = "none";
             document.getElementById("room").style.display = "none";
+            document.getElementById("room2").style.display = "none";
+            document.getElementById("room3").style.display = "none";
         }
     };
     // 3) Display button depending on id
@@ -650,7 +652,7 @@ var FindTimesComponent = (function () {
         // Start and end values of the slider for AM/PM display
         this.tstart = 16;
         this.tend = 44;
-        // Start and end values for array display (in minutes) 
+        // Start and end values for array display (in minutes)
         this.start = 8 * 12;
         this.end = 22 * 12;
         this.timeSliderConfig = {
@@ -669,6 +671,9 @@ var FindTimesComponent = (function () {
         this.buildingList = null;
         // The list that will be displayed after population in the show function
         this.roomsList = [];
+        //Arguments to pass to roomInfo
+        this.buildingName = "";
+        this.roomNumber = "";
     }
     FindTimesComponent.prototype.ngOnInit = function () {
         document.getElementById('start').textContent = this.times[this.tstart];
@@ -689,6 +694,7 @@ var FindTimesComponent = (function () {
     */
     FindTimesComponent.prototype.show = function (day) {
         var _this = this;
+        document.getElementById("room3").style.display = "none";
         // 0) Re-initialize if navigate away from current page
         if (document.getElementById("table-2").style.display == "none") {
             this.buildingList = null;
@@ -785,6 +791,21 @@ var FindTimesComponent = (function () {
         this.tend = value[1] * 2;
         document.getElementById('start').textContent = this.times[this.tstart];
         document.getElementById('end').textContent = this.times[this.tend];
+    };
+    FindTimesComponent.prototype.getRoomInfo = function (building_name, room_num) {
+        var email = JSON.parse(localStorage.getItem('user')).email;
+        //set new inputs
+        this.buildingName = building_name;
+        this.roomNumber = room_num;
+        //hide table and show room
+        document.getElementById("table-2").style.display = "none";
+        document.getElementById("room3").style.display = "block";
+        //hide everything else
+        // document.getElementById("buttons").style.display = "none";
+        // document.getElementById("all").style.display = "none";
+        // document.getElementById("table-2").style.display = "none";
+        // document.getElementById("now").style.display = "none";
+        // document.getElementById("times").style.display = "none";
     };
     return FindTimesComponent;
 }());
@@ -2017,21 +2038,21 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n  
 /***/ 239:
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n    <head></head>\r\n    <body>\r\n        <h1 *ngIf=\"!show\">No rooms currently available in {{name}}</h1>\r\n        <ng-container *ngIf=\"show\">\r\n            <h2 *ngFor=\"let room of roomsList\">\r\n                Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n            </h2>\r\n        </ng-container>\r\n    </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n    <head></head>\r\n    <body>\r\n        <h1 *ngIf=\"!show\">No rooms currently available in {{name}}</h1>\r\n        <div id=\"nowTimes\">\r\n        <ng-container *ngIf=\"show\">\r\n            <h2 *ngFor=\"let room of roomsList\" (click)=\"showRoom(name, room.name)\">\r\n                Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n            </h2>\r\n        </ng-container>\r\n        </div>\r\n        <app-room id=\"room2\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n    </body>\r\n</html>\r\n"
 
 /***/ }),
 
 /***/ 240:
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div style=\"text-align: center\">\r\n      <button (click) = \"show('omon')\" class=\"btn btn-primary\"> Monday</button>\r\n      <button (click) = \"show('otue')\" class=\"btn btn-primary\"> Tuesday</button>\r\n      <button (click) = \"show('owed')\" class=\"btn btn-primary\"> Wednesday</button>\r\n      <button (click) = \"show('othu')\" class=\"btn btn-primary\"> Thursday</button>\r\n    </div>\r\n    <div class=\"slider-grid\">\r\n      <span class=\"start\" id=\"start\"></span>\r\n      <nouislider class=\"slider\" [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\"></nouislider>\r\n      <span class=\"end\" id=\"end\"></span>\r\n    </div>\r\n    <div class=\"tablecontainer\" id=\"table-2\" style=\"display: none; margin-top: 35px;\">\r\n      <table>\r\n        <tbody>\r\n          <tr>\r\n            <th colspan=\"6\" *ngFor=\"let time of times | slice:tstart:tend\">{{time}}</th>\r\n          </tr>\r\n          <tr *ngFor=\"let rooms of roomsList\">\r\n            <th class=\"left-column\">{{name}}-{{rooms.name}}</th>\r\n            <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:start:end let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n              <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span> <!--this messes up the left column for some reason -->\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div style=\"text-align: center\">\r\n      <button (click) = \"show('omon')\" class=\"btn btn-primary\"> Monday</button>\r\n      <button (click) = \"show('otue')\" class=\"btn btn-primary\"> Tuesday</button>\r\n      <button (click) = \"show('owed')\" class=\"btn btn-primary\"> Wednesday</button>\r\n      <button (click) = \"show('othu')\" class=\"btn btn-primary\"> Thursday</button>\r\n    </div>\r\n    <div class=\"slider-grid\">\r\n      <span class=\"start\" id=\"start\"></span>\r\n      <nouislider class=\"slider\" [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\"></nouislider>\r\n      <span class=\"end\" id=\"end\"></span>\r\n    </div>\r\n    <div class=\"tablecontainer\" id=\"table-2\" style=\"display: none; margin-top: 35px;\">\r\n      <table>\r\n        <tbody>\r\n          <tr>\r\n            <th colspan=\"6\" *ngFor=\"let time of times | slice:tstart:tend\">{{time}}</th>\r\n          </tr>\r\n          <tr *ngFor=\"let rooms of roomsList\">\r\n            <th class=\"left-column\" (click)=\"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n            <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:start:end let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n              <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span> <!--this messes up the left column for some reason -->\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <app-room id=\"room3\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 
 /***/ 241:
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div style=\"text-align: center\">\r\n        <button (click) = \"show('omon')\" class=\"btn btn-primary\" id=\"mon\"> Monday</button>\r\n        <button (click) = \"show('otue')\" class=\"btn btn-primary\" id=\"tue\"> Tuesday</button>\r\n        <button (click) = \"show('owed')\" class=\"btn btn-primary\" id=\"wed\"> Wednesday</button>\r\n        <button (click) = \"show('othu')\" class=\"btn btn-primary\" id=\"thu\"> Thursday</button>\r\n      </div>\r\n      <div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n        <table>\r\n          <tbody>\r\n            <tr style=\"display: sticky\">\r\n              <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n            </tr>\r\n            <tr *ngFor=\"let rooms of roomsList\">\r\n              <!-- <th class=\"left-column\"  (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th> -->\r\n              <th class=\"left-column\" (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n              <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n                <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n      <app-room id=\"room\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room> \r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div style=\"text-align: center\">\r\n        <button (click) = \"show('omon')\" class=\"btn btn-primary\" id=\"mon\"> Monday</button>\r\n        <button (click) = \"show('otue')\" class=\"btn btn-primary\" id=\"tue\"> Tuesday</button>\r\n        <button (click) = \"show('owed')\" class=\"btn btn-primary\" id=\"wed\"> Wednesday</button>\r\n        <button (click) = \"show('othu')\" class=\"btn btn-primary\" id=\"thu\"> Thursday</button>\r\n      </div>\r\n      <div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n        <table>\r\n          <tbody>\r\n            <tr style=\"display: sticky\">\r\n              <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n            </tr>\r\n            <tr *ngFor=\"let rooms of roomsList\">\r\n              <!-- <th class=\"left-column\"  (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th> -->\r\n              <th class=\"left-column\" (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n              <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n                <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n      <app-room id=\"room\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room> \r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 
@@ -2249,6 +2270,9 @@ var FindNowComponent = (function () {
         this.roomsList = [];
         // Notifies the HTML to display the error message when out of hours
         this.show = false;
+        //Arguments to pass to roomInfo
+        this.buildingName = "";
+        this.roomNumber = "";
     }
     // Set the day once when navigating to the find classroom page
     FindNowComponent.prototype.ngOnInit = function () {
@@ -2262,6 +2286,7 @@ var FindNowComponent = (function () {
     */
     FindNowComponent.prototype.showNow = function () {
         var _this = this;
+        document.getElementById("nowTimes").style.display = "block";
         var st = new Date().getHours() * 60;
         // 1) Not "x" and between 8 AM and 10 PM?
         if (this.day != "x" && st >= 8 * 60 && st < 22 * 60) {
@@ -2331,6 +2356,12 @@ var FindNowComponent = (function () {
                 return Math.trunc(time / 60) + ":" + (time % 60) + " AM";
             }
         }
+    };
+    FindNowComponent.prototype.showRoom = function (room, number) {
+        this.buildingName = room;
+        this.roomNumber = number;
+        document.getElementById("nowTimes").style.display = "none";
+        document.getElementById("room2").style.display = "block";
     };
     return FindNowComponent;
 }());

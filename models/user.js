@@ -35,10 +35,6 @@ const UserSchema = mongoose.Schema({
 // Export User Schema
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports = {
-    User : User
-}
-
 // Get the user based on id
 module.exports.getUserById = function(id, callback){
   User.findById(id, callback);
