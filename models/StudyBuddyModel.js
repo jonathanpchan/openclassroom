@@ -238,7 +238,38 @@ function setFlag(sec, flag) {
     )
 }
 
-
+module.exports.getBuddies = function(eMail, callback) {
+    us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
+        sched = doc.schedule
+        if( !(sched.length > 0)) {
+            callback("Nothing in Schedule")
+            return
+        }
+        var promise = sched.length;
+        var did =0;
+        var retArr = []
+        sched.forEach(function(element) {
+            CS.findOne(
+                {"sec" : element.sec}, (err, doc) => {
+                    if ( !(doc.students.length > 0)) {
+                        callback("Nothing Found in SB")
+                        return
+                    }
+                    for (var i = 0; i< doc.students.length; i++){
+                        //console.log()
+                        //if (doc[students][i][user] == email){
+                        if (doc.students[i].user == eMail){
+                            retArr.push({sec: element.sec, name: element.name, buddies: doc.students[i].buddies})
+                            break;
+                        }
+                    }
+                    if (retArr.length == promise){
+                        callback(null, retArr)
+                    }
+                })
+        }, this);
+    })
+};
 //route for later
 // router.post('/test', (req,res, next) => {
 //     Buddy.getClass(req.body.crsID, (err, cls) => {

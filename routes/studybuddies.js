@@ -28,3 +28,16 @@ router.post('/remove', (req, res) => { //request and response
     return res.json({error: "Bad Request"});
 }//bad request
 })
+
+router.post('/get', (req, res) => {
+    if(req.body.email){
+        StudyBuddy.getBuddies(req.body.email, (err, x) => {
+            if (err) {
+                res.json({error: err})
+            }
+            else
+                res.json(x)
+        })
+    }
+    else res.json({error: "Malformatted Request"})
+})

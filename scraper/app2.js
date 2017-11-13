@@ -22,21 +22,27 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected:');
 })
 
-// SB.findById("5a07f4be660b859b7c181fbb", function(err,x) {
-//     console.log(x.students[0].buddies)
-// })
-var strarr = ["hi", "bi", "die"]
-var pos =0;
-var item = "students." + pos +  ".buddies"
-SB.findByIdAndUpdate("5a08f67a6389fb9fa070d902",
-    //{$set: {[item] : [strarr]}},
-    {$addToSet: 
-        {[item] : {$each: strarr} }
-    },
-    (err, newdoc) => {
-        console.log(newdoc.students[0].buddies)
-    }
-)
+// // SB.findById("5a07f4be660b859b7c181fbb", function(err,x) {
+// //     console.log(x.students[0].buddies)
+// // })
+// var strarr = ["hi", "bi", "die"]
+// var pos =0;
+// var item = "students." + pos +  ".buddies"
+// SB.findByIdAndUpdate("5a08f67a6389fb9fa070d902",
+//     //{$set: {[item] : [strarr]}},
+//     {$addToSet: 
+//         {[item] : {$each: strarr} }
+//     },
+//     (err, newdoc) => {
+//         console.log(newdoc.students[0].buddies)
+//     }
+// )
+var email = "MS1@gmail.com"
+StudyBuddy.getBuddies(email, (err, x) => {
+    if (err) {console.log("ERROR: " + err)}
+    else
+    console.log(x)
+})
 
 
 // function fillArr(arr, st, et) {
