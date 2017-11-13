@@ -6,19 +6,38 @@ const rr = mongoose.model('roomInfo', rs.RI.schema);
 const rr2 = mongoose.model('roomInfo', rs.RI.schema);
 mongoose.set('debug', true)
 
+const StudyBuddy = require('../models/StudyBuddyModel');
+const SB = mongoose.model('StudyBuddy', StudyBuddy.CS.Schema);
 
 
 
 // //mongoose.Promise = global.Promise;
-// mongoose.connect(config.database);
-// // Check to see if connected to database
-// mongoose.connection.on('connected', () => {
-//     console.log('Connected to database');
+mongoose.connect(config.database);
+// Check to see if connected to database
+mongoose.connection.on('connected', () => {
+    console.log('Connected to database');
+})
+// Check to see if connection failed
+mongoose.connection.on('error', () => {
+    console.log('Database not connected:');
+})
+
+// SB.findById("5a07f4be660b859b7c181fbb", function(err,x) {
+//     console.log(x.students[0].buddies)
 // })
-// // Check to see if connection failed
-// mongoose.connection.on('error', () => {
-//     console.log('Database not connected:');
-// })
+var strarr = ["hi", "bi", "die"]
+var pos =0;
+var item = "students." + pos +  ".buddies"
+SB.findByIdAndUpdate("5a08f67a6389fb9fa070d902",
+    //{$set: {[item] : [strarr]}},
+    {$addToSet: 
+        {[item] : {$each: strarr} }
+    },
+    (err, newdoc) => {
+        console.log(newdoc.students[0].buddies)
+    }
+)
+
 
 // function fillArr(arr, st, et) {
 //     if (st < 8*60) st = 0
@@ -52,9 +71,10 @@ mongoose.set('debug', true)
 //     console.log(i + " @ " + hour + ":" + minute + " == " + arr2[i])
 // }
 
-var arr = [{s: 1, b: 2}, {s: 11, b: 22}, {s: 111, b: 222}]
-arr[0].f = 0;
-console.log(arr)
+// var arr = [{s: 1, b: 2}, {s: 11, b: 22}, {s: 111, b: 222}]
+// arr[0].f = 0;
+// console.log(arr)
+
 
 
 
