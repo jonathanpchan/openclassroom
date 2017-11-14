@@ -292,6 +292,11 @@ var ChatComponent = (function () {
         // Clear message
         this.message = '';
     };
+    ChatComponent.prototype.back = function () {
+        this.sendee = null;
+        this.showBack = false;
+        this.messages = [];
+    };
     return ChatComponent;
 }());
 ChatComponent = __decorate([
