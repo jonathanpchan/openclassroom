@@ -5,14 +5,10 @@
 </select>
 
 
-<div *ngFor="let class of buddies">
+<div id="buddylist" style="display: none" *ngIf="loaded">
 
-  <h1 class = "courseTitle">Potential Study Buddies For {{class.name}}</h1>
+  <h1 class = "courseTitle">Potential Study Buddies For {{test.name}}</h1>
   <div class="studdyBuddies">
-    <h3 class="buddy" *ngFor = "let buddy of class.buddies" (click)="message(buddy.name)">{{buddy.name}}</h3>
+    <h3 class="buddy" *ngFor = "let buddy of test.buddies" (click)="message(buddy.name)">{{buddy.name}}</h3>
   </div>
-  <!-- <h3 class="buddy" (click)="message()" >Ricky Bobby</h3>
-  <h3 class="buddy">Santa Claus</h3>
-  <h3 class="buddy">Lemony Snicket</h3>
-  <h3 class="buddy">Gandalf the Grey</h3> -->
 </div>

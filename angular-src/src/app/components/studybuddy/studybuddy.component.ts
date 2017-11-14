@@ -13,21 +13,27 @@ export class StudybuddyComponent implements OnInit {
   courseName : string;
   courseNum : string;
   buddies = null;
+  test = null;
+  loaded : boolean = false;
 
   constructor(private authService:AuthService) { }
 
   ngOnInit() {
     //console.log(this.email);
 
-    this.buddies = JSON.parse('{"res":[{"classes":[{"name":"CECS 444","buddies":[{"name":"guy0","id":"xxxxx"},{"name":"guy1","id":"xxxxx"},{"name":"guy2","id":"xxxxx"},{"name":"guy3","id":"xxxxx"}]},{"name":"CECS 445","buddies":[{"name":"guy4","id":"xxxxx"},{"name":"guy5","id":"xxxxx"},{"name":"guy6","id":"xxxxx"},{"name":"guy7","id":"xxxxx"}]},{"name":"CECS 446","buddies":[{"name":"guy8","id":"xxxxx"},{"name":"guy9","id":"xxxxx"}]}]}]}');
-    this.buddies = this.buddies.res[0].classes;
-    console.log(this.buddies);
+
 
     this.schedule = []
     this.authService.getSchedule({email : this.email}).subscribe(schedule => {
       this.schedule = schedule.schedule
       this.schedule.sort(this.sortByCourseName)
       //console.log(this.schedule);
+
+      this.buddies = JSON.parse('{"res":[{"classes":[{"name":"CECS 444","buddies":[{"name":"guy0","id":"xxxxx"},{"name":"guy1","id":"xxxxx"},{"name":"guy2","id":"xxxxx"},{"name":"guy3","id":"xxxxx"}]},{"name":"CECS 445","buddies":[{"name":"guy4","id":"xxxxx"},{"name":"guy5","id":"xxxxx"},{"name":"guy6","id":"xxxxx"},{"name":"guy7","id":"xxxxx"}]},{"name":"CECS 446","buddies":[{"name":"guy8","id":"xxxxx"},{"name":"guy9","id":"xxxxx"}]}]}]}');
+      this.buddies = this.buddies.res[0].classes;
+      console.log(this.buddies);
+      setTimeout(this.lol(),100); // run donothing after 0.5 seconds
+
 
     },
     err => {
@@ -59,20 +65,40 @@ export class StudybuddyComponent implements OnInit {
 
   showBuddies()
   {
-    var input = (<HTMLInputElement>document.getElementById('courseSelect')).value;
-    var course = input.split(" ");
-    this.courseName = course[0];
-    this.courseNum = course[1];
+    var index = (<HTMLSelectElement>document.getElementById('courseSelect')).selectedIndex - 1;
 
-    console.log(this.courseName + " " + this.courseNum);
+    this.test = this.buddies[index];
+
+    console.log("index of course - " + index);
+    console.log(this.buddies);
+    document.getElementById("buddylist").style.display = "inline-block";
+
+    // var input = (<HTMLInputElement>document.getElementById('courseSelect')).value;
+    // var course = input.split(" ");
+    // this.courseName = course[0];
+    // this.courseNum = course[1];
+
+
+
+
+    // console.log(this.courseName + " " + this.courseNum);
+
+    // console.log("test\n" + this.test.name);
+    // console.log("test\n" + this,test.buddies);
+
+
     //TODO implement routes get data and change it
     //show study buddies now, we don't need to hide it anymore
-    document.getElementById("studdyBuddies").style.display = "inline-block";
-
   }
 
   message(name)
   {
     console.log("messaging " + name);
+  }
+
+  lol()
+  {
+    this.loaded=true;
+    document.getElementById("buddylist").style.display = "inline-block";
   }
 }
