@@ -71,4 +71,10 @@ export class ChatComponent implements OnInit {
     // Clear message
     this.message='';
   }
+
+  back() {
+    this.sendee = null;
+    this.showBack = false;
+    this.messages = [];
+  }
 }

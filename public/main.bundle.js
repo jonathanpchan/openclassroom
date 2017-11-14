@@ -2423,7 +2423,7 @@ var ChatService = (function () {
         // Connect once while on that page
         if (this.socket == null) {
             // this.socket = io.connect("http://localhost:4020/");
-            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("mongodb://open-classroom:0pen-classroom@ds129281.mlab.com:29281/open-classroom");
+            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("https://openclassroom.herokuapp.com:4020/");
             // TODO: Deployment route
         }
         this.socket.emit('join room', ID);
