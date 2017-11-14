@@ -111,6 +111,7 @@ app.listen(port, () => {
     console.log('Server started on port '+port);
 })
 // Starts up chat server on separate port
-http.listen(chatPort, () => {
+// http.listen(chatPort, () => {
+app.listen(port, () => {
     console.log('Chat Server started on port '+chatPort);
 })

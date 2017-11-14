@@ -71,24 +71,4 @@ export class ChatComponent implements OnInit {
     // Clear message
     this.message='';
   }
-
-  // TODO: USED WHILE WE DO NOT HAVE THE REST OF THE FUNCTIONALITY OF OUR CODE
-  stub() {
-    // Make sure there is a connection, there is a message, and the message is not just white space
-    if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
-      this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000});
-    }
-    else {
-      // Send message to room with message
-      this.chatService.sendMessage(this.currentRoom, this.sendee, this.message).subscribe();
-    }
-    // Clear message
-    this.message='';
-  }
-
-  back() {
-    this.sendee = null;
-    this.showBack = false;
-    this.messages = [];
-  }
 }
