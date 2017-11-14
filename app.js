@@ -102,8 +102,8 @@ io.on('connection', (socket) => {
 
 // =============== Listen to Ports ========================
 // Port Number
-const port = 3000; // For testing
-// const port = process.env.PORT || 8080; // For Deployment
+// const port = 3000; // For testing
+const port = process.env.PORT || 8080; // For Deployment
 const chatPort = 4020; // TODO: Deployment route
 
 // Takes a port and starts up server

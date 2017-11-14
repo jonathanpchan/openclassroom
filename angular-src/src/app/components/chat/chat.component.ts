@@ -16,7 +16,8 @@ export class ChatComponent implements OnInit {
   connection: any = null;
   // BELOW IS TESTING ITEM
   // names must be initialized to an empty string
-  names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+  // names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
+  names: string[] = ['all']
   showBack: boolean = false;
   // ABOVE IS TESTING ITEM
 
@@ -29,7 +30,8 @@ export class ChatComponent implements OnInit {
     // Back join room
     this.sendee = sendee;
     this.showBack = true;
-    this.chatService.createRoom(this.sender, sendee).subscribe((room) => {
+    // this.chatService.createRoom(this.sender, sendee).subscribe((room) => {
+    this.chatService.createRoom("Test A", "Test B").subscribe((room) => {
       this.currentRoom = room[0]._id
 
       // Front join room

@@ -24,10 +24,10 @@
         <div class="chatlogs" #chatlogs [scrollTop]="chatlogs.scrollHeight">
           <div *ngFor="let message of messages">
             <div *ngIf="message.sender!=sender" class="sendee">
-              <p class="chatmsg">{{message.message}}</p>
+              <p class="chatmsg"><b style="font-style: bold">{{message.sender}}</b>: {{message.message}}</p>
             </div>
             <div *ngIf="message.sender==sender" class="sender">
-              <p class="chatmsg">{{message.message}}</p>
+              <p class="chatmsg"><b style="font-style: bold">{{message.sender}}</b>: {{message.message}}</p>
             </div>
           </div>
         </div>
@@ -39,6 +39,4 @@
       </form>
       </div>
     </body>
-    <!-- For testing Purposes -->
-    <button class="btn btn-default" style="float: right" (click)="stub()">Other user</button>
   </html>

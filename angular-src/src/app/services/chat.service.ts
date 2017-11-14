@@ -18,15 +18,16 @@ export class ChatService {
       user_1: sender,
       user_2: sendee 
     }
-    return this.http.post('http://localhost:3000/messages/create', payload, {headers: headers}).map(res => res.json());
-    // return this.http.post('messages/create', payload, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/messages/create', payload, {headers: headers}).map(res => res.json());
+    return this.http.post('messages/create', payload, {headers: headers}).map(res => res.json());
   }
 
   // Tell the server to connect to server and join a room
   joinRoom(ID: String) {
     // Connect once while on that page
     if (this.socket == null) {
-      this.socket = io.connect("http://localhost:4020/");
+      // this.socket = io.connect("http://localhost:4020/");
+      this.socket = io.connect("mongodb://open-classroom:0pen-classroom@ds129281.mlab.com:29281/open-classroom");
       // TODO: Deployment route
     }
     this.socket.emit('join room', ID);
@@ -41,8 +42,8 @@ export class ChatService {
       msg: message,
       ID: ID
     }
-    return this.http.post('http://localhost:3000/messages/send', payload, {headers: headers}).map(res => res.json());
-    // return this.http.post('messages/send', payload, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/messages/send', payload, {headers: headers}).map(res => res.json());
+    return this.http.post('messages/send', payload, {headers: headers}).map(res => res.json());
   }
 
   // Create an observable that will read off the next message when the user gets a message
@@ -57,7 +58,7 @@ export class ChatService {
 
   getMessages(ID : String) {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/messages/get', {ID: ID}, {headers: headers}).map(res => res.json());
-    // return this.http.post('messages/get', {ID: ID}, {headers: headers}).map(res => res.json());
+    // return this.http.post('http://localhost:3000/messages/get', {ID: ID}, {headers: headers}).map(res => res.json());
+    return this.http.post('messages/get', {ID: ID}, {headers: headers}).map(res => res.json());
   }
 }
