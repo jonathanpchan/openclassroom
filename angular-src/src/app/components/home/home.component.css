@@ -1,39 +1,28 @@
-/* DEFAULT: For Phone */
-.home-grid {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 60% 40%;
-    grid-template-areas:
-        "jumbotron"
-        "content";
+.jumbotron {
     text-align: center;
 }
 
-h1 { 
-    font-weight: bold; 
-} 
-
 .btn {
-    width: 20rem;
+    width: 15rem;
     margin-bottom: 5px;
+}
+
+.home-content {
+    width: 100%;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 100% 100% 100%;
+    grid-template-areas:
+        "content-1"
+        "content-2"
+        "content-3";
 }
 
 /* For Desktop 600px+ */
 @media (min-width: 600px) {    
-    .content {
+    .home-content {
         display: grid;
         grid-template-columns: 33.33% 33.33% 33.33%;
-        grid-template-areas: "col-1 col-2 col-3";
+        grid-template-areas: "content-1 content-2 content-3";
     }
 }
-
-/* FOR TESTING */
-/* .jumbotron {
-    border: 2px red dotted
-}
-[class*='col-'] {
-    border: 2px green solid;
-}
-.content {
-    border: 2px blue dashed;
-} */

@@ -3,8 +3,8 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 // DO NOT DELETE. THIS IS NECESSARY FOR GET REQUESTS.
 const build = require('../models/building');
-const classes = require('../models/course');
-const CS = mongoose.model('Courses', classes.CS.Schema);
+//const classes = require('../models/course');
+//const CS = mongoose.model('Courses', classes.CS.Schema);
 var ObjectId = require('mongodb').ObjectID;
 
 
@@ -101,6 +101,7 @@ module.exports.addScheduleItem = function(eMail, crsID, callback) {
                 console.log("Something went wrong when adding a class!");
             }
             if (doc == null) {
+                console.log("Class is already added.")
                 User.find({ _id: null }, {email: 0, schedule: 0}, callback)
             }
             else { 

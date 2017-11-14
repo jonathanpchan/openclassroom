@@ -1,0 +1,204 @@
+/* Formatting of the user list area */
+.msglist {
+    display: grid;
+    grid-area: msglist;
+    grid-template-columns: 100%;
+    grid-template-rows: 50px auto;
+    grid-template-areas: 
+        "msglist-title"
+        "msglist-users";
+    min-width: 225px;
+}
+
+.msglist-title {
+    grid-area: msglist-title;
+    background: #edaa00;
+    border: 1px black solid;
+    color: black;
+    font-size: 30px;
+    overflow: auto;
+    text-align: center;
+}
+
+/* List of users */
+.msglist-users {
+    grid-area: msglist-users;
+    background: white;
+    border: 1px black solid;
+    height: 450px;
+    list-style: none;
+    margin: 0 !important;
+    max-height: 450px;
+    overflow: auto;
+    padding: 0 !important; 
+}
+
+.msglist-user {
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.msglist-btn {
+    border-bottom: 1px gray solid;
+    color: black;
+    height: 100%;
+    padding: 10px 0 10px 0;
+    width: 100%;
+}
+
+/* Formatting of the chat area */
+.chat {
+    grid-area: chat;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50px auto 50px;
+    grid-template-areas: 
+        "chat-title"
+        "chat-logs"
+        "chat-form";
+    min-width: 300px;
+}
+
+/* Title area of the chat */
+.chat-title {
+    grid-area: chat-title;
+    background: #edaa00;
+    border: 1px black solid;
+    color: black;
+    font-size: 30px;
+    text-align: center;
+}
+
+.back {
+    float: left;
+    background: #edaa00;
+    border-bottom: 1.5px black solid;
+    border-right: 1px black solid;
+    min-width: 75px;
+    height: 50px;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center;
+}
+
+/* Chatlog area where you see the messages being displayed */
+.chatlogs {
+    grid-area: chat-logs;
+    background: #f3f3f3;
+    border: 1px black solid;
+    height: 400px;
+    min-width: 300px;
+    overflow: auto;
+    padding: 5px;
+}
+
+.sender {
+    background: #edaa00;
+    margin: 0 !important;
+    width: 100%;
+}
+
+.sendee {
+    background: gray;
+    margin: 0 !important;
+    width: 100%;
+}
+
+.chatmsg {
+    border-radius: 5px;
+    clear: both;
+    border: 1.5px black solid;
+    margin-bottom: 5px;
+    padding: 0 5px 5px 5px;
+}
+
+.sender .chatmsg {
+    float: right;
+    background: lightblue;
+    max-width: 75%;
+    width: auto;
+}
+
+.sendee .chatmsg {
+    float: left;
+    background: lightgreen;
+    max-width: 75%;
+    width: auto;
+}
+
+/* User input and button formatting */
+.chat-form {
+    background: rgb(221, 221, 221);
+    border: 1px black solid;
+    overflow: hidden;
+}
+.chat-text {
+    grid-area: chat-input;
+    float: left;
+    background: transparent;
+    border: none;
+    color: black;
+    height: 100%;
+    padding-left: 10px;
+    width: 80%;
+}
+
+.chat-submit {
+    grid-area: chat-submit;
+    float: right;
+    border-left: 1px black solid;
+    height: 100%;
+    width: 20%;
+}
+
+.btn:hover {
+    color: black;
+}
+
+.btn:focus {
+    color: black;
+}
+
+/* Hide when not the "normal" class */
+.msglist-hide, .chat-hide, .back-hide {
+    display: none;
+}
+
+/* Display both parts of the chat */
+@media (min-width: 600px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 300px auto;
+        grid-template-rows: 100%;
+        grid-template-areas:
+            "msglist chat";
+    }
+
+    .msglist, .msglist-hide {
+        grid-area: msglist;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 50px auto;
+        grid-template-areas: 
+            "msglist-title"
+            "msglist-users";
+        min-width: 225px;
+    }
+
+    .chat, .chat-hide {
+        grid-area: chat;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 50px auto 50px;
+        grid-template-areas: 
+            "chat-title"
+            "chat-logs"
+            "chat-form";
+        min-width: 300px;
+    }
+
+    .back {
+        display: none;
+    }
+}

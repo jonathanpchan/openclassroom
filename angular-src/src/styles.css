@@ -1,6 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~nouislider/distribute/nouislider.min.css";
 
+html {
+    min-width: 320px;
+    min-height: 480px;
+}
+
+h1 { 
+    text-align: center; 
+    font-weight: bold; 
+} 
+
 .btn-primary {
     color: #333333;
     background-color: #edaa00;
@@ -68,3 +78,7 @@
 ::-webkit-scrollbar-thumb {
     background-color: #edaa00;
 }
+
+/* https://github.com/moff/angular2-flash-messages/issues/22 */
+#flashMessages .flash-message { display:none; }
+#flashMessages .flash-message:last-child { display:block; }

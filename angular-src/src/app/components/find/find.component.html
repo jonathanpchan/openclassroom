@@ -1,23 +1,29 @@
-<div style="text-align: center">
-  <button (click) = "show('omon')" class="btn btn-primary" id="mon"> Monday</button>
-  <button (click) = "show('otue')" class="btn btn-primary" id="tue"> Tuesday</button>
-  <button (click) = "show('owed')" class="btn btn-primary" id="wed"> Wednesday</button>
-  <button (click) = "show('othu')" class="btn btn-primary" id="thu"> Thursday</button>
-</div>
-
-<div class="tablecontainer" id="table" style="display: none">
-  <table>
-    <tbody>
-      <tr>
-        <th colspan="12" *ngFor="let time of times">{{time}}</th>
-      </tr>
-      <tr *ngFor="let rooms of roomsList">
-        <!-- <th class="left-column"  (click) = "getRoomInfo(name, rooms.name)">{{name}}-{{rooms.name}}</th> -->
-        <th class="left-column">{{name}}-{{rooms.name}}</th>
-        <td class ="five-minute-chunk" *ngFor="let room of rooms?.room | slice:96:264 let i = index " [ngClass]="room ? 'opentime' : 'closedtime'">
-          <span class="time-tool-tip">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div style="text-align: center">
+        <button (click) = "show('omon')" class="btn btn-primary" id="mon"> Monday</button>
+        <button (click) = "show('otue')" class="btn btn-primary" id="tue"> Tuesday</button>
+        <button (click) = "show('owed')" class="btn btn-primary" id="wed"> Wednesday</button>
+        <button (click) = "show('othu')" class="btn btn-primary" id="thu"> Thursday</button>
+      </div>
+      <div class="tablecontainer" id="table" style="display: none">
+        <table>
+          <tbody>
+            <tr style="display: sticky">
+              <th colspan="12" *ngFor="let time of times">{{time}}</th>
+            </tr>
+            <tr *ngFor="let rooms of roomsList">
+              <!-- <th class="left-column"  (click) = "getRoomInfo(name, rooms.name)">{{name}}-{{rooms.name}}</th> -->
+              <th class="left-column" (click) = "getRoomInfo(name, rooms.name)">{{name}}-{{rooms.name}}</th>
+              <td class ="five-minute-chunk" *ngFor="let room of rooms?.room | slice:96:264 let i = index " [ngClass]="room ? 'opentime' : 'closedtime'">
+                <span class="time-tool-tip">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-room id="room" style="display: none" building={{buildingName}} room={{roomNumber}}></app-room> 
+  </body>
+</html>

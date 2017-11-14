@@ -1,29 +1,26 @@
-<!-- Modeled after: https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" (click)="toggle()">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="z-index: 1000; position: fixed; top: 0; width: 100%">
       <a class="navbar-brand" [routerLink]="['/']">OpenClassroom</a>
-    </div>
-    <div class="collapse navbar-collapse" [ngClass]="{ 'in' : show }">
-      <ul class="nav navbar-nav" (click)="hideDropdown()">
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/schedule']">My Schedule</a></li>
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/findclassroom']">Find Classroom</a></li>
-        <!-- <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/findbuddy']">Find Buddy</a></li>
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/messages']">Messages</a></li>
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/groups']">Groups</a></li> -->
-      </ul>
-      <ul class="nav navbar-nav navbar-right" (click)="hideDropdown()">
-        <!-- <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/']">Settings</a></li> -->
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/login']">Login</a></li>
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/register']">Register </a></li>
-        <li *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a (click)="onLogoutClick()" [routerLink]="['/']">Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+      <button (click)="toggle()" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"> 
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" [ngClass]="show ? 'show' : ''" id="navbarColor02" (click)="toggle()">
+        <ul class="navbar-nav mr-auto" (click)="hide()">
+          <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/schedule']">My Schedule</a></li>
+          <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/findclassroom']">Find Classroom</a></li>
+          <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/chat']">Messaging</a></li>
+          <!-- <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a class="nav-link" [routerLink]="['/studybuddy']">Study Buddy</a></li> -->
+        </ul>
+        <ul class="nav navbar-nav navbar-right" (click)="hide()">
+          <!-- <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions] = "{exact:true}"><a class="nav-link" [routerLink]="['/']">Settings</a></li> -->
+          <li class="nav-item" *ngIf="!authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/login']">Login</a></li>
+          <li class="nav-item" *ngIf="!authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/register']">Register </a></li>
+          <li class="nav-item" *ngIf="authService.loggedIn()" [routerLinkActive]="[active]" [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" (click)="onLogoutClick()" [routerLink]="['/']">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+  </body>
+</html>

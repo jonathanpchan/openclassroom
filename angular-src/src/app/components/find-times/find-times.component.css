@@ -1,3 +1,27 @@
+.slider-grid {
+  display: grid;
+  grid-template-columns: 100px auto 100px;
+  grid-template-areas: 
+  "slider slider slider"
+  "start  .      end";
+}
+
+.start {
+  grid-area: start;
+  text-align: left;
+}
+
+.slider {
+  grid-area: slider;
+  width: 100%;
+  padding: 0 15px 0 15px;
+}
+
+.end {
+  grid-area: end;
+  text-align: right;
+}
+
 table {
   width : 2000px;
   height : auto;
@@ -85,9 +109,4 @@ td {
   .btn-primary {
     width: 24%;
   }
-}
-
-nouislider {
-  margin-left: auto; 
-  margin-right: auto;
 }

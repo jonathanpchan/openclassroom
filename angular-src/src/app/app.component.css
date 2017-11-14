@@ -1,7 +1,7 @@
 .main-grid {
     display: grid;
     grid-template-columns: 2.5% 95% 2.5%;
-    grid-template-rows: 50px 50px 100%;
+    grid-template-rows: 50px 63px 100%;
     grid-template-areas: 
         "nav    nav     nav"
         "fm     fm      fm"

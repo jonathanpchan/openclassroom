@@ -14,6 +14,8 @@ export class ScheduleComponent implements OnInit {
   home : boolean = true;
   add : boolean = false;
   delete : boolean = false;
+  finalize : boolean = false;
+  isFinalized : boolean = false;
   deleteMessage : String;
   currItem = null;
 
@@ -77,6 +79,15 @@ export class ScheduleComponent implements OnInit {
       this.flashMessage.show('Course successfully removed', {cssClass: 'alert-success', timeout: 3000})
     }
     this.delete = false;
+  }
+
+  clickFinalize() {
+    this.finalize = true;
+  }
+
+  onFinalize(confirm : boolean) {
+    this.isFinalized = confirm;
+    this.finalize = false;
   }
 
   // Sort by Course, then Course Num, then by Course Sec

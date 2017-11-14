@@ -7,6 +7,7 @@ const User = require('../models/user');
 const mongoose = require('mongoose');
 const Course = require('../models/course');
 const CS = mongoose.model('Courses', Course.CS.Schema);
+//const Buddy = require('../models/classroom');
 
 // Register POST request
 router.post('/register', (req, res, next) => {

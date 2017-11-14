@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import {BuildingsService} from '../../services/buildings.service';
 import {Router} from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages';
+//import { RoomComponent } from '../room/room.component';
+
 
 @Component({
   selector: 'app-find',
@@ -13,6 +15,9 @@ export class FindComponent implements OnInit {
   // Values that are passed from Find-Home Component
   @Input() name : string;
   day : string;
+  // Values passed to room components
+  buildingName : String = "";
+  roomNumber : String = "";
 
   // Times displayed on the front end but currently does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["8:00 AM", "9:00 AM",
@@ -49,6 +54,8 @@ export class FindComponent implements OnInit {
   * 6) Store in buildingList the query
   */
   show(day : string) {
+    document.getElementById("room").style.display = "none";
+
     // 0) Re-initialize if navigate away from current page
     if (document.getElementById("table").style.display == "none")
     {
@@ -156,17 +163,23 @@ export class FindComponent implements OnInit {
     return t;
   }
 
-  // getRoomInfo(building_name, room_num)
-  // {
-  //   var email =  JSON.parse(localStorage.getItem('user')).email
-  //   //hide everything else
-  //   document.getElementById("buttons").style.display = "none";
-  //   document.getElementById("all").style.display = "none";
-  //   document.getElementById("table").style.display = "none";
-  //   document.getElementById("table-2").style.display = "none";
-  //   document.getElementById("now").style.display = "none";
-  //   document.getElementById("times").style.display = "none";
-  //   document.getElementById("room").style.display = "block";
-  //   console.log(building_name, room_num, email);
-  // }
+  getRoomInfo(building_name, room_num)
+  {
+    var email =  JSON.parse(localStorage.getItem('user')).email
+
+    //set new inputs
+    this.buildingName = building_name;
+    this.roomNumber = room_num;
+    //hide table and show room
+    document.getElementById("table").style.display = "none";
+    document.getElementById("room").style.display = "block";
+
+    //hide everything else
+    // document.getElementById("buttons").style.display = "none";
+    // document.getElementById("all").style.display = "none";
+    // document.getElementById("table-2").style.display = "none";
+    // document.getElementById("now").style.display = "none";
+    // document.getElementById("times").style.display = "none";
+
+  }
 }

@@ -1,8 +1,3 @@
-h1 {
-    text-align: center;
-    font-weight: bold;
-}
-
 .table-title {
     background-color: #d7d1c5;
 }
@@ -18,6 +13,14 @@ td {
     border: 5px #eee solid;
 }
 
+.left-column {
+    position: sticky;
+    background-color: inherit;
+    left: 0px;
+    z-index: 20;
+    min-width: 100px;
+}
+
 .trash { 
     background-color: white; 
 } 
@@ -25,3 +28,9 @@ td {
 .trash:hover { 
     color: red; 
 } 
+
+.finalize {
+    border: none;
+    text-align: right;
+    padding-bottom: 5px;
+}

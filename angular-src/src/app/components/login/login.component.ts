@@ -16,8 +16,7 @@ export class LoginComponent implements OnInit {
                 private router: Router,
                 private flashMessage: FlashMessagesService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onLoginSubmit(){
     const user = {
