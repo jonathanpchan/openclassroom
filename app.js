@@ -107,5 +107,5 @@ const port = 3000; // For testing
 
 // Starts up chat server on separate port
 server.listen(port, () => {
-    console.log('Chat Server started on port '+port);
+    console.log('Server started on port '+port);
 })

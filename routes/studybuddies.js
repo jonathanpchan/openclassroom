@@ -7,6 +7,7 @@ const User = require('../models/user');
 const mongoose = require('mongoose');
 const StudyBuddy = require('../models/StudyBuddyModel');
 const CS = mongoose.model('StudyBuddy', StudyBuddy.CS.Schema);
+
 module.exports = router;
 
 router.post('/add', (req, res) => { //request and response
@@ -30,6 +31,7 @@ router.post('/remove', (req, res) => { //request and response
 })
 
 router.post('/get', (req, res) => {
+    console.log(req.body.email)
     if(req.body.email){
         StudyBuddy.getBuddies(req.body.email, (err, x) => {
             if (err) {

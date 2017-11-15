@@ -93,28 +93,28 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__ = __webpack_require__(133);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_validate_service__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_auth_service__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__services_buildings_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__services_chat_service__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_course_course_component__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_chat_chat_component__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_studybuddy_studybuddy_component__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_room_room_component__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_chat_chat_component__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_course_course_component__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_devguide_devguide_component__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_find_find_component__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_find_home_find_home_component__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_find_now_find_now_component__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_find_times_find_times_component__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_home_home_component__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_login_login_component__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_navbar_navbar_component__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_register_register_component__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_room_room_component__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_schedule_schedule_component__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_studybuddy_studybuddy_component__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_usermanual_usermanual_component__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_validate_service__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_auth_service__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_buildings_service__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_chat_service__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__guards_auth_guard__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27_angular2_flash_messages__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -139,13 +139,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
+
+
+
 // manually written after using ng g service _______"
-
-
-
-
-
-
 
 
 
@@ -154,18 +154,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // Routes for the components (will be protected later)
 var appRoutes = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__["a" /* HomeComponent */] },
-    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__["a" /* RegisterComponent */] },
-    { path: 'login', component: __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__["a" /* LoginComponent */] },
-    { path: 'schedule', component: __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__["a" /* ScheduleComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__["a" /* AuthGuard */]] },
-    { path: 'usermanual', component: __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__["a" /* UsermanualComponent */] },
-    { path: 'devguide', component: __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__["a" /* DevguideComponent */] },
-    { path: 'findclassroom', component: __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__["a" /* FindHomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__["a" /* AuthGuard */]] },
-    { path: 'findclassroom/now', component: __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__["a" /* FindNowComponent */] },
-    { path: 'findclassroom/building', component: __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__["a" /* FindComponent */] },
-    { path: 'findclassroom/time', component: __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__["a" /* FindTimesComponent */] },
-    { path: 'chat', component: __WEBPACK_IMPORTED_MODULE_25__components_chat_chat_component__["a" /* ChatComponent */] },
-    { path: 'studybuddy', component: __WEBPACK_IMPORTED_MODULE_26__components_studybuddy_studybuddy_component__["a" /* StudybuddyComponent */] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_14__components_home_home_component__["a" /* HomeComponent */] },
+    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_17__components_register_register_component__["a" /* RegisterComponent */] },
+    { path: 'login', component: __WEBPACK_IMPORTED_MODULE_15__components_login_login_component__["a" /* LoginComponent */] },
+    { path: 'schedule', component: __WEBPACK_IMPORTED_MODULE_19__components_schedule_schedule_component__["a" /* ScheduleComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_26__guards_auth_guard__["a" /* AuthGuard */]] },
+    { path: 'usermanual', component: __WEBPACK_IMPORTED_MODULE_21__components_usermanual_usermanual_component__["a" /* UsermanualComponent */] },
+    { path: 'devguide', component: __WEBPACK_IMPORTED_MODULE_9__components_devguide_devguide_component__["a" /* DevguideComponent */] },
+    { path: 'findclassroom', component: __WEBPACK_IMPORTED_MODULE_11__components_find_home_find_home_component__["a" /* FindHomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_26__guards_auth_guard__["a" /* AuthGuard */]] },
+    { path: 'findclassroom/now', component: __WEBPACK_IMPORTED_MODULE_12__components_find_now_find_now_component__["a" /* FindNowComponent */] },
+    { path: 'findclassroom/building', component: __WEBPACK_IMPORTED_MODULE_10__components_find_find_component__["a" /* FindComponent */] },
+    { path: 'findclassroom/time', component: __WEBPACK_IMPORTED_MODULE_13__components_find_times_find_times_component__["a" /* FindTimesComponent */] },
+    { path: 'chat', component: __WEBPACK_IMPORTED_MODULE_7__components_chat_chat_component__["a" /* ChatComponent */] },
+    { path: 'studybuddy', component: __WEBPACK_IMPORTED_MODULE_20__components_studybuddy_studybuddy_component__["a" /* StudybuddyComponent */] },
     { path: '**', redirectTo: '' }
 ];
 var AppModule = (function () {
@@ -177,31 +177,31 @@ AppModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
             __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_7__components_home_home_component__["a" /* HomeComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__["a" /* LoginComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__components_register_register_component__["a" /* RegisterComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__components_schedule_schedule_component__["a" /* ScheduleComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__components_usermanual_usermanual_component__["a" /* UsermanualComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__components_devguide_devguide_component__["a" /* DevguideComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__components_navbar_navbar_component__["a" /* NavbarComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__components_find_find_component__["a" /* FindComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__components_home_home_component__["a" /* HomeComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__components_login_login_component__["a" /* LoginComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__components_register_register_component__["a" /* RegisterComponent */],
+            __WEBPACK_IMPORTED_MODULE_19__components_schedule_schedule_component__["a" /* ScheduleComponent */],
+            __WEBPACK_IMPORTED_MODULE_21__components_usermanual_usermanual_component__["a" /* UsermanualComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_devguide_devguide_component__["a" /* DevguideComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__components_navbar_navbar_component__["a" /* NavbarComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_find_find_component__["a" /* FindComponent */],
             __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__["NouisliderComponent"],
-            __WEBPACK_IMPORTED_MODULE_15__components_find_home_find_home_component__["a" /* FindHomeComponent */],
-            __WEBPACK_IMPORTED_MODULE_22__components_find_now_find_now_component__["a" /* FindNowComponent */],
-            __WEBPACK_IMPORTED_MODULE_23__components_find_times_find_times_component__["a" /* FindTimesComponent */],
-            __WEBPACK_IMPORTED_MODULE_24__components_course_course_component__["a" /* CourseComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__components_chat_chat_component__["a" /* ChatComponent */],
-            __WEBPACK_IMPORTED_MODULE_26__components_studybuddy_studybuddy_component__["a" /* StudybuddyComponent */],
-            __WEBPACK_IMPORTED_MODULE_27__components_room_room_component__["a" /* RoomComponent */]
+            __WEBPACK_IMPORTED_MODULE_11__components_find_home_find_home_component__["a" /* FindHomeComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__components_find_now_find_now_component__["a" /* FindNowComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__components_find_times_find_times_component__["a" /* FindTimesComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__components_course_course_component__["a" /* CourseComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__components_chat_chat_component__["a" /* ChatComponent */],
+            __WEBPACK_IMPORTED_MODULE_20__components_studybuddy_studybuddy_component__["a" /* StudybuddyComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__components_room_room_component__["a" /* RoomComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormsModule"],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["HttpModule"],
             __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(appRoutes),
-            __WEBPACK_IMPORTED_MODULE_19_angular2_flash_messages__["FlashMessagesModule"]
+            __WEBPACK_IMPORTED_MODULE_27_angular2_flash_messages__["FlashMessagesModule"]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_16__services_validate_service__["a" /* ValidateService */], __WEBPACK_IMPORTED_MODULE_17__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_18__guards_auth_guard__["a" /* AuthGuard */], __WEBPACK_IMPORTED_MODULE_20__services_buildings_service__["a" /* BuildingsService */], __WEBPACK_IMPORTED_MODULE_21__services_chat_service__["a" /* ChatService */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_22__services_validate_service__["a" /* ValidateService */], __WEBPACK_IMPORTED_MODULE_23__services_auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_26__guards_auth_guard__["a" /* AuthGuard */], __WEBPACK_IMPORTED_MODULE_24__services_buildings_service__["a" /* BuildingsService */], __WEBPACK_IMPORTED_MODULE_25__services_chat_service__["a" /* ChatService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);

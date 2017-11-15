@@ -7,29 +7,30 @@ import { NouisliderComponent } from 'ng2-nouislider';
 
 // Automatically written in using "ng g component ________" in the components folder
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { ScheduleComponent } from './components/schedule/schedule.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { UsermanualComponent } from './components/usermanual/usermanual.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { CourseComponent } from './components/course/course.component';
 import { DevguideComponent } from './components/devguide/devguide.component';
 import { FindComponent } from './components/find/find.component';
 import { FindHomeComponent } from './components/find-home/find-home.component';
+import { FindNowComponent } from './components/find-now/find-now.component';
+import { FindTimesComponent } from './components/find-times/find-times.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { RegisterComponent } from './components/register/register.component';
+import { RoomComponent } from './components/room/room.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { StudybuddyComponent } from './components/studybuddy/studybuddy.component';
+import { UsermanualComponent } from './components/usermanual/usermanual.component';
 
 // manually written after using ng g service _______"
 import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
-import {AuthGuard} from './guards/auth.guard';
-import {FlashMessagesModule} from 'angular2-flash-messages';
 import {BuildingsService} from './services/buildings.service';
 import { ChatService } from './services/chat.service';
-import { FindNowComponent } from './components/find-now/find-now.component';
-import { FindTimesComponent } from './components/find-times/find-times.component';
-import { CourseComponent } from './components/course/course.component';
-import { ChatComponent } from './components/chat/chat.component';
-import { StudybuddyComponent } from './components/studybuddy/studybuddy.component';
-import { RoomComponent } from './components/room/room.component';
+import { StudyBuddyService } from './services/studybuddy.service';
+import { AuthGuard } from './guards/auth.guard';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 // Routes for the components (will be protected later)
 const appRoutes: Routes = [

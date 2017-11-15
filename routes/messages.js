@@ -20,7 +20,6 @@ router.post('/create', (req, res) =>{
 //send a message to a messages object using ID, sender, and msg content
 router.post('/send', (req, res) =>{
     if (req.body.sender != null ) {
-        console.log(req.body.sender);
     Message.saveMessage(req.body.sender, req.body.msg, req.body.ID, (err, msgs) => {
         return res.json(msgs);
 })} else {
