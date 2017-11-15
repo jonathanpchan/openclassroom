@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { AuthService } from '../../services/auth.service';
+import { StudyBuddyService } from '../../services/studybuddy.service';
+import { Router } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-schedule',
@@ -19,7 +20,7 @@ export class ScheduleComponent implements OnInit {
   deleteMessage : String;
   currItem = null;
 
-  constructor(private authService:AuthService, private router:Router, private flashMessage : FlashMessagesService) { }
+  constructor(private authService:AuthService, private studyBuddyService: StudyBuddyService, private flashMessage : FlashMessagesService) { }
 
   ngOnInit() {
     this.schedule = []
@@ -86,6 +87,9 @@ export class ScheduleComponent implements OnInit {
   }
 
   onFinalize(confirm : boolean) {
+    if (confirm) {
+      this.studyBuddyService.joinStudyBuddies(JSON.parse(localStorage.getItem('user'))["email"]);
+    }
     this.isFinalized = confirm;
     this.finalize = false;
   }

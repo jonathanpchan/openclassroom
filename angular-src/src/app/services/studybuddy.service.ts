@@ -8,9 +8,16 @@ export class StudyBuddyService {
 
   constructor(private http: Http) { }
 
-  // Get Study Buddies based on classes
-  getStudyBuddies() {
+  joinStudyBuddies(email) {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/studybuddies/get', {email: JSON.parse(localStorage.getItem('user'))["email"]},{headers: headers}).map(res => res.json());
+    return this.http.post('http://localhost:3000/studybuddies/add', { email: email },{headers: headers}).map(res => res.json());
+    // return this.http.post('studybuddies/add', {email: JSON.parse(localStorage.getItem('user'))["email"]},{headers: headers}).map(res => res.json());
+  }
+
+  // Get Study Buddies based on classes
+  getStudyBuddies(email) {
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
+    return this.http.post('http://localhost:3000/studybuddies/get', { email: email },{headers: headers}).map(res => res.json());
+    // return this.http.post('studybuddies/get', {email: JSON.parse(localStorage.getItem('user'))["email"]},{headers: headers}).map(res => res.json());
   }
 }

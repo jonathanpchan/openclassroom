@@ -34,40 +34,40 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 
 // Routes for the components (will be protected later)
 const appRoutes: Routes = [
-  {path:'', component: HomeComponent },
-  {path:'register', component: RegisterComponent },
-  {path:'login', component: LoginComponent },
-  {path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
-  {path:'usermanual', component: UsermanualComponent},
-  {path:'devguide', component: DevguideComponent},
-  {path:'findclassroom', component: FindHomeComponent, canActivate:[AuthGuard] },
-  {path:'findclassroom/now', component: FindNowComponent},
-  {path:'findclassroom/building', component: FindComponent},
-  {path:'findclassroom/time', component: FindTimesComponent},
-  {path:'chat', component: ChatComponent},
-  {path:'studybuddy', component: StudybuddyComponent},
-  {path:'**', redirectTo: ''}
+  { path:'', component: HomeComponent },
+  { path:'register', component: RegisterComponent },
+  { path:'login', component: LoginComponent },
+  { path:'schedule', component: ScheduleComponent, canActivate:[AuthGuard] },
+  { path:'usermanual', component: UsermanualComponent },
+  { path:'devguide', component: DevguideComponent },
+  { path:'findclassroom', component: FindHomeComponent, canActivate:[AuthGuard] },
+  { path:'findclassroom/now', component: FindNowComponent },
+  { path:'findclassroom/building', component: FindComponent },
+  { path:'findclassroom/time', component: FindTimesComponent },
+  { path:'chat', component: ChatComponent },
+  { path:'studybuddy', component: StudybuddyComponent },
+  { path:'**', redirectTo: '' }
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    LoginComponent,
-    RegisterComponent,
-    ScheduleComponent,
-    UsermanualComponent,
+    ChatComponent,
+    CourseComponent,
     DevguideComponent,
-    NavbarComponent,
     FindComponent,
-    NouisliderComponent,
     FindHomeComponent,
     FindNowComponent,
     FindTimesComponent,
-    CourseComponent,
-    ChatComponent,
+    HomeComponent,
+    LoginComponent,
+    NavbarComponent,
+    NouisliderComponent,
+    RegisterComponent,
+    RoomComponent,
+    ScheduleComponent,
     StudybuddyComponent,
-    RoomComponent
+    UsermanualComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +76,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard, BuildingsService, ChatService],
+  providers: [ValidateService, AuthService, AuthGuard, BuildingsService, ChatService, StudyBuddyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

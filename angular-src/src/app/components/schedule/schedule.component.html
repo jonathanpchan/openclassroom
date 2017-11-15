@@ -27,13 +27,13 @@
               <td>{{sched.location}}</td> 
               <td>{{sched.prof}}</td> 
               <!-- https://getbootstrap.com/docs/3.3/components/ --> 
-              <td style="padding: 0;"> 
+              <td *ngIf="!isFinalized" style="padding: 0;"> 
                 <button class="btn trash" (click)="clickDelete(i)"> 
                   <span class="fa fa-trash" aria-hidden="true"></span> 
                 </button> 
               </td> 
             </tr>
-            <tr>
+            <tr *ngIf="!isFinalized">
               <td colspan="6" style="padding: 0px">
                 <button class="btn btn-primary" style="width : 100%" value="Add Course" (click)="clickAdd()">
                   <span class="fa fa-plus" aria-hidden="true"></span> Add Course
