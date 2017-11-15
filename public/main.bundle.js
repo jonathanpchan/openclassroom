@@ -290,19 +290,6 @@ var ChatComponent = (function () {
         // Clear message
         this.message = '';
     };
-    // TODO: USED WHILE WE DO NOT HAVE THE REST OF THE FUNCTIONALITY OF OUR CODE
-    ChatComponent.prototype.stub = function () {
-        // Make sure there is a connection, there is a message, and the message is not just white space
-        if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
-            this.flashMessage.show('Cannot send message. Did you join a room?', { cssClass: 'alert-danger', timeout: 3000 });
-        }
-        else {
-            // Send message to room with message
-            this.chatService.sendMessage(this.currentRoom, this.sendee, this.message).subscribe();
-        }
-        // Clear message
-        this.message = '';
-    };
     ChatComponent.prototype.back = function () {
         this.sendee = null;
         this.showBack = false;
@@ -1553,18 +1540,21 @@ var StudybuddyComponent = (function () {
         this.email = JSON.parse(localStorage.getItem('user'))["email"];
         this.schedule = null;
         this.buddies = null;
+        this.test = null;
+        this.loaded = false;
     }
     StudybuddyComponent.prototype.ngOnInit = function () {
         //console.log(this.email);
         var _this = this;
-        this.buddies = JSON.parse('{"res":[{"classes":[{"name":"CECS 444","buddies":[{"name":"guy0","id":"xxxxx"},{"name":"guy1","id":"xxxxx"},{"name":"guy2","id":"xxxxx"},{"name":"guy3","id":"xxxxx"}]},{"name":"CECS 445","buddies":[{"name":"guy4","id":"xxxxx"},{"name":"guy5","id":"xxxxx"},{"name":"guy6","id":"xxxxx"},{"name":"guy7","id":"xxxxx"}]},{"name":"CECS 446","buddies":[{"name":"guy8","id":"xxxxx"},{"name":"guy9","id":"xxxxx"}]}]}]}');
-        this.buddies = this.buddies.res[0].classes;
-        console.log(this.buddies);
         this.schedule = [];
         this.authService.getSchedule({ email: this.email }).subscribe(function (schedule) {
             _this.schedule = schedule.schedule;
             _this.schedule.sort(_this.sortByCourseName);
             //console.log(this.schedule);
+            _this.buddies = JSON.parse('{"res":[{"classes":[{"name":"CECS 444","buddies":[{"name":"guy0","id":"xxxxx"},{"name":"guy1","id":"xxxxx"},{"name":"guy2","id":"xxxxx"},{"name":"guy3","id":"xxxxx"}]},{"name":"CECS 445","buddies":[{"name":"guy4","id":"xxxxx"},{"name":"guy5","id":"xxxxx"},{"name":"guy6","id":"xxxxx"},{"name":"guy7","id":"xxxxx"}]},{"name":"CECS 446","buddies":[{"name":"guy8","id":"xxxxx"},{"name":"guy9","id":"xxxxx"}]}]}]}');
+            _this.buddies = _this.buddies.res[0].classes;
+            console.log(_this.buddies);
+            setTimeout(_this.lol(), 100); // run donothing after 0.5 seconds
         }, function (err) {
             console.log(err);
         });
@@ -1586,17 +1576,27 @@ var StudybuddyComponent = (function () {
         }
     };
     StudybuddyComponent.prototype.showBuddies = function () {
-        var input = document.getElementById('courseSelect').value;
-        var course = input.split(" ");
-        this.courseName = course[0];
-        this.courseNum = course[1];
-        console.log(this.courseName + " " + this.courseNum);
+        var index = document.getElementById('courseSelect').selectedIndex - 1;
+        this.test = this.buddies[index];
+        console.log("index of course - " + index);
+        console.log(this.buddies);
+        document.getElementById("buddylist").style.display = "inline-block";
+        // var input = (<HTMLInputElement>document.getElementById('courseSelect')).value;
+        // var course = input.split(" ");
+        // this.courseName = course[0];
+        // this.courseNum = course[1];
+        // console.log(this.courseName + " " + this.courseNum);
+        // console.log("test\n" + this.test.name);
+        // console.log("test\n" + this,test.buddies);
         //TODO implement routes get data and change it
         //show study buddies now, we don't need to hide it anymore
-        document.getElementById("studdyBuddies").style.display = "inline-block";
     };
     StudybuddyComponent.prototype.message = function (name) {
         console.log("messaging " + name);
+    };
+    StudybuddyComponent.prototype.lol = function () {
+        this.loaded = true;
+        document.getElementById("buddylist").style.display = "inline-block";
     };
     return StudybuddyComponent;
 }());
@@ -2010,7 +2010,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n 
 /***/ 235:
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n    <head></head>\r\n    <body class=\"grid\">\r\n      <div [ngClass]=\"sendee==null ? 'msglist' : 'msglist-hide'\">\r\n        <div class=\"msglist-title\">OC Messenger</div>\r\n        <ul *ngIf=\"names.length > 0\" class=\"list-group msglist-users\">\r\n          <li class=\"list-group-item msglist-user\" *ngFor=\"let name of names\">\r\n            <button class=\"btn msglist-btn\" (click)=\"joinRoom(name)\">{{name}}</button>\r\n          </li>\r\n        </ul>\r\n        <ul *ngIf=\"names.length <= 0\" class=\"list-group msglist-users\">\r\n          <h2 style=\"text-align: center; top: 50%;\">Go to the Study Buddy Tab to add some buddies!</h2>\r\n        </ul>\r\n      </div>\r\n      <div [ngClass]=\"sendee==null ? 'chat-hide' : 'chat'\">\r\n        <div class=\"chat-title\">\r\n          <button *ngIf=\"showBack\" class=\"btn\" [ngClass]=\"showBack ? 'back' : 'back-hide'\" (click)=\"back()\">\r\n            <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span>Back\r\n          </button>\r\n          <div class=\"announcer\">{{sendee}}</div>\r\n        </div>\r\n        <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->\r\n        <div class=\"chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n          <div *ngFor=\"let message of messages\">\r\n            <div *ngIf=\"message.sender!=sender\" class=\"sendee\">\r\n              <p class=\"chatmsg\">{{message.message}}</p>\r\n            </div>\r\n            <div *ngIf=\"message.sender==sender\" class=\"sender\">\r\n              <p class=\"chatmsg\">{{message.message}}</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      <form class=\"chat-form\" (submit)=\"sendMessage()\">\r\n        <input type=\"text\" class=\"chat-text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n        <button type=\"submit\" class=\"btn btn-primary chat-submit\">\r\n          <span class=\"fa fa-send\" aria-hidden=\"true\"></span>\r\n        </button>\r\n      </form>\r\n      </div>\r\n    </body>\r\n    <!-- For testing Purposes -->\r\n    <button class=\"btn btn-default\" style=\"float: right\" (click)=\"stub()\">Other user</button>\r\n  </html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body class=\"grid\">\r\n    <div [ngClass]=\"sendee==null ? 'msglist' : 'msglist-hide'\">\r\n      <div class=\"msglist-title\">OC Messenger</div>\r\n      <ul *ngIf=\"names.length > 0\" class=\"list-group msglist-users\">\r\n        <li class=\"list-group-item msglist-user\" *ngFor=\"let name of names\">\r\n          <button class=\"btn msglist-btn\" (click)=\"joinRoom(name)\">{{name}}</button>\r\n        </li>\r\n      </ul>\r\n      <ul *ngIf=\"names.length <= 0\" class=\"list-group msglist-users\">\r\n        <h2 style=\"text-align: center; top: 50%;\">Go to the Study Buddy Tab to add some buddies!</h2>\r\n      </ul>\r\n    </div>\r\n    <div [ngClass]=\"sendee==null ? 'chat-hide' : 'chat'\">\r\n      <div class=\"chat-title\">\r\n        <button *ngIf=\"showBack\" class=\"btn\" [ngClass]=\"showBack ? 'back' : 'back-hide'\" (click)=\"back()\">\r\n          <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span>Back\r\n        </button>\r\n        <div class=\"announcer\">{{sendee}}</div>\r\n      </div>\r\n      <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->\r\n      <div class=\"chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n        <div *ngFor=\"let message of messages\">\r\n          <div *ngIf=\"message.sender!=sender\" class=\"sendee\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n          <div *ngIf=\"message.sender==sender\" class=\"sender\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    <form class=\"chat-form\" (submit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"chat-text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"btn btn-primary chat-submit\">\r\n        <span class=\"fa fa-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n    </div>\r\n  </body>\r\n</html>"
 
 /***/ }),
 
@@ -2101,7 +2101,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user
 /***/ 248:
 /***/ (function(module, exports) {
 
-module.exports = "<h1 style=\"text-align: center\">Pick A Course</h1>\r\n<select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n  <option selected hidden></option>\r\n  <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n</select>\r\n\r\n\r\n<div *ngFor=\"let class of buddies\">\r\n\r\n  <h1 class = \"courseTitle\">Potential Study Buddies For {{class.name}}</h1>\r\n  <div class=\"studdyBuddies\">\r\n    <h3 class=\"buddy\" *ngFor = \"let buddy of class.buddies\" (click)=\"message(buddy.name)\">{{buddy.name}}</h3>\r\n  </div>\r\n  <!-- <h3 class=\"buddy\" (click)=\"message()\" >Ricky Bobby</h3>\r\n  <h3 class=\"buddy\">Santa Claus</h3>\r\n  <h3 class=\"buddy\">Lemony Snicket</h3>\r\n  <h3 class=\"buddy\">Gandalf the Grey</h3> -->\r\n</div>\r\n"
+module.exports = "<h1 style=\"text-align: center\">Pick A Course</h1>\r\n<select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n  <option selected hidden></option>\r\n  <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n</select>\r\n\r\n\r\n<div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n\r\n  <h1 class = \"courseTitle\">Potential Study Buddies For {{test.name}}</h1>\r\n  <div class=\"studdyBuddies\">\r\n    <h3 class=\"buddy\" *ngFor = \"let buddy of test.buddies\" (click)=\"message(buddy.name)\">{{buddy.name}}</h3>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2425,8 +2425,8 @@ var ChatService = (function () {
     ChatService.prototype.joinRoom = function (ID) {
         // Connect once while on that page
         if (this.socket == null) {
-            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("http://localhost:4020/");
-            // TODO: Deployment route
+            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("http://localhost:3000/");
+            // this.socket = io.connect("https://openclassroom.herokuapp.com/");
         }
         this.socket.emit('join room', ID);
     };

@@ -15,8 +15,8 @@ const config = require('./config/database');
 // Require for routing
 const app = express();
 // Require for Chat Database
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 // =============== Routes ========================
 // Requires users and buildings from routes folder
@@ -104,13 +104,8 @@ io.on('connection', (socket) => {
 // Port Number
 const port = 3000; // For testing
 // const port = process.env.PORT || 8080; // For Deployment
-const chatPort = 4020; // TODO: Deployment route
 
-// Takes a port and starts up server
-app.listen(port, () => {
-    console.log('Server started on port '+port);
-})
 // Starts up chat server on separate port
-http.listen(chatPort, () => {
-    console.log('Chat Server started on port '+chatPort);
+server.listen(port, () => {
+    console.log('Chat Server started on port '+port);
 })
