@@ -27,7 +27,7 @@ export class ChatService {
     // Connect once while on that page
     if (this.socket == null) {
       // this.socket = io.connect("http://localhost:4020/");
-      this.socket = io.connect("https://openclassroom.herokuapp.com:4020/");
+      this.socket = io.connect("https://openclassroom.herokuapp.com/");
       // TODO: Deployment route
     }
     this.socket.emit('join room', ID);
