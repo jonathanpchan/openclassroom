@@ -8,7 +8,7 @@ const CS = mongoose.model('Courses', classes.CS.Schema);
 const buddy = require('../models/StudyBuddyModel.js');
 const cs = mongoose.model('StudyBuddy', buddy.CS.Schema);
 const um = require('../models/user');
-const us = mongoose.model('User', um.User.Schema)
+const us = mongoose.model('User', um.schema)
 
 
 

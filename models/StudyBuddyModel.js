@@ -27,7 +27,7 @@ const ClassSchema = new mongoose.Schema({
         oTue: {type: [BaseSched]},
         oWed: {type: [BaseSched]},
         oThu: {type: [BaseSched]},
-        buddies: {type: [String]}
+        buddies: {type: [{chatRoomId: {type: String}, name: {type: String}}]}
     }],
     isChanged : {type: Boolean, default: false}
 })

@@ -142,7 +142,7 @@ function match(){
                         }
                         else id = mainArr[j].email + "+" + mainArr[i].email
 
-                        id = Buffer.from(id).toString('hex')
+                        //id = Buffer.from(id).toString('hex')
 
                         //add to buddies list
                         tempBuddies.push({id: id, score: counter, otherUser: mainArr[j].email})
@@ -154,7 +154,9 @@ function match(){
                 //console.log(tempBuddies)
                 var buddies = []
                 tempBuddies.forEach(function(element) {
-                    buddies.push(element.id)
+                    var nameArr = element.id.split("+")
+                    nameArr = nameArr[1].split("@")
+                    buddies.push( {chatRoomId: Buffer.from(element.id).toString('hex'), name: nameArr[0]})
                 }, this);
                 //add to db
                 //buddies = ["hela", "bela", "mela"]
