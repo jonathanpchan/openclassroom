@@ -4,11 +4,10 @@
   <option *ngFor="let class of schedule"> {{class.name}} {{class.num}}</option>
 </select>
 
-
 <div id="buddylist" style="display: none" *ngIf="loaded">
 
-  <h1 class = "courseTitle">Potential Study Buddies For {{test.name}}</h1>
-  <div class="studdyBuddies">
-    <h3 class="buddy" *ngFor = "let buddy of test.buddies" (click)="message(buddy.name)">{{buddy.name}}</h3>
+  <h1 class = "courseTitle">Potential Study Buddies For {{courseBuddies.name}}</h1>
+  <div class="studdyBuddies" *ngIf="loaded">
+    <h3 class="buddy" *ngFor = "let buddy of courseBuddies?.buddies let i = index" (click)="message(i)">{{buddy.name}}</h3>
   </div>
 </div>

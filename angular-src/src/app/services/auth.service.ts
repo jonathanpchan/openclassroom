@@ -87,6 +87,14 @@ export class AuthService {
     // return this.http.post(roominfo/addVote', {building, room, email, item, pos, nvote}, {headers: headers}).map(res => res.json());
   }
 
+
+  //=========== Study Buddy ======================
+  getStudyBuddies(email) : Observable<any> {
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
+    return this.http.post('http://localhost:3000/studyBuddies/get', email, {headers: headers}).map(res => res.json());
+    // return this.http.post('studyBuddies/get', email, {headers: headers}).map(res => res.json());
+  }
+
   //=========== User Token ===================
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
