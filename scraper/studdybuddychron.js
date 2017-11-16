@@ -172,10 +172,10 @@ function match(){
                     {new: true},
                     (err, newdoc) => {
                         console.log(newdoc.sec)
+                        setFlag(document.sec, false)
                     }
                 )
             }//outer loop
-            setFlag(document.sec, false)
         }, this)
         console.log(count)
         //closecon()
