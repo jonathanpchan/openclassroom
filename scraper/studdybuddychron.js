@@ -17,7 +17,7 @@ mongoose.connection.on('error', () => {
     console.log('Database not connected:');})
 
 function closecon(){mongoose.connection.close(function() {
-    console.log('Disconnected from database'); })}  
+    console.log('Disconnected from database'); })}
 
     function hashCode(x){
         var hash = 0;
@@ -40,12 +40,12 @@ function closecon(){mongoose.connection.close(function() {
         if (st < 8*60) st = 0
         else st = st - 8*60
         if (et > 20*60) et = 20*60 - 5
-        else et = et - 8*60 
+        else et = et - 8*60
         for (var i =st/5; i < et/5; i++){
             arr[i] = 0;
         }
     }
-    
+
     function helper(arr){
         var retArr = new Array(144)
         if (arr.length == 0){
@@ -97,11 +97,11 @@ function match(){
                     if (cbb == null) {
                         console.log("Major ERROR!!!!")
                     }
-                    
+
                     mainArr.push({email : student.user, ot: cbb})
                     check = false;
                 })
-                
+
             }, this)
             //should have array here!! main is good to go
             if (debug > 0){
@@ -125,9 +125,9 @@ function match(){
                 for (var j = 0; j < mainArr.length; j++){
                     if (j == i) j++ //skip over self
                     if (j > mainArr.length - 1) break
-                
+
                     var counter = 0;
-                
+
                     for (var k = 0; k < 144; k++){
                         if (mainArr[i].ot[k] == 1 && mainArr[j].ot[k] == 1){
                             counter++
@@ -166,7 +166,7 @@ function match(){
                 //const SB2 = mongoose.model('StudyBuddy', StudyBuddy.CS.Schema);
                 SB.findByIdAndUpdate(document._id,
                     //{$set: {[item] : [strarr]}},
-                    {$addToSet: 
+                    {$addToSet:
                         {[item] : {$each: buddies} }
                     },
                     {new: true},
@@ -175,14 +175,26 @@ function match(){
                     }
                 )
             }//outer loop
-
+            setFlag(document.sec, false)
         }, this)
-
         console.log(count)
         //closecon()
     })
-    
     console.log("why does this not print")
+}
+
+//set flag to true + return success
+function setFlag(sec, flag) {
+    CS.findOneAndUpdate(
+        {sec : sec},
+        {
+            $set : {
+                "isChanged" : flag
+            }
+        }, {new: true}, function(err, doc) {
+            //console.log(doc)
+        }
+    )
 }
 
 match()

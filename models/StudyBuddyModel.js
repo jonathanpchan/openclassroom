@@ -16,6 +16,7 @@ const BaseSched = new mongoose.Schema({
     location : {type: String}, 
     prof : {type: String}, 
 })
+
 const ClassSchema = new mongoose.Schema({
     teacher : {type: String},
     dept: {type: String},
@@ -38,8 +39,6 @@ CS = module.exports = mongoose.model('StudyBuddy', ClassSchema );
 module.exports = {
     CS: CS
 }
-
-
 
 function placeByDay(arr , callback){
     function helperSort(a,b) {
@@ -144,52 +143,58 @@ function placeByDay(arr , callback){
 module.exports.addUser = function(eMail, callback) {
     //open times algorithm goes here
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
-        sched = doc.schedule
-        placeByDay(sched, otObj => {
-            //query each class in studybuddymodel (foreach)
-            sched.forEach( function (crs) {
-            //add to classroom
-            CS.findOneAndUpdate(
-                {"sec" : crs.sec, "students.user" : {$ne: eMail}},
-                {
-                    $addToSet: {
-                        "students": {
-                            user: eMail,
-                            oMon: otObj.omon,
-                            oTue: otObj.otue,
-                            oWed: otObj.owed,
-                            oThu: otObj.othu,
-                            buddies: []
+        var sched = doc.schedule
+        setFinalizedFlag(eMail, true, filler => {
+            placeByDay(sched, otObj => {
+                //query each class in studybuddymodel (foreach)
+                var counter = 0
+                sched.forEach(function (crs) {
+                    //add to classroom
+                    CS.findOneAndUpdate(
+                        {"sec": crs.sec, "students.user": {$ne: filler}},
+                        {
+                            $addToSet: {
+                                "students": {
+                                    user: filler,
+                                    oMon: otObj.omon,
+                                    oTue: otObj.otue,
+                                    oWed: otObj.owed,
+                                    oThu: otObj.othu,
+                                    buddies: []
+                                }
+                            }
+                        }, {new: true}, function (err, doc) {
+                            if (err) {
+                                callback(null, "Something went wrong when adding a student!")
+                                //console.log("Something went wrong when adding a student!");
+                            }
+                            if (doc == null) {
+                                callback(null, "Student is already in this section!");
+                                console.log(doc);
+                            }
+                            else {
+                                console.log(doc);
+                                //set flag to true + return success
+                                setFlag(crs.sec, true)
+                                counter++
+                                console.log("working");
+                                if(counter == sched.length - 1){
+                                    callback(null, "Student was successfully added to all classes.")
+                                }
+                            }
                         }
-                    }
-                }, {new: true}, function(err, doc) {
-                    if (err) {
-                        callback("Something went wrong when adding a student!")
-                        //console.log("Something went wrong when adding a student!");
-                    }
-                    if (doc == null) {
-                        //callback("Student is already in this section!");
-                        //console.log("Student is already in this section!");
-                    }
-                    else {
-                        //set flag to true + return success
-                        setFlag(crs.sec, true)
-                    }
-                }
-            )
+                    )
+                })
+            })
         })
-
-        })
-        
-    callback(null , "worked? maybe")
     })
 };
 
 //having trouble making a callback to show success/failure otherwise done
 module.exports.removeUser = function(eMail, callback) {
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
-        success = -1
         sched = doc.schedule
+        var counter = 0
         //query each class user's schedule in StudyBuddy Classroom schema
         sched.forEach( function (crs) {
             //add to classroom
@@ -201,22 +206,17 @@ module.exports.removeUser = function(eMail, callback) {
                 }, {new: true}, function(err, doc) {
                     if (err) {
                         console.log("Something went wrong when deleting the student!");
-                        success = 0
                     } else {
                         setFlag(crs.sec, true)
-                        success = 1
+                        counter++
+                        if(counter == sched.length - 1){
+                            setFinalizedFlag(eMail, false, null)
+                            callback(null, "All classes were successfully deleted")
+                        }
                     }
                 }
             )
         })
-
-        if(success == 1){
-            callback("Success! User deleted.")
-        } else if(success == 0) {
-            callback("Failure! Something went wrong.")
-        } else {
-            callback("damn u rly messed up")
-        }
     })
 };
 
@@ -234,6 +234,19 @@ function setFlag(sec, flag) {
             }
         }, {new: true}, function(err, doc) {
             //console.log(doc)
+        }
+    )
+}
+
+function setFinalizedFlag(eMail, flag, callback) {
+    us.findOneAndUpdate(
+        {email : eMail},
+        {
+            $set : {
+                "schedFinal" : flag
+            }
+        }, {new: true}, function(err, doc) {
+            callback(eMail)
         }
     )
 }
@@ -270,6 +283,7 @@ module.exports.getBuddies = function(eMail, callback) {
         }, this);
     })
 };
+
 //route for later
 // router.post('/test', (req,res, next) => {
 //     Buddy.getClass(req.body.crsID, (err, cls) => {

@@ -144,4 +144,35 @@ router.get('/courses', (req, res, next) => {
   });
 });
 
+/**Route to add a user to a buddylist
+ *
+ */
+router.post('/buddylist/add', (req, res) => {
+    User.addBuddy(req.body.email1, req.body.email2, req.body.user, req.body.chatID, (err, buddies) => {
+    if(buddies == null) {
+      console.log(buddies)
+      return res.json({success: false, msg: 'User already added.'})
+    } else {
+      console.log(buddies)
+      return res.json({success: true, buddies})
+    }
+  })
+})
+
+/**Route to retrieve a user's buddylist
+ * Params: req.body.email
+ *
+ */
+router.post('/buddylist', (req, res) => {
+  User.getBuddyList(req.body.email, (err, buddies) => {
+      return res.json(buddies);
+  })
+})
+
+router.post('/schedule/final', (req, res) => {
+  User.getSchedFlag(req.body.email, (err, flag) => {
+    return res.json(flag);
+  })
+})
+
 module.exports = router;

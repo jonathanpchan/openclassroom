@@ -28,7 +28,13 @@ const UserSchema = mongoose.Schema({
   password: { type: String, required: true },
   regdate: { type: Date, required: true },
   emailVerified: {type: Boolean, required: false},
-  schedule: { type: [classesSchema] }
+    schedFinal : {type: Boolean, default: false},
+  schedule: { type: [classesSchema] },
+  buddyList: {type: [{
+      chatRoomId: {type: String},
+      user: {type: String},
+      email: {type: String}
+  }]}
 });
 
 
@@ -75,11 +81,22 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }
 }
 
+/**
+ *
+ * @param email
+ * @param callback
+ */
 // Get schedule based on email
 module.exports.getSchedule = function(email, callback) {
   User.findOne({ email : email }, {schedule : 1, _id : 0}, callback);
 }
 
+/**
+ *
+ * @param eMail
+ * @param crsID
+ * @param callback
+ */
 // Add schedule item based on email and section #
 module.exports.addScheduleItem = function(eMail, crsID, callback) {
     CS.find({'courses.sec' : crsID}, {'name' : 1, 'courses.$' : 1}, (err, x) => {
@@ -113,6 +130,12 @@ module.exports.addScheduleItem = function(eMail, crsID, callback) {
 };
 
 // Delete section number based on email and section #
+/**
+ *
+ * @param eMail
+ * @param crsID
+ * @param callback
+ */
 module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
     User.findOneAndUpdate(
         {"email": eMail}, {
@@ -126,3 +149,55 @@ module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
             User.find({email: eMail}, {schedule: 1, _id:0}, callback);
         })
 };
+
+/**Adds a user to user's buddylist
+ *
+ * @param eMail1 user's buddylist
+ * @param eMail2 user being added
+ * @param user username of new buddy
+ * @param chatID chatRoom of two users
+ * @param callback route call
+ */
+module.exports.addBuddy = function( eMail1, eMail2, user, chatID, callback) {
+    User.findOneAndUpdate(
+        {"email" : eMail1, "buddyList.user" : {$ne : user}},
+        {
+            $addToSet: {
+                "buddyList": {
+                    "chatRoomId": chatID,
+                    "user": user,
+                    "email": eMail2
+                }
+            }
+        }, {new: true}, function(err, doc) {
+            if (err) {
+                callback("Something went wrong when adding a student!")
+                //console.log("Something went wrong when adding a student!");
+            }
+            if (doc == null) {
+                console.log(doc);
+                callback(null)
+            }
+            else {
+                User.find({email: eMail1}, {buddyList: 1, _id:0}, callback);
+            }
+        })
+}
+
+/**Gets user's buddylist
+ *
+ * @param eMail user's eMail to retrieve data
+ * @param callback route call
+ */
+module.exports.getBuddyList = function(eMail, callback) {
+    User.find({email : eMail}, {buddyList: 1, _id:0}, callback)
+}
+
+/**Gets flag to see if user has finalized schedule or not
+ *
+ * @param eMail
+ * @param callback
+ */
+module.exports.getSchedFlag = function(eMail, callback) {
+    User.find({email :eMail}, {schedFinal: 1, _id: 0}, callback)
+}
