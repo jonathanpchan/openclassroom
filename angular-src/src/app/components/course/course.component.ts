@@ -31,6 +31,7 @@ export class CourseComponent implements OnInit {
   ngOnInit() {
     this.courseNameOptions = []
     this.authService.getCourses().subscribe(names => {
+      console.log(names.Courses)
       for (let name in names.Courses) 
       {
         this.courseNameOptions.push(names.Courses[name].name)

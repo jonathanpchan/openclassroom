@@ -6,7 +6,7 @@ const config = require('../config/database');
 const User = require('../models/user');
 const mongoose = require('mongoose');
 const StudyBuddy = require('../models/StudyBuddyModel');
-const CS = mongoose.model('StudyBuddy', StudyBuddy.CS.Schema);
+const CS = mongoose.model('StudyBuddy', StudyBuddy.Schema);
 
 module.exports = router;
 

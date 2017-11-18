@@ -101,6 +101,12 @@ var AuthService = (function () {
         return this.http.post('http://localhost:3000/roominfo/addVote', { building: building, room: room, email: email, item: item, pos: pos, nvote: nvote }, { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.post(roominfo/addVote', {building, room, email, item, pos, nvote}, {headers: headers}).map(res => res.json());
     };
+    //=========== Study Buddy ======================
+    AuthService.prototype.getStudyBuddies = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/studyBuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('studyBuddies/get', email, {headers: headers}).map(res => res.json());
+    };
     //=========== User Token ===================
     AuthService.prototype.storeUserData = function (token, user) {
         localStorage.setItem('id_token', token);
@@ -965,6 +971,7 @@ var CourseComponent = (function () {
         var _this = this;
         this.courseNameOptions = [];
         this.authService.getCourses().subscribe(function (names) {
+            console.log(names.Courses);
             for (var name in names.Courses) {
                 _this.courseNameOptions.push(names.Courses[name].name);
             }
@@ -2151,21 +2158,27 @@ var StudybuddyComponent = (function () {
         this.email = JSON.parse(localStorage.getItem('user'))["email"];
         this.schedule = null;
         this.buddies = null;
-        this.test = null;
+        this.courseBuddies = null;
         this.loaded = false;
     }
     StudybuddyComponent.prototype.ngOnInit = function () {
-        //console.log(this.email);
         var _this = this;
+        //TODO: We may be able to remove this and just use studyBuddies once Syed Fixes it.
         this.schedule = [];
         this.authService.getSchedule({ email: this.email }).subscribe(function (schedule) {
             _this.schedule = schedule.schedule;
             _this.schedule.sort(_this.sortByCourseName);
-            //console.log(this.schedule);
-            _this.buddies = JSON.parse('{"res":[{"classes":[{"name":"CECS 444","buddies":[{"name":"guy0","id":"xxxxx"},{"name":"guy1","id":"xxxxx"},{"name":"guy2","id":"xxxxx"},{"name":"guy3","id":"xxxxx"}]},{"name":"CECS 445","buddies":[{"name":"guy4","id":"xxxxx"},{"name":"guy5","id":"xxxxx"},{"name":"guy6","id":"xxxxx"},{"name":"guy7","id":"xxxxx"}]},{"name":"CECS 446","buddies":[{"name":"guy8","id":"xxxxx"},{"name":"guy9","id":"xxxxx"}]}]}]}');
-            _this.buddies = _this.buddies.res[0].classes;
-            console.log(_this.buddies);
-            setTimeout(_this.lol(), 100); // run donothing after 0.5 seconds
+        }, function (err) {
+            console.log(err);
+        });
+        this.authService.getStudyBuddies({ email: this.email }).subscribe(function (buddies) {
+            console.log(_this.email);
+            console.log(buddies);
+            if (buddies != null) {
+                _this.courseBuddies = buddies[0];
+                _this.loaded = true;
+                _this.buddies = buddies;
+            }
         }, function (err) {
             console.log(err);
         });
@@ -2187,27 +2200,17 @@ var StudybuddyComponent = (function () {
         }
     };
     StudybuddyComponent.prototype.showBuddies = function () {
+        //get index of the select menu and set our buddyDisplay to that index of studyBuddies
         var index = document.getElementById('courseSelect').selectedIndex - 1;
-        this.test = this.buddies[index];
-        console.log("index of course - " + index);
-        console.log(this.buddies);
+        this.courseBuddies = this.buddies[index];
         document.getElementById("buddylist").style.display = "inline-block";
-        // var input = (<HTMLInputElement>document.getElementById('courseSelect')).value;
-        // var course = input.split(" ");
-        // this.courseName = course[0];
-        // this.courseNum = course[1];
-        // console.log(this.courseName + " " + this.courseNum);
-        // console.log("test\n" + this.test.name);
-        // console.log("test\n" + this,test.buddies);
-        //TODO implement routes get data and change it
-        //show study buddies now, we don't need to hide it anymore
     };
-    StudybuddyComponent.prototype.message = function (name) {
-        console.log("messaging " + name);
-    };
-    StudybuddyComponent.prototype.lol = function () {
-        this.loaded = true;
-        document.getElementById("buddylist").style.display = "inline-block";
+    StudybuddyComponent.prototype.message = function (buddyIndex) {
+        console.log(buddyIndex);
+        //set up messaing thread with the data below
+        console.log(this.courseBuddies.buddies[buddyIndex].name);
+        console.log(this.courseBuddies.buddies[buddyIndex]._id);
+        console.log(this.courseBuddies.buddies[buddyIndex].chatRoomId);
     };
     return StudybuddyComponent;
 }());
@@ -2636,7 +2639,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "/*.studyBuddies{\r\n  display: grid;\r\n  grid-template-columns:100%;\r\n  grid-gap: 5px;\r\n}*/\r\n\r\n/*switch to different layout at 600px min-width*/\r\n/*@media (min-width: 600px) {*/\r\n.studyBuddies{\r\n  display: -ms-grid;\r\n  display: grid;\r\n  -ms-grid-columns:(1fr)[4];\r\n      grid-template-columns:repeat(4, 1fr);\r\n  grid-gap: 15px;\r\n}\r\n/*}*/\r\n\r\n.buddy{\r\n  /*grid-area:bd;*/\r\n  border: 1px solid black;\r\n  border-radius: 25px;\r\n  text-align: center;\r\n}\r\n\r\n.courseTitle\r\n{\r\n  text-align: center;\r\n}\r\n", ""]);
+exports.push([module.i, "/*.studyBuddies{\r\n  display: grid;\r\n  grid-template-columns:100%;\r\n  grid-gap: 5px;\r\n}*/\r\n\r\n/*switch to different layout at 600px min-width*/\r\n/*@media (min-width: 600px) {*/\r\n.studyBuddies{\r\n  /*display: grid;\r\n  grid-template-columns:repeat(4, 1fr);\r\n  grid-gap: 15px;*/\r\n  /*display:inline-block;*/\r\n}\r\n/*}*/\r\n\r\n.buddy{\r\n  /*grid-area:bd;*/\r\n  border: 1px solid black;\r\n  border-radius: 25px;\r\n  text-align: center;\r\n  display:inline-block;\r\n  width: auto;\r\n  padding: 25px;\r\n\r\n}\r\n\r\n.courseTitle\r\n{\r\n  padding-top: 20px;\r\n  text-align: center;\r\n}\r\n", ""]);
 
 // exports
 
@@ -2754,7 +2757,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user
 /* 249 */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 style=\"text-align: center\">Pick A Course</h1>\r\n<select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n  <option selected hidden></option>\r\n  <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n</select>\r\n\r\n\r\n<div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n\r\n  <h1 class = \"courseTitle\">Potential Study Buddies For {{test.name}}</h1>\r\n  <div class=\"studdyBuddies\">\r\n    <h3 class=\"buddy\" *ngFor = \"let buddy of test.buddies\" (click)=\"message(buddy.name)\">{{buddy.name}}</h3>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<h1 style=\"text-align: center\">Pick A Course</h1>\r\n<select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n  <option selected hidden></option>\r\n  <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n</select>\r\n\r\n<div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n\r\n  <h1 class = \"courseTitle\">Potential Study Buddies For {{courseBuddies.name}}</h1>\r\n  <div class=\"studdyBuddies\" *ngIf=\"loaded\">\r\n    <h3 class=\"buddy\" *ngFor = \"let buddy of courseBuddies?.buddies let i = index\" (click)=\"message(i)\">{{buddy.name}}</h3>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 /* 250 */
