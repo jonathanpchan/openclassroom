@@ -34,10 +34,10 @@ const ClassSchema = new mongoose.Schema({
 })
 
 // Export Room SChema
-CS = module.exports = mongoose.model('StudyBuddy', ClassSchema );
+SB = module.exports = mongoose.model('StudyBuddy', ClassSchema );
 
 module.exports = {
-    CS: CS
+    SB: SB
 }
 
 function placeByDay(arr , callback){
@@ -150,7 +150,7 @@ module.exports.addUser = function(eMail, callback) {
                 var counter = 0
                 sched.forEach(function (crs) {
                     //add to classroom
-                    CS.findOneAndUpdate(
+                    SB.findOneAndUpdate(
                         {"sec": crs.sec, "students.user": {$ne: filler}},
                         {
                             $addToSet: {
@@ -198,7 +198,7 @@ module.exports.removeUser = function(eMail, callback) {
         //query each class user's schedule in StudyBuddy Classroom schema
         sched.forEach( function (crs) {
             //add to classroom
-            CS.findOneAndUpdate({"sec" : crs.sec},
+            SB.findOneAndUpdate({"sec" : crs.sec},
                 {
                     $pull : {
                         "students" : { user : eMail }
@@ -221,12 +221,12 @@ module.exports.removeUser = function(eMail, callback) {
 };
 
 module.exports.getClass = function(sect, callback){
-    CS.find({ 'sec' : sect }, callback)
+    SB.find({ 'sec' : sect }, callback)
 };
 
 //set flag to true + return success
 function setFlag(sec, flag) {
-    CS.findOneAndUpdate(
+    SB.findOneAndUpdate(
         {sec : sec},
         {
             $set : {
@@ -262,7 +262,7 @@ module.exports.getBuddies = function(eMail, callback) {
         var did =0;
         var retArr = []
         sched.forEach(function(element) {
-            CS.findOne(
+            SB.findOne(
                 {"sec" : element.sec}, (err, doc) => {
                     if ( !(doc.students.length > 0)) {
                         callback("Nothing Found in SB")
