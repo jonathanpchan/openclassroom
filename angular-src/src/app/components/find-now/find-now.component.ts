@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {BuildingsService} from '../../services/buildings.service';
+import { BuildingsService } from '../../services/buildings.service';
 
 @Component({
   selector: 'app-find-now',

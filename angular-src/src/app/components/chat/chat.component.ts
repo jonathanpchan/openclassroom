@@ -20,7 +20,8 @@ export class ChatComponent implements OnInit {
   showBack: boolean = false;
   // ABOVE IS TESTING ITEM
 
-  constructor(private chatService: ChatService, private flashMessage: FlashMessagesService) {}
+  constructor(private chatService: ChatService, 
+              private flashMessage: FlashMessagesService) { }
 
   ngOnInit() { }
 

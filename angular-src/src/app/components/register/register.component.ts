@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ValidateService} from '../../services/validate.service';
-import {AuthService} from '../../services/auth.service';
-import {FlashMessagesService} from 'angular2-flash-messages';
-import {Router} from '@angular/router';
+import { ValidateService } from '../../services/validate.service';
+import { AuthService } from '../../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -19,15 +19,12 @@ export class RegisterComponent implements OnInit {
   regdate: Date;
 
   // What services that are being used to register
-  constructor (
-    private validateService: ValidateService,
-    private flashMessage : FlashMessagesService,
-    private authService : AuthService,
-    private router : Router
-  ) { }
+  constructor(private validateService: ValidateService,
+              private flashMessage : FlashMessagesService,
+              private authService : AuthService,
+              private router : Router) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onRegisterSubmit(){
     const user = {

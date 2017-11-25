@@ -49,8 +49,8 @@ var AuthService = (function () {
     };
     //=========== Schedule =====================
     AuthService.prototype.isFinalized = function (email) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/final', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
+        // let headers = new Headers({ 'Content-Type' : 'application/json' });
+        return this.http.post('http://localhost:3000/users/final', { email: email }).map(function (res) { return res.json(); });
         // return this.http.post('users/final', {email: email}, {headers: headers}).map(res => res.json());
     };
     AuthService.prototype.getSchedule = function (email) {
@@ -681,7 +681,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 var AppComponent = (function () {
     function AppComponent() {
-        this.title = 'app works!';
     }
     AppComponent.prototype.ngOnInit = function () {
         window.onscroll = this.scrollUp;
@@ -966,17 +965,18 @@ var CourseComponent = (function () {
     function CourseComponent(authService, flashMessage) {
         this.authService = authService;
         this.flashMessage = flashMessage;
+        // 3rd dropdown for course combination
         this.courseChoice = null;
+        // Confirmation when adding / cancelling the add course
         this.confirm = false;
         this.afterConfirm = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
-    // ========== Get Options ===============
-    // Get the course names
+    // ========== Get Dropdown Options ===============
+    // 1) Get the course names
     CourseComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.courseNameOptions = [];
         this.authService.getCourses().subscribe(function (names) {
-            console.log(names.Courses);
             for (var name in names.Courses) {
                 _this.courseNameOptions.push(names.Courses[name].name);
             }
@@ -984,7 +984,7 @@ var CourseComponent = (function () {
             console.log(err);
         });
     };
-    // Get the course numbers
+    // 2) Get the course numbers
     CourseComponent.prototype.getCourseNumOptions = function () {
         if (this.courseNameOptions != null) {
             // Reset the data that is displayed
@@ -993,6 +993,7 @@ var CourseComponent = (function () {
             // Populate current course array to point to specific course name
             this.currCourseName = this.courseAll;
             for (var all in this.currCourseName) {
+                // Once the particular course name is found
                 if (this.currCourseName[all].name == this.courseName) {
                     this.currCourseName = this.currCourseName[all]["courses"];
                     break;
@@ -1006,7 +1007,7 @@ var CourseComponent = (function () {
             this.courseNumOptions = this.makeUnique(this.courseNumOptions);
         }
     };
-    // Get the course options
+    // 3) Get the course options
     CourseComponent.prototype.getCourseChoiceOptions = function () {
         if (this.courseNumOptions != null) {
             this.courseChoiceOptions = [];
@@ -1036,7 +1037,7 @@ var CourseComponent = (function () {
     CourseComponent.prototype.onBack = function () {
         this.afterConfirm.emit(false);
     };
-    // On submit, show alternative data (If missing data, then alert)
+    // 4) On submit, show alternative data (If missing data, then alert)
     CourseComponent.prototype.onSubmit = function () {
         if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) {
             this.confirmMessage = this.courseName + " " + this.courseChoice.num + " Class # " + this.courseChoice.sec + " " + this.courseChoice.day + " " + this.courseChoice.time + " " + this.courseChoice.location;
@@ -1074,7 +1075,7 @@ var CourseComponent = (function () {
         }
     };
     // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
-    // Take a SORTED array, determine unique values, and then return
+    // Take a SORTED array, determine unique values, and then return the array
     CourseComponent.prototype.makeUnique = function (arr) {
         var tempArr = arr;
         for (var i = 1; i < tempArr.length;) {
@@ -1125,8 +1126,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DevguideComponent = (function () {
     function DevguideComponent() {
     }
-    DevguideComponent.prototype.ngOnInit = function () {
-    };
+    DevguideComponent.prototype.ngOnInit = function () { };
     return DevguideComponent;
 }());
 DevguideComponent = __decorate([
@@ -1646,8 +1646,7 @@ var HomeComponent = (function () {
     function HomeComponent(authService) {
         this.authService = authService;
     }
-    HomeComponent.prototype.ngOnInit = function () {
-    };
+    HomeComponent.prototype.ngOnInit = function () { };
     return HomeComponent;
 }());
 HomeComponent = __decorate([
@@ -1822,8 +1821,7 @@ var RegisterComponent = (function () {
         this.authService = authService;
         this.router = router;
     }
-    RegisterComponent.prototype.ngOnInit = function () {
-    };
+    RegisterComponent.prototype.ngOnInit = function () { };
     RegisterComponent.prototype.onRegisterSubmit = function () {
         var _this = this;
         var user = {

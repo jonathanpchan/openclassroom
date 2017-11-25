@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-course',
@@ -8,30 +8,37 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./course.component.css']
 })
 export class CourseComponent implements OnInit {
+  // 1st dropdown for course name
   courseName : string
   courseNameOptions : any[]
+
+  // Holds onto the collection that has the listing of the courses based on courseName
   currCourseName : any[]
 
+  // 2nd dropdown for course number
   courseNum : string
   courseNumOptions : any[]
   
+  // 3rd dropdown for course combination
   courseChoice = null
   courseChoiceOptions : any[]
   
+  // Cache of all courses so the database only needs to be called once
   courseAll : any[]
 
+  // Confirmation when adding / cancelling the add course
   confirm : boolean = false
   confirmMessage : string
   @Output() afterConfirm : EventEmitter<any> = new EventEmitter<any>()
 
-  constructor(private authService : AuthService, private flashMessage : FlashMessagesService) { }
+  constructor(private authService : AuthService, 
+              private flashMessage : FlashMessagesService) { }
 
-  // ========== Get Options ===============
-  // Get the course names
+  // ========== Get Dropdown Options ===============
+  // 1) Get the course names
   ngOnInit() {
     this.courseNameOptions = []
     this.authService.getCourses().subscribe(names => {
-      console.log(names.Courses)
       for (let name in names.Courses) 
       {
         this.courseNameOptions.push(names.Courses[name].name)
@@ -42,17 +49,19 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  // Get the course numbers
+  // 2) Get the course numbers
   getCourseNumOptions() {
     if (this.courseNameOptions != null)
     {
       // Reset the data that is displayed
       this.courseNumOptions = []
       this.courseChoiceOptions = null
+
       // Populate current course array to point to specific course name
       this.currCourseName = this.courseAll
       for (let all in this.currCourseName) 
       {
+        // Once the particular course name is found
         if (this.currCourseName[all].name == this.courseName)
         {
           this.currCourseName = this.currCourseName[all]["courses"]
@@ -70,7 +79,7 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  // Get the course options
+  // 3) Get the course options
   getCourseChoiceOptions() {
     if (this.courseNumOptions != null)
     {
@@ -107,7 +116,7 @@ export class CourseComponent implements OnInit {
     this.afterConfirm.emit(false);
   }
   
-  // On submit, show alternative data (If missing data, then alert)
+  // 4) On submit, show alternative data (If missing data, then alert)
   onSubmit() {
     if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) 
     {
@@ -153,7 +162,7 @@ export class CourseComponent implements OnInit {
   }
   
   // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
-  // Take a SORTED array, determine unique values, and then return
+  // Take a SORTED array, determine unique values, and then return the array
   makeUnique(arr) {
     let tempArr = arr;
     for (var i = 1; i < tempArr.length; ) 

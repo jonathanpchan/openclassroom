@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {BuildingsService} from '../../services/buildings.service';
-import {Router} from '@angular/router';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { BuildingsService } from '../../services/buildings.service';
+import { Router } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 //import { RoomComponent } from '../room/room.component';
 
 
@@ -32,13 +32,11 @@ export class FindComponent implements OnInit {
   roomsList = [];
 
   // Need to pass arguments so it can be used in functions below
-  constructor(
-    private buildingService : BuildingsService,
-    private router : Router,
-    private flashMessage : FlashMessagesService
-  ) {}
+  constructor(private buildingService : BuildingsService,
+              private router : Router,
+              private flashMessage : FlashMessagesService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   /*
   * Show the table based on the day (BUILDING name should be provided)

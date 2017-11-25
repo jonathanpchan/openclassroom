@@ -20,7 +20,9 @@ export class ScheduleComponent implements OnInit {
   deleteMessage : String;
   currItem = null;
 
-  constructor(private authService:AuthService, private studyBuddyService: StudyBuddyService, private flashMessage : FlashMessagesService) { }
+  constructor(private authService:AuthService, 
+              private studyBuddyService: StudyBuddyService, 
+              private flashMessage : FlashMessagesService) { }
 
   ngOnInit() {
     this.schedule = []

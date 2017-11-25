@@ -1,6 +1,6 @@
 //Service module for building, class, and classroom queries
 import { Injectable } from '@angular/core';
-import {Http, Headers, Response} from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 //import {tokenNotExpired} from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';

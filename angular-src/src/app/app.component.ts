@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AppComponent {
-  title = 'app works!';
-
   ngOnInit() {
     window.onscroll = this.scrollUp;
   }

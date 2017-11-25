@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FindComponent } from '../find/find.component';
 import { BuildingsService } from '../../services/buildings.service';
 import { FindNowComponent } from '../find-now/find-now.component';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-find-home',
@@ -19,7 +19,8 @@ export class FindHomeComponent implements OnInit {
   // Access the used FindNowComponent to make the show function call
   @ViewChild(FindNowComponent) nowComponent : FindNowComponent;
 
-  constructor(private buildingService : BuildingsService, private flashMessage : FlashMessagesService) {}
+  constructor(private buildingService : BuildingsService, 
+              private flashMessage : FlashMessagesService) { }
 
   // 1) Display available building names
   ngOnInit() {

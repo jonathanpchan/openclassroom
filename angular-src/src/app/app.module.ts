@@ -24,9 +24,9 @@ import { StudybuddyComponent } from './components/studybuddy/studybuddy.componen
 import { UsermanualComponent } from './components/usermanual/usermanual.component';
 
 // manually written after using ng g service _______"
-import {ValidateService} from './services/validate.service';
-import {AuthService} from './services/auth.service';
-import {BuildingsService} from './services/buildings.service';
+import { ValidateService } from './services/validate.service';
+import { AuthService } from './services/auth.service';
+import { BuildingsService } from './services/buildings.service';
 import { ChatService } from './services/chat.service';
 import { StudyBuddyService } from './services/studybuddy.service';
 import { AuthGuard } from './guards/auth.guard';

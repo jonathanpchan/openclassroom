@@ -1,8 +1,6 @@
-import { Component, OnChanges, Input} from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {FlashMessagesService} from 'angular2-flash-messages';
-
-
+import { Component, OnChanges, Input } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-room',
@@ -27,9 +25,9 @@ export class RoomComponent implements OnChanges {
   email : JSON = JSON.parse(localStorage.getItem('user'))["email"]
 
   constructor(private authService:AuthService,
-              private flashMessage:FlashMessagesService){}
+              private flashMessage:FlashMessagesService){ }
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log("new room " + this.building,this.room);
     this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
 
