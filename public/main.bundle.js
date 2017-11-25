@@ -48,6 +48,11 @@ var AuthService = (function () {
         // return this.http.post('users/authenticate', user, {headers: headers}).map(res => res.json());
     };
     //=========== Schedule =====================
+    AuthService.prototype.isFinalized = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/users/final', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('users/final', {email: email}, {headers: headers}).map(res => res.json());
+    };
     AuthService.prototype.getSchedule = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         // this.loadToken();
@@ -2044,11 +2049,16 @@ var ScheduleComponent = (function () {
         var _this = this;
         this.schedule = [];
         var email = this.user["email"];
+        // Get schedule
         this.authService.getSchedule({ email: email }).subscribe(function (schedule) {
             _this.schedule = schedule.schedule;
             _this.schedule.sort(_this.sortByCourseName);
         }, function (err) {
             console.log(err);
+        });
+        // Check to see if finalized
+        this.authService.isFinalized(this.user["email"]).subscribe(function (finalized) {
+            _this.isFinalized = finalized[0].schedFinal;
         });
     };
     // ========== Add ==================
@@ -2098,7 +2108,7 @@ var ScheduleComponent = (function () {
     };
     ScheduleComponent.prototype.onFinalize = function (confirm) {
         if (confirm) {
-            this.studyBuddyService.joinStudyBuddies(JSON.parse(localStorage.getItem('user'))["email"]);
+            this.studyBuddyService.joinStudyBuddies(this.user["email"]).subscribe();
         }
         this.isFinalized = confirm;
         this.finalize = false;

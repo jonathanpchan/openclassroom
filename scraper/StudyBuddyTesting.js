@@ -6,7 +6,7 @@ var config = require('../config/database');
 const classes = require('../models/course');
 const CS = mongoose.model('Courses', classes.CS.Schema);
 const buddy = require('../models/StudyBuddyModel.js');
-const cs = mongoose.model('StudyBuddy', buddy.CS.Schema);
+const cs = mongoose.model('StudyBuddy', buddy.Schema);
 const um = require('../models/user');
 const us = mongoose.model('User', um.schema)
 

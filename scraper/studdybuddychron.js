@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 var config = require('../config/database');
 const request = require('request')
 const StudyBuddy = require('../models/StudyBuddyModel');
-const SB = mongoose.model('StudyBuddy', StudyBuddy.CS.Schema);
+const SB = mongoose.model('StudyBuddy', StudyBuddy.Schema);
 var myArgs = process.argv.slice(2);
 var debug = myArgs[0];
 //mongoose.set('debug', true)

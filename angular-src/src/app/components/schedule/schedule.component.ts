@@ -25,6 +25,7 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
     this.schedule = []
     let email = this.user["email"]
+    // Get schedule
     this.authService.getSchedule({email : email}).subscribe(schedule => {
       this.schedule = schedule.schedule
       this.schedule.sort(this.sortByCourseName)
@@ -32,6 +33,10 @@ export class ScheduleComponent implements OnInit {
     err => {
       console.log(err)
     })
+    // Check to see if finalized
+    this.authService.isFinalized(this.user["email"]).subscribe((finalized) => {
+      this.isFinalized= finalized[0].schedFinal
+    });
   }
 
   // ========== Add ==================
@@ -88,7 +93,7 @@ export class ScheduleComponent implements OnInit {
 
   onFinalize(confirm : boolean) {
     if (confirm) {
-      this.studyBuddyService.joinStudyBuddies(JSON.parse(localStorage.getItem('user'))["email"]);
+      this.studyBuddyService.joinStudyBuddies(this.user["email"]).subscribe();
     }
     this.isFinalized = confirm;
     this.finalize = false;

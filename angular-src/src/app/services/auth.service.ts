@@ -24,6 +24,12 @@ export class AuthService {
   }
 
   //=========== Schedule =====================
+  isFinalized(email) : Observable<any> {
+    let headers = new Headers({ 'Content-Type' : 'application/json' });
+    return this.http.post('http://localhost:3000/users/final', {email: email}, {headers: headers}).map(res => res.json());
+    // return this.http.post('users/final', {email: email}, {headers: headers}).map(res => res.json());
+  }
+  
   getSchedule(email) : Observable<any> {
     let headers = new Headers({ 'Content-Type' : 'application/json' });
     // this.loadToken();

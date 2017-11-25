@@ -169,10 +169,11 @@ router.post('/buddylist', (req, res) => {
   })
 })
 
-router.post('/schedule/final', (req, res) => {
+router.post('/final', (req, res) =>{
   User.getSchedFlag(req.body.email, (err, flag) => {
-    return res.json(flag);
+    if (err) throw err;
+    return res.json(flag)
   })
-})
+});
 
 module.exports = router;
