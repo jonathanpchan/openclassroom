@@ -11,28 +11,29 @@ const CS = mongoose.model('StudyBuddy', StudyBuddy.Schema);
 module.exports = router;
 
 router.post('/add', (req, res) => { //request and response
-    if(req.body.email) { //check if valid request
+    if (req.body.email) { //check if valid request
         StudyBuddy.addUser(req.body.email, (err, msg) => {
             return res.json(msg);
         })
-    } else {
+    } 
+    else {
         return res.json({error: "Bad Request"});
     }//bad request
 })
 
 router.post('/remove', (req, res) => { //request and response
-    if(req.body.email) { //check if valid request
+    if (req.body.email) { //check if valid request
     StudyBuddy.removeUser(req.body.email, (err, msg) => {
         return res.json(msg);
-})
-} else {
-    return res.json({error: "Bad Request"});
-}//bad request
+    })} 
+    else {
+        return res.json({error: "Bad Request"});
+    }//bad request
 })
 
 router.post('/get', (req, res) => {
     console.log(req.body.email)
-    if(req.body.email){
+    if (req.body.email){
         StudyBuddy.getBuddies(req.body.email, (err, x) => {
             if (err) {
                 res.json({error: err})
@@ -41,5 +42,7 @@ router.post('/get', (req, res) => {
                 res.json(x)
         })
     }
-    else res.json({error: "Malformatted Request"})
+    else {
+        res.json({error: "Malformatted Request"})
+    }
 })

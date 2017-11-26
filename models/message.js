@@ -26,7 +26,8 @@ module.exports = {
 //Create a new user chat with two users and return _ID of the chat
 module.exports.createNewChat = function(user_1, user_2, callback){
     console.log("createNewChat");
-    MSG.findOne({$and: [{"user_1": user_1 }, {"user_2": user_2}]}, (err, x) => {
+    MSG.findOne(
+        {$or: [{$and: [{"user_1": user_1 }, {"user_2": user_2}]}, {$and: [{"user_1": user_2 }, {"user_2": user_1}]}]}, (err, x) => {
         console.log(x);
         if( x == null ){
             MSG.collection.insert(
@@ -37,8 +38,8 @@ module.exports.createNewChat = function(user_1, user_2, callback){
                 }
             )
         }
-    MSG.find({$and: [{"user_1": user_1 }, {"user_2": user_2}]}, { _id : 1}, callback)
-}).limit(1)
+    MSG.find({$or: [{$and: [{"user_1": user_1 }, {"user_2": user_2}]}, {$and: [{"user_1": user_2 }, {"user_2": user_1}]}]}, { _id : 1}, callback)
+    }).limit(1)
 }
 
 //add comment to chat array between 2 users

@@ -6,6 +6,8 @@ const config = require('../config/database');
 const Building = require('../models/building');
 const mongoose = require('mongoose');
 
+module.exports = router;
+
 // Post name to get a building
 router.post('/', (req, res, next) => {
   const name = req.body.name;
@@ -46,9 +48,3 @@ router.get('/names', (req, res, next) => {
     }
   });
 });
-
-// router.get('/building', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-//   res.json({building: req.building});
-//});router.get()
-
-module.exports = router;

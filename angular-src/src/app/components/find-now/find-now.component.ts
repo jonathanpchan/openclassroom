@@ -8,24 +8,24 @@ import { BuildingsService } from '../../services/buildings.service';
 })
 export class FindNowComponent implements OnInit {
   // Value passed from Find-Home Component
-  @Input() name : string;
+  @Input() name: string;
 
   // Days the buildingService will query using
   days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
-  day : string;
+  day: string;
 
   // The list that will be displayed after population in the show function
   roomsList = [];
 
   // Notifies the HTML to display the error message when out of hours
-  show : boolean = false;
+  show: boolean = false;
 
   //Arguments to pass to roomInfo
-  buildingName : String = "";
-  roomNumber : String = "";
+  buildingName: String = "";
+  roomNumber: String = "";
 
   // Need to pass argument so it can be used in functions below
-  constructor(private buildingService : BuildingsService) { }
+  constructor(private buildingService: BuildingsService) { }
 
   // Set the day once when navigating to the find classroom page
   ngOnInit() {
@@ -60,7 +60,7 @@ export class FindNowComponent implements OnInit {
             // 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
             if (st >= timesJSON[time].st && (st+30) <= timesJSON[time].et)
             {
-              this.roomsList.push({ name : roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
+              this.roomsList.push({ name: roomsJSON[room].name, st: this.timeFormat(timesJSON[time].st), et: this.timeFormat(timesJSON[time].et) });
             }
           }
         }
@@ -83,7 +83,7 @@ export class FindNowComponent implements OnInit {
   }
 
   // Adjust time in minutes to stringified time (No 12:00 AM)
-  timeFormat(time : number) : string
+  timeFormat(time: number): string
   {
     // 12 AM
     if (Math.trunc(time/60) == 0)

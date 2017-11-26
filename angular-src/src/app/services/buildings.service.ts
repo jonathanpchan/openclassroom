@@ -8,23 +8,25 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class BuildingsService {
-  constructor(private http:Http) { }
+  constructor(private http: Http) { }
 
-  getBuilding(name : String) : Observable<any> {
-    let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/buildings', {name}, {headers : headers}).map(res => res.json()).catch(this.handleError);
-    // return this.http.post('buildings', {name}, {headers : headers}).map(res => res.json()).catch(this.handleError);
+  //=========== Buildings ======================
+  getBuilding(name: String): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.post('http://localhost:3000/buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
+    // return this.http.post('buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
   }
 
-  getBuildings() : Observable<any> {
-    return this.http.get('http://localhost:3000/buildings').map(res => res.json()).catch(this.handleError);
-    // return this.http.get('buildings').map(res => res.json()).catch(this.handleError);
+  getBuildings(): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    // return this.http.get('buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
   }
 
-  getBuildingNames() : Observable<any> {
-    let headers = new Headers({'Content-Type' : 'application/json' });
-    return this.http.get('http://localhost:3000/buildings/names', {headers : headers}).map(res => res.json()).catch(this.handleError);
-    // return this.http.get('buildings/names', {headers : headers}).map(res => res.json()).catch(this.handleError);
+  getBuildingNames(): Observable<any> {
+    let headers = new Headers({'Content-Type': 'application/json' });
+    return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    // return this.http.get('buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
   }
 
   private extractData(res: Response) {
@@ -40,7 +42,7 @@ export class BuildingsService {
       const err = body.error || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
-      errMsg = error.message ? error.message : error.toString();
+      errMsg = error.message ? error.message: error.toString();
     }
     console.error(errMsg);
     return Promise.reject(errMsg);

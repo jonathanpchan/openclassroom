@@ -4,12 +4,12 @@
   <body class="grid">
     <div [ngClass]="sendee==null ? 'msglist' : 'msglist-hide'">
       <div class="msglist-title">OC Messenger</div>
-      <ul *ngIf="names.length > 0" class="list-group msglist-users">
-        <li class="list-group-item msglist-user" *ngFor="let name of names">
-          <button class="btn msglist-btn" (click)="joinRoom(name)">{{name}}</button>
+      <ul *ngIf="buddyList.length > 0" class="list-group msglist-users">
+        <li class="list-group-item msglist-user" *ngFor="let buddy of buddyList">
+          <button class="btn msglist-btn" (click)="joinRoom(buddy)">{{buddy.user}}</button>
         </li>
       </ul>
-      <ul *ngIf="names.length <= 0" class="list-group msglist-users">
+      <ul *ngIf="buddyList.length <= 0" class="list-group msglist-users">
         <h2 style="text-align: center; top: 50%;">Go to the Study Buddy Tab to add some buddies!</h2>
       </ul>
     </div>

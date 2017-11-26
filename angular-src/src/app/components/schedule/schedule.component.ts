@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { StudyBuddyService } from '../../services/studybuddy.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -10,25 +10,26 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-  user : JSON = JSON.parse(localStorage.getItem('user'))
+  user: JSON = JSON.parse(localStorage.getItem('user'))
   schedule = null;
-  home : boolean = true;
-  add : boolean = false;
-  delete : boolean = false;
-  finalize : boolean = false;
-  isFinalized : boolean = false;
-  deleteMessage : String;
+  home: boolean = true;
+  add: boolean = false;
+  delete: boolean = false;
+  finalize: boolean = false;
+  isFinalized: boolean = false;
+  deleteMessage: String;
   currItem = null;
 
-  constructor(private authService:AuthService, 
-              private studyBuddyService: StudyBuddyService, 
-              private flashMessage : FlashMessagesService) { }
+  constructor(
+    private userService: UserService, 
+    private studyBuddyService: StudyBuddyService, 
+    private flashMessage: FlashMessagesService) { }
 
   ngOnInit() {
     this.schedule = []
     let email = this.user["email"]
     // Get schedule
-    this.authService.getSchedule({email : email}).subscribe(schedule => {
+    this.userService.getSchedule({email: email}).subscribe(schedule => {
       this.schedule = schedule.schedule
       this.schedule.sort(this.sortByCourseName)
     },
@@ -36,7 +37,7 @@ export class ScheduleComponent implements OnInit {
       console.log(err)
     })
     // Check to see if finalized
-    this.authService.isFinalized(this.user["email"]).subscribe((finalized) => {
+    this.userService.isFinalized(this.user["email"]).subscribe((finalized) => {
       this.isFinalized= finalized[0].schedFinal
     });
   }
@@ -68,19 +69,19 @@ export class ScheduleComponent implements OnInit {
     let courseChoice = course;
     this.deleteMessage = course.name+" "+courseChoice.num+" Class # "+courseChoice.sec+" "+courseChoice.day+" "+courseChoice.time+" "+courseChoice.location;
     // In preparation for delete
-    this.currItem = { index : index, crsID : courseChoice.sec};
+    this.currItem = { index: index, crsID: courseChoice.sec};
   }
 
   // 2) Determine if you delete or cancel
-  onCourseDelete(confirm : boolean) {
+  onCourseDelete(confirm: boolean) {
     if (confirm) 
     {
       let coursePayload = {
-        email : JSON.parse(localStorage.getItem('user')).email,
-        crsID : this.currItem.crsID
+        email: JSON.parse(localStorage.getItem('user')).email,
+        crsID: this.currItem.crsID
       }
       // Delete on back end
-      this.authService.deleteScheduleItem(coursePayload).subscribe();
+      this.userService.deleteScheduleItem(coursePayload).subscribe();
       // Delete on front end
       this.schedule.splice(this.currItem.index, 1)
       this.schedule.sort(this.sortByCourseName)
@@ -93,7 +94,7 @@ export class ScheduleComponent implements OnInit {
     this.finalize = true;
   }
 
-  onFinalize(confirm : boolean) {
+  onFinalize(confirm: boolean) {
     if (confirm) {
       this.studyBuddyService.joinStudyBuddies(this.user["email"]).subscribe();
     }

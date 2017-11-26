@@ -6,6 +6,8 @@ const config = require('../config/database');
 const RI = require('../models/roomInfo');
 const mongoose = require('mongoose');
 
+module.exports = router;
+
 router.post('/getRoomInfo', (req,res) => {
     //use email to poulate uVote
     building = req.body.building;
@@ -32,13 +34,11 @@ router.post('/addVote', (req,res) => {
             return res.json(err?err:x);
         })
     }
-    else{
+    else {
         RI.addVote(building, room, item, email, nvote, (err, x) => {
             return res.json(err?err:x);
         })
     }
-   
-   
 })
 
 router.post('/addComment', (req,res) => {
@@ -51,8 +51,5 @@ router.post('/addComment', (req,res) => {
         return res.json("Malformatted Request")
     RI.addComment(building, room, email, comment, (err,x) => {
         return res.json(x.n>0?"comment added":"Nothing found")
-    })
-    
+    })  
 })
-//router.post('/addVote', )
-module.exports = router;

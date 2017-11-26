@@ -12,15 +12,16 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class FindHomeComponent implements OnInit {
   // Chosen building to be queried (passed down components)
-  building : string = "";
+  building: string = "";
   // All building names possible
   buildingNames = [];
 
   // Access the used FindNowComponent to make the show function call
-  @ViewChild(FindNowComponent) nowComponent : FindNowComponent;
+  @ViewChild(FindNowComponent) nowComponent: FindNowComponent;
 
-  constructor(private buildingService : BuildingsService, 
-              private flashMessage : FlashMessagesService) { }
+  constructor(
+    private buildingService: BuildingsService, 
+    private flashMessage: FlashMessagesService) { }
 
   // 1) Display available building names
   ngOnInit() {
@@ -53,7 +54,7 @@ export class FindHomeComponent implements OnInit {
   }
 
   // 3) Display button depending on id
-  displayOption(option : string) {
+  displayOption(option: string) {
     if (this.building == "") {
       this.flashMessage.show('Please choose a building to find an Open Classroom.', {cssClass: 'alert-danger', timeout: 3000})
     }

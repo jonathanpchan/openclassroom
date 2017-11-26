@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { ChatService } from '../../services/chat.service';
+import { StudyBuddyService } from '../../services/studybuddy.service';
 
 @Component({
   selector: 'app-studybuddy',
@@ -7,22 +9,25 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./studybuddy.component.css']
 })
 export class StudybuddyComponent implements OnInit {
-
-  email : JSON = JSON.parse(localStorage.getItem('user'))["email"];
+  user: JSON = JSON.parse(localStorage.getItem('user'));
+  buddy: string = null;
+  email: JSON = this.user["email"];
   schedule = null;
-  courseName : string;
-  courseNum : string;
+  courseName: string;
+  courseNum: string;
   buddies = null;
   courseBuddies = null;
-  loaded : boolean = false;
+  loaded: boolean = false;
 
-  constructor(private authService:AuthService) { }
+  constructor(
+    private userService: UserService,
+    private chatService: ChatService,
+    private studyBuddyService: StudyBuddyService) { }
 
   ngOnInit() {
-
-    //TODO: We may be able to remove this and just use studyBuddies once Syed Fixes it.
     this.schedule = []
-    this.authService.getSchedule({email : this.email}).subscribe(schedule => {
+    // Generate course names
+    this.userService.getSchedule({email: this.email}).subscribe(schedule => {
       this.schedule = schedule.schedule
       this.schedule.sort(this.sortByCourseName)
     },
@@ -30,9 +35,8 @@ export class StudybuddyComponent implements OnInit {
       console.log(err)
     })
 
-    this.authService.getStudyBuddies({email : this.email}).subscribe(buddies => {
-      console.log(this.email);
-      console.log(buddies);
+    // Generate buddies to course names
+    this.studyBuddyService.getStudyBuddies({email: this.email}).subscribe(buddies => {
       if(buddies!=null)
       {
         this.courseBuddies = buddies[0];
@@ -43,7 +47,6 @@ export class StudybuddyComponent implements OnInit {
     err => {
       console.log(err)
     })
-
   }
 
   // Sort by Course, then Course Num, then by Course Sec
@@ -77,11 +80,14 @@ export class StudybuddyComponent implements OnInit {
 
   message(buddyIndex)
   {
+    let buddy = this.courseBuddies.buddies[buddyIndex];
+    this.chatService.addBuddyListItem(JSON.parse(localStorage.getItem('user'))["email"], buddy.email, buddy.name).subscribe();
+    this.buddy = buddy;
+  }
 
-    console.log(buddyIndex);
-    //set up messaing thread with the data below
-    console.log(this.courseBuddies.buddies[buddyIndex].name);
-    console.log(this.courseBuddies.buddies[buddyIndex]._id);
-    console.log(this.courseBuddies.buddies[buddyIndex].chatRoomId);
+  ngOnDestroy() {
+    if (this.buddy != null) {
+      this.chatService.ID = this.buddy;
+    }
   }
 }

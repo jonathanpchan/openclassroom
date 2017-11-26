@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
@@ -9,36 +9,37 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class CourseComponent implements OnInit {
   // 1st dropdown for course name
-  courseName : string
-  courseNameOptions : any[]
+  courseName: string
+  courseNameOptions: any[]
 
   // Holds onto the collection that has the listing of the courses based on courseName
-  currCourseName : any[]
+  currCourseName: any[]
 
   // 2nd dropdown for course number
-  courseNum : string
-  courseNumOptions : any[]
+  courseNum: string
+  courseNumOptions: any[]
   
   // 3rd dropdown for course combination
   courseChoice = null
-  courseChoiceOptions : any[]
+  courseChoiceOptions: any[]
   
   // Cache of all courses so the database only needs to be called once
-  courseAll : any[]
+  courseAll: any[]
 
   // Confirmation when adding / cancelling the add course
-  confirm : boolean = false
-  confirmMessage : string
-  @Output() afterConfirm : EventEmitter<any> = new EventEmitter<any>()
+  confirm: boolean = false
+  confirmMessage: string
+  @Output() afterConfirm: EventEmitter<any> = new EventEmitter<any>()
 
-  constructor(private authService : AuthService, 
-              private flashMessage : FlashMessagesService) { }
+  constructor(
+    private userService: UserService, 
+    private flashMessage: FlashMessagesService) { }
 
   // ========== Get Dropdown Options ===============
   // 1) Get the course names
   ngOnInit() {
     this.courseNameOptions = []
-    this.authService.getCourses().subscribe(names => {
+    this.userService.getCourses().subscribe(names => {
       for (let name in names.Courses) 
       {
         this.courseNameOptions.push(names.Courses[name].name)
@@ -100,7 +101,7 @@ export class CourseComponent implements OnInit {
     if (this.courseAll == null) 
     {
       this.courseAll = [];
-      this.authService.getCourses().subscribe(all => {
+      this.userService.getCourses().subscribe(all => {
         for (let course in all.Courses) {
           this.courseAll.push(all.Courses[course]);
         }
@@ -131,15 +132,15 @@ export class CourseComponent implements OnInit {
   }
 
   // Determine what to do if add or cancel
-  addClick(answer : boolean) {
+  addClick(answer: boolean) {
     if (answer) 
     {
       // Add on back end
       let coursePayload = {
-        email : JSON.parse(localStorage.getItem('user')).email,
-        crsID : this.courseChoice.sec
+        email: JSON.parse(localStorage.getItem('user')).email,
+        crsID: this.courseChoice.sec
       }
-      this.authService.addScheduleItem(coursePayload).subscribe((success) =>
+      this.userService.addScheduleItem(coursePayload).subscribe((success) =>
       {
         // Don't add to front end
         if (success.length == 0)

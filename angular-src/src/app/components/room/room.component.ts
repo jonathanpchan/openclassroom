@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { RoomInfoService } from '../../services/roominfo.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
@@ -10,33 +10,31 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 export class RoomComponent implements OnChanges {
   //inputs from find components
   @Input() building: string = "";
-  @Input() room : string = "";
+  @Input() room: string = "";
 
   //data structure
   rooms = null;
-  loaded : boolean = false;
-  empMon : boolean;
-  tuesday : boolean;
-  wednesday : boolean;
-  thursday : boolean;
+  loaded: boolean = false;
+  empMon: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
 
   //other data do send in routes
-  comment : string;
-  email : JSON = JSON.parse(localStorage.getItem('user'))["email"]
+  comment: string;
+  email: JSON = JSON.parse(localStorage.getItem('user'))["email"]
 
-  constructor(private authService:AuthService,
-              private flashMessage:FlashMessagesService){ }
+  constructor(
+    private roomInfoService: RoomInfoService,
+    private flashMessage: FlashMessagesService) { }
 
   ngOnChanges() {
-    console.log("new room " + this.building,this.room);
-    this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
-
-      if(roomInfo != null)
+    this.roomInfoService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
+      if (roomInfo != null)
       {
         this.rooms = roomInfo;
         this.loaded = true;
       }
-      console.log(this.rooms);
     },
     err => {
       console.log(err)
@@ -49,25 +47,24 @@ export class RoomComponent implements OnChanges {
     var t;
     var minutes = time;
 
-    if(minutes>=780)    {
+    if (minutes>=780)    {
       minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
     }
     t = (minutes - minutes%60)/60 + ":";//calculating hours
 
-    if(minutes%60==0)    {//formating minutes toFixed and to Prevision dont work
+    if (minutes%60==0)    {//formating minutes toFixed and to Prevision dont work
       t += "00";
     }
-    else    {
+    else {
       t += time%60;
     }
 
-    if(time>720)    {//setting AM/PM based on the original time
+    if (time>720)    {//setting AM/PM based on the original time
       t+= " PM";
     }
-    else    {
+    else {
       t+= " AM";
     }
-
     return t;
   }
 
@@ -76,14 +73,14 @@ export class RoomComponent implements OnChanges {
     // console.log("building - " + this.building + " room - " + this.room
     //           + " email - " + this.email +  " item - " + item + " pos - " + pos
     //           + " vote - " + nVote);
-    this.authService.addVote(this.building, this.room, this.email, item, pos, nVote).subscribe(data => {
-      if(data.success){
+    this.roomInfoService.addVote(this.building, this.room, this.email, item, pos, nVote).subscribe(data => {
+      if (data.success) {
         //TODO update room info here instead
         console.log("good vote")
       }
-      else{
+      else {
         //console.log("no vote?")
-        this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
+        this.roomInfoService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
           this.rooms = roomInfo;
         },
         err => {
@@ -101,18 +98,18 @@ export class RoomComponent implements OnChanges {
     // console.log("building - " + this.building + " room - " + this.room + " email - " + this.email +
     //           " comment - " + this.comment);
 
-    if(this.comment == "")    {
+    if (this.comment == "") {
       this.flashMessage.show('Please enter a comment before submitting', {cssClass: 'alert-danger', timeout: 3000});
     }
-    else{
-      this.authService.addComment(this.building, this.room, this.email, this.comment).subscribe(data => {
-        if(data.success){
+    else {
+      this.roomInfoService.addComment(this.building, this.room, this.email, this.comment).subscribe(data => {
+        if (data.success) {
           //TODO update room info here instead
           console.log("good")
         }
-        else{
+        else {
           console.log("no comment?")
-          this.authService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
+          this.roomInfoService.getRoomInfo(this.building, this.room).subscribe(roomInfo => {
             this.rooms = roomInfo;
           },
           err => {
@@ -120,8 +117,7 @@ export class RoomComponent implements OnChanges {
           });
         }
       })
+    }
+    this.comment = '';
   }
-  this.comment = '';
-  }
-
 }

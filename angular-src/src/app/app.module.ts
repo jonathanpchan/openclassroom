@@ -25,9 +25,10 @@ import { UsermanualComponent } from './components/usermanual/usermanual.componen
 
 // manually written after using ng g service _______"
 import { ValidateService } from './services/validate.service';
-import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { BuildingsService } from './services/buildings.service';
 import { ChatService } from './services/chat.service';
+import { RoomInfoService } from './services/roominfo.service';
 import { StudyBuddyService } from './services/studybuddy.service';
 import { AuthGuard } from './guards/auth.guard';
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -76,7 +77,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard, BuildingsService, ChatService, StudyBuddyService],
+  providers: [ValidateService, UserService, AuthGuard, BuildingsService, ChatService, RoomInfoService, StudyBuddyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

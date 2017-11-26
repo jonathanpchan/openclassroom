@@ -31,7 +31,6 @@ const UserSchema = mongoose.Schema({
     schedFinal : {type: Boolean, default: false},
   schedule: { type: [classesSchema] },
   buddyList: {type: [{
-      chatRoomId: {type: String},
       user: {type: String},
       email: {type: String}
   }]}
@@ -158,13 +157,13 @@ module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
  * @param chatID chatRoom of two users
  * @param callback route call
  */
-module.exports.addBuddy = function( eMail1, eMail2, user, chatID, callback) {
+module.exports.addBuddy = function( eMail1, eMail2, user, callback) {
+    console.log("ADD BUDDY"+eMail1)
     User.findOneAndUpdate(
         {"email" : eMail1, "buddyList.user" : {$ne : user}},
         {
             $addToSet: {
                 "buddyList": {
-                    "chatRoomId": chatID,
                     "user": user,
                     "email": eMail2
                 }

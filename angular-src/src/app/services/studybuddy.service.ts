@@ -5,19 +5,18 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Injectable()
 export class StudyBuddyService {
-
   constructor(private http: Http) { }
 
   joinStudyBuddies(email) {
-    let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/studybuddies/add', { email: email },{headers: headers}).map(res => res.json());
-    // return this.http.post('studybuddies/add', {email: JSON.parse(localStorage.getItem('user'))["email"]},{headers: headers}).map(res => res.json());
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.post('http://localhost:3000/studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
+    // return this.http.post('studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
   }
 
   // Get Study Buddies based on classes
-  getStudyBuddies(email) {
-    let headers = new Headers({ 'Content-Type' : 'application/json' });
-    return this.http.post('http://localhost:3000/studybuddies/get', { email: email },{headers: headers}).map(res => res.json());
-    // return this.http.post('studybuddies/get', {email: JSON.parse(localStorage.getItem('user'))["email"]},{headers: headers}).map(res => res.json());
+  getStudyBuddies(email): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.post('http://localhost:3000/studyBuddies/get', email, { headers: headers }).map(res => res.json());
+    // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
   }
 }

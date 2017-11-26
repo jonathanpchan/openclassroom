@@ -13,11 +13,11 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 
 export class FindComponent implements OnInit {
   // Values that are passed from Find-Home Component
-  @Input() name : string;
-  day : string;
+  @Input() name: string;
+  day: string;
   // Values passed to room components
-  buildingName : String = "";
-  roomNumber : String = "";
+  buildingName: String = "";
+  roomNumber: String = "";
 
   // Times displayed on the front end but currently does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["8:00 AM", "9:00 AM",
@@ -32,9 +32,10 @@ export class FindComponent implements OnInit {
   roomsList = [];
 
   // Need to pass arguments so it can be used in functions below
-  constructor(private buildingService : BuildingsService,
-              private router : Router,
-              private flashMessage : FlashMessagesService) { }
+  constructor(
+    private buildingService: BuildingsService,
+    private router: Router,
+    private flashMessage: FlashMessagesService) { }
 
   ngOnInit() { }
 
@@ -51,7 +52,7 @@ export class FindComponent implements OnInit {
   * 5) Push temp array to the roomsList
   * 6) Store in buildingList the query
   */
-  show(day : string) {
+  show(day: string) {
     document.getElementById("room").style.display = "none";
 
     // 0) Re-initialize if navigate away from current page
@@ -87,7 +88,7 @@ export class FindComponent implements OnInit {
               }
             }
             // 5) Add to the roomsList
-            this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+            this.roomsList.push({ name: roomsJSON[room].name, room: arr});
           }
           // 6) Store in the buildingList ("cache")
           this.buildingList = buildingList.OpenBuilding[0];
@@ -121,7 +122,7 @@ export class FindComponent implements OnInit {
             }
           }
           // 4a) Add to the roomsList
-          this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+          this.roomsList.push({ name: roomsJSON[room].name, room: arr});
         }
         this.day = day;
       }

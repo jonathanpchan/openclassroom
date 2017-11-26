@@ -155,8 +155,9 @@ function match(){
                 var buddies = []
                 tempBuddies.forEach(function(element) {
                     var nameArr = element.id.split("+")
+                    let email = nameArr[1]
                     nameArr = nameArr[1].split("@")
-                    buddies.push( {chatRoomId: Buffer.from(element.id).toString('hex'), name: nameArr[0]})
+                    buddies.push( {chatRoomId: Buffer.from(element.id).toString('hex'), email: email, name: nameArr[0]})
                 }, this);
                 //add to db
                 //buddies = ["hela", "bela", "mela"]
