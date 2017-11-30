@@ -81,7 +81,8 @@ export class StudybuddyComponent implements OnInit {
   message(buddyIndex)
   {
     let buddy = this.courseBuddies.buddies[buddyIndex];
-    this.chatService.addBuddyListItem(JSON.parse(localStorage.getItem('user'))["email"], buddy.email, buddy.name).subscribe();
+    this.chatService.addBuddyListItem(this.user["email"], buddy.email, buddy.name).subscribe();
+    this.chatService.addBuddyListItem(buddy.email, this.user["email"], this.user["username"]).subscribe();
     this.buddy = buddy;
   }
 

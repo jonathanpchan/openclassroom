@@ -85,13 +85,18 @@ export class ScheduleComponent implements OnInit {
       // Delete on front end
       this.schedule.splice(this.currItem.index, 1)
       this.schedule.sort(this.sortByCourseName)
-      this.flashMessage.show('Course successfully removed', {cssClass: 'alert-success', timeout: 3000})
+      this.flashMessage.show('Course successfully removed.', {cssClass: 'alert-success', timeout: 3000})
     }
     this.delete = false;
   }
 
   clickFinalize() {
-    this.finalize = true;
+    if (this.schedule.length > 0) {
+      this.finalize = true;
+    }
+    else {
+      this.flashMessage.show('Cannot finalize course schedule.', {cssClass: 'alert-danger', timeout: 3000})
+    }
   }
 
   onFinalize(confirm: boolean) {
