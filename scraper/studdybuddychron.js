@@ -155,6 +155,7 @@ function match(){
                 var buddies = []
                 tempBuddies.forEach(function(element) {
                     var nameArr = element.id.split("+")
+                    console.log(nameArr[0])
                     let email = nameArr[1]
                     nameArr = nameArr[1].split("@")
                     buddies.push( {chatRoomId: Buffer.from(element.id).toString('hex'), email: email, name: nameArr[0]})

@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit {
     this.sendee = sendee.user;
     this.showBack = true;
     // Create room or get room # to join (Back End)
-    this.chatService.createRoom(this.sender, this.sendee).subscribe((out) => {
+    this.chatService.createRoom(this.user["email"], sendee.email).subscribe((out) => {
       // Eliminate issue of room # too long
       this.currentRoom = out[0]._id.substring(0, 24);
       // Join Room (Back End)
