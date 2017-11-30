@@ -23,6 +23,10 @@ export class UserService {
     // return this.http.post('users/authenticate', user, { headers: headers }).map(res => res.json());
   }
 
+  changePW(email, oldpw, newpw) {
+    let headers = new Headers({'Content-Type': 'application/json' });
+    return this.http.post('http://localhost:3000/users/settings/pw', {email, oldpw, newpw}, { headers: headers }).map(res => res.json());
+  }
   //=========== Schedule =====================
   isFinalized(email): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
