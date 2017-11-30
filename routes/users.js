@@ -32,7 +32,7 @@ router.post('/register', (req, res, next) => {
         // If invalid user
         if (err){
           return res.json({success: false, msg:'Failed to register user'});
-        } 
+        }
         else {
           // Return when valid user
           return res.json({success: true, msg:'User registered'});
@@ -85,6 +85,23 @@ router.post('/authenticate', (req, res, next) => {
     });
   });
 });
+
+// Change user's pw
+router.post('/settings/pw', (req, res) => {
+  if(req.body.oldpw) {
+    User.changePW(req.body.email, req.body.oldpw, req.body.newpw, (err, resp) => {
+      if(resp != null) {
+        console.log("works");
+        return res.json({success: true, msg: resp});
+      } else {
+        console.log("doesn't work");
+        return res.json({success: false, msg: "Wrong password"})
+      }
+    })
+  }else {
+    return res.json({error: "Bad request"});
+  }
+})
 
 // Get User Schedule based on email
 router.post('/schedule', (req, res) =>{

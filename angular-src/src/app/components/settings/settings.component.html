@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+  <h1>
+    Settings
+  </h1>
+  <h2>
+    <table id="t03">
+      <tr>
+        <td class="align-left">User Profile</td>
+        <td class="align-right">
+          <label class="container small">Finalized Schedule
+            <input type="checkbox" checked="checked">
+            <span class="checkmark"></span>
+          </label>
+        </td>
+      </tr>
+    </table>
+  </h2>
+
+  <div class="page-padding">
+    <div class="borders">
+        <table id="t01">
+          <tr>
+            <td class="width">Username</td>
+            <td class ="align-left"> {{username}} </td>
+          </tr>
+          <tr>
+            <td class="width">E-mail</td>
+            <td class="align-left">{{email}}</td>
+          </tr>
+        </table>
+      <button (click)="toggleView()" class="dropdown">
+        <table id="t02">
+          <tr>
+            <td class="width">Password</td>
+            <td class="align-left">************</td>
+            <td class="align-right" *ngIf="!show">Edit</td>
+          </tr>
+        </table>
+      </button>
+
+      <div *ngIf="show">
+          <form class="form-horizontal" (submit)="onSubmitPW()">
+            <div class="form-group form-group-sm col-xs-3">
+              <label class="col-sm-2 control-label" for="sm">Old Password</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" id="sm" [(ngModel)]="oldpw" name="oldpw">
+              </div>
+            </div>
+            <div class="form-group form-group-sm col-xs-3">
+              <label class="col-sm-2 control-label" for="sm">New Password</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" id="sm" [(ngModel)]="newpw" name="newpw">
+              </div>
+            </div>
+              <input style="margin: 15px" type="submit" class="btn btn-primary" value="Submit">
+          </form>
+      </div>
+
+      </div>
+  </div>
+</div>
+</body>
+</html>
+
