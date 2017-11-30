@@ -80,50 +80,6 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }
 }
 
-function compPassword(candidatePW, hash, callback) {
-    if(candidatePW != null) {
-        bcrypt.compare(candidatePW, hash, (err, isMatch) => {
-            callback(null, isMatch);
-        })
-    } else {
-        callback(null, null);
-    }
-}
-
-/**
- *
- * @param email
- * @param pw
- * @param callback
- */
-module.exports.changePW = function(eMail, oldpw, newpw, callback) {
-    User.find({email : eMail}, {password: 1, _id:0}, (err, pw) => {
-        console.log(pw[0].password);
-        bcrypt.genSalt(10, (err, salt) => {
-            compPassword(oldpw, pw[0].password, (err, isMatch) => {
-                if(isMatch) {
-                    bcrypt.hash(newpw, salt, (err, hash) => {
-                        User.findOneAndUpdate({"email": eMail},
-                        {
-                            $set: {
-                                "password": hash
-                            }
-                        }, {new: true}, function (err, doc) {
-                            if (err) {
-                                console.log("Something went wrong when changing the pw!!");
-                            } else {
-                                callback(null, "Password was successfully changed!")
-                            }
-                        })
-                    })
-                } else {
-                    callback(null, null)
-                }
-            })
-        })
-    })
-}
-
 /**
  *
  * @param email

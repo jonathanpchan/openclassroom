@@ -32,7 +32,6 @@ import { RoomInfoService } from './services/roominfo.service';
 import { StudyBuddyService } from './services/studybuddy.service';
 import { AuthGuard } from './guards/auth.guard';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-import { SettingsComponent } from './components/settings/settings.component';
 
 // Routes for the components (will be protected later)
 const appRoutes: Routes = [
@@ -48,7 +47,6 @@ const appRoutes: Routes = [
   { path:'findclassroom/time', component: FindTimesComponent },
   { path:'chat', component: ChatComponent },
   { path:'studybuddy', component: StudybuddyComponent },
-    { path: 'settings', component: SettingsComponent },
   { path:'**', redirectTo: '' }
 ]
 
@@ -70,8 +68,7 @@ const appRoutes: Routes = [
     RoomComponent,
     ScheduleComponent,
     StudybuddyComponent,
-    UsermanualComponent,
-    SettingsComponent
+    UsermanualComponent
   ],
   imports: [
     BrowserModule,
