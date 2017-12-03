@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 /* For header styling */
-h2 {
-=======
  h2 {
->>>>>>> dev
      padding-bottom: 5px;
      padding-left: 100px;
      padding-right: 100px;
@@ -17,42 +13,25 @@ h2 {
      border-bottom: 1px solid #FFD07F;
  }
 
-<<<<<<< HEAD
 /*div left padding */
-=======
->>>>>>> dev
  div.content-padding-left {
      padding-left : 50px;
  }
 
-<<<<<<< HEAD
 /*padding for entire page*/
-=======
->>>>>>> dev
  div.page-padding {
      padding-left: 100px;
      padding-right: 100px;
  }
 
-<<<<<<< HEAD
-/*dotted borders for the page*/
  div.borders {
      border-left: 1px dotted black;
      border-right: 1px dotted black;
-     border-bottom: 1px dotted black;
-=======
- div.borders {
-     border-left: 1px dotted black;
-     border-right: 1px dotted black;
->>>>>>> dev
      padding-left: 20px;
      padding-right: 20px;
  }
 
-<<<<<<< HEAD
 /*left indent for header*/
-=======
->>>>>>> dev
  div.p1 {
      text-align: left;
      padding-bottom:0px;
@@ -60,61 +39,41 @@ h2 {
      padding-left:15px;
  }
 
-<<<<<<< HEAD
 /*dynamic table*/
-=======
-
->>>>>>> dev
 #t01 {
     width:100%;
     padding: 0;
 }
 
-<<<<<<< HEAD
 /*inner table for hover color*/
-=======
->>>>>>> dev
  #t02 {
      width:100%;
      padding: 0;
  }
 
-<<<<<<< HEAD
 /*inner table for hover color*/
-=======
->>>>>>> dev
  #t03 {
      width:100%;
      padding: 0;
  }
 
-<<<<<<< HEAD
 /*table width*/
-=======
-
->>>>>>> dev
  .width {
     text-align: left;
     width: 200px;
 }
 
-<<<<<<< HEAD
+
 /*align-left*/
-=======
->>>>>>> dev
 .align-left {
     text-align: left;
 }
 
-<<<<<<< HEAD
 /*align-right*/
-=======
->>>>>>> dev
 .align-right {
     text-align: right;
 }
 
-<<<<<<< HEAD
 /*small text*/
 .small {
     font-size: .7em;
@@ -123,11 +82,10 @@ h2 {
 }
 
 /*dropdown styling*/
-=======
 .small {
     font-size: .7em
 }
->>>>>>> dev
+
 button.dropdown {
     background-color: inherit;
     border: none;
@@ -135,9 +93,7 @@ button.dropdown {
     padding: 0;
 }
 
-<<<<<<< HEAD
 /*center dropdown content*/
-=======
 button.hello {
     padding: 0;
 }
@@ -146,24 +102,17 @@ button.dropdown:hover, button.dropdown:active {
     border: none;
 }
 
->>>>>>> dev
  div.dropdown-content {
      display: inline-block;
      text-align: center;
  }
 
-<<<<<<< HEAD
  /*hover color for table items*/
-=======
->>>>>>> dev
  #t01 tr:hover {
      background-color: lightgray;
  }
 
-<<<<<<< HEAD
  /*hover color for drop down item*/
-=======
->>>>>>> dev
  #t02 tr:hover {
      background-color: lightblue;
  }
