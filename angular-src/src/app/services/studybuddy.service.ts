@@ -12,11 +12,16 @@ export class StudyBuddyService {
     return this.http.post('http://localhost:3000/studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
     // return this.http.post('studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
   }
+  unfinalize(email) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.post('http://localhost:3000/studybuddies/remove', {email : email}, { headers: headers }).map(res => res.json());
+    // return this.http.post('studybuddies/remove', email, { headers: headers }).map(res => res.json());
+  }
 
   // Get Study Buddies based on classes
   getStudyBuddies(email): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.post('http://localhost:3000/studyBuddies/get', email, { headers: headers }).map(res => res.json());
+    return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(res => res.json());
     // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
   }
 }

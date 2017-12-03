@@ -197,3 +197,13 @@ router.post('/final', (req, res) =>{
     return res.json(flag)
   })
 });
+
+router.post('/settings/unfinalize', (req, res) => {
+  User.unfinalizeSched(req.body.email, (err, resp) => {
+    if(resp == null){
+      return res.json({success: false, msg: 'Something went wrong.'})
+    } else {
+      return res.json({success: true, msg: resp})
+    }
+  })
+})

@@ -144,46 +144,51 @@ module.exports.addUser = function(eMail, callback) {
     //open times algorithm goes here
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
         var sched = doc.schedule
+        var brk = false;
         setFinalizedFlag(eMail, true, filler => {
             placeByDay(sched, otObj => {
                 //query each class in studybuddymodel (foreach)
                 var counter = 0
                 sched.forEach(function (crs) {
-                    //add to classroom
-                    SB.findOneAndUpdate(
-                        {"sec": crs.sec, "students.user": {$ne: filler}},
-                        {
-                            $addToSet: {
-                                "students": {
-                                    user: filler,
-                                    oMon: otObj.omon,
-                                    oTue: otObj.otue,
-                                    oWed: otObj.owed,
-                                    oThu: otObj.othu,
-                                    buddies: []
+                    if(!brk) {
+                        //add to classroom
+                        SB.findOneAndUpdate(
+                            {"sec": crs.sec, "students.user": {$ne: filler}},
+                            {
+                                $addToSet: {
+                                    "students": {
+                                        user: filler,
+                                        oMon: otObj.omon,
+                                        oTue: otObj.otue,
+                                        oWed: otObj.owed,
+                                        oThu: otObj.othu,
+                                        buddies: []
+                                    }
+                                }
+                            }, {new: true}, function (err, doc) {
+                                if (err) {
+                                    callback(null, "Something went wrong when adding a student!")
+                                    //console.log("Something went wrong when adding a student!");
+                                }
+                                if (doc == null) {
+                                    brk = true;
+                                }
+                                else {
+                                    console.log(doc);
+                                    //set flag to true + return success
+                                    setFlag(crs.sec, true)
+                                    counter++
+                                    console.log("working");
+                                    if(counter == sched.length - 1){
+                                        callback(null, "Student was successfully added to all classes.")
+                                    }
                                 }
                             }
-                        }, {new: true}, function (err, doc) {
-                            if (err) {
-                                callback(null, "Something went wrong when adding a student!")
-                                //console.log("Something went wrong when adding a student!");
-                            }
-                            if (doc == null) {
-                                callback(null, "Student is already in this section!");
-                                console.log(doc);
-                            }
-                            else {
-                                console.log(doc);
-                                //set flag to true + return success
-                                setFlag(crs.sec, true)
-                                counter++
-                                console.log("working");
-                                if(counter == sched.length - 1){
-                                    callback(null, "Student was successfully added to all classes.")
-                                }
-                            }
-                        }
-                    )
+                        )
+                    }
+                    if (brk) {
+                        callback(null, "Student is already enrolled!");
+                    }
                 })
             })
         })
@@ -246,7 +251,9 @@ function setFinalizedFlag(eMail, flag, callback) {
                 "schedFinal" : flag
             }
         }, {new: true}, function(err, doc) {
-            callback(eMail)
+            if(callback != null){
+                callback(eMail)
+            }
         }
     )
 }

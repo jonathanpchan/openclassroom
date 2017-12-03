@@ -244,3 +244,26 @@ module.exports.getBuddyList = function(eMail, callback) {
 module.exports.getSchedFlag = function(eMail, callback) {
     User.find({email :eMail}, {schedFinal: 1, _id: 0}, callback)
 }
+
+
+// /** depricated
+//  *
+//  * @param eMail
+//  * @param callback
+//  */
+// module.exports.unfinalizeSched = function(eMail, callback) {
+//     User.findOneAndUpdate(
+//         {email : eMail},
+//         {
+//             $set: {
+//                 "schedFinal": false
+//             }
+//         }, {new: true}, function(err, doc) {
+//            if (err) {
+//                 callback(null, null)
+//             } else {
+//                User.find({email :eMail}, {schedFinal: 1, _id: 0}, callback)
+//             }
+//         }
+//     )
+// }
