@@ -11,13 +11,14 @@ import { StudyBuddyService } from '../../services/studybuddy.service';
 export class StudybuddyComponent implements OnInit {
   user: JSON = JSON.parse(localStorage.getItem('user'));
   buddy: string = null;
-  email: JSON = this.user["email"];
+  email: string;
   schedule = null;
   courseName: string;
   courseNum: string;
   buddies = null;
   courseBuddies = null;
   loaded: boolean = false;
+  isFinalized : boolean;
 
   constructor(
     private userService: UserService,
@@ -27,6 +28,22 @@ export class StudybuddyComponent implements OnInit {
   ngOnInit() {
     this.schedule = []
     // Generate course names
+    this.email = this.user["email"];
+
+    //calls isFinalized to prevent users from using this when the data is not finalized
+    this.userService.isFinalized(this.email).subscribe( data => {
+        this.isFinalized = data[0].schedFinal;
+        console.log(this.isFinalized);
+        if(this.isFinalized){
+          console.log("display");
+          document.getElementById("buddies").style.display = "inline-block";
+       }
+       else{
+         console.log("warning");
+        document.getElementById("warning").style.display = "inline-block";
+      }
+    })
+
     this.userService.getSchedule({email: this.email}).subscribe(schedule => {
       this.schedule = schedule.schedule
       this.schedule.sort(this.sortByCourseName)

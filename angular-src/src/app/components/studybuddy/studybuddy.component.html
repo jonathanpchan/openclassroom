@@ -2,6 +2,10 @@
 <html>
   <head></head>
   <body>
+    <div id="warning" *ngIf="!isFinalized">
+      <h1>Please finalize your schedule in your schedule page</h1>
+    </div>
+    <div id="buddies" *ngIf="isFinalized">
     <h1 style="text-align: center">Pick A Course</h1>
     <select id="courseSelect" class="form-control" (change)="showBuddies()">
       <option selected hidden></option>
@@ -14,5 +18,6 @@
         <a *ngFor = "let buddy of courseBuddies?.buddies let i = index" (click)="message(i)" routerLink="/chat"><h3 class="buddy">{{buddy.name}}</h3></a>
       </div>
     </div>
+  </div>
   </body>
 </html>
