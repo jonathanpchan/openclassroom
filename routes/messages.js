@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 module.exports = router;
 
-//create a new messages object using two user identifiers
+// POST request to create a new messages object using two user identifiers
 router.post('/create', (req, res) =>{
     if (req.body.user_1 != null && req.body.user_2 != null) {
         Message.createNewChat(req.body.user_1, req.body.user_2, (err, msgs) => {
@@ -19,7 +19,7 @@ router.post('/create', (req, res) =>{
     }
 })
 
-//send a message to a messages object using ID, sender, and msg content
+// POST request to send a message to a messages object using ID, sender, and msg content
 router.post('/send', (req, res) =>{
     if (req.body.sender != null ) {
     Message.saveMessage(req.body.sender, req.body.msg, req.body.ID, (err, msgs) => {
@@ -30,7 +30,7 @@ router.post('/send', (req, res) =>{
     }
 })
 
-//POST request to get messages between two users using ID of messages object
+// POST request to get messages between two users using ID of messages object
 router.post('/get', (req, res) =>{
     if (req.body.ID != null) {
     Message.getMessages(req.body.ID, (err, msgs) => {

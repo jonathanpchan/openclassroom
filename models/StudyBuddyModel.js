@@ -3,20 +3,23 @@ const config = require('../config/database');
 const user = require('../models/user');
 const us = mongoose.model('User', user.schema);
 
-//Class schema
+//Classroom data that each user has in the students array of ClassSchema
 const BaseSched = new mongoose.Schema({
     num : {type: String},
     sec : {type: String}, 
     day : {type: String}, 
     time : {type: String}, 
-    stimeInMin : {type: Number},
-    etimeInMin : {type: Number},
+    sTimeInMin : {type: Number},
+    eTimeInMin : {type: Number},
     sh : {type: Number},
     room : {type: String}, 
     location : {type: String}, 
     prof : {type: String}, 
 })
 
+//Classroom schema that holds data regarding a class.
+//isChanged is used to notify chron job
+//Students array holds an array of users which holds their schedule based on days, and an array of buddies
 const ClassSchema = new mongoose.Schema({
     teacher : {type: String},
     dept: {type: String},
@@ -33,13 +36,19 @@ const ClassSchema = new mongoose.Schema({
     isChanged : {type: Boolean, default: false}
 })
 
-// Export Room SChema
+//Place schema in export variable
 SB = module.exports = mongoose.model('StudyBuddy', ClassSchema );
 
+//Export Schema
 module.exports = {
     SB: SB
 }
 
+/**
+ *
+ * @param arr
+ * @param callback
+ */
 function placeByDay(arr , callback){
     function helperSort(a,b) {
         //console.log(a.time + " - " + b.time + " = " )
@@ -138,8 +147,11 @@ function placeByDay(arr , callback){
     callback(arr2)
 }
 
-//prototype for addUser. Adds user to class, implement open time data later
-//having trouble making callback to show success/failure
+/**Adds a user to all sections listed in his or her finalized schedule. Sets finalized schedule flag to true.
+ *
+ * @param eMail E-mail to grab user's schedule
+ * @param callback Returns a success message if all classes were successfully added
+ */
 module.exports.addUser = function(eMail, callback) {
     //open times algorithm goes here
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
@@ -168,17 +180,14 @@ module.exports.addUser = function(eMail, callback) {
                             }, {new: true}, function (err, doc) {
                                 if (err) {
                                     callback(null, "Something went wrong when adding a student!")
-                                    //console.log("Something went wrong when adding a student!");
                                 }
                                 if (doc == null) {
                                     brk = true;
                                 }
                                 else {
-                                    console.log(doc);
                                     //set flag to true + return success
                                     setFlag(crs.sec, true)
                                     counter++
-                                    console.log("working");
                                     if(counter == sched.length - 1){
                                         callback(null, "Student was successfully added to all classes.")
                                     }
@@ -195,7 +204,11 @@ module.exports.addUser = function(eMail, callback) {
     })
 };
 
-//having trouble making a callback to show success/failure otherwise done
+/**Removes a user from each class section that he or she is enrolled in. Sets finalized schedule flag to false.
+ *
+ * @param eMail E-mail to grab the user's schedule
+ * @param callback Returns success message to callback function
+ */
 module.exports.removeUser = function(eMail, callback) {
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
         sched = doc.schedule
@@ -210,7 +223,7 @@ module.exports.removeUser = function(eMail, callback) {
                     }
                 }, {new: true}, function(err, doc) {
                     if (err) {
-                        console.log("Something went wrong when deleting the student!");
+                        callback(null, null)
                     } else {
                         setFlag(crs.sec, true)
                         counter++
@@ -225,11 +238,20 @@ module.exports.removeUser = function(eMail, callback) {
     })
 };
 
+/**Gets section object based on section number
+ *
+ * @param sect Section # of classroom
+ * @param callback function to receive section object
+ */
 module.exports.getClass = function(sect, callback){
     SB.find({ 'sec' : sect }, callback)
 };
 
-//set flag to true + return success
+/**Sets flag for isChanged in the classroom. Used to signal chron job that a classroom is ready to be used
+ *
+ * @param sec Section of the classroom
+ * @param flag Flag to set to either true or false
+ */
 function setFlag(sec, flag) {
     SB.findOneAndUpdate(
         {sec : sec},
@@ -238,11 +260,17 @@ function setFlag(sec, flag) {
                 "isChanged" : flag
             }
         }, {new: true}, function(err, doc) {
-            //console.log(doc)
         }
     )
 }
 
+/**Sets the finalized flag inside a user's schedule. This signifies that the user has been added or removed
+ * from a classroom.
+ *
+ * @param eMail E-mail to access user's data
+ * @param flag Flag to set to either true or false
+ * @param callback Returns the eMail back to callback function
+ */
 function setFinalizedFlag(eMail, flag, callback) {
     us.findOneAndUpdate(
         {email : eMail},
@@ -258,6 +286,11 @@ function setFinalizedFlag(eMail, flag, callback) {
     )
 }
 
+/**Grabs the buddies of a user
+ *
+ * @param eMail E-mail to access user's data
+ * @param callback Returns the the array of study buddies to callback function
+ */
 module.exports.getBuddies = function(eMail, callback) {
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
         sched = doc.schedule
@@ -290,13 +323,3 @@ module.exports.getBuddies = function(eMail, callback) {
         }, this);
     })
 };
-
-//route for later
-// router.post('/test', (req,res, next) => {
-//     Buddy.getClass(req.body.crsID, (err, cls) => {
-//     return res.json({success: true, cls});
-// })
-// })
-//
-// module.exports.removeUser = function();
-

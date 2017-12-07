@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 
 module.exports = router;
 
+//POST request to return the room's info page object
 router.post('/getRoomInfo', (req,res) => {
     //use email to poulate uVote
     building = req.body.building;
@@ -20,6 +21,7 @@ router.post('/getRoomInfo', (req,res) => {
    
 })
 
+//POST request to add/remove a vote to a room's vote-able fields
 router.post('/addVote', (req,res) => {
     building = req.body.building;
     room = req.body.room;
@@ -41,8 +43,8 @@ router.post('/addVote', (req,res) => {
     }
 })
 
+// POST request to add a comment to a room's info page
 router.post('/addComment', (req,res) => {
-    //return res.json("thans for comment")
     building = req.body.building;
     room = req.body.room;
     email = req.body.email;

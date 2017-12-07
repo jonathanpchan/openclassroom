@@ -51,7 +51,7 @@ router.post('/authenticate', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  // If user exists, check for password
+// If user exists, check for password
   User.getUserByEmail(email, (err, user) => {
     if (err) throw err;
     if (!user){
@@ -86,15 +86,13 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
-// Change user's pw
+// POST request to change the user's password
 router.post('/settings/pw', (req, res) => {
   if(req.body.oldpw) {
     User.changePW(req.body.email, req.body.oldpw, req.body.newpw, (err, resp) => {
       if(resp != null) {
-        console.log("works");
         return res.json({success: true, msg: resp});
       } else {
-        console.log("doesn't work");
         return res.json({success: false, msg: "Wrong password"})
       }
     })
@@ -103,7 +101,7 @@ router.post('/settings/pw', (req, res) => {
   }
 })
 
-// Get User Schedule based on email
+// POST request to get User Schedule based on email
 router.post('/schedule', (req, res) =>{
   if (req.body.email) {
     User.getSchedule(req.body.email, (err, sched) =>{
@@ -115,7 +113,7 @@ router.post('/schedule', (req, res) =>{
   }
 })
 
-// Add a schedule item based on email and section #
+// POST request to add a schedule item based on email and section #
 router.post('/schedule/add', (req, res) => { //request and response
   if (req.body.email){ //check if valid request
     User.addScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
@@ -127,7 +125,7 @@ router.post('/schedule/add', (req, res) => { //request and response
   }
 })
 
-// Delete a schedule item based on email and section #
+// POST request to delete a schedule item based on email and section #
 router.post('/schedule/delete', (req, res) => { //request and response
   if (req.body.email){ //check if valid request
     User.deleteScheduleItem(req.body.email, req.body.crsID, (err, courses) => {
@@ -139,7 +137,7 @@ router.post('/schedule/delete', (req, res) => { //request and response
   }
 })
 
-// Get request getting all the documents
+// GET request getting all the documents
 router.get('/courses/names', (req, res, next) => {
   Course.getCourseNames((err, Courses) => {
     if (err) throw err;
@@ -152,7 +150,7 @@ router.get('/courses/names', (req, res, next) => {
   });
 });
 
-// Get all courses for cache
+// GET request to return the courses offered at CSULB
 router.get('/courses', (req, res, next) => {
   Course.getCourses((err, Courses) => {
     if (err) throw err;
@@ -165,32 +163,25 @@ router.get('/courses', (req, res, next) => {
   });
 });
 
-/**Route to add a user to a buddylist
- *
- */
+// POST request to add a user to a buddylist
 router.post('/buddylist/add', (req, res) => {
-  console.log("router "+req.body.email+" "+req.body.email2)
     User.addBuddy(req.body.email1, req.body.email2, req.body.user, (err, buddies) => {
     if (buddies == null) {
-      console.log(buddies)
       return res.json({success: false, msg: 'User already added.'})
     } else {
-      console.log(buddies)
       return res.json({success: true, buddies})
     }
   })
 })
 
-/**Route to retrieve a user's buddylist
- * Params: req.body.email
- *
- */
+// POST request to return a user's buddylist
 router.post('/buddylist', (req, res) => {
   User.getBuddyList(req.body.email, (err, buddies) => {
       return res.json(buddies);
   })
 })
 
+// POST request to return a user's finalized schedule flag
 router.post('/final', (req, res) =>{
   User.getSchedFlag(req.body.email, (err, flag) => {
     if (err) throw err;
@@ -198,6 +189,7 @@ router.post('/final', (req, res) =>{
   })
 });
 
+// POST request to unfinalize the user's schedule
 router.post('/settings/unfinalize', (req, res) => {
   User.unfinalizeSched(req.body.email, (err, resp) => {
     if(resp == null){

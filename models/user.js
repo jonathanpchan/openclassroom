@@ -40,24 +40,40 @@ const UserSchema = mongoose.Schema({
 // Export User Schema
 const User = module.exports = mongoose.model('User', UserSchema);
 
-// Get the user based on id
+/**Finds the user based by ID
+ *
+ * @param id ID of user
+ * @param callback Returns user object
+ */
 module.exports.getUserById = function(id, callback){
   User.findById(id, callback);
 }
 
-// Get the user based on username
+/**Finds user based on Username
+ *
+ * @param username Username identifier
+ * @param callback Returns user object
+ */
 module.exports.getUserByUsername = function(username, callback){
   const query = {username: username}
   User.findOne(query, callback);
 }
 
-// Get the user based on email
+/**Finds user based on E-mail
+ *
+ * @param email E-mail of user
+ * @param callback Returns user object
+ */
 module.exports.getUserByEmail = function(email, callback) {
   const query = {email: email}
   User.findOne(query, callback);
 }
 
-// Gen random key to use for password
+/**Generates a hashed password for the user and saves user object into the database
+ *
+ * @param newUser User being added
+ * @param callback Returns to function
+ */
 module.exports.addUser = function(newUser, callback){
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -68,7 +84,12 @@ module.exports.addUser = function(newUser, callback){
   });
 }
 
-// Compare password for validation
+/**Compares the password to database password for validation
+ *
+ * @param candidatePassword Password being compared
+ * @param hash Hash code
+ * @param callback Returns a boolean to the function
+ */
 module.exports.comparePassword = function(candidatePassword, hash, callback){
     if(candidatePassword != null) {
         bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
@@ -80,6 +101,12 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }
 }
 
+/**Refer to above. This is used within the class in changePW
+ *
+ * @param candidatePW
+ * @param hash
+ * @param callback
+ */
 function compPassword(candidatePW, hash, callback) {
     if(candidatePW != null) {
         bcrypt.compare(candidatePW, hash, (err, isMatch) => {
@@ -90,11 +117,12 @@ function compPassword(candidatePW, hash, callback) {
     }
 }
 
-/**
+/**Changes the user's password to access the website
  *
- * @param email
- * @param pw
- * @param callback
+ * @param eMail E-mail to access user's data
+ * @param oldpw Password used for authentication before changing
+ * @param newpw New password to be changed
+ * @param callback Returns success message if succeeded, else null to callback function
  */
 module.exports.changePW = function(eMail, oldpw, newpw, callback) {
     User.find({email : eMail}, {password: 1, _id:0}, (err, pw) => {
@@ -124,21 +152,21 @@ module.exports.changePW = function(eMail, oldpw, newpw, callback) {
     })
 }
 
-/**
+/**Returns the user's schedule
  *
- * @param email
- * @param callback
+ * @param email E-mail to access user's data
+ * @param callback Returns the user's schedule to callback function
  */
 // Get schedule based on email
 module.exports.getSchedule = function(email, callback) {
   User.findOne({ email : email }, {schedule : 1, _id : 0}, callback);
 }
 
-/**
+/**Adds a course to a user's schedule
  *
- * @param eMail
- * @param crsID
- * @param callback
+ * @param eMail E-mail to grab the user's information
+ * @param crsID Course ID to be added
+ * @param callback Returns the schedule if succeeded to the callback function
  */
 // Add schedule item based on email and section #
 module.exports.addScheduleItem = function(eMail, crsID, callback) {
@@ -172,12 +200,11 @@ module.exports.addScheduleItem = function(eMail, crsID, callback) {
     })
 };
 
-// Delete section number based on email and section #
-/**
+/**Deletes a course from the user's schedule
  *
- * @param eMail
- * @param crsID
- * @param callback
+ * @param eMail E-mail to access user's information
+ * @param crsID Course ID
+ * @param callback Returns schedule back to callback function
  */
 module.exports.deleteScheduleItem = function(eMail, crsID, callback) {
     User.findOneAndUpdate(
@@ -215,7 +242,6 @@ module.exports.addBuddy = function( eMail1, eMail2, user, callback) {
         }, {new: true}, function(err, doc) {
             if (err) {
                 callback("Something went wrong when adding a student!")
-                //console.log("Something went wrong when adding a student!");
             }
             if (doc == null) {
                 console.log(doc);
@@ -230,7 +256,7 @@ module.exports.addBuddy = function( eMail1, eMail2, user, callback) {
 /**Gets user's buddylist
  *
  * @param eMail user's eMail to retrieve data
- * @param callback route call
+ * @param callback Returns buddylist to callback function
  */
 module.exports.getBuddyList = function(eMail, callback) {
     User.find({email : eMail}, {buddyList: 1, _id:0}, callback)
@@ -238,32 +264,9 @@ module.exports.getBuddyList = function(eMail, callback) {
 
 /**Gets flag to see if user has finalized schedule or not
  *
- * @param eMail
- * @param callback
+ * @param eMail E-mail to access user's data
+ * @param callback Returns schedule flag to callback function
  */
 module.exports.getSchedFlag = function(eMail, callback) {
     User.find({email :eMail}, {schedFinal: 1, _id: 0}, callback)
 }
-
-
-// /** depricated
-//  *
-//  * @param eMail
-//  * @param callback
-//  */
-// module.exports.unfinalizeSched = function(eMail, callback) {
-//     User.findOneAndUpdate(
-//         {email : eMail},
-//         {
-//             $set: {
-//                 "schedFinal": false
-//             }
-//         }, {new: true}, function(err, doc) {
-//            if (err) {
-//                 callback(null, null)
-//             } else {
-//                User.find({email :eMail}, {schedFinal: 1, _id: 0}, callback)
-//             }
-//         }
-//     )
-// }

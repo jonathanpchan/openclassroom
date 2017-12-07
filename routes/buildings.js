@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 module.exports = router;
 
-// Post name to get a building
+// POST request to return a building object
 router.post('/', (req, res, next) => {
   const name = req.body.name;
   const day = req.body.day;
@@ -23,7 +23,7 @@ router.post('/', (req, res, next) => {
   });
 });
 
-// Get all buildings
+// GET request to return all building objects
 router.get('/', (req, res, next) => {
   Building.getBuildings((err, OpenBuilding) => {
     if(err) throw err;
@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => {
   });
 });
 
-// Get all building names
+// GET request to return the names of all buildings
 router.get('/names', (req, res, next) => {
   Building.getBuildingNames((err, OpenBuilding) => {
     if(err) throw err;

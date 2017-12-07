@@ -29,11 +29,16 @@ export class SettingsComponent implements OnInit {
     ngOnInit() {
         this.username = this.user["username"];
         this.email = this.user["email"];
+
+        //calls isFinalized service to disable/activate checkbox button
         this.userService.isFinalized(this.email).subscribe( data => {
             this.isFinalized = data[0].schedFinal;
         })
     }
 
+    /**Toggles the view for hidable content
+     *
+     */
     toggleView(): void {
         if (this.show === false) {
             this.show = true;
@@ -42,6 +47,9 @@ export class SettingsComponent implements OnInit {
         }
     }
 
+    /** Calls changePW service to change the user's password. Returns flash message for success or failure
+     *
+     */
     onSubmitPW(): void {
         if (this.oldpw == "" || this.newpw == "") {
             this.flashMessage.show('Please enter all fields before submitting', {
@@ -67,6 +75,9 @@ export class SettingsComponent implements OnInit {
         this.newpw = '';
     }
 
+    /** Used to call unfinalize service. If successful, flash message notifies user.
+     *
+     */
     unfinalize(): void {
         this.studyBuddyService.unfinalize(this.email).subscribe(data => {
             if (data.success) {

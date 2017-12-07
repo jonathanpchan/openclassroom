@@ -45,22 +45,35 @@ module.exports = {
   RS: RS
 }
 
-// Add a new building by saving
+/**Add a new building by saving to the database
+ *
+ * @param newBuilding building object
+ */
 module.exports.addBuilding = function(newBuilding) {
     newBuilding.save();
 }
 
-// Gets building based on name
+/**Gets specific building based on name,
+ *
+ * @param Name building name
+ * @param callback returns building object to callback function
+ */
 module.exports.getBuilding = function(Name, callback) {
   BS.find({name: Name}, {_id : 0}).exec(callback);
 }
 
-// Gets all buildings
+/**Gets all building object in database
+ *
+ * @param callback returns entire building object to callback function
+ */
 module.exports.getBuildings = function(callback) {
   BS.find({}, {_id : 0}).exec(callback);
 }
 
-// Get all building names
+/**Gets all building names in database
+ *
+ * @param callback returns building names to callback function
+ */
 module.exports.getBuildingNames = function(callback) {
   BS.find({},{_id : 0, rooms : 0}).sort({ name : 1 }).exec(callback);
 }

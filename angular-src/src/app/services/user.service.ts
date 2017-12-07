@@ -23,6 +23,7 @@ export class UserService {
     // return this.http.post('users/authenticate', user, { headers: headers }).map(res => res.json());
   }
 
+  // Route to call settings/pw. Used to changed the user's password.
   changePW(email, oldpw, newpw) {
     let headers = new Headers({'Content-Type': 'application/json' });
     return this.http.post('http://localhost:3000/users/settings/pw', {email, oldpw, newpw}, { headers: headers }).map(res => res.json());

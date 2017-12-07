@@ -10,6 +10,7 @@ const CS = mongoose.model('StudyBuddy', StudyBuddy.Schema);
 
 module.exports = router;
 
+// POST requst to add a user to the study buddy feature
 router.post('/add', (req, res) => { //request and response
     if (req.body.email) { //check if valid request
         StudyBuddy.addUser(req.body.email, (err, msg) => {
@@ -21,6 +22,7 @@ router.post('/add', (req, res) => { //request and response
     }//bad request
 })
 
+// POST request to remove a user from the study buddy feature
 router.post('/remove', (req, res) => { //request and response
     if (req.body.email) { //check if valid request
     StudyBuddy.removeUser(req.body.email, (err, msg) => {
@@ -31,8 +33,8 @@ router.post('/remove', (req, res) => { //request and response
     }//bad request
 })
 
+// POST request to return the user's study buddies
 router.post('/get', (req, res) => {
-    console.log(req.body.email)
     if (req.body.email){
         StudyBuddy.getBuddies(req.body.email, (err, x) => {
             if (err) {

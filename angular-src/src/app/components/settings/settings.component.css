@@ -1,8 +1,8 @@
 /* For header styling */
  h2 {
      padding-bottom: 5px;
-     padding-left: 100px;
-     padding-right: 100px;
+     padding-left: 10%;
+     padding-right: 10%;
      text-align: left;
      font-size: 25px;
   }
@@ -20,8 +20,8 @@
 
 /*padding for entire page*/
  div.page-padding {
-     padding-left: 100px;
-     padding-right: 100px;
+     padding-left: 10%;
+     padding-right: 10%;
  }
 
  div.borders {
