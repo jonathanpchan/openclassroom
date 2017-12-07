@@ -2,9 +2,10 @@
 <html>
   <head></head>
   <body>
-    <div id="warning" *ngIf="!isFinalized">
+    <div id="warning" style="display: none" *ngIf="!isFinalized">
       <h1>Please finalize your schedule in your schedule page</h1>
     </div>
+
     <div id="buddies" *ngIf="isFinalized">
     <h1 style="text-align: center">Pick A Course</h1>
     <select id="courseSelect" class="form-control" (change)="showBuddies()">

@@ -18,7 +18,7 @@ export class StudybuddyComponent implements OnInit {
   buddies = null;
   courseBuddies = null;
   loaded: boolean = false;
-  isFinalized : boolean;
+  isFinalized : boolean = false;
 
   constructor(
     private userService: UserService,
@@ -33,17 +33,16 @@ export class StudybuddyComponent implements OnInit {
     //calls isFinalized to prevent users from using this when the data is not finalized
     this.userService.isFinalized(this.email).subscribe( data => {
         this.isFinalized = data[0].schedFinal;
-        console.log(this.isFinalized);
-        if(this.isFinalized){
-          console.log("display");
-          document.getElementById("buddies").style.display = "inline-block";
-       }
-       else{
-         console.log("warning");
-        document.getElementById("warning").style.display = "inline-block";
-      }
+        
+        //if not finalized display warning to user.
+        if(!this.isFinalized){
+          // console.log("warning");
+          document.getElementById("warning").style.display = "inline-block";
+        }
+
     })
 
+    //TODO: Use the course names once syed provides them instead of using the schedule
     this.userService.getSchedule({email: this.email}).subscribe(schedule => {
       this.schedule = schedule.schedule
       this.schedule.sort(this.sortByCourseName)
@@ -52,7 +51,7 @@ export class StudybuddyComponent implements OnInit {
       console.log(err)
     })
 
-    // Generate buddies to course names
+    // Generate buddies for course names
     this.studyBuddyService.getStudyBuddies({email: this.email}).subscribe(buddies => {
       if(buddies!=null)
       {
