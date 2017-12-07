@@ -23,12 +23,6 @@ export class ChatComponent implements OnInit {
     private flashMessage: FlashMessagesService) { }
 
   ngOnInit() { 
-    // Get the buddyList (normally)
-    this.chatService.getBuddyList(this.user['email']).subscribe((list) => {
-      for (let buddyIndex in list[0].buddyList) {
-        this.buddyList.push(list[0].buddyList[buddyIndex]);
-      }
-    })
     // Open the chatroom with 
     if (this.chatService.ID != null) {
       let payload = {
@@ -38,6 +32,12 @@ export class ChatComponent implements OnInit {
       this.joinRoom(payload);
       this.chatService.ID = null;
     }
+    // Get the buddyList (normally)
+    this.chatService.getBuddyList(this.user['email']).subscribe((list) => {
+      for (let buddyIndex in list[0].buddyList) {
+        this.buddyList.push(list[0].buddyList[buddyIndex]);
+      }
+    })
   }
 
   // Join room (Leave room before joining new room)

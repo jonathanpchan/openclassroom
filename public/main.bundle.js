@@ -48,9 +48,11 @@ var UserService = (function () {
         return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.post('users/authenticate', user, { headers: headers }).map(res => res.json());
     };
+    // Route to call settings/pw. Used to changed the user's password.
     UserService.prototype.changePW = function (email, oldpw, newpw) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/users/settings/pw', { email: email, oldpw: oldpw, newpw: newpw }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('users/settings/pw', {email, oldpw, newpw}, {headers: headers}).map(res => res.json());
     };
     //=========== Schedule =====================
     UserService.prototype.isFinalized = function (email) {
@@ -214,7 +216,57 @@ var _a;
 /* 34 */,
 /* 35 */,
 /* 36 */,
-/* 37 */,
+/* 37 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StudyBuddyService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var StudyBuddyService = (function () {
+    function StudyBuddyService(http) {
+        this.http = http;
+    }
+    // Service to call /add route. Adds a user to study buddy feature
+    StudyBuddyService.prototype.joinStudyBuddies = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/studybuddies/add', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
+    };
+    // Service to call /remove route. Removes a user from study buddy feature
+    StudyBuddyService.prototype.unfinalize = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/studybuddies/remove', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('studybuddies/remove', email, { headers: headers }).map(res => res.json());
+    };
+    // Service to call /get route. Get Study Buddies based on classes
+    StudyBuddyService.prototype.getStudyBuddies = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
+    };
+    return StudyBuddyService;
+}());
+StudyBuddyService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], StudyBuddyService);
+
+var _a;
+//# sourceMappingURL=studybuddy.service.js.map
+
+/***/ }),
 /* 38 */,
 /* 39 */,
 /* 40 */,
@@ -222,7 +274,8 @@ var _a;
 /* 42 */,
 /* 43 */,
 /* 44 */,
-/* 45 */
+/* 45 */,
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -321,50 +374,6 @@ ChatService = __decorate([
 
 var _a;
 //# sourceMappingURL=chat.service.js.map
-
-/***/ }),
-/* 46 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StudyBuddyService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var StudyBuddyService = (function () {
-    function StudyBuddyService(http) {
-        this.http = http;
-    }
-    StudyBuddyService.prototype.joinStudyBuddies = function (email) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studybuddies/add', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
-    };
-    // Get Study Buddies based on classes
-    StudyBuddyService.prototype.getStudyBuddies = function (email) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studyBuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
-    };
-    return StudyBuddyService;
-}());
-StudyBuddyService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], StudyBuddyService);
-
-var _a;
-//# sourceMappingURL=studybuddy.service.js.map
 
 /***/ }),
 /* 47 */
@@ -785,9 +794,9 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_validate_service__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_user_service__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_buildings_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_chat_service__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_chat_service__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_roominfo_service__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_studybuddy_service__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_studybuddy_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__guards_auth_guard__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29_angular2_flash_messages__);
@@ -896,7 +905,7 @@ AppModule = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatComponent; });
@@ -927,12 +936,6 @@ var ChatComponent = (function () {
     }
     ChatComponent.prototype.ngOnInit = function () {
         var _this = this;
-        // Get the buddyList (normally)
-        this.chatService.getBuddyList(this.user['email']).subscribe(function (list) {
-            for (var buddyIndex in list[0].buddyList) {
-                _this.buddyList.push(list[0].buddyList[buddyIndex]);
-            }
-        });
         // Open the chatroom with 
         if (this.chatService.ID != null) {
             var payload = {
@@ -942,6 +945,12 @@ var ChatComponent = (function () {
             this.joinRoom(payload);
             this.chatService.ID = null;
         }
+        // Get the buddyList (normally)
+        this.chatService.getBuddyList(this.user['email']).subscribe(function (list) {
+            for (var buddyIndex in list[0].buddyList) {
+                _this.buddyList.push(list[0].buddyList[buddyIndex]);
+            }
+        });
     };
     // Join room (Leave room before joining new room)
     ChatComponent.prototype.joinRoom = function (sendee) {
@@ -2072,7 +2081,7 @@ var _a, _b;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScheduleComponent; });
@@ -2213,8 +2222,9 @@ var _a, _b, _c;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2228,17 +2238,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SettingsComponent = (function () {
-    function SettingsComponent(userService, flashMessage) {
+    function SettingsComponent(userService, studyBuddyService, flashMessage) {
         this.userService = userService;
+        this.studyBuddyService = studyBuddyService;
         this.flashMessage = flashMessage;
         this.user = JSON.parse(localStorage.getItem('user'));
         this.show = false;
     }
     SettingsComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.username = this.user["username"];
         this.email = this.user["email"];
+        //calls isFinalized service to disable/activate checkbox button
+        this.userService.isFinalized(this.email).subscribe(function (data) {
+            _this.isFinalized = data[0].schedFinal;
+        });
     };
+    /**Toggles the view for hidable content
+     *
+     */
     SettingsComponent.prototype.toggleView = function () {
         if (this.show === false) {
             this.show = true;
@@ -2247,15 +2267,24 @@ var SettingsComponent = (function () {
             this.show = false;
         }
     };
+    /** Calls changePW service to change the user's password. Returns flash message for success or failure
+     *
+     */
     SettingsComponent.prototype.onSubmitPW = function () {
         var _this = this;
         if (this.oldpw == "" || this.newpw == "") {
-            this.flashMessage.show('Please enter all fields before submitting', { cssClass: 'alert-danger', timeout: 3000 });
+            this.flashMessage.show('Please enter all fields before submitting', {
+                cssClass: 'alert-danger',
+                timeout: 3000
+            });
         }
         else {
             this.userService.changePW(this.email, this.oldpw, this.newpw).subscribe(function (data) {
                 if (data.success) {
-                    _this.flashMessage.show('Password successfully changed.', { cssClass: 'alert-success', timeout: 3000 });
+                    _this.flashMessage.show('Password successfully changed.', {
+                        cssClass: 'alert-success',
+                        timeout: 3000
+                    });
                     _this.show = false;
                 }
                 else if (!data.success) {
@@ -2266,6 +2295,21 @@ var SettingsComponent = (function () {
         this.oldpw = '';
         this.newpw = '';
     };
+    /** Used to call unfinalize service. If successful, flash message notifies user.
+     *
+     */
+    SettingsComponent.prototype.unfinalize = function () {
+        var _this = this;
+        this.studyBuddyService.unfinalize(this.email).subscribe(function (data) {
+            if (data.success) {
+                _this.flashMessage.show('Schedule has been opened for modification! Please finalize your schedule in the Schedule tab!', {
+                    cssClass: 'alert-success',
+                    timeout: 3000
+                });
+                _this.isFinalized = false;
+            }
+        });
+    };
     return SettingsComponent;
 }());
 SettingsComponent = __decorate([
@@ -2274,10 +2318,10 @@ SettingsComponent = __decorate([
         template: __webpack_require__(253),
         styles: [__webpack_require__(231)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__["a" /* StudyBuddyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__["a" /* StudyBuddyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], SettingsComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=settings.component.js.map
 
 /***/ }),
@@ -2287,8 +2331,8 @@ var _a, _b;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_chat_service__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_studybuddy_service__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_chat_service__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_studybuddy_service__ = __webpack_require__(37);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StudybuddyComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2310,23 +2354,34 @@ var StudybuddyComponent = (function () {
         this.studyBuddyService = studyBuddyService;
         this.user = JSON.parse(localStorage.getItem('user'));
         this.buddy = null;
-        this.email = this.user["email"];
         this.schedule = null;
         this.buddies = null;
         this.courseBuddies = null;
         this.loaded = false;
+        this.isFinalized = false;
     }
     StudybuddyComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.schedule = [];
         // Generate course names
+        this.email = this.user["email"];
+        //calls isFinalized to prevent users from using this when the data is not finalized
+        this.userService.isFinalized(this.email).subscribe(function (data) {
+            _this.isFinalized = data[0].schedFinal;
+            //if not finalized display warning to user.
+            if (!_this.isFinalized) {
+                // console.log("warning");
+                document.getElementById("warning").style.display = "inline-block";
+            }
+        });
+        //TODO: Use the course names once syed provides them instead of using the schedule
         this.userService.getSchedule({ email: this.email }).subscribe(function (schedule) {
             _this.schedule = schedule.schedule;
             _this.schedule.sort(_this.sortByCourseName);
         }, function (err) {
             console.log(err);
         });
-        // Generate buddies to course names
+        // Generate buddies for course names
         this.studyBuddyService.getStudyBuddies({ email: this.email }).subscribe(function (buddies) {
             if (buddies != null) {
                 _this.courseBuddies = buddies[0];
@@ -2797,7 +2852,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, " h2 {\r\n     padding-bottom: 5px;\r\n     padding-left: 100px;\r\n     padding-right: 100px;\r\n     text-align: left;\r\n     font-size: 25px;\r\n  }\r\n\r\n h2:after {\r\n     content: \"\";\r\n     display: block;\r\n     border-bottom: 1px solid #FFD07F;\r\n }\r\n\r\n div.content-padding-left {\r\n     padding-left : 50px;\r\n }\r\n\r\n div.page-padding {\r\n     padding-left: 100px;\r\n     padding-right: 100px;\r\n }\r\n\r\n div.borders {\r\n     border-left: 1px dotted black;\r\n     border-right: 1px dotted black;\r\n     padding-left: 20px;\r\n     padding-right: 20px;\r\n }\r\n\r\n div.p1 {\r\n     text-align: left;\r\n     padding-bottom:0px;\r\n     padding-top:0px;\r\n     padding-left:15px;\r\n }\r\n\r\n\r\n#t01 {\r\n    width:100%;\r\n    padding: 0;\r\n}\r\n\r\n #t02 {\r\n     width:100%;\r\n     padding: 0;\r\n }\r\n\r\n #t03 {\r\n     width:100%;\r\n     padding: 0;\r\n }\r\n\r\n\r\n .width {\r\n    text-align: left;\r\n    width: 200px;\r\n}\r\n\r\n.align-left {\r\n    text-align: left;\r\n}\r\n\r\n.align-right {\r\n    text-align: right;\r\n}\r\n\r\n.small {\r\n    font-size: .7em\r\n}\r\nbutton.dropdown {\r\n    background-color: inherit;\r\n    border: none;\r\n    width: 100%;\r\n    padding: 0;\r\n}\r\n\r\nbutton.hello {\r\n    padding: 0;\r\n}\r\nbutton.dropdown:hover, button.dropdown:active {\r\n    background-color: lightblue;\r\n    border: none;\r\n}\r\n\r\n div.dropdown-content {\r\n     display: inline-block;\r\n     text-align: center;\r\n }\r\n\r\n #t01 tr:hover {\r\n     background-color: lightgray;\r\n }\r\n\r\n #t02 tr:hover {\r\n     background-color: lightblue;\r\n }\r\n\r\n", ""]);
+exports.push([module.i, "/* For header styling */\r\n h2 {\r\n     padding-bottom: 5px;\r\n     padding-left: 10%;\r\n     padding-right: 10%;\r\n     text-align: left;\r\n     font-size: 25px;\r\n  }\r\n\r\n h2:after {\r\n     content: \"\";\r\n     display: block;\r\n     border-bottom: 1px solid #FFD07F;\r\n }\r\n\r\n/*div left padding */\r\n div.content-padding-left {\r\n     padding-left : 50px;\r\n }\r\n\r\n/*padding for entire page*/\r\n div.page-padding {\r\n     padding-left: 10%;\r\n     padding-right: 10%;\r\n }\r\n\r\n div.borders {\r\n     border-left: 1px dotted black;\r\n     border-right: 1px dotted black;\r\n     padding-left: 20px;\r\n     padding-right: 20px;\r\n }\r\n\r\n/*left indent for header*/\r\n div.p1 {\r\n     text-align: left;\r\n     padding-bottom:0px;\r\n     padding-top:0px;\r\n     padding-left:15px;\r\n }\r\n\r\n/*dynamic table*/\r\n#t01 {\r\n    width:100%;\r\n    padding: 0;\r\n}\r\n\r\n/*inner table for hover color*/\r\n #t02 {\r\n     width:100%;\r\n     padding: 0;\r\n }\r\n\r\n/*inner table for hover color*/\r\n #t03 {\r\n     width:100%;\r\n     padding: 0;\r\n }\r\n\r\n/*table width*/\r\n .width {\r\n    text-align: left;\r\n    width: 200px;\r\n}\r\n\r\n\r\n/*align-left*/\r\n.align-left {\r\n    text-align: left;\r\n}\r\n\r\n/*align-right*/\r\n.align-right {\r\n    text-align: right;\r\n}\r\n\r\n/*small text*/\r\n.small {\r\n    font-size: .7em;\r\n    text-align: right;\r\n    padding-right: 0;\r\n}\r\n\r\n/*dropdown styling*/\r\n.small {\r\n    font-size: .7em\r\n}\r\n\r\nbutton.dropdown {\r\n    background-color: inherit;\r\n    border: none;\r\n    width: 100%;\r\n    padding: 0;\r\n}\r\n\r\n/*center dropdown content*/\r\nbutton.hello {\r\n    padding: 0;\r\n}\r\nbutton.dropdown:hover, button.dropdown:active {\r\n    background-color: lightblue;\r\n    border: none;\r\n}\r\n\r\n div.dropdown-content {\r\n     display: inline-block;\r\n     text-align: center;\r\n }\r\n\r\n /*hover color for table items*/\r\n #t01 tr:hover {\r\n     background-color: lightgray;\r\n }\r\n\r\n /*hover color for drop down item*/\r\n #t02 tr:hover {\r\n     background-color: lightblue;\r\n }\r\n\r\n", ""]);
 
 // exports
 
@@ -2831,7 +2886,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\r\n", ""]);
+exports.push([module.i, "h2 {\r\n    padding-bottom: 5px;\r\n    padding-left: 10%;\r\n    padding-right: 10%;\r\n    text-align: left;\r\n    font-size: 25px;\r\n}\r\n\r\nh2:after {\r\n    content: \"\";\r\n    display: block;\r\n    border-bottom: 1px solid #FFD07F;\r\n}\r\n\r\np {\r\n    padding-left: 10%;\r\n    padding-right: 10%;\r\n}\r\n\r\n.ol2 {\r\n    padding-left: 12%;\r\n    padding-right: 12%;\r\n}\r\n", ""]);
 
 // exports
 
@@ -2932,19 +2987,19 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user
 /* 253 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n<body>\r\n<div>\r\n  <h1>\r\n    Settings\r\n  </h1>\r\n  <h2>\r\n    <table id=\"t03\">\r\n      <tr>\r\n        <td class=\"align-left\">User Profile</td>\r\n        <td class=\"align-right\">\r\n          <label class=\"container small\">Finalized Schedule\r\n            <input type=\"checkbox\" checked=\"checked\">\r\n            <span class=\"checkmark\"></span>\r\n          </label>\r\n        </td>\r\n      </tr>\r\n    </table>\r\n  </h2>\r\n\r\n  <div class=\"page-padding\">\r\n    <div class=\"borders\">\r\n        <table id=\"t01\">\r\n          <tr>\r\n            <td class=\"width\">Username</td>\r\n            <td class =\"align-left\"> {{username}} </td>\r\n          </tr>\r\n          <tr>\r\n            <td class=\"width\">E-mail</td>\r\n            <td class=\"align-left\">{{email}}</td>\r\n          </tr>\r\n        </table>\r\n      <button (click)=\"toggleView()\" class=\"dropdown\">\r\n        <table id=\"t02\">\r\n          <tr>\r\n            <td class=\"width\">Password</td>\r\n            <td class=\"align-left\">************</td>\r\n            <td class=\"align-right\" *ngIf=\"!show\">Edit</td>\r\n          </tr>\r\n        </table>\r\n      </button>\r\n\r\n      <div *ngIf=\"show\">\r\n          <form class=\"form-horizontal\" (submit)=\"onSubmitPW()\">\r\n            <div class=\"form-group form-group-sm col-xs-3\">\r\n              <label class=\"col-sm-2 control-label\" for=\"sm\">Old Password</label>\r\n              <div class=\"col-sm-10\">\r\n                <input class=\"form-control\" type=\"text\" id=\"sm\" [(ngModel)]=\"oldpw\" name=\"oldpw\">\r\n              </div>\r\n            </div>\r\n            <div class=\"form-group form-group-sm col-xs-3\">\r\n              <label class=\"col-sm-2 control-label\" for=\"sm\">New Password</label>\r\n              <div class=\"col-sm-10\">\r\n                <input class=\"form-control\" type=\"text\" id=\"sm\" [(ngModel)]=\"newpw\" name=\"newpw\">\r\n              </div>\r\n            </div>\r\n              <input style=\"margin: 15px\" type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n          </form>\r\n      </div>\r\n\r\n      </div>\r\n  </div>\r\n</div>\r\n</body>\r\n</html>\r\n\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n<body>\r\n<div id=\"container\">\r\n  <h1>\r\n    Settings\r\n  </h1>\r\n  <h2>\r\n    <table id=\"t03\">\r\n      <tr>\r\n        <td class=\"align-left\">User Profile</td>\r\n        <td class=\"align-right\">\r\n          <label class=\"container small\">Finalized Schedule\r\n            <input type=\"checkbox\" [checked]=\"isFinalized\" [disabled]=\"!isFinalized\" (change)=\"unfinalize()\">\r\n            <span class=\"checkmark\"></span>\r\n          </label>\r\n        </td>\r\n      </tr>\r\n    </table>\r\n  </h2>\r\n\r\n  <div class=\"page-padding\">\r\n    <div class=\"borders\">\r\n        <table id=\"t01\">\r\n          <tr>\r\n            <td class=\"width\">Username</td>\r\n            <td class =\"align-left\"> {{username}} </td>\r\n          </tr>\r\n          <tr>\r\n            <td class=\"width\">E-mail</td>\r\n            <td class=\"align-left\">{{email}}</td>\r\n          </tr>\r\n        </table>\r\n      <button (click)=\"toggleView()\" class=\"dropdown\">\r\n        <table id=\"t02\">\r\n          <tr>\r\n            <td class=\"width\">Password</td>\r\n            <td class=\"align-left\">************</td>\r\n            <td class=\"align-right\" *ngIf=\"!show\">Edit</td>\r\n          </tr>\r\n        </table>\r\n      </button>\r\n\r\n      <div *ngIf=\"show\">\r\n          <form class=\"form-horizontal\" (submit)=\"onSubmitPW()\">\r\n            <div class=\"form-group form-group-sm col-xs-3\">\r\n              <label class=\"col-sm-2 control-label\" for=\"sm\">Old Password</label>\r\n              <div class=\"col-sm-10\">\r\n                <input class=\"form-control\" type=\"text\" id=\"sm\" [(ngModel)]=\"oldpw\" name=\"oldpw\">\r\n              </div>\r\n            </div>\r\n            <div class=\"form-group form-group-sm col-xs-3\">\r\n              <label class=\"col-sm-2 control-label\" for=\"sm\">New Password</label>\r\n              <div class=\"col-sm-10\">\r\n                <input class=\"form-control\" type=\"text\" id=\"sm\" [(ngModel)]=\"newpw\" name=\"newpw\">\r\n              </div>\r\n            </div>\r\n              <input style=\"margin: 15px\" type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n          </form>\r\n      </div>\r\n\r\n      </div>\r\n  </div>\r\n</div>\r\n</body>\r\n</html>\r\n\r\n"
 
 /***/ }),
 /* 254 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1 style=\"text-align: center\">Pick A Course</h1>\r\n    <select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n      <option selected hidden></option>\r\n      <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n    </select>\r\n\r\n    <div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n      <h1 class = \"courseTitle\">Potential Study Buddies For {{courseBuddies.name}}</h1>\r\n      <div class=\"studdyBuddies\" *ngIf=\"loaded\">\r\n        <a *ngFor = \"let buddy of courseBuddies?.buddies let i = index\" (click)=\"message(i)\" routerLink=\"/chat\"><h3 class=\"buddy\">{{buddy.name}}</h3></a>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div id=\"warning\" style=\"display: none\" *ngIf=\"!isFinalized\">\r\n      <h1>Please finalize your schedule in your schedule page</h1>\r\n    </div>\r\n\r\n    <div id=\"buddies\" *ngIf=\"isFinalized\">\r\n    <h1 style=\"text-align: center\">Pick A Course</h1>\r\n    <select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n      <option selected hidden></option>\r\n      <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n    </select>\r\n\r\n    <div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n      <h1 class = \"courseTitle\">Potential Study Buddies For {{courseBuddies.name}}</h1>\r\n      <div class=\"studdyBuddies\" *ngIf=\"loaded\">\r\n        <a *ngFor = \"let buddy of courseBuddies?.buddies let i = index\" (click)=\"message(i)\" routerLink=\"/chat\"><h3 class=\"buddy\">{{buddy.name}}</h3></a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 255 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> User manual </title>\r\n  </head>\r\n  <body style=\"text-align: left\">\r\n      <h2 class=\"page-header\" style=\"text-align: center;\">User Manual</h2>\r\n      <h3 class=\"header\"> [Overview] </h3>\r\n      <p class= \"tab\">\r\n        For a student, finding the ideal place to study can be a reoccurring issue.\r\n        With the inception of OpenClassroom, our goal is to minimize students' already\r\n        high stress levels by a simple solution to finding optimal classrooms to study in.\r\n        Our application will be able to search for classrooms based on a specific time,\r\n        a specific building, or by a \"now\" function that will list all available classrooms\r\n        that are open at the time of query.\r\n      <h3 class=\"header\"> [Registration] </h3>\r\n      To register, you will need a valid e-mail address.\r\n      <ol type = \"1\">\r\n        <li> Click on the register tab on the top right corner of the navigation bar. </li>\r\n        <li> Enter your name.</li>\r\n        <li> Enter a username. (Other users will be able to identify you by this.)</li>\r\n        <li> Enter a valid e-mail address.</li>\r\n        <li> Create a password.</li>\r\n        <li> Click submit!</li>\r\n        <li> Congratulations! You will now be able to login and access the services provided.</li>\r\n      </ol>\r\n    \r\n      <h3 class=\"header\"> [Login] </h3>\r\n      To login, you will need to have a registered account.\r\n      <ol type = \"1\">\r\n        <li> Click on the login tab on the top right corner of the navigation bar. </li>\r\n        <li> Enter your e-mail address.</li>\r\n        <li> Enter your password.</li>\r\n        <li> Click submit!</li>\r\n      </ol>\r\n    \r\n    <h3 class=\"header\"> [FAQ] </h3>\r\n    <ol type = \"1\">\r\n      <li> When will the application be released to the public? </li>\r\n        <ul>\r\n          <li> We are looking to launch in December, 2017! </li>\r\n        </ul>\r\n      <li> How can I become a part of the development team? </li>\r\n        <ul>\r\n          <li> Please refer to our developer guide!  </li>\r\n        </ul>\r\n      <li> I can't login! What should I do?</li>\r\n        <ul>\r\n          <li> Please make sure you're using the credentials you created your account\r\n        with, and if you are still unable to access your account, please contact us at\r\n        <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com.</a>\r\n          </li>\r\n        </ul>\r\n    </ol>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> User manual </title>\r\n  </head>\r\n  <body style=\"text-align: left\">\r\n      <h1 class=\"page-header\" style=\"text-align: center;\">User Manual</h1>\r\n      <h2> Overview </h2>\r\n      <p class= \"tab\">\r\n        For a student, finding the ideal place to study can be a reoccurring issue.\r\n        With the inception of OpenClassroom, our goal is to minimize students' already\r\n        high stress levels by a simple solution to finding optimal classrooms to study in.\r\n        Our application will be able to search for classrooms based on a specific time,\r\n        a specific building, or by a \"now\" function that will list all available classrooms\r\n        that are open at the time of query.\r\n      </p>\r\n\r\n      <h2> Registration </h2>\r\n      <p>To register, you will need a valid e-mail address.</p>\r\n      <ol class = \"ol2\">\r\n        <li> Click on the 'Register' tab.</li>\r\n        <li> Enter your name.</li>\r\n        <li> Enter a username. (Other users will be able to identify you by this.)</li>\r\n        <li> Enter a valid e-mail address.</li>\r\n        <li> Create a password.</li>\r\n        <li> Click submit.</li>\r\n        <li> Congratulations! You will now be able to login and access our provided services.</li>\r\n      </ol>\r\n    \r\n      <h2> Login </h2>\r\n      <p>To login, you will need to have a registered account.</p>\r\n      <ol class = \"ol2\">\r\n        <li> Click on the 'Login' tab. </li>\r\n        <li> Enter your e-mail address.</li>\r\n        <li> Enter your password.</li>\r\n        <li> Click submit.</li>\r\n      </ol>\r\n\r\n      <h2> Adding Your Schedule </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Click on the 'Schedule' tab. </li>\r\n          <li> Click \"Add Course\". </li>\r\n          <li> Enter course information. </li>\r\n          <li> Click Accept. </li>\r\n      </ol>\r\n\r\n      <h2> Searching For a Classroom </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Click on the 'Find Classroom' tab. </li>\r\n          <li> Select a building from the provided list. </li>\r\n          <li> Select 'Right Now' </li>\r\n          <li> Select 'By Building' </li>\r\n          <ol type=\"i\">\r\n              <li> Select a day. </li>\r\n              <li> Browse the times by horizontally scrolling. </li>\r\n          </ol>\r\n          <li> Select 'By Time' </li>\r\n          <ol type=\"i\">\r\n              <li> Select a day. </li>\r\n              <li> Adjust the time slider. </li>\r\n              <li> Browse the times by horizontally scrolling. </li>\r\n          </ol>\r\n      </ol>\r\n\r\n      <h2> Finding a Study Buddy </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Click on the 'Schedule' tab. </li>\r\n          <li> Click 'Finalize Schedule' </li>\r\n          <li> Allow 24 hours for potential study buddies to appear. </li>\r\n          <li> Click on the 'Study Buddy' tab. </li>\r\n          <li> Select one of your courses. </li>\r\n          <li> Select a study buddy. </li>\r\n          <li> Start a conversation! </li>\r\n      </ol>\r\n      <h2> Viewing a Room's Information </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Search for a classroom via 'By Building' or 'By Time'. </li>\r\n          <ol type=\"i\"> <li>Click the room #.</li> </ol>\r\n          <li> Search for a classroom via 'By Now'. </li>\r\n          <ol type =\"i\"> <li>Click anywhere on the rooms that were found. </li></ol>\r\n      </ol>\r\n    \r\n    <h2> FAQ </h2>\r\n      <ol class =\"ol2\">\r\n          <li> When will the application be released to the public? </li>\r\n          <ul>\r\n              <li> We are looking to launch in December, 2017! </li>\r\n          </ul>\r\n          <li> How can I become a part of the development team? </li>\r\n          <ul>\r\n              <li> Please refer to our developer guide!  </li>\r\n          </ul>\r\n          <li> I can't login! What should I do?</li>\r\n          <ul>\r\n              <li> Please make sure you're using the credentials you created your account\r\n                  with, and if you are still unable to access your account, please contact us at\r\n                  <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com.</a>\r\n              </li>\r\n          </ul>\r\n          <li> I finalized my schedule, how come no one appears in my Study Buddies? </li>\r\n          <ul>\r\n              <li>Please allow 24 hours for our system to update and provide users for you to study with. </li>\r\n          </ul>\r\n      </ol>\r\n\r\n  </body>\r\n</html>"
 
 /***/ }),
 /* 256 */,
