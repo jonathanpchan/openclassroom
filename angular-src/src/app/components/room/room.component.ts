@@ -8,11 +8,11 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./room.component.css']
 })
 export class RoomComponent implements OnChanges {
-  //inputs from find components
+  // Inputs from find components
   @Input() building: string = "";
   @Input() room: string = "";
 
-  //data structure
+  // Data structure
   rooms = null;
   loaded: boolean = false;
   empMon: boolean;

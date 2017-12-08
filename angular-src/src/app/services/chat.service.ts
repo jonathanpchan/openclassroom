@@ -8,6 +8,7 @@ import * as io from 'socket.io-client';
 export class ChatService {
   // How the user is communicating with the server
   private socket: any;
+  // ID of the user that's going to be chatting with you
   public ID: string = null;
 
   constructor(private http: Http) { }

@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() { }
 
-  // Changes state of dropdown
+  // Change the state of dropdown
   toggle() {
     this.show = !this.show;
   }

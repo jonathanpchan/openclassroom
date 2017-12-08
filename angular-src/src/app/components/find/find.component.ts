@@ -129,6 +129,7 @@ export class FindComponent implements OnInit {
     }
   }
 
+  // Jon C's algorithm for displaying the time on the time cell
   displayToolTip(time)
   {
     var  minutes = time*5;//since we have minutes in 5 minute chunks
@@ -140,10 +141,6 @@ export class FindComponent implements OnInit {
     if(minutes>=780)    {
       minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
     }
-    // // TODO: remove this for deployment as it's unneeded
-    // else if(minutes < 60)    {
-    //   minutes+=720;//adding 12 hours if its before 1 AM
-    // }
     t = (minutes - minutes%60)/60 + ":";//calculating hours
 
     if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
@@ -169,16 +166,9 @@ export class FindComponent implements OnInit {
     //set new inputs
     this.buildingName = building_name;
     this.roomNumber = room_num;
+
     //hide table and show room
     document.getElementById("table").style.display = "none";
     document.getElementById("room").style.display = "block";
-
-    //hide everything else
-    // document.getElementById("buttons").style.display = "none";
-    // document.getElementById("all").style.display = "none";
-    // document.getElementById("table-2").style.display = "none";
-    // document.getElementById("now").style.display = "none";
-    // document.getElementById("times").style.display = "none";
-
   }
 }

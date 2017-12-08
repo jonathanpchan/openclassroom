@@ -10,4 +10,6 @@ export class HomeComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() { }
+
+    // NOT NECESSARILY NEEDED SINCE THE HOME PAGE IS "STATIC"
 }

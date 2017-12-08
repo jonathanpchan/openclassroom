@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
   <body class="main-grid">
+    <!-- Navbar -->
     <app-navbar></app-navbar>
+
+    <!-- Flash messages below navbar -->
     <flash-messages></flash-messages>
+
+    <!-- Components below flash messages -->
     <router-outlet></router-outlet>
+
+    <!-- To Top button shows up if you scroll down far enough -->
     <button class="button-to-top" (click)="toTop()" id="to-top">
       <span class="fa fa-chevron-up" aria-hidden="true"></span>
       <p>Top</p>

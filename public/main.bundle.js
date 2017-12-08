@@ -38,11 +38,13 @@ var UserService = (function () {
         this.http = http;
     }
     //=========== User Registration ============
+    // Register a user given user information from payload
     UserService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/users/register', user, { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.post('users/register', user, { headers: headers }).map(res => res.json());
     };
+    // Authenticate a user given user information from payload
     UserService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
@@ -55,52 +57,62 @@ var UserService = (function () {
         // return this.http.post('users/settings/pw', {email, oldpw, newpw}, {headers: headers}).map(res => res.json());
     };
     //=========== Schedule =====================
+    // Check to see if the user is finalized
     UserService.prototype.isFinalized = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/users/final', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.post('users/final', { email: email }, { headers: headers }).map(res => res.json());
     };
+    // Get the user's schedule
     UserService.prototype.getSchedule = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/users/schedule', email, { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.post('users/schedule', email, { headers: headers }).map(res => res.json());
     };
+    // Add a schedule item to the user's schedule
     UserService.prototype.addScheduleItem = function (item) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/users/schedule/add', item, { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.post('users/schedule/add', item, { headers: headers }).map(res => res.json());
     };
+    // Delete a schedule item from the user's schedule
     UserService.prototype.deleteScheduleItem = function (item) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/users/schedule/delete', item, { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.post('users/schedule/delete', item, { headers: headers }).map(res => res.json());
     };
     //=========== Courses ======================
+    // Get a list of all the course names
     UserService.prototype.getCourseNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.get('http://localhost:3000/users/courses/names', { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.get('users/courses/names', { headers: headers }).map(res => res.json());
     };
+    // Get all course information
     UserService.prototype.getCourses = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.get('http://localhost:3000/users/courses', { headers: headers }).map(function (res) { return res.json(); });
         // return this.http.get('users/courses', { headers: headers }).map(res => res.json());
     };
     //=========== User Token ===================
+    // Store user data into local storage
     UserService.prototype.storeUserData = function (token, user) {
         localStorage.setItem('id_token', token);
         localStorage.setItem('user', JSON.stringify(user));
         this.authToken = token;
         this.user = user;
     };
+    // Load JSON web token
     UserService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
         this.authToken = token;
     };
+    // Check to see if the token is not expired
     UserService.prototype.loggedIn = function () {
         // need to read id_token due to some update
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_angular2_jwt__["tokenNotExpired"])('id_token');
     };
+    // Logout clears local storage and user information
     UserService.prototype.logout = function () {
         this.authToken = null;
         this.user = null;
@@ -162,16 +174,19 @@ var BuildingsService = (function () {
         this.http = http;
     }
     //=========== Buildings ======================
+    // Get building based on name
     BuildingsService.prototype.getBuilding = function (name) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/buildings', { name: name }, { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
         // return this.http.post('buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
     };
+    // Get all buildings
     BuildingsService.prototype.getBuildings = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
         // return this.http.get('buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
     };
+    // Get all building names
     BuildingsService.prototype.getBuildingNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
@@ -302,6 +317,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ChatService = (function () {
     function ChatService(http) {
         this.http = http;
+        // ID of the user that's going to be chatting with you
         this.ID = null;
     }
     // Create the room based on user pair
@@ -395,6 +411,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ValidateService = (function () {
     function ValidateService() {
     }
+    // Make sure the register information is all filled out
     ValidateService.prototype.validateRegister = function (user) {
         if (user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined) {
             return false;
@@ -403,6 +420,8 @@ var ValidateService = (function () {
             return true;
         }
     };
+    // Make sure it's a valid email
+    // Source: LOST
     ValidateService.prototype.validateEmail = function (email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
@@ -564,6 +583,7 @@ var FindNowComponent = (function () {
             }
         }
     };
+    // Display the room info
     FindNowComponent.prototype.showRoom = function (room, number) {
         this.buildingName = room;
         this.roomNumber = number;
@@ -739,10 +759,12 @@ var AppComponent = (function () {
     AppComponent.prototype.ngOnInit = function () {
         window.onscroll = this.scrollUp;
     };
+    // Scroll back to the to if you click the To Top  
     AppComponent.prototype.toTop = function () {
         document.body.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
     };
+    // Determine whether or not to show the To Top button  
     AppComponent.prototype.scrollUp = function () {
         if (document.body.scrollTop > 30 || document.scrollingElement.scrollTop > 30) {
             document.getElementById("to-top").style.display = "block";
@@ -925,19 +947,28 @@ var ChatComponent = (function () {
     function ChatComponent(chatService, flashMessage) {
         this.chatService = chatService;
         this.flashMessage = flashMessage;
+        // You
         this.user = JSON.parse(localStorage.getItem('user'));
+        // You are the sender
         this.sender = this.user["name"];
+        // You intially are talking to no one
         this.sendee = null;
+        // Holds the message logs
         this.messages = [];
+        // What message is being sent when sending a message
         this.message = null;
+        // Connection determines if you connected to the room
         this.connection = null;
+        // Holds the listing of names of who you can talk to
         this.buddyList = [];
+        // Flag for if you can show the back button (small screen: Show buddy list or message log)
         this.showBack = false;
     }
     ChatComponent.prototype.ngOnInit = function () {
         var _this = this;
-        // Open the chatroom with 
+        // Join room if you came from the study buddy page
         if (this.chatService.ID != null) {
+            // If you clicked a study buddy, that info is put in chatService then received from chatservice to talk with that person
             var payload = {
                 "user": this.chatService.ID["name"],
                 "email": this.chatService.ID["email"]
@@ -945,20 +976,19 @@ var ChatComponent = (function () {
             this.joinRoom(payload);
             this.chatService.ID = null;
         }
-        // Get the buddyList (normally)
+        // Get the buddy list normally
         this.chatService.getBuddyList(this.user['email']).subscribe(function (list) {
             for (var buddyIndex in list[0].buddyList) {
                 _this.buddyList.push(list[0].buddyList[buddyIndex]);
             }
         });
     };
-    // Join room (Leave room before joining new room)
+    // Leave any pre-existing rooms, then join a room
     ChatComponent.prototype.joinRoom = function (sendee) {
         var _this = this;
-        // Back join room
         this.sendee = sendee.user;
         this.showBack = true;
-        // Create room or get room # to join (Back End)
+        // Create room and get a room # to join (Back End)
         this.chatService.createRoom(this.user["email"], sendee.email).subscribe(function (out) {
             // Eliminate issue of room # too long
             _this.currentRoom = out[0]._id.substring(0, 24);
@@ -971,8 +1001,8 @@ var ChatComponent = (function () {
                     _this.messages.push(messages[0].messages[message]);
                 }
             });
+            // Listen for Messages (Front End)
             if (_this.connection == null) {
-                // Listen for Messages (Front End)
                 _this.connection = _this.chatService.getSubscription().subscribe(function (payload) {
                     _this.messages.push(payload);
                 });
@@ -980,7 +1010,7 @@ var ChatComponent = (function () {
             _this.message = '';
         });
     };
-    // Send message (REQUIRES JOINROOM CALLED FIRST)
+    // Only send a message if you've joined a room
     ChatComponent.prototype.sendMessage = function () {
         // Make sure there is a connection, there is a message, and the message is not just white space
         if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
@@ -993,10 +1023,12 @@ var ChatComponent = (function () {
         // Clear message
         this.message = '';
     };
+    // Go back to the buddy list (small screen: Clears who you were talking)
     ChatComponent.prototype.back = function () {
         this.sendee = null;
         this.showBack = false;
         this.messages = [];
+        this.message = '';
     };
     return ChatComponent;
 }());
@@ -1034,6 +1066,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// NOTE: COURSE COMPONENT IS USED IN THE SCHEDULE COMPONENT AS A CHILD COMPONENT, 
+// HENCE THE EMITS TO NOTIFY THE PARENT COMPONENT WHEN IT NEEDS TO TAKE BACK THE DISPLAY/CONTROL.
+// Source: https://angular.io/guide/component-interaction
 var CourseComponent = (function () {
     function CourseComponent(userService, flashMessage) {
         this.userService = userService;
@@ -1060,13 +1095,13 @@ var CourseComponent = (function () {
     // 2) Get the course numbers
     CourseComponent.prototype.getCourseNumOptions = function () {
         if (this.courseNameOptions != null) {
-            // Reset the data that is displayed
+            // Reset the course number data that is displayed
             this.courseNumOptions = [];
             this.courseChoiceOptions = null;
             // Populate current course array to point to specific course name
             this.currCourseName = this.courseAll;
             for (var all in this.currCourseName) {
-                // Once the particular course name is found
+                // Once the particular course name is found, set the current course name
                 if (this.currCourseName[all].name == this.courseName) {
                     this.currCourseName = this.currCourseName[all]["courses"];
                     break;
@@ -1076,7 +1111,7 @@ var CourseComponent = (function () {
             for (var courses in this.currCourseName) {
                 this.courseNumOptions.push(this.currCourseName[courses]["num"]);
             }
-            // Made display sorted and unique
+            // Make display sorted and unique
             this.courseNumOptions = this.makeUnique(this.courseNumOptions);
         }
     };
@@ -1092,7 +1127,7 @@ var CourseComponent = (function () {
             }
         }
     };
-    // Gets all courses and puts them into courseAll as "cache"
+    // Get all courses and puts them into courseAll as "cache" (on focus: When you select a course name)
     CourseComponent.prototype.cache = function () {
         var _this = this;
         if (this.courseAll == null) {
@@ -1107,10 +1142,11 @@ var CourseComponent = (function () {
         }
     };
     // ========== Add ===============
+    // Switch back to Schedule component
     CourseComponent.prototype.onBack = function () {
         this.afterConfirm.emit(false);
     };
-    // 4) On submit, show alternative data (If missing data, then alert)
+    // 4) On submit, show data you'd like to add. If missing data, then alert that more info is needed.
     CourseComponent.prototype.onSubmit = function () {
         if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) {
             this.confirmMessage = this.courseName + " " + this.courseChoice.num + " Class # " + this.courseChoice.sec + " " + this.courseChoice.day + " " + this.courseChoice.time + " " + this.courseChoice.location;
@@ -1125,13 +1161,13 @@ var CourseComponent = (function () {
     CourseComponent.prototype.addClick = function (answer) {
         var _this = this;
         if (answer) {
-            // Add on back end
+            // Add (Back End)
             var coursePayload = {
                 email: JSON.parse(localStorage.getItem('user')).email,
                 crsID: this.courseChoice.sec
             };
             this.userService.addScheduleItem(coursePayload).subscribe(function (success) {
-                // Don't add to front end
+                // Don't Add (Front End)
                 if (success.length == 0) {
                     _this.flashMessage.show('Course already in schedule.', { cssClass: 'alert-danger', timeout: 3000 });
                     _this.afterConfirm.emit(false);
@@ -1147,8 +1183,8 @@ var CourseComponent = (function () {
             this.afterConfirm.emit(false);
         }
     };
-    // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
     // Take a SORTED array, determine unique values, and then return the array
+    // Source: http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
     CourseComponent.prototype.makeUnique = function (arr) {
         var tempArr = arr;
         for (var i = 1; i < tempArr.length;) {
@@ -1260,12 +1296,17 @@ var FindHomeComponent = (function () {
     // 2) Display option buttons
     FindHomeComponent.prototype.displayButtons = function () {
         if (document.getElementById("buttons").style.display == "none") {
+            // Show the day buttons
             document.getElementById("buttons").style.display = "block";
-            document.getElementById("all").style.display = "none";
+            // Hide the Find table
             document.getElementById("table").style.display = "none";
+            // Hide the Find Times table
             document.getElementById("table-2").style.display = "none";
+            // Hide the child component buttons
+            document.getElementById("all").style.display = "none";
             document.getElementById("now").style.display = "none";
             document.getElementById("times").style.display = "none";
+            // Hide the room info components
             document.getElementById("room").style.display = "none";
             document.getElementById("room2").style.display = "none";
             document.getElementById("room3").style.display = "none";
@@ -1278,9 +1319,12 @@ var FindHomeComponent = (function () {
         }
         else {
             if (document.getElementById("buttons").style.display == "block") {
+                // Hide day buttons after one is clicked
                 document.getElementById("buttons").style.display = "none";
+                // Show the child component options
                 document.getElementById(option).style.display = "block";
                 if (option == "now") {
+                    // If child is "Find Now" call show now to display the time when it shows the Child Component
                     this.nowComponent.showNow();
                 }
             }
@@ -1444,6 +1488,7 @@ var FindTimesComponent = (function () {
             }
         }
     };
+    // Jon C's algorithm for displaying the time on the time cell
     FindTimesComponent.prototype.displayToolTip = function (time) {
         var minutes = time * 5; //since we have minutes in 5 minute chunks
         minutes += this.start * 5; //offset of start value * 5
@@ -1452,10 +1497,6 @@ var FindTimesComponent = (function () {
         if (minutes >= 780) {
             minutes -= 720; //if its 13 o'clock you take off 12 hours or 720 mins
         }
-        // // TODO: remove this for deployment as it's unneeded
-        // else if(minutes < 60)    {
-        //   minutes+=720;//adding 12 hours if its before 1 AM
-        // }
         t = (minutes - minutes % 60) / 60 + ":"; //calculating hours
         if (minutes % 60 < 10) {
             t += "0" + time % 60;
@@ -1480,6 +1521,7 @@ var FindTimesComponent = (function () {
         document.getElementById('start').textContent = this.times[this.tstart];
         document.getElementById('end').textContent = this.times[this.tend];
     };
+    // Display the room info
     FindTimesComponent.prototype.getRoomInfo = function (building_name, room_num) {
         var email = JSON.parse(localStorage.getItem('user')).email;
         //set new inputs
@@ -1488,12 +1530,6 @@ var FindTimesComponent = (function () {
         //hide table and show room
         document.getElementById("table-2").style.display = "none";
         document.getElementById("room3").style.display = "block";
-        //hide everything else
-        // document.getElementById("buttons").style.display = "none";
-        // document.getElementById("all").style.display = "none";
-        // document.getElementById("table-2").style.display = "none";
-        // document.getElementById("now").style.display = "none";
-        // document.getElementById("times").style.display = "none";
     };
     return FindTimesComponent;
 }());
@@ -1636,6 +1672,7 @@ var FindComponent = (function () {
             }
         }
     };
+    // Jon C's algorithm for displaying the time on the time cell
     FindComponent.prototype.displayToolTip = function (time) {
         var minutes = time * 5; //since we have minutes in 5 minute chunks
         minutes += 480; //offset of 8 AM need to add 8 hours
@@ -1644,10 +1681,6 @@ var FindComponent = (function () {
         if (minutes >= 780) {
             minutes -= 720; //if its 13 o'clock you take off 12 hours or 720 mins
         }
-        // // TODO: remove this for deployment as it's unneeded
-        // else if(minutes < 60)    {
-        //   minutes+=720;//adding 12 hours if its before 1 AM
-        // }
         t = (minutes - minutes % 60) / 60 + ":"; //calculating hours
         if (minutes % 60 < 10) {
             t += "0" + time % 60;
@@ -1671,12 +1704,6 @@ var FindComponent = (function () {
         //hide table and show room
         document.getElementById("table").style.display = "none";
         document.getElementById("room").style.display = "block";
-        //hide everything else
-        // document.getElementById("buttons").style.display = "none";
-        // document.getElementById("all").style.display = "none";
-        // document.getElementById("table-2").style.display = "none";
-        // document.getElementById("now").style.display = "none";
-        // document.getElementById("times").style.display = "none";
     };
     return FindComponent;
 }());
@@ -1765,6 +1792,7 @@ var LoginComponent = (function () {
         this.flashMessage = flashMessage;
     }
     LoginComponent.prototype.ngOnInit = function () { };
+    // Send email and password combination to the database and navigate based on if it successfully matched an email and password combination.
     LoginComponent.prototype.onLoginSubmit = function () {
         var _this = this;
         var user = {
@@ -1772,14 +1800,15 @@ var LoginComponent = (function () {
             password: this.password
         };
         this.userService.authenticateUser(user).subscribe(function (data) {
+            // If sucessful, store user data into JSON web token
             if (data.success) {
                 _this.userService.storeUserData(data.token, data.user);
                 _this.flashMessage.show('Login Successful', { cssClass: 'alert-success', timeout: 3000 });
                 _this.router.navigate(['schedule']);
             }
             else {
+                // If unsuccessful, show the email and password combination was not correct
                 _this.flashMessage.show('No Match with that Email and Password.', { cssClass: 'alert-danger', timeout: 3000 });
-                _this.router.navigate(['login']);
             }
         });
     };
@@ -1832,7 +1861,7 @@ var NavbarComponent = (function () {
         this.show = false; // Initially show hidden
     }
     NavbarComponent.prototype.ngOnInit = function () { };
-    // Changes state of dropdown
+    // Change the state of dropdown
     NavbarComponent.prototype.toggle = function () {
         this.show = !this.show;
     };
@@ -1895,6 +1924,7 @@ var RegisterComponent = (function () {
         this.router = router;
     }
     RegisterComponent.prototype.ngOnInit = function () { };
+    //This function checks to make sure all data is good when trying to register for openclassroom
     RegisterComponent.prototype.onRegisterSubmit = function () {
         var _this = this;
         var user = {
@@ -1914,15 +1944,16 @@ var RegisterComponent = (function () {
             this.flashMessage.show('Please use a valid email.', { cssClass: 'alert-danger', timeout: 3000 });
             return false;
         }
-        // Register User using const user data
+        // Register User using inputted user data
         this.userService.registerUser(user).subscribe(function (data) {
+            // If successful go to login page
             if (data.success) {
                 _this.flashMessage.show('You registered! Please enter your credentials to log in.', { cssClass: 'alert-success', timeout: 3000 });
                 _this.router.navigate(['/login']);
             }
             else {
+                // If unsuccessful, show email is already in use
                 _this.flashMessage.show('Email is already in use.', { cssClass: 'alert-danger', timeout: 3000 });
-                _this.router.navigate(['/register']);
             }
         });
     };
@@ -1966,14 +1997,16 @@ var RoomComponent = (function () {
     function RoomComponent(roomInfoService, flashMessage) {
         this.roomInfoService = roomInfoService;
         this.flashMessage = flashMessage;
-        //inputs from find components
+        // Inputs from find components
         this.building = "";
         this.room = "";
-        //data structure
+        // Data structure
         this.rooms = null;
         this.loaded = false;
         this.email = JSON.parse(localStorage.getItem('user'))["email"];
     }
+    //we use ngOnChanges() to dynamically get the room information from the find-classroom components
+    //otherwise there would be issues loading each room from the other component
     RoomComponent.prototype.ngOnChanges = function () {
         var _this = this;
         this.roomInfoService.getRoomInfo(this.building, this.room).subscribe(function (roomInfo) {
@@ -1985,6 +2018,7 @@ var RoomComponent = (function () {
             console.log(err);
         });
     };
+    //format time as time is provide in minutes otherwise
     RoomComponent.prototype.timeFormat = function (time) {
         var t;
         var minutes = time;
@@ -2006,18 +2040,16 @@ var RoomComponent = (function () {
         }
         return t;
     };
+    //used to handle votes performed on the front end.
     RoomComponent.prototype.vote = function (item, pos, nVote) {
         var _this = this;
-        // console.log("building - " + this.building + " room - " + this.room
-        //           + " email - " + this.email +  " item - " + item + " pos - " + pos
-        //           + " vote - " + nVote);
         this.roomInfoService.addVote(this.building, this.room, this.email, item, pos, nVote).subscribe(function (data) {
             if (data.success) {
-                //TODO update room info here instead
-                console.log("good vote");
+                //TODO update room info here instead since there is no actual success message from the route
             }
             else {
-                //console.log("no vote?")
+                //we call update this.rooms so we have the newest data from the databse after a vote goes through
+                //other wise you will need to refresh the page to see any changes.
                 _this.roomInfoService.getRoomInfo(_this.building, _this.room).subscribe(function (roomInfo) {
                     _this.rooms = roomInfo;
                 }, function (err) {
@@ -2026,22 +2058,21 @@ var RoomComponent = (function () {
             }
         });
     };
+    //used to submit a comment to the database when one is sent from the front end.
     RoomComponent.prototype.onCommentSubmit = function () {
-        //check for empty comment here
-        // console.log("building - " + this.building + " room - " + this.room + " email - " + this.email +
-        //           " comment - " + this.comment);
         var _this = this;
+        //if the comment box is empty do not allow them to submit anything and show an error flash message.
         if (this.comment == "") {
             this.flashMessage.show('Please enter a comment before submitting', { cssClass: 'alert-danger', timeout: 3000 });
         }
         else {
             this.roomInfoService.addComment(this.building, this.room, this.email, this.comment).subscribe(function (data) {
                 if (data.success) {
-                    //TODO update room info here instead
-                    console.log("good");
+                    //TODO update room info here instead same issue as above
                 }
                 else {
-                    console.log("no comment?");
+                    //we call update this.rooms so we have the newest data from the databse after a user comments on the room.
+                    //other wise you will need to refresh the page to see any changes.
                     _this.roomInfoService.getRoomInfo(_this.building, _this.room).subscribe(function (roomInfo) {
                         _this.rooms = roomInfo;
                     }, function (err) {
@@ -2050,6 +2081,7 @@ var RoomComponent = (function () {
                 }
             });
         }
+        //this is linked to the text field so we reset it here
         this.comment = '';
     };
     return RoomComponent;
@@ -2103,13 +2135,21 @@ var ScheduleComponent = (function () {
         this.userService = userService;
         this.studyBuddyService = studyBuddyService;
         this.flashMessage = flashMessage;
+        // You
         this.user = JSON.parse(localStorage.getItem('user'));
+        // Your schedule
         this.schedule = null;
+        // Boolean for if you are displaying the schedule
         this.home = true;
+        // Boolean for if you are attempting to add a course
         this.add = false;
+        // Boolean for if you are attempting to delete a course
         this.delete = false;
+        // Boolean for if you are finalizing a schedule
         this.finalize = false;
+        // Boolean for if the schedule is finalized or not
         this.isFinalized = false;
+        // Item that is in the process of being deleted
         this.currItem = null;
     }
     ScheduleComponent.prototype.ngOnInit = function () {
@@ -2171,14 +2211,17 @@ var ScheduleComponent = (function () {
         this.delete = false;
     };
     ScheduleComponent.prototype.clickFinalize = function () {
+        // If the length is greater than 0, you can finalize
         if (this.schedule.length > 0) {
             this.finalize = true;
         }
         else {
+            // If the length is <= 0, you cannot finalize
             this.flashMessage.show('Cannot finalize course schedule.', { cssClass: 'alert-danger', timeout: 3000 });
         }
     };
     ScheduleComponent.prototype.onFinalize = function (confirm) {
+        // On finalize confirmation screen, finalize or don't finalize depending on the button chosen
         if (confirm) {
             this.studyBuddyService.joinStudyBuddies(this.user["email"]).subscribe();
         }
@@ -2352,6 +2395,7 @@ var StudybuddyComponent = (function () {
         this.userService = userService;
         this.chatService = chatService;
         this.studyBuddyService = studyBuddyService;
+        //get user from local storage and set up all data needed for the component
         this.user = JSON.parse(localStorage.getItem('user'));
         this.buddy = null;
         this.schedule = null;
@@ -2363,16 +2407,16 @@ var StudybuddyComponent = (function () {
     StudybuddyComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.schedule = [];
-        // Generate course names
         this.email = this.user["email"];
-        //calls isFinalized to prevent users from using this when the data is not finalized
+        //calls isFinalized in user service to prevent users from using this when the data is not finalized
         this.userService.isFinalized(this.email).subscribe(function (data) {
             _this.isFinalized = data[0].schedFinal;
             //if not finalized display warning to user.
             if (!_this.isFinalized) {
-                // console.log("warning");
                 document.getElementById("warning").style.display = "inline-block";
             }
+        }, function (err) {
+            console.log(err);
         });
         //TODO: Use the course names once syed provides them instead of using the schedule
         this.userService.getSchedule({ email: this.email }).subscribe(function (schedule) {
@@ -2381,9 +2425,14 @@ var StudybuddyComponent = (function () {
         }, function (err) {
             console.log(err);
         });
-        // Generate buddies for course names
+        // Generate buddies for each course
         this.studyBuddyService.getStudyBuddies({ email: this.email }).subscribe(function (buddies) {
-            if (buddies != null) {
+            //This should be handled in the err, but routes do not proved a proper err
+            if (buddies.error == "Nothing Found in SB") {
+                document.getElementById("cronjobwait").style.display = "inline-block";
+                document.getElementById("buddies").style.display = "none";
+            }
+            else {
                 _this.courseBuddies = buddies[0];
                 _this.loaded = true;
                 _this.buddies = buddies;
@@ -2392,6 +2441,7 @@ var StudybuddyComponent = (function () {
             console.log(err);
         });
     };
+    // Used to sort the schedule by coure names
     // Sort by Course, then Course Num, then by Course Sec
     StudybuddyComponent.prototype.sortByCourseName = function (a, b) {
         // Name (ex. CECS)
@@ -2408,12 +2458,23 @@ var StudybuddyComponent = (function () {
             return a.name > b.name;
         }
     };
+    //Shows the buddies depending on the index of the class that is chosen
+    //TODO fix this when routes provide course name ex 491b
     StudybuddyComponent.prototype.showBuddies = function () {
         //get index of the select menu and set our buddyDisplay to that index of studyBuddies
         var index = document.getElementById('courseSelect').selectedIndex - 1;
         this.courseBuddies = this.buddies[index];
-        document.getElementById("buddylist").style.display = "inline-block";
+        //if there are no buddies display text indicating there are no buddies
+        if (this.courseBuddies.buddies.length < 1) {
+            document.getElementById("buddylist").style.display = "none";
+            document.getElementById("nobuddies").style.display = "inline-block";
+        }
+        else {
+            document.getElementById("buddylist").style.display = "inline-block";
+            document.getElementById("nobuddies").style.display = "none";
+        }
     };
+    //open message thread to buddy
     StudybuddyComponent.prototype.message = function (buddyIndex) {
         var buddy = this.courseBuddies.buddies[buddyIndex];
         this.chatService.addBuddyListItem(this.user["email"], buddy.email, buddy.name).subscribe();
@@ -2614,7 +2675,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, ".main-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 2.5% 95% 2.5%;\r\n        grid-template-columns: 2.5% 95% 2.5%;\r\n    -ms-grid-rows: 50px 63px 100%;\r\n        grid-template-rows: 50px 63px 100%;\r\n    grid-template-areas: \r\n        \"nav    nav     nav\"\r\n        \"fm     fm      fm\"\r\n        \".      ro      .\";\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.main-grid app-navbar {\r\n    grid-area: nav;\r\n}\r\n\r\n.main-grid flash-messages {\r\n    grid-area: fm;\r\n}\r\n\r\n/* Used to circumvent router-outlet issue */\r\n.main-grid div {\r\n    grid-area: ro;\r\n    /* border: 2px black solid; */\r\n}\r\n\r\n/* https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */\r\n.button-to-top {\r\n    display: none; /* Hidden by default */\r\n    position: fixed; /* Fixed/sticky position */\r\n    bottom: 20px; /* Place the button at the bottom of the page */\r\n    right: 20px; /* Place the button 30px from the right */\r\n    z-index: 100; /* Make sure it does not overlap */\r\n    border: none; /* Remove borders */\r\n    outline: none; /* Remove outline */\r\n    background-color: #edaa00; /* Set a background color */\r\n    color: #333333; /* Text color */\r\n    padding-right: 20px;\r\n    padding-top: 5px;\r\n    padding-bottom: 5px;\r\n    padding-left: 20px;\r\n    border-radius: 10px; /* Rounded corners */\r\n    opacity: 0.6;\r\n}\r\n\r\n.button-to-top:hover {\r\n    opacity: 0.7;\r\n}\r\n\r\n.button-to-top:active {\r\n    opacity: 0.8;\r\n}", ""]);
+exports.push([module.i, ".main-grid {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 2.5% 95% 2.5%;\r\n        grid-template-columns: 2.5% 95% 2.5%;\r\n    -ms-grid-rows: 50px 63px 100%;\r\n        grid-template-rows: 50px 63px 100%;\r\n    grid-template-areas: \r\n        \"nav    nav     nav\"\r\n        \"fm     fm      fm\"\r\n        \".      ro      .\";\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.main-grid app-navbar {\r\n    grid-area: nav;\r\n}\r\n\r\n.main-grid flash-messages {\r\n    grid-area: fm;\r\n}\r\n\r\n/* Used to circumvent router-outlet issue */\r\n.main-grid div {\r\n    grid-area: ro;\r\n    /* border: 2px black solid; */\r\n}\r\n\r\n/* Source: https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */\r\n.button-to-top {\r\n    display: none; /* Hidden by default */\r\n    position: fixed; /* Fixed/sticky position */\r\n    bottom: 20px; /* Place the button at the bottom of the page */\r\n    right: 20px; /* Place the button 30px from the right */\r\n    z-index: 100; /* Make sure it does not overlap */\r\n    border: none; /* Remove borders */\r\n    outline: none; /* Remove outline */\r\n    background-color: #edaa00; /* Set a background color */\r\n    color: #333333; /* Text color */\r\n    padding-right: 20px;\r\n    padding-top: 5px;\r\n    padding-bottom: 5px;\r\n    padding-left: 20px;\r\n    border-radius: 10px; /* Rounded corners */\r\n    opacity: 0.6;\r\n}\r\n\r\n.button-to-top:hover {\r\n    opacity: 0.7;\r\n}\r\n\r\n.button-to-top:active {\r\n    opacity: 0.8;\r\n}", ""]);
 
 // exports
 
@@ -2665,7 +2726,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "h3:after {\r\n    content: \"\";\r\n    display: block;\r\n    border-bottom: 1px solid #FFD07F;\r\n}", ""]);
 
 // exports
 
@@ -2869,7 +2930,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "/*.studyBuddies{\r\n  display: grid;\r\n  grid-template-columns:100%;\r\n  grid-gap: 5px;\r\n}*/\r\n\r\n/*switch to different layout at 600px min-width*/\r\n/*@media (min-width: 600px) {*/\r\n.studyBuddies{\r\n  /*display: grid;\r\n  grid-template-columns:repeat(4, 1fr);\r\n  grid-gap: 15px;*/\r\n  /*display:inline-block;*/\r\n}\r\n/*}*/\r\n\r\n.buddy{\r\n  /*grid-area:bd;*/\r\n  border: 1px solid black;\r\n  border-radius: 25px;\r\n  text-align: center;\r\n  display:inline-block;\r\n  width: auto;\r\n  padding: 25px;\r\n\r\n}\r\n\r\n.courseTitle\r\n{\r\n  padding-top: 20px;\r\n  text-align: center;\r\n}\r\n", ""]);
+exports.push([module.i, "/*.studyBuddies{\r\n  display: grid;\r\n  grid-template-columns:100%;\r\n  grid-gap: 5px;\r\n}*/\r\n\r\n/*switch to different layout at 600px min-width*/\r\n/*@media (min-width: 600px) {*/\r\n.studyBuddies{\r\n  /*display: grid;\r\n  grid-template-columns:repeat(4, 1fr);\r\n  grid-gap: 15px;*/\r\n  /*display:inline-block;*/\r\n}\r\n/*}*/\r\n\r\n.buddy{\r\n  /*grid-area:bd;*/\r\n  border: 1px solid black;\r\n  border-radius: 25px;\r\n  text-align: center;\r\n  display:inline-block;\r\n  width: auto;\r\n  padding: 25px;\r\n\r\n}\r\n\r\n.courseTitle\r\n{\r\n  padding-top: 20px;\r\n  text-align: center;\r\n}\r\n\r\n#nobuddies\r\n{\r\n  padding-top: 20px;\r\n  text-align: center;\r\n\r\n\r\n}\r\n", ""]);
 
 // exports
 
@@ -2903,73 +2964,73 @@ module.exports = module.exports.toString();
 /* 239 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n    <app-navbar></app-navbar>\r\n    <flash-messages></flash-messages>\r\n    <router-outlet></router-outlet>\r\n    <button class=\"button-to-top\" (click)=\"toTop()\" id=\"to-top\">\r\n      <span class=\"fa fa-chevron-up\" aria-hidden=\"true\"></span>\r\n      <p>Top</p>\r\n    </button>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n    <!-- Navbar -->\r\n    <app-navbar></app-navbar>\r\n\r\n    <!-- Flash messages below navbar -->\r\n    <flash-messages></flash-messages>\r\n\r\n    <!-- Components below flash messages -->\r\n    <router-outlet></router-outlet>\r\n\r\n    <!-- To Top button shows up if you scroll down far enough -->\r\n    <button class=\"button-to-top\" (click)=\"toTop()\" id=\"to-top\">\r\n      <span class=\"fa fa-chevron-up\" aria-hidden=\"true\"></span>\r\n      <p>Top</p>\r\n    </button>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 240 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body class=\"grid\">\r\n    <div [ngClass]=\"sendee==null ? 'msglist' : 'msglist-hide'\">\r\n      <div class=\"msglist-title\">OC Messenger</div>\r\n      <ul *ngIf=\"buddyList.length > 0\" class=\"list-group msglist-users\">\r\n        <li class=\"list-group-item msglist-user\" *ngFor=\"let buddy of buddyList\">\r\n          <button class=\"btn msglist-btn\" (click)=\"joinRoom(buddy)\">{{buddy.user}}</button>\r\n        </li>\r\n      </ul>\r\n      <ul *ngIf=\"buddyList.length <= 0\" class=\"list-group msglist-users\">\r\n        <h2 style=\"text-align: center; top: 50%;\">Go to the Study Buddy Tab to add some buddies!</h2>\r\n      </ul>\r\n    </div>\r\n    <div [ngClass]=\"sendee==null ? 'chat-hide' : 'chat'\">\r\n      <div class=\"chat-title\">\r\n        <button *ngIf=\"showBack\" class=\"btn\" [ngClass]=\"showBack ? 'back' : 'back-hide'\" (click)=\"back()\">\r\n          <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span>Back\r\n        </button>\r\n        <div class=\"announcer\">{{sendee}}</div>\r\n      </div>\r\n      <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->\r\n      <div class=\"chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n        <div *ngFor=\"let message of messages\">\r\n          <div *ngIf=\"message.sender!=sender\" class=\"sendee\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n          <div *ngIf=\"message.sender==sender\" class=\"sender\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    <form class=\"chat-form\" (submit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"chat-text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"btn btn-primary chat-submit\">\r\n        <span class=\"fa fa-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n    </div>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body class=\"grid\">\r\n    <!-- BUDDY LIST: If you aren't talking to anyone, then SHOW the buddylist (small screen) -->\r\n    <div [ngClass]=\"sendee==null ? 'msglist' : 'msglist-hide'\">\r\n      <div class=\"msglist-title\">OC Messenger</div>\r\n      <!-- Buddies in list -->\r\n      <ul *ngIf=\"buddyList.length > 0\" class=\"list-group msglist-users\">\r\n        <li class=\"list-group-item msglist-user\" *ngFor=\"let buddy of buddyList\">\r\n          <button class=\"btn msglist-btn\" (click)=\"joinRoom(buddy)\">{{buddy.user}}</button>\r\n        </li>\r\n      </ul>\r\n      <!-- No buddies in list -->\r\n      <ul *ngIf=\"buddyList.length <= 0\" class=\"list-group msglist-users\">\r\n        <h2 style=\"text-align: center; top: 50%;\">Go to the Study Buddy Tab to add some buddies!</h2>\r\n      </ul>\r\n    </div>\r\n\r\n    <!-- MESSAGE LOGS: If you aren't talking to anyone, HIDE the message logs (small screen) -->\r\n    <div [ngClass]=\"sendee==null ? 'chat-hide' : 'chat'\">\r\n      <!-- Show the back button if you are talking to someone -->\r\n      <div class=\"chat-title\">\r\n        <button *ngIf=\"showBack\" class=\"btn\" [ngClass]=\"showBack ? 'back' : 'back-hide'\" (click)=\"back()\">\r\n          <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span>Back\r\n        </button>\r\n        <div class=\"announcer\">{{sendee}}</div>\r\n      </div>\r\n      <!--\r\n        Code to scroll to the bottom of the chat and display either you or the sendee's message \r\n        Source: https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style \r\n      -->\r\n      <div class=\"chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n        <div *ngFor=\"let message of messages\">\r\n          <div *ngIf=\"message.sender!=sender\" class=\"sendee\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n          <div *ngIf=\"message.sender==sender\" class=\"sender\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    \r\n    <!-- SENDING MESSAGE: You can input into the text input, then click submit or click enter after writing a message to send a message -->\r\n    <form class=\"chat-form\" (submit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"chat-text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"btn btn-primary chat-submit\">\r\n        <span class=\"fa fa-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n    </div>\r\n  </body>\r\n</html>"
 
 /***/ }),
 /* 241 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"!confirm\">\r\n      <div class=\"form-group\">\r\n        <!-- 1) Choosing the course name -->\r\n        <h1>Add a Course</h1>\r\n        <h2>Department</h2>\r\n        <select class=\"form-control\" [(ngModel)]=\"courseName\" name=\"courseName\" (focus)=\"cache()\" (change)=\"getCourseNumOptions()\">\r\n          <option selected hidden></option>\r\n          <option *ngFor=\"let cname of courseNameOptions\">{{cname}}</option>\r\n        </select>\r\n    \r\n        <!-- 2) Choosing the course number -->\r\n        <div *ngIf=\"courseNumOptions\">\r\n          <h2>Course Number</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseNum\" name=\"courseNum\" (change)=\"getCourseChoiceOptions()\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cid of courseNumOptions\"> {{cid}}</option>\r\n          </select>\r\n        </div>\r\n    \r\n        <!-- 3) Finally choosing a class -->\r\n        <div *ngIf=\"courseChoiceOptions\">\r\n          <h2>Course</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseChoice\" name=\"courseChoice\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cchoice of courseChoiceOptions\" [ngValue]=\"cchoice\"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div>\r\n        <button class=\"btn btn-primary cancel\" (click)=\"onBack()\">\r\n            <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span> Back\r\n        </button>\r\n        <button class=\"btn btn-default submit\" (click)=\"onSubmit()\">\r\n          <span class=\"fa fa-plus\" aria-hidden=\"true\"></span> Add Course\r\n        </button>\r\n      </div>\r\n    </div>\r\n      \r\n    <div *ngIf=\"confirm\" id=\"confirm\" style=\"text-align: center\">\r\n      <h1>Are you sure you want to add?</h1>\r\n      <h2>{{confirmMessage}}</h2>\r\n      <div>\r\n        <button class=\"btn btn-default btn-primary\" style=\"width: 33%\" (click)=\"addClick(true)\">\r\n          <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"addClick(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"!confirm\">\r\n      <div class=\"form-group\">\r\n        <!-- 1) Choose the course name -->\r\n        <h1>Add a Course</h1>\r\n        <h2>Department</h2>\r\n        <select class=\"form-control\" [(ngModel)]=\"courseName\" name=\"courseName\" (focus)=\"cache()\" (change)=\"getCourseNumOptions()\">\r\n          <option selected hidden></option>\r\n          <option *ngFor=\"let cname of courseNameOptions\">{{cname}}</option>\r\n        </select>\r\n    \r\n        <!-- 2) Choose the course number -->\r\n        <div *ngIf=\"courseNumOptions\">\r\n          <h2>Course Number</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseNum\" name=\"courseNum\" (change)=\"getCourseChoiceOptions()\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cid of courseNumOptions\"> {{cid}}</option>\r\n          </select>\r\n        </div>\r\n    \r\n        <!-- 3) Choose the class -->\r\n        <div *ngIf=\"courseChoiceOptions\">\r\n          <h2>Course</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseChoice\" name=\"courseChoice\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cchoice of courseChoiceOptions\" [ngValue]=\"cchoice\"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Options for adding or backing to Schedule Component -->\r\n      <div>\r\n        <button class=\"btn btn-primary cancel\" (click)=\"onBack()\">\r\n            <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span> Back\r\n        </button>\r\n        <button class=\"btn btn-default submit\" (click)=\"onSubmit()\">\r\n          <span class=\"fa fa-plus\" aria-hidden=\"true\"></span> Add Course\r\n        </button>\r\n      </div>\r\n    </div>\r\n    \r\n    <!-- Options for confirming or canceling course addition -->\r\n    <div *ngIf=\"confirm\" id=\"confirm\" style=\"text-align: center\">\r\n      <h1>Are you sure you want to add?</h1>\r\n      <h2>{{confirmMessage}}</h2>\r\n      <div>\r\n        <button class=\"btn btn-default btn-primary\" style=\"width: 33%\" (click)=\"addClick(true)\">\r\n          <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"addClick(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 242 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> Developer Guide </title>\r\n  </head>\r\n  <body>\r\n    <h2 class=\"page-header\" style=\"text-align: center;\">Developer Guide</h2>\r\n    \r\n    <h3 class=\"header\"> [What is Open Classroom?] </h3>\r\n    <p>As computer science students, we have personally had issues finding open rooms to study in. \r\n      So we created an app to let students know what classrooms and labs are open. \r\n      Currently students have no easy way to find this out. \r\n      They have to chance upon a room or search physically until they find one. \r\n      We provide a listing of what rooms are open to make the lives of students easier. \r\n      In addition, students are able to replicate their schedules. \r\n      By finalizing their schedules, students gain access to Study Buddies where they can find other \r\n      people to study with (whether they are in the same class or taking a different section). \r\n      Not sharing is on the way along with a more interactive chat system. \r\n      A means for users to update erroneous information based on buildings has been enabled and, in the future, will be user moderated. \r\n      This application will surely increase the student’s knowledgebase of where they can prepare for their next exam or simply get the \r\n      help they need in a free space devoid of professor involvement.</p>\r\n    \r\n    <h3 class=\"header\"> [Features] </h3>\r\n    <u>Currently Live</u>\r\n    <ul>\r\n      <li>Signup</li>\r\n      <li>Login/Logout</li>\r\n      <li>Create and Finalize Schedule</li>\r\n      <li>Find Classroom (All Rooms / Right Now / By Time)</li>\r\n      <li>Find Study Buddies</li>\r\n      <li>Message Study Buddies</li>\r\n    </ul>\r\n    <u>In Progress</u>\r\n    <ul>\r\n      <li>User Group Boards</li>\r\n      <li>File Transfer between Users</li>\r\n    </ul>\r\n    \r\n    <h3 class=\"header\"> [Setup] </h3>\r\n    <p>You can install the Open Classroom application by downloading the source code directly and unzipping the contents into a folder. \r\n      Alternatively, you can also fork project. As this is a MEAN stack application, you must <b>install the 4 dependencies:</b></p>\r\n    <ol>\r\n      <li> <b>MongoDB</b> (via website)</li>\r\n      <li> <b>Angular 2.0</b> (via npm install)</li>\r\n      <li> <b>ExpressJS</b> (via npm install)</li>\r\n      <li> <b>NodeJS</b> (via website)</li>\r\n    </ol>\r\n    <p>Furthermore, you must <b>install (\"ng install\") the node_modules folder</b> into these 2 folders <b>using a terminal at that path location:</b></p>\r\n    <ol>\r\n      <li> \"openclassroom\" folder</li>\r\n      <li> \"openclassroom/angular-src\" folder</li>\r\n    </ol>\r\n  \r\n    <u>Populate your MongoDB Database with Classroom Content</u>\r\n    <ol>\r\n      <li> Navigate where you installed MongoDB (default location: C:\\Program Files\\MongoDB\\Server\\3.4\\bin) and <b>run \"mongod.exe\"</b></li>\r\n      <li> Navigate to the \"scraper\" folder</li>\r\n      <li> In a terminal at this path location, run <b>\"node scraper\"</b></li>\r\n    </ol>\r\n  \r\n    <u>Run the Open Classroom Application on Localhost</u>\r\n    <ol>\r\n      <li> Make sure <b>\"mongod.exe\"</b> is running (if not, run \"mongod.exe\" as seen above)</li>\r\n      <li> Open a new terminal in the <b>\"openclassroom\"</b> folder</li>\r\n      <li> Run <b>\"nodemon\"</b> (see dependencies) </li>\r\n      <li> Open a new terminal in the <b>\"openclassroom/angular-src\"</b> folder</li>\r\n      <li> Run <b>\"ng serve\"</b> (see dependencies) </li>\r\n      <li> <b>Open a web browser</b> (Chrome, Edge, Firefox, etc.) and go to <b>\"localhost:4200\"</b> </li>\r\n    </ol>\r\n    \r\n    <h3 class=\"header\"> [Dependencies] </h3>\r\n    <u>Open Classroom uses the MEAN stack</u>\r\n    <ul>\r\n      <li><a href=\"https://www.mongodb.com/download-center\"> MongoDB </a></li>\r\n      <li><a href=\"https://github.com/angular/angular-cli\"> Angular 2.0</a></li>\r\n      <li><a href=\"https://github.com/expressjs/express\"> ExpressJS </a></li>\r\n      <li><a href=\"https://nodejs.org/en/download/\"> NodeJS </a></li>\r\n    </ul>\r\n    <i>(Angular 2.0 and ExpressJS are installed using \"ng install\". MongoDB and NodeJS shall be installed from their respective websites.)</i> \r\n    <br>\r\n    <br>\r\n    <u>Helpful Applications</u>\r\n    <ul>\r\n      <li> <a href=\"https://nodemon.io/\">Nodemon</a> - an application that updates your project without having to restart \"npm start\" or \"ng serve\" </li>\r\n      <li> <a href=\"https://studio3t.com/download/\">Studio 3T</a> - a MongoDB client that displays the data in your database (when connected)</li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [OpenClassroom Project Tree] </h3>\r\n    <ul>\r\n      <li>angular-src (where our angular project resides)\r\n        <ul>\r\n          <li>e2e (for testing)</li>\r\n          <li>node_modules (dependencies installed based on package.json)</li>\r\n          <li>src\r\n            <ul>\r\n              <li>app (location of webpage components)\r\n                <ul>\r\n                  <li>components (modules that are added to the website)</li>\r\n                  <li>guards (protects routes)</li>\r\n                  <li>services (makes post an get requests to aid component requests)</li>\r\n                </ul>\r\n              </li>\r\n              <li>assets</li>\r\n              <li>environments</li>\r\n            </ul>\r\n          </li>\r\n        </ul>\r\n      </li>\r\n      <li>config (where JSON Web Token strategy and database is located)</li>\r\n      <li>models (where the MongoDB collection models and its associated functions reside)</li>\r\n      <li>node_modules (dependencies installed based on package.json)</li>\r\n      <li>routes (location of GET and POST request reside)</li>\r\n      <li>scraper (where MongoDB database collections are created)\r\n        <ul>\r\n        <li>open-classroom-data (JSON file with pre-scraped buildings 2017)</li>\r\n        </ul>\r\n      </li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [How do I contribute?] </h3>\r\n    <p>If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.</p>\r\n    <ul>\r\n      <li>Source Code: <a href=\"https://github.com/jonathanpchan/openclassroom\">https://github.com/jonathanpchan/openclassroom</a></li>\r\n      <li>Issue Tracker: <a href=\"https://github.com/jonathanpchan/openclassroom/issues\">https://github.com/jonathanpchan/openclassroom/issues</a></li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [Support] </h3>\r\n    <p>If you have any questions, feel free to contact us at <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com</a>.</p>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> Developer Guide </title>\r\n  </head>\r\n  <body>\r\n    <h2 class=\"page-header\" style=\"text-align: center; font-weight: bold\">Developer Guide</h2>\r\n    \r\n    <h3 class=\"header\"> [What is Open Classroom?] </h3>\r\n    <p>As computer science students, we have personally had issues finding open rooms to study in. \r\n      So we created an app to let students know what classrooms and labs are open. \r\n      Currently students have no easy way to find this out. \r\n      They have to chance upon a room or search physically until they find one. \r\n      We provide a listing of what rooms are open to make the lives of students easier. \r\n      In addition, students are able to replicate their schedules. \r\n      By finalizing their schedules, students gain access to Study Buddies where they can find other \r\n      people to study with (whether they are in the same class or taking a different section). \r\n      Not sharing is on the way along with a more interactive chat system. \r\n      A means for users to update erroneous information based on buildings has been enabled and, in the future, will be user moderated. \r\n      This application will surely increase the student’s knowledgebase of where they can prepare for their next exam or simply get the \r\n      help they need in a free space devoid of professor involvement.</p>\r\n    \r\n    <h3 class=\"header\"> [Features] </h3>\r\n    <u>Currently Live</u>\r\n    <ul>\r\n      <li>Signup</li>\r\n      <li>Login/Logout</li>\r\n      <li>Create and Finalize Schedule</li>\r\n      <li>Find Classroom (All Rooms / Right Now / By Time)</li>\r\n      <li>Find Study Buddies</li>\r\n      <li>Message Study Buddies</li>\r\n    </ul>\r\n    <u>In Progress</u>\r\n    <ul>\r\n      <li>User Group Boards</li>\r\n      <li>File Transfer between Users</li>\r\n    </ul>\r\n    \r\n    <h3 class=\"header\"> [Setup] </h3>\r\n    <p>You can install the Open Classroom application by downloading the source code directly and unzipping the contents into a folder. \r\n      Alternatively, you can also fork project. As this is a MEAN stack application, you must <b>install the 4 dependencies:</b></p>\r\n    <ol>\r\n      <li> <b>MongoDB</b> (via website)</li>\r\n      <li> <b>Angular 2.0</b> (via npm install)</li>\r\n      <li> <b>ExpressJS</b> (via npm install)</li>\r\n      <li> <b>NodeJS</b> (via website)</li>\r\n    </ol>\r\n    <p>Furthermore, you must <b>install (\"ng install\") the node_modules folder</b> into these 2 folders <b>using a terminal at that path location:</b></p>\r\n    <ol>\r\n      <li> \"openclassroom\" folder</li>\r\n      <li> \"openclassroom/angular-src\" folder</li>\r\n    </ol>\r\n  \r\n    <u>Populate your MongoDB Database with Classroom Content</u>\r\n    <ol>\r\n      <li> Navigate where you installed MongoDB (default location: C:\\Program Files\\MongoDB\\Server\\3.4\\bin) and <b>run \"mongod.exe\"</b></li>\r\n      <li> Navigate to the \"scraper\" folder</li>\r\n      <li> In a terminal at this path location, run <b>\"node scraper\"</b></li>\r\n    </ol>\r\n  \r\n    <u>Run the Open Classroom Application on Localhost</u>\r\n    <ol>\r\n      <li> Make sure <b>\"mongod.exe\"</b> is running (if not, run \"mongod.exe\" as seen above)</li>\r\n      <li> Open a new terminal in the <b>\"openclassroom\"</b> folder</li>\r\n      <li> Run <b>\"nodemon\"</b> (see dependencies) </li>\r\n      <li> Open a new terminal in the <b>\"openclassroom/angular-src\"</b> folder</li>\r\n      <li> Run <b>\"ng serve\"</b> (see dependencies) </li>\r\n      <li> <b>Open a web browser</b> (Chrome, Edge, Firefox, etc.) and go to <b>\"localhost:4200\"</b> </li>\r\n    </ol>\r\n    \r\n    <h3 class=\"header\"> [Dependencies] </h3>\r\n    <u>Open Classroom uses the MEAN stack</u>\r\n    <ul>\r\n      <li><a href=\"https://www.mongodb.com/download-center\"> MongoDB </a></li>\r\n      <li><a href=\"https://github.com/angular/angular-cli\"> Angular 2.0</a></li>\r\n      <li><a href=\"https://github.com/expressjs/express\"> ExpressJS </a></li>\r\n      <li><a href=\"https://nodejs.org/en/download/\"> NodeJS </a></li>\r\n    </ul>\r\n    <i>(Angular 2.0 and ExpressJS are installed using \"ng install\". MongoDB and NodeJS shall be installed from their respective websites.)</i> \r\n    <br>\r\n    <br>\r\n    <u>Helpful Applications</u>\r\n    <ul>\r\n      <li> <a href=\"https://nodemon.io/\">Nodemon</a> - an application that updates your project without having to restart \"npm start\" or \"ng serve\" </li>\r\n      <li> <a href=\"https://studio3t.com/download/\">Studio 3T</a> - a MongoDB client that displays the data in your database (when connected)</li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [OpenClassroom Project Tree] </h3>\r\n    <ul>\r\n      <li>angular-src (where our angular project resides)\r\n        <ul>\r\n          <li>e2e (for testing)</li>\r\n          <li>node_modules (dependencies installed based on package.json)</li>\r\n          <li>src\r\n            <ul>\r\n              <li>app (location of webpage components)\r\n                <ul>\r\n                  <li>components (modules that are added to the website)</li>\r\n                  <li>guards (protects routes)</li>\r\n                  <li>services (makes post an get requests to aid component requests)</li>\r\n                </ul>\r\n              </li>\r\n              <li>assets</li>\r\n              <li>environments</li>\r\n            </ul>\r\n          </li>\r\n        </ul>\r\n      </li>\r\n      <li>config (where JSON Web Token strategy and database is located)</li>\r\n      <li>models (where the MongoDB collection models and its associated functions reside)</li>\r\n      <li>node_modules (dependencies installed based on package.json)</li>\r\n      <li>routes (location of GET and POST request reside)</li>\r\n      <li>scraper (where MongoDB database collections are created)\r\n        <ul>\r\n        <li>open-classroom-data (JSON file with pre-scraped buildings 2017)</li>\r\n        </ul>\r\n      </li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [How do I contribute?] </h3>\r\n    <p>If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.</p>\r\n    <ul>\r\n      <li>Source Code: <a href=\"https://github.com/jonathanpchan/openclassroom\">https://github.com/jonathanpchan/openclassroom</a></li>\r\n      <li>Issue Tracker: <a href=\"https://github.com/jonathanpchan/openclassroom/issues\">https://github.com/jonathanpchan/openclassroom/issues</a></li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [Support] </h3>\r\n    <p>If you have any questions, feel free to contact us at <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com</a>.</p>\r\n  </body>\r\n</html>"
 
 /***/ }),
 /* 243 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- 1) Building Select -->\r\n    <div class=\"form-group\">\r\n      <h1 id=\"title\">Building</h1>\r\n      <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n        <option style=\"display: none\"></option>\r\n        <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n      </select>\r\n    </div>\r\n    \r\n    <!-- 2) Button Select -->\r\n    <div class=\"buttons\" id=\"buttons\" style=\"display: none; text-align: center;\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" value=\"All Rooms\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" value=\"Right Now\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" value=\"By Time\">\r\n    </div>\r\n    \r\n    <!-- 3a) Get all rooms based on building and time -->\r\n    <app-find id=\"all\" style=\"display: none\" name={{building}}></app-find>\r\n    \r\n    <!-- 3b) Get all rooms based on building -->\r\n    <app-find-now id=\"now\" style=\"display: none\" name={{building}}></app-find-now>\r\n    \r\n    <!-- 3c) Get all rooms based on building and time -->\r\n    <app-find-times id=\"times\" style=\"display: none\" name={{building}}></app-find-times>\r\n    \r\n    <!-- <app-room id=\"room\" style=\"display: none\"></app-room> -->\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- 1) Building Select -->\r\n    <div class=\"form-group\">\r\n      <h1 id=\"title\">Building</h1>\r\n      <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n        <option style=\"display: none\"></option>\r\n        <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n      </select>\r\n    </div>\r\n    \r\n    <!-- 2) Button Select -->\r\n    <div class=\"buttons\" id=\"buttons\" style=\"display: none; text-align: center;\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" value=\"All Rooms\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" value=\"Right Now\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" value=\"By Time\">\r\n    </div>\r\n    \r\n    <!-- 3a) Get all rooms based on building and time -->\r\n    <app-find id=\"all\" style=\"display: none\" name={{building}}></app-find>\r\n    \r\n    <!-- 3b) Get all rooms based on building -->\r\n    <app-find-now id=\"now\" style=\"display: none\" name={{building}}></app-find-now>\r\n    \r\n    <!-- 3c) Get all rooms based on building and time -->\r\n    <app-find-times id=\"times\" style=\"display: none\" name={{building}}></app-find-times>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 244 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n    <head></head>\r\n    <body>\r\n        <h1 *ngIf=\"!show\">No rooms currently available in {{name}}</h1>\r\n        <div id=\"nowTimes\">\r\n        <ng-container *ngIf=\"show\">\r\n            <h2 *ngFor=\"let room of roomsList\" (click)=\"showRoom(name, room.name)\">\r\n                Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n            </h2>\r\n        </ng-container>\r\n        </div>\r\n        <app-room id=\"room2\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n    </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n    <head></head>\r\n    <body>\r\n        <!-- Show if no rooms available -->\r\n        <h1 *ngIf=\"!show\">No rooms currently available in {{name}}</h1>\r\n        <div id=\"nowTimes\">\r\n            <!-- Show if rooms are available -->\r\n            <ng-container *ngIf=\"show\">\r\n                <h2 *ngFor=\"let room of roomsList\" (click)=\"showRoom(name, room.name)\">\r\n                    Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n                </h2>\r\n            </ng-container>\r\n        </div>\r\n\r\n        <!-- Show when room is clicked -->\r\n        <app-room id=\"room2\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n    </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 245 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div style=\"text-align: center\">\r\n      <button (click) = \"show('omon')\" class=\"btn btn-primary\"> Monday</button>\r\n      <button (click) = \"show('otue')\" class=\"btn btn-primary\"> Tuesday</button>\r\n      <button (click) = \"show('owed')\" class=\"btn btn-primary\"> Wednesday</button>\r\n      <button (click) = \"show('othu')\" class=\"btn btn-primary\"> Thursday</button>\r\n    </div>\r\n    <div class=\"slider-grid\">\r\n      <span class=\"start\" id=\"start\"></span>\r\n      <nouislider class=\"slider\" [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\"></nouislider>\r\n      <span class=\"end\" id=\"end\"></span>\r\n    </div>\r\n    <div class=\"tablecontainer\" id=\"table-2\" style=\"display: none; margin-top: 35px;\">\r\n      <table>\r\n        <tbody>\r\n          <tr>\r\n            <th colspan=\"6\" *ngFor=\"let time of times | slice:tstart:tend\">{{time}}</th>\r\n          </tr>\r\n          <tr *ngFor=\"let rooms of roomsList\">\r\n            <th class=\"left-column\" (click)=\"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n            <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:start:end let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n              <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span> <!--this messes up the left column for some reason -->\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <app-room id=\"room3\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- Day Buttons -->\r\n    <div style=\"text-align: center\">\r\n      <button (click) = \"show('omon')\" class=\"btn btn-primary\"> Monday</button>\r\n      <button (click) = \"show('otue')\" class=\"btn btn-primary\"> Tuesday</button>\r\n      <button (click) = \"show('owed')\" class=\"btn btn-primary\"> Wednesday</button>\r\n      <button (click) = \"show('othu')\" class=\"btn btn-primary\"> Thursday</button>\r\n    </div>\r\n    \r\n    <!-- Slider -->\r\n    <div class=\"slider-grid\">\r\n      <span class=\"start\" id=\"start\"></span>\r\n      <nouislider class=\"slider\" [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\"></nouislider>\r\n      <span class=\"end\" id=\"end\"></span>\r\n    </div>\r\n    \r\n    <!-- Find Times Table -->\r\n    <div class=\"tablecontainer\" id=\"table-2\" style=\"display: none; margin-top: 35px;\">\r\n      <table>\r\n        <tbody>\r\n          <tr>\r\n            <th colspan=\"6\" *ngFor=\"let time of times | slice:tstart:tend\">{{time}}</th>\r\n          </tr>\r\n          <tr *ngFor=\"let rooms of roomsList\">\r\n            <!-- Attach a click to the leftmost column -->\r\n            <th class=\"left-column\" (click)=\"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n            <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:start:end let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n              <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span> <!--this messes up the left column for some reason -->\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n\r\n    <!-- Display the room info on leftmost column click -->\r\n    <app-room id=\"room3\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 246 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div style=\"text-align: center\">\r\n        <button (click) = \"show('omon')\" class=\"btn btn-primary\" id=\"mon\"> Monday</button>\r\n        <button (click) = \"show('otue')\" class=\"btn btn-primary\" id=\"tue\"> Tuesday</button>\r\n        <button (click) = \"show('owed')\" class=\"btn btn-primary\" id=\"wed\"> Wednesday</button>\r\n        <button (click) = \"show('othu')\" class=\"btn btn-primary\" id=\"thu\"> Thursday</button>\r\n      </div>\r\n      <div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n        <table>\r\n          <tbody>\r\n            <tr style=\"display: sticky\">\r\n              <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n            </tr>\r\n            <tr *ngFor=\"let rooms of roomsList\">\r\n              <!-- <th class=\"left-column\"  (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th> -->\r\n              <th class=\"left-column\" (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n              <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n                <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span><!-- this messes up the left column for some reason-->\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n      <app-room id=\"room\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room> \r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- Day Buttons -->\r\n    <div style=\"text-align: center\">\r\n        <button (click) = \"show('omon')\" class=\"btn btn-primary\" id=\"mon\"> Monday</button>\r\n        <button (click) = \"show('otue')\" class=\"btn btn-primary\" id=\"tue\"> Tuesday</button>\r\n        <button (click) = \"show('owed')\" class=\"btn btn-primary\" id=\"wed\"> Wednesday</button>\r\n        <button (click) = \"show('othu')\" class=\"btn btn-primary\" id=\"thu\"> Thursday</button>\r\n      </div>\r\n\r\n      <!-- Find All Rooms Table -->\r\n      <div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n        <table>\r\n          <tbody>\r\n            <tr style=\"display: sticky\">\r\n              <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n            </tr>\r\n            <tr *ngFor=\"let rooms of roomsList\">\r\n              <!-- Attach a click to the leftmost column -->\r\n              <th class=\"left-column\" (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n              <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n                <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n\r\n      <!-- Display the room info on leftmost column click -->\r\n      <app-room id=\"room\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room> \r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 247 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body class=\"home-grid\">\r\n    <div class=\"jumbotron\">\r\n      <h1>Open Classroom</h1>\r\n      <h2>Find available classrooms for your studying needs</h2> \r\n      \r\n      <div *ngIf = \"!userService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> <a class=\"btn btn-default\" [routerLink]=\"['/login']\">Login</a>\r\n      </div>\r\n      <div *ngIf = \"userService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/schedule']\">View My Schedule</a> <a class=\"btn btn-default\" [routerLink]=\"['/findclassroom']\">Find Open Classroom</a>\r\n      </div>\r\n\r\n      <div>\r\n        <p>\r\n          <br /><a [routerLink]=\"['/usermanual']\">User Manual</a> | <a [routerLink]=\"['/devguide']\">Dev Guide</a> \r\n        </p>\r\n      </div>\r\n    </div>\r\n    <div class=\"home-content\">\r\n      <div class=\"content-1\">\r\n        <h3>Find the Best Study Spot!</h3>\r\n        <p>Find open rooms by building, right now, or by time.</p>\r\n      </div>\r\n      <div class=\"content-2\">\r\n        <h3>Study with fellow Study Buddies!</h3>\r\n        <p>Find others in the same program to study with.</p>\r\n      </div>\r\n      <div class=\"content-3\">\r\n        <h3>Share Class Notes!</h3>\r\n        <p>Share notes to get an edge on the competition.</p>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body class=\"home-grid\">\r\n    <div class=\"jumbotron\">\r\n      <h1>Open Classroom</h1>\r\n      <h2>Find available classrooms for your studying needs</h2> \r\n      \r\n      <!-- Buttons to show if NOT logged in -->\r\n      <div *ngIf = \"!userService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> \r\n        <a class=\"btn btn-default\" [routerLink]=\"['/login']\">Login</a>\r\n      </div>\r\n      <!-- Buttons to show if logged in -->\r\n      <div *ngIf = \"userService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/schedule']\">View My Schedule</a> \r\n        <a class=\"btn btn-default\" [routerLink]=\"['/findclassroom']\">Find Open Classroom</a>\r\n      </div>\r\n\r\n      <div>\r\n        <p>\r\n          <br />\r\n          <!-- Links to usermanual and devguide -->\r\n          <a [routerLink]=\"['/usermanual']\">User Manual</a> | <a [routerLink]=\"['/devguide']\">Dev Guide</a> \r\n        </p>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- Content below jumbotron content -->\r\n    <div class=\"home-content\">\r\n      <div class=\"content-1\">\r\n        <h3>Find the Best Study Spot!</h3>\r\n        <p>Find open rooms by building, right now, or by time.</p>\r\n      </div>\r\n      <div class=\"content-2\">\r\n        <h3>Study with fellow Study Buddies!</h3>\r\n        <p>Find others in the same program to study with.</p>\r\n      </div>\r\n      <div class=\"content-3\">\r\n        <h3>Share Class Notes!</h3>\r\n        <p>Share notes to get an edge on the competition.</p>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 248 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1>Login</h1>\r\n    <form (submit)=\"onLoginSubmit()\">\r\n      <div class=\"form-group\">\r\n        <label>Email</label>\r\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"email\" name=\"email\">\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>Password</label>\r\n        <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\r\n      </div>\r\n      <input type=\"submit\" class=\"btn btn-primary\" value=\"Login\">\r\n    </form>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1>Login</h1>\r\n    <form (submit)=\"onLoginSubmit()\">\r\n      <!-- Email field -->\r\n      <div class=\"form-group\">\r\n        <label>Email</label>\r\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"email\" name=\"email\">\r\n      </div>\r\n      \r\n      <!-- Password Field -->\r\n      <div class=\"form-group\">\r\n        <label>Password</label>\r\n        <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\r\n      </div>\r\n\r\n      <!-- Submit button -->\r\n      <input type=\"submit\" class=\"btn btn-primary\" value=\"Login\">\r\n    </form>\r\n  </body>\r\n</html>"
 
 /***/ }),
 /* 249 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\" style=\"z-index: 1000\">\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n      <button (click)=\"toggle()\" class=\"navbar-toggler collapsed\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarColor02\" aria-controls=\"navbarColor02\"> \r\n        <span class=\"navbar-toggler-icon\"></span>\r\n      </button>\r\n      <div class=\"navbar-collapse collapse\" [ngClass]=\"show ? 'show' : ''\" id=\"navbarColor02\" (click)=\"toggle()\">\r\n        <ul class=\"navbar-nav mr-auto\" (click)=\"hide()\">\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/chat']\">Messaging</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/studybuddy']\">Study Buddy</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\" (click)=\"hide()\">\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/settings']\">Settings</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"!userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/login']\">Login</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"!userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/register']\">Register </a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n        </ul>\r\n      </div>\r\n    </nav>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- \r\n      Stood up quickly by adapting bootswatch source code (clicking the navbar we wanted to see information about)\r\n      Source: https://bootswatch.com/cosmo/\r\n     -->\r\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\" style=\"z-index: 1000\">\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n      <button (click)=\"toggle()\" class=\"navbar-toggler collapsed\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarColor02\" aria-controls=\"navbarColor02\"> \r\n        <span class=\"navbar-toggler-icon\"></span>\r\n      </button>\r\n      <div class=\"navbar-collapse collapse\" [ngClass]=\"show ? 'show' : ''\" id=\"navbarColor02\" (click)=\"toggle()\">\r\n        <ul class=\"navbar-nav mr-auto\" (click)=\"hide()\">\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/chat']\">Messaging</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/studybuddy']\">Study Buddy</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\" (click)=\"hide()\">\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/settings']\">Settings</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"!userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/login']\">Login</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"!userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/register']\">Register </a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n        </ul>\r\n      </div>\r\n    </nav>\r\n  </body>\r\n</html>"
 
 /***/ }),
 /* 250 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1>Register</h1>\r\n    <form (submit)=\"onRegisterSubmit()\">\r\n      <div class=\"form-group\">\r\n        <label>Name</label>\r\n        <input type=\"text\" [(ngModel)]=\"name\" name=\"name\" class=\"form-control\">\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>Username</label>\r\n        <input type=\"text\" [(ngModel)]=\"username\" name=\"username\" class=\"form-control\">\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>Email</label>\r\n        <input type=\"text\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" >\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>Password</label>\r\n        <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\">\r\n      </div>\r\n      <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n    </form>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1>Register</h1>\r\n    <form (submit)=\"onRegisterSubmit()\">\r\n\r\n      <!-- Name field -->\r\n      <div class=\"form-group\">\r\n        <label>Name</label>\r\n        <input type=\"text\" [(ngModel)]=\"name\" name=\"name\" class=\"form-control\">\r\n      </div>\r\n\r\n      <!-- Username field -->\r\n      <div class=\"form-group\">\r\n        <label>Username</label>\r\n        <input type=\"text\" [(ngModel)]=\"username\" name=\"username\" class=\"form-control\">\r\n      </div>\r\n\r\n      <!-- Email field -->\r\n      <div class=\"form-group\">\r\n        <label>Email</label>\r\n        <input type=\"text\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" >\r\n      </div>\r\n\r\n      <!-- Password field -->\r\n      <div class=\"form-group\">\r\n        <label>Password</label>\r\n        <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\">\r\n      </div>\r\n\r\n      <!-- Submit button -->\r\n      <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n    </form>\r\n  </body>\r\n</html>"
 
 /***/ }),
 /* 251 */
@@ -2981,7 +3042,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n  
 /* 252 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user && !add && !delete && !finalize\">\r\n      <h1>My Schedule</h1>\r\n      <div style=\"overflow: auto\">\r\n        <table>\r\n          <thead></thead>\r\n          <tbody>\r\n            <tr *ngIf=\"!isFinalized\">\r\n              <td class=\"finalize\" colspan=\"6\"><input class=\"btn btn-primary\" type=\"button\" value=\"Finalize Schedule\" (click)=\"clickFinalize()\"></td>\r\n            </tr> \r\n            <tr class=\"table-title\">\r\n              <td class=\"left-column\"><h3>NAME</h3></td> \r\n              <td style=\"min-width: 125px\"><h3>CLASS #</h3></td> \r\n              <td style=\"min-width: 100px\"><h3>DAYS</h3></td> \r\n              <td style=\"min-width: 125px\"><h3>TIME</h3></td> \r\n              <td style=\"min-width: 150px\"><h3>LOCATION</h3></td> \r\n              <td style=\"min-width: 175px\"><h3>INSTRUCTOR</h3></td> \r\n              <td *ngIf=\"schedule.length > 0\" style=\"background: white; width: 2.5%; border: none;\"></td> \r\n            </tr>\r\n            <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\" style=\"background-color: white\">\r\n              <td class=\"left-column\">{{sched.name}} {{sched.num}}</td> \r\n              <td>{{sched.sec}}</td> \r\n              <td>{{sched.day}}</td> \r\n              <td>{{sched.time}}</td> \r\n              <td>{{sched.location}}</td> \r\n              <td>{{sched.prof}}</td> \r\n              <!-- https://getbootstrap.com/docs/3.3/components/ --> \r\n              <td *ngIf=\"!isFinalized\" style=\"padding: 0;\"> \r\n                <button class=\"btn trash\" (click)=\"clickDelete(i)\"> \r\n                  <span class=\"fa fa-trash\" aria-hidden=\"true\"></span> \r\n                </button> \r\n              </td> \r\n            </tr>\r\n            <tr *ngIf=\"!isFinalized\">\r\n              <td colspan=\"6\" style=\"padding: 0px\">\r\n                <button class=\"btn btn-primary\" style=\"width : 100%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n                  <span class=\"fa fa-plus\" aria-hidden=\"true\"></span> Add Course\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </div>\r\n      \r\n    <div *ngIf=\"user && add && !delete\">\r\n      <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n    </div>\r\n    \r\n    <div *ngIf=\"user && !add && delete\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to remove?</h1>\r\n      <h3>{{deleteMessage}}</h3>\r\n      <div>\r\n          <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"onCourseDelete(true)\">\r\n            <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n          </button>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"onCourseDelete(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"user && !add && !delete && finalize && !isFinalized\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to finalize your schedule?</h1>\r\n      <div>\r\n          <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"onFinalize(true)\">\r\n            <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n          </button>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"onFinalize(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n\r\n  "
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user && !add && !delete && !finalize\">\r\n      <h1>My Schedule</h1>\r\n      <div style=\"overflow: auto\">\r\n        <table>\r\n          <thead></thead>\r\n          <tbody>\r\n            <!-- Display Finalize button if not finalized -->\r\n            <tr *ngIf=\"!isFinalized\">\r\n              <td class=\"finalize\" colspan=\"6\"><input class=\"btn btn-primary\" type=\"button\" value=\"Finalize Schedule\" (click)=\"clickFinalize()\"></td>\r\n            </tr> \r\n\r\n            <!-- Display schedule headers -->\r\n            <tr class=\"table-title\">\r\n              <td class=\"left-column\"><h3>NAME</h3></td> \r\n              <td style=\"min-width: 125px\"><h3>CLASS #</h3></td> \r\n              <td style=\"min-width: 100px\"><h3>DAYS</h3></td> \r\n              <td style=\"min-width: 125px\"><h3>TIME</h3></td> \r\n              <td style=\"min-width: 150px\"><h3>LOCATION</h3></td> \r\n              <td style=\"min-width: 175px\"><h3>INSTRUCTOR</h3></td> \r\n              <td *ngIf=\"schedule.length > 0\" style=\"background: white; width: 2.5%; border: none;\"></td> \r\n            </tr>\r\n\r\n            <!-- Display scehdule items -->\r\n            <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\" style=\"background-color: white\">\r\n              <td class=\"left-column\">{{sched.name}} {{sched.num}}</td> \r\n              <td>{{sched.sec}}</td> \r\n              <td>{{sched.day}}</td> \r\n              <td>{{sched.time}}</td> \r\n              <td>{{sched.location}}</td> \r\n              <td>{{sched.prof}}</td> \r\n\r\n              <!-- \r\n                Display icons in buttons\r\n                Source: https://getbootstrap.com/docs/3.3/components/ \r\n              --> \r\n              <td *ngIf=\"!isFinalized\" style=\"padding: 0;\"> \r\n                <button class=\"btn trash\" (click)=\"clickDelete(i)\"> \r\n                  <span class=\"fa fa-trash\" aria-hidden=\"true\"></span> \r\n                </button> \r\n              </td> \r\n            </tr>\r\n\r\n            <!-- Display add button if not finalized -->\r\n            <tr *ngIf=\"!isFinalized\">\r\n              <td colspan=\"6\" style=\"padding: 0px\">\r\n                <button class=\"btn btn-primary\" style=\"width : 100%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n                  <span class=\"fa fa-plus\" aria-hidden=\"true\"></span> Add Course\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </div>\r\n      \r\n    <!-- Display course component if you click the Add button -->\r\n    <div *ngIf=\"user && add && !delete\">\r\n      <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n    </div>\r\n    \r\n    <!-- Display the remove confirmation page if you click the Trash icon -->\r\n    <div *ngIf=\"user && !add && delete\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to remove?</h1>\r\n      <h3>{{deleteMessage}}</h3>\r\n      <div>\r\n        <!-- If Yes, delete course from schedule -->\r\n        <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"onCourseDelete(true)\">\r\n          <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n        <!-- If No, keep course in schedule -->\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"onCourseDelete(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- Display the finalize confirmation page if you click the finalize schedule button -->\r\n    <div *ngIf=\"user && !add && !delete && finalize && !isFinalized\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to finalize your schedule?</h1>\r\n      <div>\r\n        <!-- If Yes, finalize the schedule -->\r\n        <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"onFinalize(true)\">\r\n          <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n        <!-- If No, don't finalize the schedule -->\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"onFinalize(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n\r\n  "
 
 /***/ }),
 /* 253 */
@@ -2993,7 +3054,7 @@ module.exports = "<!DOCTYPE html>\r\n<html>\r\n<body>\r\n<div id=\"container\">\
 /* 254 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div id=\"warning\" style=\"display: none\" *ngIf=\"!isFinalized\">\r\n      <h1>Please finalize your schedule in your schedule page</h1>\r\n    </div>\r\n\r\n    <div id=\"buddies\" *ngIf=\"isFinalized\">\r\n    <h1 style=\"text-align: center\">Pick A Course</h1>\r\n    <select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n      <option selected hidden></option>\r\n      <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n    </select>\r\n\r\n    <div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n      <h1 class = \"courseTitle\">Potential Study Buddies For {{courseBuddies.name}}</h1>\r\n      <div class=\"studdyBuddies\" *ngIf=\"loaded\">\r\n        <a *ngFor = \"let buddy of courseBuddies?.buddies let i = index\" (click)=\"message(i)\" routerLink=\"/chat\"><h3 class=\"buddy\">{{buddy.name}}</h3></a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  </body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div id=\"warning\" style=\"display: none\" *ngIf=\"!isFinalized\">\r\n      <h1>Please finalize your schedule in your schedule page</h1>\r\n    </div>\r\n\r\n    <div id=\"cronjobwait\" style=\"display: none\">\r\n      <h2> Please be paitent and wait for us to process your buddies, check back later to see!</h2>\r\n    </div>\r\n\r\n    <div id=\"buddies\" *ngIf=\"isFinalized\">\r\n    <h1 style=\"text-align: center\">Pick A Course</h1>\r\n    <select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n      <option selected hidden></option>\r\n      <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n    </select>\r\n\r\n    <div id=\"nobuddies\" style=\"display: none\">\r\n      <h2> Sorry there are no study buddies available for this course</h2>\r\n    </div>\r\n\r\n    <div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n      <h1 class = \"courseTitle\">Potential Study Buddies For {{courseBuddies.name}}</h1>\r\n      <div class=\"studdyBuddies\" *ngIf=\"loaded\">\r\n        <a *ngFor = \"let buddy of courseBuddies?.buddies let i = index\" (click)=\"message(i)\" routerLink=\"/chat\"><h3 class=\"buddy\">{{buddy.name}}</h3></a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
 /* 255 */

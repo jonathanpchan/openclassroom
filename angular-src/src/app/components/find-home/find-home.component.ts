@@ -39,17 +39,24 @@ export class FindHomeComponent implements OnInit {
   displayButtons() {
     if (document.getElementById("buttons").style.display == "none")
     {
+      // Show the day buttons
       document.getElementById("buttons").style.display = "block";
-      document.getElementById("all").style.display = "none";
+      
+      // Hide the Find table
       document.getElementById("table").style.display = "none";
+      
+      // Hide the Find Times table
       document.getElementById("table-2").style.display = "none";
+      
+      // Hide the child component buttons
+      document.getElementById("all").style.display = "none";
       document.getElementById("now").style.display = "none";
       document.getElementById("times").style.display = "none";
+      
+      // Hide the room info components
       document.getElementById("room").style.display = "none";
       document.getElementById("room2").style.display = "none";
       document.getElementById("room3").style.display = "none";
-
-
     }
   }
 
@@ -61,10 +68,13 @@ export class FindHomeComponent implements OnInit {
     else {
       if (document.getElementById("buttons").style.display == "block")
       {
+        // Hide day buttons after one is clicked
         document.getElementById("buttons").style.display = "none";
+        // Show the child component options
         document.getElementById(option).style.display = "block";
         if (option == "now")
         {
+          // If child is "Find Now" call show now to display the time when it shows the Child Component
           this.nowComponent.showNow();
         }
       }

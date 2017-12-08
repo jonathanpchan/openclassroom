@@ -2,6 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
+// NOTE: COURSE COMPONENT IS USED IN THE SCHEDULE COMPONENT AS A CHILD COMPONENT, 
+// HENCE THE EMITS TO NOTIFY THE PARENT COMPONENT WHEN IT NEEDS TO TAKE BACK THE DISPLAY/CONTROL.
+// Source: https://angular.io/guide/component-interaction
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
@@ -54,7 +57,7 @@ export class CourseComponent implements OnInit {
   getCourseNumOptions() {
     if (this.courseNameOptions != null)
     {
-      // Reset the data that is displayed
+      // Reset the course number data that is displayed
       this.courseNumOptions = []
       this.courseChoiceOptions = null
 
@@ -62,20 +65,21 @@ export class CourseComponent implements OnInit {
       this.currCourseName = this.courseAll
       for (let all in this.currCourseName) 
       {
-        // Once the particular course name is found
+        // Once the particular course name is found, set the current course name
         if (this.currCourseName[all].name == this.courseName)
         {
           this.currCourseName = this.currCourseName[all]["courses"]
           break;
         }
       }
+
       // Populate the course num options from current course array
       for (let courses in this.currCourseName)
       {
         this.courseNumOptions.push(this.currCourseName[courses]["num"])
       }
 
-      // Made display sorted and unique
+      // Make display sorted and unique
       this.courseNumOptions = this.makeUnique(this.courseNumOptions)
     }
   }
@@ -96,7 +100,7 @@ export class CourseComponent implements OnInit {
     }
   }
 
-  // Gets all courses and puts them into courseAll as "cache"
+  // Get all courses and puts them into courseAll as "cache" (on focus: When you select a course name)
   cache() {
     if (this.courseAll == null) 
     {
@@ -113,11 +117,12 @@ export class CourseComponent implements OnInit {
   }
 
   // ========== Add ===============
+  // Switch back to Schedule component
   onBack() {
     this.afterConfirm.emit(false);
   }
   
-  // 4) On submit, show alternative data (If missing data, then alert)
+  // 4) On submit, show data you'd like to add. If missing data, then alert that more info is needed.
   onSubmit() {
     if (this.courseAll && this.courseNameOptions && this.courseNumOptions && this.courseChoiceOptions && this.courseChoice) 
     {
@@ -135,21 +140,21 @@ export class CourseComponent implements OnInit {
   addClick(answer: boolean) {
     if (answer) 
     {
-      // Add on back end
+      // Add (Back End)
       let coursePayload = {
         email: JSON.parse(localStorage.getItem('user')).email,
         crsID: this.courseChoice.sec
       }
       this.userService.addScheduleItem(coursePayload).subscribe((success) =>
       {
-        // Don't add to front end
+        // Don't Add (Front End)
         if (success.length == 0)
         {
           this.flashMessage.show('Course already in schedule.', {cssClass: 'alert-danger', timeout: 3000})
           this.afterConfirm.emit(false)
         }
         else
-        {
+        { // Add (Front End)
           let add = {name: this.courseName, num: this.courseChoice.num, sec: this.courseChoice.sec, day: this.courseChoice.day, time: this.courseChoice.time, location: this.courseChoice.location, prof: this.courseChoice.prof }
           this.afterConfirm.emit(add)
           this.flashMessage.show('Course successfully added.', {cssClass: 'alert-success', timeout: 3000})
@@ -157,13 +162,13 @@ export class CourseComponent implements OnInit {
       });
     } 
     else 
-    {
+    { // If cancel, then switch back to schedule component
       this.afterConfirm.emit(false)
     }
   }
   
-  // http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
   // Take a SORTED array, determine unique values, and then return the array
+  // Source: http://rosettacode.org/wiki/Remove_duplicate_elements#JavaScript
   makeUnique(arr) {
     let tempArr = arr;
     for (var i = 1; i < tempArr.length; ) 

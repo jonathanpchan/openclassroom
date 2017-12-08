@@ -1,0 +1,5 @@
+h3:after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #FFD07F;
+}

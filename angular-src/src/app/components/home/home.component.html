@@ -6,19 +6,27 @@
       <h1>Open Classroom</h1>
       <h2>Find available classrooms for your studying needs</h2> 
       
+      <!-- Buttons to show if NOT logged in -->
       <div *ngIf = "!userService.loggedIn()">
-        <a class="btn btn-primary" [routerLink]="['/register']">Register</a> <a class="btn btn-default" [routerLink]="['/login']">Login</a>
+        <a class="btn btn-primary" [routerLink]="['/register']">Register</a> 
+        <a class="btn btn-default" [routerLink]="['/login']">Login</a>
       </div>
+      <!-- Buttons to show if logged in -->
       <div *ngIf = "userService.loggedIn()">
-        <a class="btn btn-primary" [routerLink]="['/schedule']">View My Schedule</a> <a class="btn btn-default" [routerLink]="['/findclassroom']">Find Open Classroom</a>
+        <a class="btn btn-primary" [routerLink]="['/schedule']">View My Schedule</a> 
+        <a class="btn btn-default" [routerLink]="['/findclassroom']">Find Open Classroom</a>
       </div>
 
       <div>
         <p>
-          <br /><a [routerLink]="['/usermanual']">User Manual</a> | <a [routerLink]="['/devguide']">Dev Guide</a> 
+          <br />
+          <!-- Links to usermanual and devguide -->
+          <a [routerLink]="['/usermanual']">User Manual</a> | <a [routerLink]="['/devguide']">Dev Guide</a> 
         </p>
       </div>
     </div>
+
+    <!-- Content below jumbotron content -->
     <div class="home-content">
       <div class="content-1">
         <h3>Find the Best Study Spot!</h3>

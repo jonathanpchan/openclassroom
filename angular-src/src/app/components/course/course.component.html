@@ -3,7 +3,7 @@
   <body>
     <div *ngIf="!confirm">
       <div class="form-group">
-        <!-- 1) Choosing the course name -->
+        <!-- 1) Choose the course name -->
         <h1>Add a Course</h1>
         <h2>Department</h2>
         <select class="form-control" [(ngModel)]="courseName" name="courseName" (focus)="cache()" (change)="getCourseNumOptions()">
@@ -11,7 +11,7 @@
           <option *ngFor="let cname of courseNameOptions">{{cname}}</option>
         </select>
     
-        <!-- 2) Choosing the course number -->
+        <!-- 2) Choose the course number -->
         <div *ngIf="courseNumOptions">
           <h2>Course Number</h2>
           <select class="form-control" [(ngModel)]="courseNum" name="courseNum" (change)="getCourseChoiceOptions()">
@@ -20,7 +20,7 @@
           </select>
         </div>
     
-        <!-- 3) Finally choosing a class -->
+        <!-- 3) Choose the class -->
         <div *ngIf="courseChoiceOptions">
           <h2>Course</h2>
           <select class="form-control" [(ngModel)]="courseChoice" name="courseChoice">
@@ -29,6 +29,8 @@
           </select>
         </div>
       </div>
+
+      <!-- Options for adding or backing to Schedule Component -->
       <div>
         <button class="btn btn-primary cancel" (click)="onBack()">
             <span class="fa fa-chevron-left" aria-hidden="true"></span> Back
@@ -38,7 +40,8 @@
         </button>
       </div>
     </div>
-      
+    
+    <!-- Options for confirming or canceling course addition -->
     <div *ngIf="confirm" id="confirm" style="text-align: center">
       <h1>Are you sure you want to add?</h1>
       <h2>{{confirmMessage}}</h2>

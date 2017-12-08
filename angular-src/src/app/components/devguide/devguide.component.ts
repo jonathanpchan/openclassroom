@@ -9,4 +9,6 @@ export class DevguideComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
+
+  // NOT NECESSARILY NEEDED SINCE THE DEV GUIDE IS STATIC
 }

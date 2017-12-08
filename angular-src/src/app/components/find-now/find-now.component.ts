@@ -135,6 +135,7 @@ export class FindNowComponent implements OnInit {
     }
   }
 
+  // Display the room info
   showRoom(room, number)
   {
     this.buildingName = room;
@@ -142,5 +143,4 @@ export class FindNowComponent implements OnInit {
     document.getElementById("nowTimes").style.display = "none";
     document.getElementById("room2").style.display = "block";
   }
-
- }
+}

@@ -28,7 +28,8 @@ export class FindTimesComponent implements OnInit {
   start: number = 8*12;
   end: number = 22*12;
 
-  // Configure the slider (as reference: http://tb.github.io/ng2-nouislider/)
+  // Configure the slider
+  // Source: http://tb.github.io/ng2-nouislider/
   timeRange: number[];
   timeSliderConfig: any = {
     behaviour: 'drag',
@@ -150,6 +151,7 @@ export class FindTimesComponent implements OnInit {
     }
   }
 
+  // Jon C's algorithm for displaying the time on the time cell
   displayToolTip(time)
   {
     var  minutes = time*5;//since we have minutes in 5 minute chunks
@@ -160,10 +162,6 @@ export class FindTimesComponent implements OnInit {
     if(minutes>=780)    {
       minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
     }
-    // // TODO: remove this for deployment as it's unneeded
-    // else if(minutes < 60)    {
-    //   minutes+=720;//adding 12 hours if its before 1 AM
-    // }
     t = (minutes - minutes%60)/60 + ":";//calculating hours
 
     if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
@@ -192,6 +190,7 @@ export class FindTimesComponent implements OnInit {
     document.getElementById('end').textContent = this.times[this.tend];
   }
 
+  // Display the room info
   getRoomInfo(building_name, room_num)
   {
     var email =  JSON.parse(localStorage.getItem('user')).email
@@ -199,16 +198,9 @@ export class FindTimesComponent implements OnInit {
     //set new inputs
     this.buildingName = building_name;
     this.roomNumber = room_num;
+
     //hide table and show room
     document.getElementById("table-2").style.display = "none";
     document.getElementById("room3").style.display = "block";
-
-    //hide everything else
-    // document.getElementById("buttons").style.display = "none";
-    // document.getElementById("all").style.display = "none";
-    // document.getElementById("table-2").style.display = "none";
-    // document.getElementById("now").style.display = "none";
-    // document.getElementById("times").style.display = "none";
-
   }
 }

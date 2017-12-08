@@ -48,16 +48,17 @@ export class RegisterComponent implements OnInit {
       return false;
     }
 
-    // Register User using const user data
+    // Register User using inputted user data
     this.userService.registerUser(user).subscribe(data => {
+      // If successful go to login page
       if (data.success) {
         this.flashMessage.show('You registered! Please enter your credentials to log in.', { cssClass: 'alert-success', timeout: 3000 });
         this.router.navigate(['/login']);
 
       }
       else {
+        // If unsuccessful, show email is already in use
         this.flashMessage.show('Email is already in use.', { cssClass: 'alert-danger', timeout: 3000 });
-        this.router.navigate(['/register']);
       }
     });
   }

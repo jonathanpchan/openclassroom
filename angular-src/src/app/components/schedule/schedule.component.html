@@ -7,9 +7,12 @@
         <table>
           <thead></thead>
           <tbody>
+            <!-- Display Finalize button if not finalized -->
             <tr *ngIf="!isFinalized">
               <td class="finalize" colspan="6"><input class="btn btn-primary" type="button" value="Finalize Schedule" (click)="clickFinalize()"></td>
             </tr> 
+
+            <!-- Display schedule headers -->
             <tr class="table-title">
               <td class="left-column"><h3>NAME</h3></td> 
               <td style="min-width: 125px"><h3>CLASS #</h3></td> 
@@ -19,6 +22,8 @@
               <td style="min-width: 175px"><h3>INSTRUCTOR</h3></td> 
               <td *ngIf="schedule.length > 0" style="background: white; width: 2.5%; border: none;"></td> 
             </tr>
+
+            <!-- Display scehdule items -->
             <tr *ngFor="let sched of schedule; let i = index;" colspan="6" style="background-color: white">
               <td class="left-column">{{sched.name}} {{sched.num}}</td> 
               <td>{{sched.sec}}</td> 
@@ -26,13 +31,19 @@
               <td>{{sched.time}}</td> 
               <td>{{sched.location}}</td> 
               <td>{{sched.prof}}</td> 
-              <!-- https://getbootstrap.com/docs/3.3/components/ --> 
+
+              <!-- 
+                Display icons in buttons
+                Source: https://getbootstrap.com/docs/3.3/components/ 
+              --> 
               <td *ngIf="!isFinalized" style="padding: 0;"> 
                 <button class="btn trash" (click)="clickDelete(i)"> 
                   <span class="fa fa-trash" aria-hidden="true"></span> 
                 </button> 
               </td> 
             </tr>
+
+            <!-- Display add button if not finalized -->
             <tr *ngIf="!isFinalized">
               <td colspan="6" style="padding: 0px">
                 <button class="btn btn-primary" style="width : 100%" value="Add Course" (click)="clickAdd()">
@@ -45,29 +56,36 @@
       </div>
     </div>
       
+    <!-- Display course component if you click the Add button -->
     <div *ngIf="user && add && !delete">
       <app-course (afterConfirm)="onCourseAdd($event)"></app-course>
     </div>
     
+    <!-- Display the remove confirmation page if you click the Trash icon -->
     <div *ngIf="user && !add && delete" style="text-align: center;"> 
       <h1>Are you sure you want to remove?</h1>
       <h3>{{deleteMessage}}</h3>
       <div>
-          <button class="btn btn-default" style="width: 33%" (click)="onCourseDelete(true)">
-            <span class="fa fa-check" aria-hidden="true"></span> Yes
-          </button>
+        <!-- If Yes, delete course from schedule -->
+        <button class="btn btn-default" style="width: 33%" (click)="onCourseDelete(true)">
+          <span class="fa fa-check" aria-hidden="true"></span> Yes
+        </button>
+        <!-- If No, keep course in schedule -->
         <button class="btn btn-primary" style="width: 33%" (click)="onCourseDelete(false)">
           <span class="fa fa-remove" aria-hidden="true"></span> No
         </button>
       </div>
     </div>
 
+    <!-- Display the finalize confirmation page if you click the finalize schedule button -->
     <div *ngIf="user && !add && !delete && finalize && !isFinalized" style="text-align: center;"> 
       <h1>Are you sure you want to finalize your schedule?</h1>
       <div>
-          <button class="btn btn-default" style="width: 33%" (click)="onFinalize(true)">
-            <span class="fa fa-check" aria-hidden="true"></span> Yes
-          </button>
+        <!-- If Yes, finalize the schedule -->
+        <button class="btn btn-default" style="width: 33%" (click)="onFinalize(true)">
+          <span class="fa fa-check" aria-hidden="true"></span> Yes
+        </button>
+        <!-- If No, don't finalize the schedule -->
         <button class="btn btn-primary" style="width: 33%" (click)="onFinalize(false)">
           <span class="fa fa-remove" aria-hidden="true"></span> No
         </button>
