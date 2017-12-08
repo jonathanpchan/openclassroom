@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() { }
 
+  //This function checks to make sure all data is good when trying to register for openclassroom
   onRegisterSubmit() {
     const user = {
       name: this.name,

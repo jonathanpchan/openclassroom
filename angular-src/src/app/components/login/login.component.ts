@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
+  //This sends the email and password combination to the data if successful the user is logged in
+  //otherwise an error message is shown.
   onLoginSubmit() {
     const user = {
       email: this.email,
