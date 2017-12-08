@@ -300,12 +300,14 @@ module.exports.getBuddies = function(eMail, callback) {
         }
         var promise = sched.length;
         var did =0;
-        var retArr = []
+        var retArr = [];
+        x = true;
         sched.forEach(function(element) {
-            SB.findOne(
-                {"sec" : element.sec}, (err, doc) => {
+            if(x == true){
+                SB.findOne(
+                    {"sec" : element.sec}, (err, doc) => {
                     if ( !(doc.students.length > 0)) {
-                        callback("Nothing Found in SB")
+                        x = false;
                         return
                     }
                     for (var i = 0; i< doc.students.length; i++){
@@ -320,6 +322,10 @@ module.exports.getBuddies = function(eMail, callback) {
                         callback(null, retArr)
                     }
                 })
+            }
         }, this);
+        if (x == false){
+            callback(null, null)
+        }
     })
 };

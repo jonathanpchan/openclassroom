@@ -1,1 +1,23 @@
+h2 {
+    padding-bottom: 5px;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: left;
+    font-size: 25px;
+}
 
+h2:after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #FFD07F;
+}
+
+p {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.ol2 {
+    padding-left: 12%;
+    padding-right: 12%;
+}
