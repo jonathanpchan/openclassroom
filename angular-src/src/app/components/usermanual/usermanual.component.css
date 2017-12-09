@@ -3,7 +3,7 @@ h2 {
     padding-left: 10%;
     padding-right: 10%;
     text-align: left;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 h2:after {
@@ -20,4 +20,15 @@ p {
 .ol2 {
     padding-left: 12%;
     padding-right: 12%;
+}
+
+img {
+    width:100%;
+    height:auto;
+    border-radius: 7px;
+    border:1px solid black;
+}
+
+li {
+    font-weight : bold;
 }
