@@ -50,38 +50,38 @@
     <u>Installing the Project and its Dependencies</u>
     <ol>
       <li>Download and install NodeJS</li>
-      <img src="assets/images/devguide/node.png" style="max-width: 950px;"/>
+      <img src="assets/images/devguide/node.png" style="max-width: 600px;"/>
       <li>Download and install MongoDB</li>
-      <img src="assets/images/devguide/mongo.png" style="max-width: 950px;"/>
+      <img src="assets/images/devguide/mongo.png" style="max-width: 600px;"/>
       <li>Add NodeJS, MongoDB, and NPM to your PATH
         <ol type="a">
           <li>In the start menu, type in "environment" and click on the item labeled "Edit environment variables for your account"</li>
           <img src="assets/images/devguide/environment-1.png" style="max-width: 300px;"/>
           <li>Highlight PATH and click "Edit"</li>
-          <img src="assets/images/devguide/environment-2.png" style="max-width: 500px;"/>
+          <img src="assets/images/devguide/environment-2.png" style="max-width: 600px;"/>
           <li>Input the items into your PATH</li>
-          <img src="assets/images/devguide/environment-3.png" style="max-width: 500px;"/>
+          <img src="assets/images/devguide/environment-3.png" style="max-width: 600px;"/>
         </ol>
       </li>
       <li>Download / Fork the project onto your computer</li>
-      <img src="assets/images/devguide/github.png" style="max-width: 950px;"/>
+      <img src="assets/images/devguide/github.png" style="max-width: 600px;"/>
       <li>In the command prompt, input the command: <code>npm install -g nodemon</code></li>
-      <img src="assets/images/devguide/nodemon-1.png" style="max-width: 750px;"/>
+      <img src="assets/images/devguide/nodemon-1.png" style="max-width: 600px;"/>
       <li>Navigate to the "openclassroom" folder and input the command: <code>npm install</code></li>
-      <img src="assets/images/devguide/npm-openclassroom.png" style="max-width: 750px;"/>
+      <img src="assets/images/devguide/npm-openclassroom.png" style="max-width: 600px;"/>
       <li>Navigate to the "openclassroom/angular-src" folder and input the command: <code>npm install</code></li>
-      <img src="assets/images/devguide/npm-angularsrc.png" style="max-width: 750px;"/>
+      <img src="assets/images/devguide/npm-angularsrc.png" style="max-width: 600px;"/>
     </ol>
 
     <!-- How do you initialize your database? -->
     <u>Initialize Your MongoDB Database</u>
     <ol>
       <li>In the command prommpt, input the command: <code>mongod</code></li>
-      <img src="assets/images/devguide/mongod.png" style="max-width: 500px;"/>
+      <img src="assets/images/devguide/mongod.png" style="max-width: 600px;"/>
       <li>In another command prompt, navigate to the "openclassroom/scraper" folder and input the command: <code>node scraper</code></li>
-      <img src="assets/images/devguide/scraper.png" style="max-width: 500px;"/>
+      <img src="assets/images/devguide/scraper.png" style="max-width: 600px;"/>
       <li>Input the command: <code>node StudyBuddyTesting 1</code></li>
-      <img src="assets/images/devguide/studybuddytesting-1.png" style="max-width: 500px;"/>
+      <img src="assets/images/devguide/studybuddytesting-1.png" style="max-width: 600px;"/>
     </ol>
 
     <!-- How do you run on Localhost? -->
@@ -89,9 +89,9 @@
     <ol>
       <li>Make sure <code>mongod</code> is running on one of your command prompts</li>
       <li>In another command prompt, navigate to the "openclassroom" folder and input the command: <code>nodemon</code></li>
-      <img src="assets/images/devguide/nodemon-2.png" style="max-width: 500px;"/>
+      <img src="assets/images/devguide/nodemon-2.png" style="max-width: 600px;"/>
       <li>In a third command prompt, navigate to the "openclassroom/angular-src" folder and input the command: <code>ng serve</code></li>
-      <img src="assets/images/devguide/ngserve.png" style="max-width: 500px;"/>
+      <img src="assets/images/devguide/ngserve.png" style="max-width: 600px;"/>
       <li>Open a web browser and input <code>localhost:4200</code> in the address bar</li>
       <img src="assets/images/devguide/localhost.png" style="max-width: 300px;"/>
     </ol>
@@ -101,16 +101,16 @@
     <ol>
       <li>Make sure your application is running on Localhost (if not, see above)</li>
       <li>In a command prompt, navigate to the "openclassroom/scraper" folder and input the command: <code>mongoimport --db open-classroom --collection users --file dummyUsers.json</code></li>
-      <img src="assets/images/devguide/mongoimport.png" style="max-width: 500px;"/>
+      <img src="assets/images/devguide/mongoimport.png" style="max-width: 600px;"/>
       <li>In the same folder, input the command: <code>node StudyBuddyTesting</code>
         <br>(Note: This command will be used if the cronjob is not up and running (See below). Currently this function does not end, so once 
         the text stops running, terminate the program using <code>CTRL + C</code>)
-        <br><img src="assets/images/devguide/studybuddytesting.png" style="max-width: 500px;"/>
+        <br><img src="assets/images/devguide/studybuddytesting.png" style="max-width: 600px;"/>
       </li>
       <li>In the same folder, input the command: <code>node studdybuddychron</code>
         <br>(Note: This program will be leveraged as a repeatable task. Until done so, we manually run it while the application is running. 
             Currently this function does not end, so once the text stops running, terminate the program using <code>CTRL + C</code>) 
-        <br><img src="assets/images/devguide/studdybuddychron.png" style="max-width: 500px;"/>         
+        <br><img src="assets/images/devguide/studdybuddychron.png" style="max-width: 600px;"/>         
       </li>
     </ol>
 
@@ -131,48 +131,45 @@
       <li><a href="https://studio3t.com/download/">Studio 3T</a>: A MongoDB client that displays the data in your database (when connected)</li>
     </ul>
 
-    <h2> [OpenClassroom Project Tree] </h2>
+    <!-- What does the project organization look like? -->
+    <h2> OpenClassroom Project Tree </h2>
     <ul>
-      <li>angular-src (where our angular project resides)
+      <li>angular-src: Where the angular project resides
         <ul>
-          <li>e2e (for testing)</li>
-          <li>node_modules (dependencies installed based on package.json)</li>
+          <li>e2e: For end to end testing</li>
+          <li>node_modules: Dependencies installed based on package.json</li>
           <li>src
             <ul>
-              <li>app (location of webpage components)
+              <li>app: Home of angular components, guards, and services
                 <ul>
-                  <li>components (modules that are added to the website)</li>
-                  <li>guards (protects routes)</li>
-                  <li>services (makes post an get requests to aid component requests)</li>
+                  <li>components: Where html components are created</li>
+                  <li>guards: Protects routes</li>
+                  <li>services: Makes POST and GET requests to aid component functionality</li>
                 </ul>
               </li>
-              <li>assets</li>
+              <li>assets: Location of images </li>
               <li>environments</li>
             </ul>
           </li>
         </ul>
       </li>
-      <li>config (where JSON Web Token strategy and database is located)</li>
-      <li>models (where the MongoDB collection models and its associated functions reside)</li>
-      <li>node_modules (dependencies installed based on package.json)</li>
-      <li>routes (location of GET and POST request reside)</li>
-      <li>scraper (where MongoDB database collections are created)
-        <ul>
-        <li>open-classroom-data (JSON file with pre-scraped buildings 2017)</li>
-        </ul>
-      </li>
+      <li>config: Where JSON Web Token strategy and database information resides</li>
+      <li>models: Where MongoDB collection models reside</li>
+      <li>node_modules: Dependencies installed based on package.json</li>
+      <li>routes: Where POST and GET requests reside</li>
+      <li>scraper: Where MongoDB database collections are created</li>
     </ul>
 
-    <h2> [How do I contribute?] </h2>
+    <!-- How do I contribute? -->
+    <h2> How do I contribute? </h2>
     <p>If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.</p>
     <ul>
       <li>Source Code: <a href="https://github.com/jonathanpchan/openclassroom">https://github.com/jonathanpchan/openclassroom</a></li>
       <li>Issue Tracker: <a href="https://github.com/jonathanpchan/openclassroom/issues">https://github.com/jonathanpchan/openclassroom/issues</a></li>
     </ul>
 
-    <h2> [Support] </h2>
-    <p>If you have any questions, feel free to contact us at <a href="openclassroom2017@gmail.com">openclassroom2017@gmail.com</a>.</p>
-
-    <br>
+    <!-- If I have any other questions, who do I contact? -->
+    <h2> Support </h2>
+    <p>If you have any questions, feel free to contact us at <a href="mailto:openclassroom2017@gmail.com">openclassroom2017@gmail.com</a>.</p>
   </body>
 </html>
