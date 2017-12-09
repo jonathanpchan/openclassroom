@@ -26,7 +26,11 @@ router.post('/add', (req, res) => { //request and response
 router.post('/remove', (req, res) => { //request and response
     if (req.body.email) { //check if valid request
     StudyBuddy.removeUser(req.body.email, (err, msg) => {
+        if(msg != null) {
         return res.json({success: true, msg});
+        } else {
+            return res.json({success: false})
+        }
     })
     } else {
         return res.json({error: "Bad Request"});

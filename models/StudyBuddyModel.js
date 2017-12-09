@@ -160,7 +160,7 @@ module.exports.addUser = function(eMail, callback) {
         setFinalizedFlag(eMail, true, filler => {
             placeByDay(sched, otObj => {
                 //query each class in studybuddymodel (foreach)
-                var counter = 0
+                var counter = -1
                 sched.forEach(function (crs) {
                     if(!brk) {
                         //add to classroom
@@ -212,18 +212,19 @@ module.exports.addUser = function(eMail, callback) {
 module.exports.removeUser = function(eMail, callback) {
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
         sched = doc.schedule
-        var counter = 0
+        var counter = -1
+        var brk = false;
         //query each class user's schedule in StudyBuddy Classroom schema
         sched.forEach( function (crs) {
-            //add to classroom
-            SB.findOneAndUpdate({"sec" : crs.sec},
-                {
+            if(!brk){
+                SB.findOneAndUpdate({"sec" : crs.sec}, {
                     $pull : {
                         "students" : { user : eMail }
-                    }
+                        }
                 }, {new: true}, function(err, doc) {
                     if (err) {
-                        callback(null, null)
+                        brk = true;
+                        return
                     } else {
                         setFlag(crs.sec, true)
                         counter++
@@ -232,9 +233,12 @@ module.exports.removeUser = function(eMail, callback) {
                             callback(null, "All classes were successfully deleted")
                         }
                     }
-                }
-            )
+                })
+            }
         })
+        if(brk) {
+            callback(null, null)
+        }
     })
 };
 

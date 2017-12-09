@@ -18,13 +18,13 @@ export class StudyBuddyService {
   unfinalize(email) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post('http://localhost:3000/studybuddies/remove', {email : email}, { headers: headers }).map(res => res.json());
-    // return this.http.post('studybuddies/remove', email, { headers: headers }).map(res => res.json());
+    // return this.http.post('studybuddies/remove', { email : email }, { headers: headers }).map(res => res.json());
   }
 
   // Service to call /get route. Get Study Buddies based on classes
   getStudyBuddies(email): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(res => res.json());
-    // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
+    // return this.http.post('studyBuddies/get', { email : email}, { headers: headers }).map(res => res.json());
   }
 }
