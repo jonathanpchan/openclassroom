@@ -4,7 +4,7 @@
   <body class="home-grid">
     <div class="jumbotron">
       <h1>Open Classroom</h1>
-      <h2>Find available classrooms for your studying needs</h2> 
+      <h2>Find available classrooms for your studying needs</h2>
       
       <!-- Buttons to show if NOT logged in -->
       <div *ngIf = "!userService.loggedIn()">
@@ -21,7 +21,7 @@
         <p>
           <br />
           <!-- Links to usermanual and devguide -->
-          <a [routerLink]="['/usermanual']">User Manual</a> | <a [routerLink]="['/devguide']">Dev Guide</a> 
+          <b><a [routerLink]="['/usermanual']">User Manual</a> | <a [routerLink]="['/devguide']">Dev Guide</a></b>
         </p>
       </div>
     </div>
