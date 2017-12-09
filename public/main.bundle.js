@@ -1,23 +1,14 @@
-webpackJsonp([1,4],[
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
+webpackJsonp([1,4],{
+
+/***/ 10:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_jwt__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -129,580 +120,8 @@ var _a;
 //# sourceMappingURL=user.service.js.map
 
 /***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-//Service module for building, class, and classroom queries
-
-
-
-
-var BuildingsService = (function () {
-    function BuildingsService(http) {
-        this.http = http;
-    }
-    //=========== Buildings ======================
-    // Get building based on name
-    BuildingsService.prototype.getBuilding = function (name) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/buildings', { name: name }, { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
-    };
-    // Get all buildings
-    BuildingsService.prototype.getBuildings = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.get('buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
-    };
-    // Get all building names
-    BuildingsService.prototype.getBuildingNames = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.get('buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
-    };
-    BuildingsService.prototype.extractData = function (res) {
-        var body = res.json();
-        return body || {};
-    };
-    BuildingsService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Promise.reject(errMsg);
-    };
-    return BuildingsService;
-}());
-BuildingsService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], BuildingsService);
-
-var _a;
-//# sourceMappingURL=buildings.service.js.map
-
-/***/ }),
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StudyBuddyService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var StudyBuddyService = (function () {
-    function StudyBuddyService(http) {
-        this.http = http;
-    }
-    // Service to call /add route. Adds a user to study buddy feature
-    StudyBuddyService.prototype.joinStudyBuddies = function (email) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studybuddies/add', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
-    };
-    // Service to call /remove route. Removes a user from study buddy feature
-    StudyBuddyService.prototype.unfinalize = function (email) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studybuddies/remove', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studybuddies/remove', email, { headers: headers }).map(res => res.json());
-    };
-    // Service to call /get route. Get Study Buddies based on classes
-    StudyBuddyService.prototype.getStudyBuddies = function (email) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
-    };
-    return StudyBuddyService;
-}());
-StudyBuddyService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], StudyBuddyService);
-
-var _a;
-//# sourceMappingURL=studybuddy.service.js.map
-
-/***/ }),
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_socket_io_client__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var ChatService = (function () {
-    function ChatService(http) {
-        this.http = http;
-        // ID of the user that's going to be chatting with you
-        this.ID = null;
-    }
-    // Create the room based on user pair
-    ChatService.prototype.createRoom = function (sender, sendee) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        var payload = {
-            user_1: sender,
-            user_2: sendee
-        };
-        return this.http.post('http://localhost:3000/messages/create', payload, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('messages/create', payload, { headers: headers }).map(res => res.json());
-    };
-    // Tell the server to connect to server and join a room
-    ChatService.prototype.joinRoom = function (ID) {
-        // Connect once while on that page
-        if (this.socket == null) {
-            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("http://localhost:3000/");
-            // this.socket = io.connect("https://openclassroom.herokuapp.com/");
-        }
-        this.socket.emit('join room', ID);
-    };
-    // Tell the server to send a message to those in the room
-    ChatService.prototype.sendMessage = function (ID, sender, message) {
-        this.socket.emit('add message', ID, sender, message);
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        var payload = {
-            sender: sender,
-            msg: message,
-            ID: ID
-        };
-        return this.http.post('http://localhost:3000/messages/send', payload, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('messages/send', payload, { headers: headers }).map(res => res.json());
-    };
-    ChatService.prototype.getBuddyList = function (email) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/buddylist', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
-    };
-    ChatService.prototype.addBuddyListItem = function (email1, email2, user) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        var payload = {
-            email1: email1,
-            email2: email2,
-            user: user
-        };
-        return this.http.post('http://localhost:3000/users/buddylist/add', payload, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/buddylist/add', payload, { headers: headers }).map(res => res.json());
-    };
-    // Create an observable that will read off the next message when the user gets a message
-    ChatService.prototype.getSubscription = function () {
-        var _this = this;
-        var observable = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
-            _this.socket.on('message', function (data) {
-                observer.next(data);
-            });
-        });
-        return observable;
-    };
-    ChatService.prototype.getMessages = function (ID) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/messages/get', { ID: ID }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
-    };
-    return ChatService;
-}());
-ChatService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], ChatService);
-
-var _a;
-//# sourceMappingURL=chat.service.js.map
-
-/***/ }),
-/* 47 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ValidateService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var ValidateService = (function () {
-    function ValidateService() {
-    }
-    // Make sure the register information is all filled out
-    ValidateService.prototype.validateRegister = function (user) {
-        if (user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    };
-    // Make sure it's a valid email
-    // Source: LOST
-    ValidateService.prototype.validateEmail = function (email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-    };
-    return ValidateService;
-}());
-ValidateService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [])
-], ValidateService);
-
-//# sourceMappingURL=validate.service.js.map
-
-/***/ }),
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(26);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindNowComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var FindNowComponent = (function () {
-    // Need to pass argument so it can be used in functions below
-    function FindNowComponent(buildingService) {
-        this.buildingService = buildingService;
-        // Days the buildingService will query using
-        this.days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
-        // The list that will be displayed after population in the show function
-        this.roomsList = [];
-        // Notifies the HTML to display the error message when out of hours
-        this.show = false;
-        //Arguments to pass to roomInfo
-        this.buildingName = "";
-        this.roomNumber = "";
-    }
-    // Set the day once when navigating to the find classroom page
-    FindNowComponent.prototype.ngOnInit = function () {
-        this.day = this.days[new Date().getDay()];
-    };
-    /*
-    * Gets the rooms that are open and display when they are open
-    * 1) Not "x" and between 8AM and 10 PM?
-    * 2) Notify buildingService to get the buildings from MongoDB
-    * 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
-    */
-    FindNowComponent.prototype.showNow = function () {
-        var _this = this;
-        document.getElementById("nowTimes").style.display = "block";
-        var st = new Date().getHours() * 60;
-        // 1) Not "x" and between 8 AM and 10 PM?
-        if (this.day != "x" && st >= 8 * 60 && st < 22 * 60) {
-            // Clear roomsList for new list
-            this.roomsList = [];
-            // 2) Notify buildingService to get the buildings from MongoDB
-            this.buildingService.getBuilding(this.name).subscribe(function (buildingList) {
-                // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
-                var roomsJSON = buildingList.OpenBuilding[0].rooms;
-                for (var room in roomsJSON) {
-                    // timesJSON = [{ name, sec, days, location, st, et }]
-                    var timesJSON = roomsJSON[room][_this.day];
-                    for (var time in timesJSON) {
-                        // 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
-                        if (st >= timesJSON[time].st && (st + 30) <= timesJSON[time].et) {
-                            _this.roomsList.push({ name: roomsJSON[room].name, st: _this.timeFormat(timesJSON[time].st), et: _this.timeFormat(timesJSON[time].et) });
-                        }
-                    }
-                }
-                if (_this.roomsList.length > 0) {
-                    _this.show = true;
-                }
-                else {
-                    _this.show = false;
-                }
-            }, function (err) {
-                console.log(err);
-            });
-        }
-        else {
-            this.show = false;
-        }
-    };
-    // Adjust time in minutes to stringified time (No 12:00 AM)
-    FindNowComponent.prototype.timeFormat = function (time) {
-        // 12 AM
-        if (Math.trunc(time / 60) == 0) {
-            if (time % 60 < 10) {
-                return "12:0" + (time % 60) + " AM";
-            }
-            else {
-                return "12:" + (time % 60) + " AM";
-            }
-        }
-        else if (Math.trunc(time / 60) == 12) {
-            if (time % 60 < 10) {
-                return "12:0" + (time % 60) + " PM";
-            }
-            else {
-                return "12:" + (time % 60) + " PM";
-            }
-        }
-        // 1 PM to 12 AM (exclusive)
-        if (time / 60 > 12) {
-            if (time % 60 < 10) {
-                return (Math.trunc(time / 60) - 12) + ":0" + (time % 60) + " PM";
-            }
-            else {
-                return (Math.trunc(time / 60) - 12) + ":" + (time % 60) + " PM";
-            }
-        }
-        else {
-            if (time % 60 < 10) {
-                return Math.trunc(time / 60) + ":0" + (time % 60) + " AM";
-            }
-            else {
-                return Math.trunc(time / 60) + ":" + (time % 60) + " AM";
-            }
-        }
-    };
-    // Display the room info
-    FindNowComponent.prototype.showRoom = function (room, number) {
-        this.buildingName = room;
-        this.roomNumber = number;
-        document.getElementById("nowTimes").style.display = "none";
-        document.getElementById("room2").style.display = "block";
-    };
-    return FindNowComponent;
-}());
-__decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
-    __metadata("design:type", String)
-], FindNowComponent.prototype, "name", void 0);
-FindNowComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-find-now',
-        template: __webpack_require__(244),
-        styles: [__webpack_require__(222)]
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
-], FindNowComponent);
-
-var _a;
-//# sourceMappingURL=find-now.component.js.map
-
-/***/ }),
-/* 81 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoomInfoService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-//Service module for building, class, and classroom queries
-
-
-
-
-var RoomInfoService = (function () {
-    function RoomInfoService(http) {
-        this.http = http;
-    }
-    RoomInfoService.prototype.getRoomInfo = function (building, room) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('roominfo/getRoomInfo', { building, room }, { headers: headers }).map(res => res.json());
-    };
-    RoomInfoService.prototype.addComment = function (building, room, email, comment) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/roominfo/addComment', { building: building, room: room, email: email, comment: comment }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('roominfo/addComment', { building, room, email, comment }, { headers: headers }).map(res => res.json());
-    };
-    RoomInfoService.prototype.addVote = function (building, room, email, item, pos, nvote) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/roominfo/addVote', { building: building, room: room, email: email, item: item, pos: pos, nvote: nvote }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('roominfo/addVote', { building, room, email, item, pos, nvote }, { headers: headers }).map(res => res.json());
-    };
-    return RoomInfoService;
-}());
-RoomInfoService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
-], RoomInfoService);
-
-var _a;
-//# sourceMappingURL=roominfo.service.js.map
-
-/***/ }),
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */
+/***/ 123:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -711,19 +130,20 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 120;
+webpackEmptyContext.id = 123;
 
 
 /***/ }),
-/* 121 */
+
+/***/ 124:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(148);
 
 
 
@@ -735,12 +155,8 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 //# sourceMappingURL=main.js.map
 
 /***/ }),
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */
+
+/***/ 130:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -778,15 +194,16 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-root',
-        template: __webpack_require__(239),
-        styles: [__webpack_require__(217)]
+        template: __webpack_require__(242),
+        styles: [__webpack_require__(220)]
     })
 ], AppComponent);
 
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
-/* 128 */
+
+/***/ 131:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -795,34 +212,34 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_nouislider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_nouislider__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_chat_chat_component__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_course_course_component__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_devguide_devguide_component__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_find_find_component__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_find_home_find_home_component__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_chat_chat_component__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_course_course_component__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_devguide_devguide_component__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_find_find_component__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_find_home_find_home_component__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_find_now_find_now_component__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_find_times_find_times_component__ = __webpack_require__(133);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_home_home_component__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_login_login_component__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_navbar_navbar_component__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_register_register_component__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_room_room_component__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_schedule_schedule_component__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_studybuddy_studybuddy_component__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_usermanual_usermanual_component__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_validate_service__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_find_times_find_times_component__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_home_home_component__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_login_login_component__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_navbar_navbar_component__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_register_register_component__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_room_room_component__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_schedule_schedule_component__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_studybuddy_studybuddy_component__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_usermanual_usermanual_component__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__services_validate_service__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__services_user_service__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_buildings_service__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_chat_service__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_chat_service__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_roominfo_service__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_studybuddy_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__guards_auth_guard__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_studybuddy_service__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__guards_auth_guard__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_settings_settings_component__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_settings_settings_component__ = __webpack_require__(144);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -922,12 +339,13 @@ AppModule = __decorate([
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
-/* 129 */
+
+/***/ 132:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatComponent; });
@@ -1035,8 +453,8 @@ var ChatComponent = (function () {
 ChatComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-chat',
-        template: __webpack_require__(240),
-        styles: [__webpack_require__(218)]
+        template: __webpack_require__(243),
+        styles: [__webpack_require__(221)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object])
 ], ChatComponent);
@@ -1045,7 +463,8 @@ var _a, _b;
 //# sourceMappingURL=chat.component.js.map
 
 /***/ }),
-/* 130 */
+
+/***/ 133:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1206,8 +625,8 @@ __decorate([
 CourseComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-course',
-        template: __webpack_require__(241),
-        styles: [__webpack_require__(219)]
+        template: __webpack_require__(244),
+        styles: [__webpack_require__(222)]
     }),
     __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], CourseComponent);
@@ -1216,7 +635,8 @@ var _a, _b, _c;
 //# sourceMappingURL=course.component.js.map
 
 /***/ }),
-/* 131 */
+
+/***/ 134:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1241,8 +661,8 @@ var DevguideComponent = (function () {
 DevguideComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-devguide',
-        template: __webpack_require__(242),
-        styles: [__webpack_require__(220)]
+        template: __webpack_require__(245),
+        styles: [__webpack_require__(223)]
     }),
     __metadata("design:paramtypes", [])
 ], DevguideComponent);
@@ -1250,7 +670,8 @@ DevguideComponent = __decorate([
 //# sourceMappingURL=devguide.component.js.map
 
 /***/ }),
-/* 132 */
+
+/***/ 135:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1339,8 +760,8 @@ __decorate([
 FindHomeComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-home',
-        template: __webpack_require__(243),
-        styles: [__webpack_require__(221)],
+        template: __webpack_require__(246),
+        styles: [__webpack_require__(224)],
         providers: [__WEBPACK_IMPORTED_MODULE_2__find_now_find_now_component__["a" /* FindNowComponent */]] // Needed to function call the FindNowComponent
     }),
     __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
@@ -1350,7 +771,8 @@ var _a, _b, _c;
 //# sourceMappingURL=find-home.component.js.map
 
 /***/ }),
-/* 133 */
+
+/***/ 136:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1540,8 +962,8 @@ __decorate([
 FindTimesComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find-times',
-        template: __webpack_require__(245),
-        styles: [__webpack_require__(223)]
+        template: __webpack_require__(248),
+        styles: [__webpack_require__(226)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
 ], FindTimesComponent);
@@ -1550,7 +972,8 @@ var _a;
 //# sourceMappingURL=find-times.component.js.map
 
 /***/ }),
-/* 134 */
+
+/***/ 137:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1714,8 +1137,8 @@ __decorate([
 FindComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-find',
-        template: __webpack_require__(246),
-        styles: [__webpack_require__(224)]
+        template: __webpack_require__(249),
+        styles: [__webpack_require__(227)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], FindComponent);
@@ -1724,7 +1147,8 @@ var _a, _b, _c;
 //# sourceMappingURL=find.component.js.map
 
 /***/ }),
-/* 135 */
+
+/***/ 138:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1752,8 +1176,8 @@ var HomeComponent = (function () {
 HomeComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-home',
-        template: __webpack_require__(247),
-        styles: [__webpack_require__(225)]
+        template: __webpack_require__(250),
+        styles: [__webpack_require__(228)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object])
 ], HomeComponent);
@@ -1762,7 +1186,8 @@ var _a;
 //# sourceMappingURL=home.component.js.map
 
 /***/ }),
-/* 136 */
+
+/***/ 139:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1817,8 +1242,8 @@ var LoginComponent = (function () {
 LoginComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-login',
-        template: __webpack_require__(248),
-        styles: [__webpack_require__(226)]
+        template: __webpack_require__(251),
+        styles: [__webpack_require__(229)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], LoginComponent);
@@ -1827,7 +1252,8 @@ var _a, _b, _c;
 //# sourceMappingURL=login.component.js.map
 
 /***/ }),
-/* 137 */
+
+/***/ 140:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1836,7 +1262,7 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validate_service__ = __webpack_require__(48);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavbarComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1880,8 +1306,8 @@ var NavbarComponent = (function () {
 NavbarComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-navbar',
-        template: __webpack_require__(249),
-        styles: [__webpack_require__(227)]
+        template: __webpack_require__(252),
+        styles: [__webpack_require__(230)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_validate_service__["a" /* ValidateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_validate_service__["a" /* ValidateService */]) === "function" && _d || Object])
 ], NavbarComponent);
@@ -1890,12 +1316,13 @@ var _a, _b, _c, _d;
 //# sourceMappingURL=navbar.component.js.map
 
 /***/ }),
-/* 138 */
+
+/***/ 141:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_validate_service__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
@@ -1962,8 +1389,8 @@ var RegisterComponent = (function () {
 RegisterComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-register',
-        template: __webpack_require__(250),
-        styles: [__webpack_require__(228)]
+        template: __webpack_require__(253),
+        styles: [__webpack_require__(231)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_validate_service__["a" /* ValidateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_validate_service__["a" /* ValidateService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _d || Object])
 ], RegisterComponent);
@@ -1972,7 +1399,8 @@ var _a, _b, _c, _d;
 //# sourceMappingURL=register.component.js.map
 
 /***/ }),
-/* 139 */
+
+/***/ 142:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2097,8 +1525,8 @@ __decorate([
 RoomComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-room',
-        template: __webpack_require__(251),
-        styles: [__webpack_require__(229)]
+        template: __webpack_require__(254),
+        styles: [__webpack_require__(232)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_roominfo_service__["a" /* RoomInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_roominfo_service__["a" /* RoomInfoService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object])
 ], RoomComponent);
@@ -2107,13 +1535,14 @@ var _a, _b;
 //# sourceMappingURL=room.component.js.map
 
 /***/ }),
-/* 140 */
+
+/***/ 143:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScheduleComponent; });
@@ -2249,8 +1678,8 @@ var ScheduleComponent = (function () {
 ScheduleComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-schedule',
-        template: __webpack_require__(252),
-        styles: [__webpack_require__(230)]
+        template: __webpack_require__(255),
+        styles: [__webpack_require__(233)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__["a" /* StudyBuddyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__["a" /* StudyBuddyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], ScheduleComponent);
@@ -2259,13 +1688,14 @@ var _a, _b, _c;
 //# sourceMappingURL=schedule.component.js.map
 
 /***/ }),
-/* 141 */
+
+/***/ 144:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsComponent; });
@@ -2358,8 +1788,8 @@ var SettingsComponent = (function () {
 SettingsComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-settings',
-        template: __webpack_require__(253),
-        styles: [__webpack_require__(231)]
+        template: __webpack_require__(256),
+        styles: [__webpack_require__(234)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__["a" /* StudyBuddyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_studybuddy_service__["a" /* StudyBuddyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _c || Object])
 ], SettingsComponent);
@@ -2368,14 +1798,15 @@ var _a, _b, _c;
 //# sourceMappingURL=settings.component.js.map
 
 /***/ }),
-/* 142 */
+
+/***/ 145:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_chat_service__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_studybuddy_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_chat_service__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_studybuddy_service__ = __webpack_require__(35);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StudybuddyComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2491,8 +1922,8 @@ var StudybuddyComponent = (function () {
 StudybuddyComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-studybuddy',
-        template: __webpack_require__(254),
-        styles: [__webpack_require__(232)]
+        template: __webpack_require__(257),
+        styles: [__webpack_require__(235)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_chat_service__["a" /* ChatService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_studybuddy_service__["a" /* StudyBuddyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_studybuddy_service__["a" /* StudyBuddyService */]) === "function" && _c || Object])
 ], StudybuddyComponent);
@@ -2501,7 +1932,8 @@ var _a, _b, _c;
 //# sourceMappingURL=studybuddy.component.js.map
 
 /***/ }),
-/* 143 */
+
+/***/ 146:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2526,8 +1958,8 @@ var UsermanualComponent = (function () {
 UsermanualComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-usermanual',
-        template: __webpack_require__(255),
-        styles: [__webpack_require__(233)]
+        template: __webpack_require__(258),
+        styles: [__webpack_require__(236)]
     }),
     __metadata("design:paramtypes", [])
 ], UsermanualComponent);
@@ -2535,7 +1967,8 @@ UsermanualComponent = __decorate([
 //# sourceMappingURL=usermanual.component.js.map
 
 /***/ }),
-/* 144 */
+
+/***/ 147:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2580,7 +2013,8 @@ var _a, _b;
 //# sourceMappingURL=auth.guard.js.map
 
 /***/ }),
-/* 145 */
+
+/***/ 148:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2596,78 +2030,8 @@ var environment = {
 //# sourceMappingURL=environment.js.map
 
 /***/ }),
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */
+
+/***/ 220:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2684,7 +2048,8 @@ exports.push([module.i, ".main-grid {\r\n    display: -ms-grid;\r\n    display: 
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 218 */
+
+/***/ 221:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2701,7 +2066,8 @@ exports.push([module.i, "/* Formatting of the user list area */\r\n.msglist {\r\
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 219 */
+
+/***/ 222:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2718,7 +2084,8 @@ exports.push([module.i, ".cancel {\r\n    float: left;\r\n}\r\n\r\n.submit {\r\n
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 220 */
+
+/***/ 223:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2726,7 +2093,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "h3:after {\r\n    content: \"\";\r\n    display: block;\r\n    border-bottom: 1px solid #FFD07F;\r\n}", ""]);
+exports.push([module.i, "body {\r\n    padding-left: 10%;\r\n    padding-right: 10%;\r\n}\r\n\r\nh2 {\r\n    padding-bottom: 5px;\r\n    font-size: 30px;\r\n}\r\n\r\nh2:after {\r\n    content: \"\";\r\n    display: block;\r\n    border-bottom: 1px solid #FFD07F;\r\n}\r\n\r\nimg {\r\n    width:100%;\r\n    height:auto;\r\n    border-radius: 7px;\r\n    border:1px solid black;\r\n}\r\n\r\nli {\r\n    font-weight : bold;\r\n}", ""]);
 
 // exports
 
@@ -2735,7 +2102,8 @@ exports.push([module.i, "h3:after {\r\n    content: \"\";\r\n    display: block;
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 221 */
+
+/***/ 224:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2752,7 +2120,8 @@ exports.push([module.i, ".buttons { \r\n    text-align: center; \r\n} \r\n \r\n.
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 222 */
+
+/***/ 225:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2769,7 +2138,8 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 223 */
+
+/***/ 226:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2786,7 +2156,8 @@ exports.push([module.i, ".slider-grid {\r\n  display: -ms-grid;\r\n  display: gr
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 224 */
+
+/***/ 227:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2803,7 +2174,8 @@ exports.push([module.i, "table {\r\n  width : auto;\r\n  height : auto;\r\n}\r\n
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 225 */
+
+/***/ 228:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2820,7 +2192,8 @@ exports.push([module.i, ".jumbotron {\r\n    text-align: center;\r\n}\r\n\r\n.bt
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 226 */
+
+/***/ 229:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2837,7 +2210,8 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 227 */
+
+/***/ 230:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2854,7 +2228,8 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 228 */
+
+/***/ 231:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2871,7 +2246,8 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 229 */
+
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2888,7 +2264,8 @@ exports.push([module.i, ".roomName{\r\n  padding-bottom: 50px;\r\n}\r\n\r\n/*.da
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 230 */
+
+/***/ 233:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2905,7 +2282,8 @@ exports.push([module.i, ".table-title {\r\n    background-color: #d7d1c5;\r\n}\r
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 231 */
+
+/***/ 234:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2922,7 +2300,8 @@ exports.push([module.i, "/* For header styling */\r\n h2 {\r\n     padding-botto
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 232 */
+
+/***/ 235:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2939,7 +2318,8 @@ exports.push([module.i, "/*.studyBuddies{\r\n  display: grid;\r\n  grid-template
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 233 */
+
+/***/ 236:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -2947,7 +2327,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "h2 {\r\n    padding-bottom: 5px;\r\n    padding-left: 10%;\r\n    padding-right: 10%;\r\n    text-align: left;\r\n    font-size: 25px;\r\n}\r\n\r\nh2:after {\r\n    content: \"\";\r\n    display: block;\r\n    border-bottom: 1px solid #FFD07F;\r\n}\r\n\r\np {\r\n    padding-left: 10%;\r\n    padding-right: 10%;\r\n}\r\n\r\n.ol2 {\r\n    padding-left: 12%;\r\n    padding-right: 12%;\r\n}\r\n", ""]);
+exports.push([module.i, "body {\r\n    padding-left: 10%;\r\n    padding-right: 10%;\r\n}\r\n\r\nh2 {\r\n    padding-bottom: 5px;\r\n    text-align: left;\r\n    font-size: 30px;\r\n}\r\n\r\nh2:after {\r\n    content: \"\";\r\n    display: block;\r\n    border-bottom: 1px solid #FFD07F;\r\n}\r\n\r\nimg {\r\n    width:100%;\r\n    height:auto;\r\n    border-radius: 7px;\r\n    border:1px solid black;\r\n}\r\n\r\nli {\r\n    font-weight : bold;\r\n}\r\n\r\n.nobold {\r\n    font-weight : normal;\r\n}", ""]);
 
 // exports
 
@@ -2956,163 +2336,616 @@ exports.push([module.i, "h2 {\r\n    padding-bottom: 5px;\r\n    padding-left: 1
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */
+
+/***/ 242:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body class=\"main-grid\">\r\n    <!-- Navbar -->\r\n    <app-navbar></app-navbar>\r\n\r\n    <!-- Flash messages below navbar -->\r\n    <flash-messages></flash-messages>\r\n\r\n    <!-- Components below flash messages -->\r\n    <router-outlet></router-outlet>\r\n\r\n    <!-- To Top button shows up if you scroll down far enough -->\r\n    <button class=\"button-to-top\" (click)=\"toTop()\" id=\"to-top\">\r\n      <span class=\"fa fa-chevron-up\" aria-hidden=\"true\"></span>\r\n      <p>Top</p>\r\n    </button>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 240 */
+
+/***/ 243:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body class=\"grid\">\r\n    <!-- BUDDY LIST: If you aren't talking to anyone, then SHOW the buddylist (small screen) -->\r\n    <div [ngClass]=\"sendee==null ? 'msglist' : 'msglist-hide'\">\r\n      <div class=\"msglist-title\">OC Messenger</div>\r\n      <!-- Buddies in list -->\r\n      <ul *ngIf=\"buddyList.length > 0\" class=\"list-group msglist-users\">\r\n        <li class=\"list-group-item msglist-user\" *ngFor=\"let buddy of buddyList\">\r\n          <button class=\"btn msglist-btn\" (click)=\"joinRoom(buddy)\">{{buddy.user}}</button>\r\n        </li>\r\n      </ul>\r\n      <!-- No buddies in list -->\r\n      <ul *ngIf=\"buddyList.length <= 0\" class=\"list-group msglist-users\">\r\n        <h2 style=\"text-align: center; top: 50%;\">Go to the Study Buddy Tab to add some buddies!</h2>\r\n      </ul>\r\n    </div>\r\n\r\n    <!-- MESSAGE LOGS: If you aren't talking to anyone, HIDE the message logs (small screen) -->\r\n    <div [ngClass]=\"sendee==null ? 'chat-hide' : 'chat'\">\r\n      <!-- Show the back button if you are talking to someone -->\r\n      <div class=\"chat-title\">\r\n        <button *ngIf=\"showBack\" class=\"btn\" [ngClass]=\"showBack ? 'back' : 'back-hide'\" (click)=\"back()\">\r\n          <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span>Back\r\n        </button>\r\n        <div class=\"announcer\">{{sendee}}</div>\r\n      </div>\r\n      <!--\r\n        Code to scroll to the bottom of the chat and display either you or the sendee's message \r\n        Source: https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style \r\n      -->\r\n      <div class=\"chatlogs\" #chatlogs [scrollTop]=\"chatlogs.scrollHeight\">\r\n        <div *ngFor=\"let message of messages\">\r\n          <div *ngIf=\"message.sender!=sender\" class=\"sendee\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n          <div *ngIf=\"message.sender==sender\" class=\"sender\">\r\n            <p class=\"chatmsg\">{{message.message}}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    \r\n    <!-- SENDING MESSAGE: You can input into the text input, then click submit or click enter after writing a message to send a message -->\r\n    <form class=\"chat-form\" (submit)=\"sendMessage()\">\r\n      <input type=\"text\" class=\"chat-text\" [(ngModel)]=\"message\" [ngModelOptions]=\"{standalone: true}\"/>\r\n      <button type=\"submit\" class=\"btn btn-primary chat-submit\">\r\n        <span class=\"fa fa-send\" aria-hidden=\"true\"></span>\r\n      </button>\r\n    </form>\r\n    </div>\r\n  </body>\r\n</html>"
 
 /***/ }),
-/* 241 */
+
+/***/ 244:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"!confirm\">\r\n      <div class=\"form-group\">\r\n        <!-- 1) Choose the course name -->\r\n        <h1>Add a Course</h1>\r\n        <h2>Department</h2>\r\n        <select class=\"form-control\" [(ngModel)]=\"courseName\" name=\"courseName\" (focus)=\"cache()\" (change)=\"getCourseNumOptions()\">\r\n          <option selected hidden></option>\r\n          <option *ngFor=\"let cname of courseNameOptions\">{{cname}}</option>\r\n        </select>\r\n    \r\n        <!-- 2) Choose the course number -->\r\n        <div *ngIf=\"courseNumOptions\">\r\n          <h2>Course Number</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseNum\" name=\"courseNum\" (change)=\"getCourseChoiceOptions()\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cid of courseNumOptions\"> {{cid}}</option>\r\n          </select>\r\n        </div>\r\n    \r\n        <!-- 3) Choose the class -->\r\n        <div *ngIf=\"courseChoiceOptions\">\r\n          <h2>Course</h2>\r\n          <select class=\"form-control\" [(ngModel)]=\"courseChoice\" name=\"courseChoice\">\r\n            <option selected hidden></option>\r\n            <option *ngFor=\"let cchoice of courseChoiceOptions\" [ngValue]=\"cchoice\"> {{courseName}} {{cchoice.num}} |  #{{cchoice.sec}} {{cchoice.day}} {{cchoice.time}} {{cchoice.location}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Options for adding or backing to Schedule Component -->\r\n      <div>\r\n        <button class=\"btn btn-primary cancel\" (click)=\"onBack()\">\r\n            <span class=\"fa fa-chevron-left\" aria-hidden=\"true\"></span> Back\r\n        </button>\r\n        <button class=\"btn btn-default submit\" (click)=\"onSubmit()\">\r\n          <span class=\"fa fa-plus\" aria-hidden=\"true\"></span> Add Course\r\n        </button>\r\n      </div>\r\n    </div>\r\n    \r\n    <!-- Options for confirming or canceling course addition -->\r\n    <div *ngIf=\"confirm\" id=\"confirm\" style=\"text-align: center\">\r\n      <h1>Are you sure you want to add?</h1>\r\n      <h2>{{confirmMessage}}</h2>\r\n      <div>\r\n        <button class=\"btn btn-default btn-primary\" style=\"width: 33%\" (click)=\"addClick(true)\">\r\n          <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"addClick(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 242 */
+
+/***/ 245:
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> Developer Guide </title>\r\n  </head>\r\n  <body>\r\n    <h2 class=\"page-header\" style=\"text-align: center; font-weight: bold\">Developer Guide</h2>\r\n    \r\n    <h3 class=\"header\"> [What is Open Classroom?] </h3>\r\n    <p>As computer science students, we have personally had issues finding open rooms to study in. \r\n      So we created an app to let students know what classrooms and labs are open. \r\n      Currently students have no easy way to find this out. \r\n      They have to chance upon a room or search physically until they find one. \r\n      We provide a listing of what rooms are open to make the lives of students easier. \r\n      In addition, students are able to replicate their schedules. \r\n      By finalizing their schedules, students gain access to Study Buddies where they can find other \r\n      people to study with (whether they are in the same class or taking a different section). \r\n      Not sharing is on the way along with a more interactive chat system. \r\n      A means for users to update erroneous information based on buildings has been enabled and, in the future, will be user moderated. \r\n      This application will surely increase the student’s knowledgebase of where they can prepare for their next exam or simply get the \r\n      help they need in a free space devoid of professor involvement.</p>\r\n    \r\n    <h3 class=\"header\"> [Features] </h3>\r\n    <u>Currently Live</u>\r\n    <ul>\r\n      <li>Signup</li>\r\n      <li>Login/Logout</li>\r\n      <li>Create and Finalize Schedule</li>\r\n      <li>Find Classroom (All Rooms / Right Now / By Time)</li>\r\n      <li>Find Study Buddies</li>\r\n      <li>Message Study Buddies</li>\r\n    </ul>\r\n    <u>In Progress</u>\r\n    <ul>\r\n      <li>User Group Boards</li>\r\n      <li>File Transfer between Users</li>\r\n    </ul>\r\n    \r\n    <h3 class=\"header\"> [Setup] </h3>\r\n    <p>You can install the Open Classroom application by downloading the source code directly and unzipping the contents into a folder. \r\n      Alternatively, you can also fork project. As this is a MEAN stack application, you must <b>install the 4 dependencies:</b></p>\r\n    <ol>\r\n      <li> <b>MongoDB</b> (via website)</li>\r\n      <li> <b>Angular 2.0</b> (via npm install)</li>\r\n      <li> <b>ExpressJS</b> (via npm install)</li>\r\n      <li> <b>NodeJS</b> (via website)</li>\r\n    </ol>\r\n    <p>Furthermore, you must <b>install (\"ng install\") the node_modules folder</b> into these 2 folders <b>using a terminal at that path location:</b></p>\r\n    <ol>\r\n      <li> \"openclassroom\" folder</li>\r\n      <li> \"openclassroom/angular-src\" folder</li>\r\n    </ol>\r\n  \r\n    <u>Populate your MongoDB Database with Classroom Content</u>\r\n    <ol>\r\n      <li> Navigate where you installed MongoDB (default location: C:\\Program Files\\MongoDB\\Server\\3.4\\bin) and <b>run \"mongod.exe\"</b></li>\r\n      <li> Navigate to the \"scraper\" folder</li>\r\n      <li> In a terminal at this path location, run <b>\"node scraper\"</b></li>\r\n    </ol>\r\n  \r\n    <u>Run the Open Classroom Application on Localhost</u>\r\n    <ol>\r\n      <li> Make sure <b>\"mongod.exe\"</b> is running (if not, run \"mongod.exe\" as seen above)</li>\r\n      <li> Open a new terminal in the <b>\"openclassroom\"</b> folder</li>\r\n      <li> Run <b>\"nodemon\"</b> (see dependencies) </li>\r\n      <li> Open a new terminal in the <b>\"openclassroom/angular-src\"</b> folder</li>\r\n      <li> Run <b>\"ng serve\"</b> (see dependencies) </li>\r\n      <li> <b>Open a web browser</b> (Chrome, Edge, Firefox, etc.) and go to <b>\"localhost:4200\"</b> </li>\r\n    </ol>\r\n    \r\n    <h3 class=\"header\"> [Dependencies] </h3>\r\n    <u>Open Classroom uses the MEAN stack</u>\r\n    <ul>\r\n      <li><a href=\"https://www.mongodb.com/download-center\"> MongoDB </a></li>\r\n      <li><a href=\"https://github.com/angular/angular-cli\"> Angular 2.0</a></li>\r\n      <li><a href=\"https://github.com/expressjs/express\"> ExpressJS </a></li>\r\n      <li><a href=\"https://nodejs.org/en/download/\"> NodeJS </a></li>\r\n    </ul>\r\n    <i>(Angular 2.0 and ExpressJS are installed using \"ng install\". MongoDB and NodeJS shall be installed from their respective websites.)</i> \r\n    <br>\r\n    <br>\r\n    <u>Helpful Applications</u>\r\n    <ul>\r\n      <li> <a href=\"https://nodemon.io/\">Nodemon</a> - an application that updates your project without having to restart \"npm start\" or \"ng serve\" </li>\r\n      <li> <a href=\"https://studio3t.com/download/\">Studio 3T</a> - a MongoDB client that displays the data in your database (when connected)</li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [OpenClassroom Project Tree] </h3>\r\n    <ul>\r\n      <li>angular-src (where our angular project resides)\r\n        <ul>\r\n          <li>e2e (for testing)</li>\r\n          <li>node_modules (dependencies installed based on package.json)</li>\r\n          <li>src\r\n            <ul>\r\n              <li>app (location of webpage components)\r\n                <ul>\r\n                  <li>components (modules that are added to the website)</li>\r\n                  <li>guards (protects routes)</li>\r\n                  <li>services (makes post an get requests to aid component requests)</li>\r\n                </ul>\r\n              </li>\r\n              <li>assets</li>\r\n              <li>environments</li>\r\n            </ul>\r\n          </li>\r\n        </ul>\r\n      </li>\r\n      <li>config (where JSON Web Token strategy and database is located)</li>\r\n      <li>models (where the MongoDB collection models and its associated functions reside)</li>\r\n      <li>node_modules (dependencies installed based on package.json)</li>\r\n      <li>routes (location of GET and POST request reside)</li>\r\n      <li>scraper (where MongoDB database collections are created)\r\n        <ul>\r\n        <li>open-classroom-data (JSON file with pre-scraped buildings 2017)</li>\r\n        </ul>\r\n      </li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [How do I contribute?] </h3>\r\n    <p>If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.</p>\r\n    <ul>\r\n      <li>Source Code: <a href=\"https://github.com/jonathanpchan/openclassroom\">https://github.com/jonathanpchan/openclassroom</a></li>\r\n      <li>Issue Tracker: <a href=\"https://github.com/jonathanpchan/openclassroom/issues\">https://github.com/jonathanpchan/openclassroom/issues</a></li>\r\n    </ul>\r\n  \r\n    <h3 class=\"header\"> [Support] </h3>\r\n    <p>If you have any questions, feel free to contact us at <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com</a>.</p>\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> Developer Guide </title>\r\n  </head>\r\n  <body>\r\n    <!-- Title of the Page -->\r\n    <h1 class=\"page-header\" style=\"text-align: center;\">Developer Guide</h1>\r\n\r\n    <!-- What is the application about? -->\r\n    <h2> What is Open Classroom? </h2>\r\n    <p> As students, we have personally had issues finding open classrooms to study in. \r\n        To add insult to injury, physical classroom listings are either out of date or \r\n        inaccurate. Our goal is to provide students an application where they can find \r\n        which classrooms and labs are open. </p>\r\n    <p> Currently, students have no easy way to find this out. They must chance upon a \r\n        room or search physically until they find one. We want to provide a listing of \r\n        what rooms are open to make the lives of students easier. In addition, students \r\n        will be able to upload their schedules and the system will suggest where they \r\n        will be able to study. There will be social elements where students can find \r\n        other people to study with, whether they are in the same class or taking a \r\n        different section. Chat functionality and note sharing will also be implemented. \r\n        Furthermore, there will be a way for users to update desired classroom features \r\n        such as whiteboards or outlets. This application will provide immense benefit \r\n        to students because they will no longer have to stress, waste time, or debate \r\n        whether said classroom is open or not.</p>\r\n\r\n    <!-- What features are available? -->\r\n    <h2> Features </h2>\r\n    <u>Currently Live</u>\r\n    <ul>\r\n      <li>Register</li>\r\n      <li>Login</li>\r\n      <li>User Schedule</li>\r\n      <li>Get Open Classroom (All Rooms, Right Now, By Times)</li>\r\n      <li>Messaging</li>\r\n      <li>Study Buddy</li>\r\n      <li>Settings</li>\r\n    </ul>\r\n    <u>Future Features</u>\r\n    <ul>\r\n      <li>Open Classroom (Tentative Times)</li>\r\n      <li>User Groups</li>\r\n      <li>File Transfer</li>\r\n    </ul>\r\n\r\n    <!-- What actions can be done to get the program up and running? -->\r\n    <h2> Setup </h2>\r\n        <!-- How do you set up the program on your machine? -->\r\n    <u>Installing the Project and its Dependencies</u>\r\n    <ol>\r\n      <li>Download and install NodeJS</li>\r\n      <img src=\"assets/images/devguide/node.png\" style=\"max-width: 600px;\"/>\r\n      <li>Download and install MongoDB</li>\r\n      <img src=\"assets/images/devguide/mongo.png\" style=\"max-width: 600px;\"/>\r\n      <li>Add NodeJS, MongoDB, and NPM to your PATH\r\n        <ol type=\"a\">\r\n          <li>In the start menu, type in \"environment\" and click on the item labeled \"Edit environment variables for your account\"</li>\r\n          <img src=\"assets/images/devguide/environment-1.png\" style=\"max-width: 300px;\"/>\r\n          <li>Highlight PATH and click \"Edit\"</li>\r\n          <img src=\"assets/images/devguide/environment-2.png\" style=\"max-width: 600px;\"/>\r\n          <li>Input the items into your PATH</li>\r\n          <img src=\"assets/images/devguide/environment-3.png\" style=\"max-width: 600px;\"/>\r\n        </ol>\r\n      </li>\r\n      <li>Download / Fork the project onto your computer</li>\r\n      <img src=\"assets/images/devguide/github.png\" style=\"max-width: 600px;\"/>\r\n      <li>In the command prompt, input the command: <code>npm install -g nodemon</code></li>\r\n      <img src=\"assets/images/devguide/nodemon-1.png\" style=\"max-width: 600px;\"/>\r\n      <li>Navigate to the \"openclassroom\" folder and input the command: <code>npm install</code></li>\r\n      <img src=\"assets/images/devguide/npm-openclassroom.png\" style=\"max-width: 600px;\"/>\r\n      <li>Navigate to the \"openclassroom/angular-src\" folder and input the command: <code>npm install</code></li>\r\n      <img src=\"assets/images/devguide/npm-angularsrc.png\" style=\"max-width: 600px;\"/>\r\n    </ol>\r\n\r\n    <!-- How do you initialize your database? -->\r\n    <u>Initialize Your MongoDB Database</u>\r\n    <ol>\r\n      <li>In the command prommpt, input the command: <code>mongod</code></li>\r\n      <img src=\"assets/images/devguide/mongod.png\" style=\"max-width: 600px;\"/>\r\n      <li>In another command prompt, navigate to the \"openclassroom/scraper\" folder and input the command: <code>node scraper</code></li>\r\n      <img src=\"assets/images/devguide/scraper.png\" style=\"max-width: 600px;\"/>\r\n      <li>Input the command: <code>node StudyBuddyTesting 1</code></li>\r\n      <img src=\"assets/images/devguide/studybuddytesting-1.png\" style=\"max-width: 600px;\"/>\r\n    </ol>\r\n\r\n    <!-- How do you run on Localhost? -->\r\n    <u>Run Your Open Classroom Application on Localhost</u>\r\n    <ol>\r\n      <li>Make sure <code>mongod</code> is running on one of your command prompts</li>\r\n      <li>In another command prompt, navigate to the \"openclassroom\" folder and input the command: <code>nodemon</code></li>\r\n      <img src=\"assets/images/devguide/nodemon-2.png\" style=\"max-width: 600px;\"/>\r\n      <li>In a third command prompt, navigate to the \"openclassroom/angular-src\" folder and input the command: <code>ng serve</code></li>\r\n      <img src=\"assets/images/devguide/ngserve.png\" style=\"max-width: 600px;\"/>\r\n      <li>Open a web browser and input <code>localhost:4200</code> in the address bar</li>\r\n      <img src=\"assets/images/devguide/localhost.png\" style=\"max-width: 300px;\"/>\r\n    </ol>\r\n\r\n    <!-- How do you add dummy users for chat testing? -->\r\n    <u>Adding Dummmy Users into the Study Buddy</u>\r\n    <ol>\r\n      <li>Make sure your application is running on Localhost (if not, see above)</li>\r\n      <li>In a command prompt, navigate to the \"openclassroom/scraper\" folder and input the command: <code>mongoimport --db open-classroom --collection users --file dummyUsers.json</code></li>\r\n      <img src=\"assets/images/devguide/mongoimport.png\" style=\"max-width: 600px;\"/>\r\n      <li>In the same folder, input the command: <code>node StudyBuddyTesting</code>\r\n        <br>(Note: This command will be used if the cronjob is not up and running (See below). Currently this function does not end, so once \r\n        the text stops running, terminate the program using <code>CTRL + C</code>)\r\n        <br><img src=\"assets/images/devguide/studybuddytesting.png\" style=\"max-width: 600px;\"/>\r\n      </li>\r\n      <li>In the same folder, input the command: <code>node studdybuddychron</code>\r\n        <br>(Note: This program will be leveraged as a repeatable task. Until done so, we manually run it while the application is running. \r\n            Currently this function does not end, so once the text stops running, terminate the program using <code>CTRL + C</code>) \r\n        <br><img src=\"assets/images/devguide/studdybuddychron.png\" style=\"max-width: 600px;\"/>         \r\n      </li>\r\n    </ol>\r\n\r\n    <!-- What are the dependencies or what technologies can be used? -->\r\n    <h2> Dependencies </h2>\r\n    <u>Open Classroom uses the MEAN stack</u>\r\n    <ul>\r\n      <li><a href=\"https://www.mongodb.com/download-center\"> MongoDB </a></li>\r\n      <li><a href=\"https://github.com/angular/angular-cli\"> Angular 2.0</a></li>\r\n      <li><a href=\"https://github.com/expressjs/express\"> ExpressJS </a></li>\r\n      <li><a href=\"https://nodejs.org/en/download/\"> NodeJS </a></li>\r\n    </ul>\r\n    <p><i>(Angular 2.0 and ExpressJS are installed using \"ng install\". MongoDB and NodeJS shall be installed from their respective websites.)</i></p>\r\n    <u>Helpful Applications</u>\r\n    <ul>\r\n      <li><a href=\"https://www.gitkraken.com/\">GitKraken</a>: \"The legendary Git GUI client for Windows, Mac, and Linux\"</li>\r\n      <li><a href=\"https://nodemon.io/\">Nodemon</a>: An application that updates your project without having to restart \"npm start\" or \"ng serve\" </li>\r\n      <li><a href=\"https://studio3t.com/download/\">Studio 3T</a>: A MongoDB client that displays the data in your database (when connected)</li>\r\n    </ul>\r\n\r\n    <!-- What does the project organization look like? -->\r\n    <h2> OpenClassroom Project Tree </h2>\r\n    <ul>\r\n      <li>angular-src: Where the angular project resides\r\n        <ul>\r\n          <li>e2e: For end to end testing</li>\r\n          <li>node_modules: Dependencies installed based on package.json</li>\r\n          <li>src\r\n            <ul>\r\n              <li>app: Home of angular components, guards, and services\r\n                <ul>\r\n                  <li>components: Where html components are created</li>\r\n                  <li>guards: Protects routes</li>\r\n                  <li>services: Makes POST and GET requests to aid component functionality</li>\r\n                </ul>\r\n              </li>\r\n              <li>assets: Location of images </li>\r\n              <li>environments</li>\r\n            </ul>\r\n          </li>\r\n        </ul>\r\n      </li>\r\n      <li>config: Where JSON Web Token strategy and database information resides</li>\r\n      <li>models: Where MongoDB collection models reside</li>\r\n      <li>node_modules: Dependencies installed based on package.json</li>\r\n      <li>routes: Where POST and GET requests reside</li>\r\n      <li>scraper: Where MongoDB database collections are created</li>\r\n    </ul>\r\n\r\n    <!-- How do I contribute? -->\r\n    <h2> How do I contribute? </h2>\r\n    <p>If you want to contribute to the project, feel free to report bugs, download the source code, or fork the project.</p>\r\n    <ul>\r\n      <li>Source Code: <a href=\"https://github.com/jonathanpchan/openclassroom\">https://github.com/jonathanpchan/openclassroom</a></li>\r\n      <li>Issue Tracker: <a href=\"https://github.com/jonathanpchan/openclassroom/issues\">https://github.com/jonathanpchan/openclassroom/issues</a></li>\r\n    </ul>\r\n\r\n    <!-- If I have any other questions, who do I contact? -->\r\n    <h2> Support </h2>\r\n    <p>If you have any questions, feel free to contact us at <a href=\"mailto:openclassroom2017@gmail.com\">openclassroom2017@gmail.com</a>.</p>\r\n  </body>\r\n</html>"
 
 /***/ }),
-/* 243 */
+
+/***/ 246:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- 1) Building Select -->\r\n    <div class=\"form-group\">\r\n      <h1 id=\"title\">Building</h1>\r\n      <select class=\"form-control\" [(ngModel)]=\"building\" name=\"building\" (focus)=\"displayButtons($event)\">\r\n        <option style=\"display: none\"></option>\r\n        <option *ngFor=\"let buildingName of buildingNames\"> {{buildingName}} </option>\r\n      </select>\r\n    </div>\r\n    \r\n    <!-- 2) Button Select -->\r\n    <div class=\"buttons\" id=\"buttons\" style=\"display: none; text-align: center;\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('all')\" value=\"All Rooms\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('now')\" value=\"Right Now\">\r\n      <input type=\"button\" class=\"btn btn-primary\" (click)=\"displayOption('times')\" value=\"By Time\">\r\n    </div>\r\n    \r\n    <!-- 3a) Get all rooms based on building and time -->\r\n    <app-find id=\"all\" style=\"display: none\" name={{building}}></app-find>\r\n    \r\n    <!-- 3b) Get all rooms based on building -->\r\n    <app-find-now id=\"now\" style=\"display: none\" name={{building}}></app-find-now>\r\n    \r\n    <!-- 3c) Get all rooms based on building and time -->\r\n    <app-find-times id=\"times\" style=\"display: none\" name={{building}}></app-find-times>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 244 */
+
+/***/ 247:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n    <head></head>\r\n    <body>\r\n        <!-- Show if no rooms available -->\r\n        <h1 *ngIf=\"!show\">No rooms currently available in {{name}}</h1>\r\n        <div id=\"nowTimes\">\r\n            <!-- Show if rooms are available -->\r\n            <ng-container *ngIf=\"show\">\r\n                <h2 *ngFor=\"let room of roomsList\" (click)=\"showRoom(name, room.name)\">\r\n                    Room: {{room.name}} from {{room.st}} until {{room.et}}\r\n                </h2>\r\n            </ng-container>\r\n        </div>\r\n\r\n        <!-- Show when room is clicked -->\r\n        <app-room id=\"room2\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n    </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 245 */
+
+/***/ 248:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- Day Buttons -->\r\n    <div style=\"text-align: center\">\r\n      <button (click) = \"show('omon')\" class=\"btn btn-primary\"> Monday</button>\r\n      <button (click) = \"show('otue')\" class=\"btn btn-primary\"> Tuesday</button>\r\n      <button (click) = \"show('owed')\" class=\"btn btn-primary\"> Wednesday</button>\r\n      <button (click) = \"show('othu')\" class=\"btn btn-primary\"> Thursday</button>\r\n    </div>\r\n    \r\n    <!-- Slider -->\r\n    <div class=\"slider-grid\">\r\n      <span class=\"start\" id=\"start\"></span>\r\n      <nouislider class=\"slider\" [config]=\"timeSliderConfig\" [(ngModel)]=\"timeRange\" (ngModelChange)=\"onChange($event)\" [ngModelOptions]=\"{standalone: true}\" id=\"slider\"></nouislider>\r\n      <span class=\"end\" id=\"end\"></span>\r\n    </div>\r\n    \r\n    <!-- Find Times Table -->\r\n    <div class=\"tablecontainer\" id=\"table-2\" style=\"display: none; margin-top: 35px;\">\r\n      <table>\r\n        <tbody>\r\n          <tr>\r\n            <th colspan=\"6\" *ngFor=\"let time of times | slice:tstart:tend\">{{time}}</th>\r\n          </tr>\r\n          <tr *ngFor=\"let rooms of roomsList\">\r\n            <!-- Attach a click to the leftmost column -->\r\n            <th class=\"left-column\" (click)=\"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n            <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:start:end let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n              <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span> <!--this messes up the left column for some reason -->\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n\r\n    <!-- Display the room info on leftmost column click -->\r\n    <app-room id=\"room3\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 246 */
+
+/***/ 249:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- Day Buttons -->\r\n    <div style=\"text-align: center\">\r\n        <button (click) = \"show('omon')\" class=\"btn btn-primary\" id=\"mon\"> Monday</button>\r\n        <button (click) = \"show('otue')\" class=\"btn btn-primary\" id=\"tue\"> Tuesday</button>\r\n        <button (click) = \"show('owed')\" class=\"btn btn-primary\" id=\"wed\"> Wednesday</button>\r\n        <button (click) = \"show('othu')\" class=\"btn btn-primary\" id=\"thu\"> Thursday</button>\r\n      </div>\r\n\r\n      <!-- Find All Rooms Table -->\r\n      <div class=\"tablecontainer\" id=\"table\" style=\"display: none\">\r\n        <table>\r\n          <tbody>\r\n            <tr style=\"display: sticky\">\r\n              <th colspan=\"12\" *ngFor=\"let time of times\">{{time}}</th>\r\n            </tr>\r\n            <tr *ngFor=\"let rooms of roomsList\">\r\n              <!-- Attach a click to the leftmost column -->\r\n              <th class=\"left-column\" (click) = \"getRoomInfo(name, rooms.name)\">{{name}}-{{rooms.name}}</th>\r\n              <td class =\"five-minute-chunk\" *ngFor=\"let room of rooms?.room | slice:96:264 let i = index \" [ngClass]=\"room ? 'opentime' : 'closedtime'\">\r\n                <span class=\"time-tool-tip\">{{displayToolTip(i)}}</span>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n\r\n      <!-- Display the room info on leftmost column click -->\r\n      <app-room id=\"room\" style=\"display: none\" building={{buildingName}} room={{roomNumber}}></app-room> \r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 247 */
+
+/***/ 250:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body class=\"home-grid\">\r\n    <div class=\"jumbotron\">\r\n      <h1>Open Classroom</h1>\r\n      <h2>Find available classrooms for your studying needs</h2> \r\n      \r\n      <!-- Buttons to show if NOT logged in -->\r\n      <div *ngIf = \"!userService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> \r\n        <a class=\"btn btn-default\" [routerLink]=\"['/login']\">Login</a>\r\n      </div>\r\n      <!-- Buttons to show if logged in -->\r\n      <div *ngIf = \"userService.loggedIn()\">\r\n        <a class=\"btn btn-primary\" [routerLink]=\"['/schedule']\">View My Schedule</a> \r\n        <a class=\"btn btn-default\" [routerLink]=\"['/findclassroom']\">Find Open Classroom</a>\r\n      </div>\r\n\r\n      <div>\r\n        <p>\r\n          <br />\r\n          <!-- Links to usermanual and devguide -->\r\n          <a [routerLink]=\"['/usermanual']\">User Manual</a> | <a [routerLink]=\"['/devguide']\">Dev Guide</a> \r\n        </p>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- Content below jumbotron content -->\r\n    <div class=\"home-content\">\r\n      <div class=\"content-1\">\r\n        <h3>Find the Best Study Spot!</h3>\r\n        <p>Find open rooms by building, right now, or by time.</p>\r\n      </div>\r\n      <div class=\"content-2\">\r\n        <h3>Study with fellow Study Buddies!</h3>\r\n        <p>Find others in the same program to study with.</p>\r\n      </div>\r\n      <div class=\"content-3\">\r\n        <h3>Share Class Notes!</h3>\r\n        <p>Share notes to get an edge on the competition.</p>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 248 */
+
+/***/ 251:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1>Login</h1>\r\n    <form (submit)=\"onLoginSubmit()\">\r\n      <!-- Email field -->\r\n      <div class=\"form-group\">\r\n        <label>Email</label>\r\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"email\" name=\"email\">\r\n      </div>\r\n      \r\n      <!-- Password Field -->\r\n      <div class=\"form-group\">\r\n        <label>Password</label>\r\n        <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\r\n      </div>\r\n\r\n      <!-- Submit button -->\r\n      <input type=\"submit\" class=\"btn btn-primary\" value=\"Login\">\r\n    </form>\r\n  </body>\r\n</html>"
 
 /***/ }),
-/* 249 */
+
+/***/ 252:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <!-- \r\n      Stood up quickly by adapting bootswatch source code (clicking the navbar we wanted to see information about)\r\n      Source: https://bootswatch.com/cosmo/\r\n     -->\r\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\" style=\"z-index: 1000\">\r\n      <a class=\"navbar-brand\" [routerLink]=\"['/']\">OpenClassroom</a>\r\n      <button (click)=\"toggle()\" class=\"navbar-toggler collapsed\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarColor02\" aria-controls=\"navbarColor02\"> \r\n        <span class=\"navbar-toggler-icon\"></span>\r\n      </button>\r\n      <div class=\"navbar-collapse collapse\" [ngClass]=\"show ? 'show' : ''\" id=\"navbarColor02\" (click)=\"toggle()\">\r\n        <ul class=\"navbar-nav mr-auto\" (click)=\"hide()\">\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/schedule']\">My Schedule</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/findclassroom']\">Find Classroom</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/chat']\">Messaging</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/studybuddy']\">Study Buddy</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\" (click)=\"hide()\">\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions] = \"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/settings']\">Settings</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"!userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/login']\">Login</a></li>\r\n          <li class=\"nav-item\" *ngIf=\"!userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" [routerLink]=\"['/register']\">Register </a></li>\r\n          <li class=\"nav-item\" *ngIf=\"userService.loggedIn()\" [routerLinkActive]=\"[active]\" [routerLinkActiveOptions]=\"{exact:true}\"><a class=\"nav-link\" (click)=\"onLogoutClick()\" [routerLink]=\"['/']\">Logout</a></li>\r\n        </ul>\r\n      </div>\r\n    </nav>\r\n  </body>\r\n</html>"
 
 /***/ }),
-/* 250 */
+
+/***/ 253:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1>Register</h1>\r\n    <form (submit)=\"onRegisterSubmit()\">\r\n\r\n      <!-- Name field -->\r\n      <div class=\"form-group\">\r\n        <label>Name</label>\r\n        <input type=\"text\" [(ngModel)]=\"name\" name=\"name\" class=\"form-control\">\r\n      </div>\r\n\r\n      <!-- Username field -->\r\n      <div class=\"form-group\">\r\n        <label>Username</label>\r\n        <input type=\"text\" [(ngModel)]=\"username\" name=\"username\" class=\"form-control\">\r\n      </div>\r\n\r\n      <!-- Email field -->\r\n      <div class=\"form-group\">\r\n        <label>Email</label>\r\n        <input type=\"text\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" >\r\n      </div>\r\n\r\n      <!-- Password field -->\r\n      <div class=\"form-group\">\r\n        <label>Password</label>\r\n        <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\">\r\n      </div>\r\n\r\n      <!-- Submit button -->\r\n      <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n    </form>\r\n  </body>\r\n</html>"
 
 /***/ }),
-/* 251 */
+
+/***/ 254:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <h1 class =\"roomName\">{{rooms?.building}}-{{rooms?.room}}</h1>\r\n    <div class = \"timesection\">\r\n      <h2>Open Times </h2>\r\n\r\n      <h2>Monday</h2>\r\n      <div class = \"dayContainer\" *ngFor=\"let time of rooms?.mon let i = index\">\r\n        <div class = \"day\">\r\n          <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n          <button type=\"button\" class=\"uVote\" class=\"btn btn-primary btn-md\" (click)=\"vote('mon', i, 1)\" >\r\n            <span class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></span>{{time.uVote}}\r\n          </button>\r\n          <button type=\"button\" class=\"dVote\" class=\"btn btn-default btn-md\" (click)=\"vote('mon', i, -1)\" >\r\n            <span class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></span>{{time.dVote}}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <h2>Tuesday</h2>\r\n      <div class = \"dayContainer\" *ngFor=\"let time of rooms?.tue let i = index\">\r\n        <div class = \"day\">\r\n          <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n          <button type=\"button\" class=\"uVote\" class=\"btn btn-primary btn-md\" (click)=\"vote('tue', i, 1)\" >\r\n            <span class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></span>{{time.uVote}}\r\n          </button>\r\n          <button type=\"button\" class=\"dVote\" class=\"btn btn-default btn-md\" (click)=\"vote('tue', i, -1)\" >\r\n            <span class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></span>{{time.dVote}}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <h2>Wednesday</h2>\r\n      <div class = \"dayContainer\" *ngFor=\"let time of rooms?.wed let i = index\">\r\n        <div class = \"day\">\r\n          <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n          <button type=\"button\" class=\"uVote\" class=\"btn btn-primary btn-md\" (click)=\"vote('wed', i, 1)\" >\r\n            <span class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></span>{{time.uVote}}\r\n          </button>\r\n          <button type=\"button\" class=\"dVote\" class=\"btn btn-default btn-md\" (click)=\"vote('wed', i, -1)\" >\r\n            <span class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></span>{{time.dVote}}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <h2>Thursday</h2>\r\n      <div class = \"dayContainer\" *ngFor=\"let time of rooms?.thu let i = index\">\r\n        <div class = \"day\">\r\n          <h3 class = \"timeContainer\" >Open From {{timeFormat(time.st)}} - {{timeFormat(time.et)}}</h3>\r\n          <button type=\"button\" class=\"uVote\" class=\"btn btn-primary btn-md\" (click)=\"vote('thu', i, 1)\" >\r\n            <span class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></span>{{time.uVote}}\r\n          </button>\r\n          <button type=\"button\" class=\"dVote\" class=\"btn btn-default btn-md\" (click)=\"vote('thu', i, -1)\" >\r\n            <span class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></span>{{time.dVote}}\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class = \"featureSection\">\r\n      <h2>Features</h2>\r\n      <div class = \"featureContainer\">\r\n        <div class = \"feature\" *ngIf=\"loaded\">\r\n          <h3 class = \"featureName\">Outlets</h3>\r\n          <button type=\"button\" class=\"uVote\" class=\"btn btn-primary btn-md\" (click)=\"vote('hasOutlets', -1, 1)\" >\r\n            <span class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></span>{{rooms.hasOutlets.uVote}}\r\n          </button>\r\n          <button type=\"button\" class=\"dVote\" class=\"btn btn-default btn-md\" (click)=\"vote('hasOutlets', -1, -1)\" >\r\n            <span class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></span>{{rooms.hasOutlets.dVote}}\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class = \"featureContainer\">\r\n        <div class = \"feature\" *ngIf=\"loaded\">\r\n          <h3 class = \"featureName\">White Board</h3>\r\n          <button type=\"button\" class=\"uVote\" class=\"btn btn-primary btn-nd\" (click)=\"vote('whiteBoard', -1, 1)\" >\r\n            <span class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></span>{{rooms.whiteBoard.uVote}}\r\n          </button>\r\n          <button type=\"button\" class=\"dVote\" class=\"btn btn-default btn-md\"(click)=\"vote('whiteBoard', -1, -1)\" >\r\n            <span class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></span>{{rooms.whiteBoard.dVote}}\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class = \"commentSection\">\r\n      <h2>Comments</h2>\r\n      <form id = \"commentBox\" (submit)=\"onCommentSubmit()\">\r\n        Add A Comment:\r\n        <input class=\"form-control\" [(ngModel)]=\"comment\" name=\"comment\">\r\n        <input type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n      </form>\r\n      <div class = \"commentContainer\" *ngFor = \"let comment of rooms?.comments let i = index\">\r\n        <p class = \"comment\">\"{{comment.content}}\"</p>\r\n        <p class = \"commentUser\">{{comment.email}} </p>\r\n        <button type=\"button\" class=\"uVote\" class=\"btn btn-primary btn-sm\"  (click)=\"vote('comments', i, 1)\" >\r\n          <span class=\"fa fa-thumbs-up\" aria-hidden=\"true\"></span> {{comment.uVote}}\r\n        </button>\r\n        <button type=\"button\"  class=\"dVote\" class=\"btn btn-default btn-sm\" (click)=\"vote('comments', i, -1)\" >\r\n          <span class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></span> {{comment.dVote}}\r\n        </button>\r\n        <p class = \"date\">{{comment.date}}</p>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 252 */
+
+/***/ 255:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <body>\r\n    <div *ngIf=\"user && !add && !delete && !finalize\">\r\n      <h1>My Schedule</h1>\r\n      <div style=\"overflow: auto\">\r\n        <table>\r\n          <thead></thead>\r\n          <tbody>\r\n            <!-- Display Finalize button if not finalized -->\r\n            <tr *ngIf=\"!isFinalized\">\r\n              <td class=\"finalize\" colspan=\"6\"><input class=\"btn btn-primary\" type=\"button\" value=\"Finalize Schedule\" (click)=\"clickFinalize()\"></td>\r\n            </tr> \r\n\r\n            <!-- Display schedule headers -->\r\n            <tr class=\"table-title\">\r\n              <td class=\"left-column\"><h3>NAME</h3></td> \r\n              <td style=\"min-width: 125px\"><h3>CLASS #</h3></td> \r\n              <td style=\"min-width: 100px\"><h3>DAYS</h3></td> \r\n              <td style=\"min-width: 125px\"><h3>TIME</h3></td> \r\n              <td style=\"min-width: 150px\"><h3>LOCATION</h3></td> \r\n              <td style=\"min-width: 175px\"><h3>INSTRUCTOR</h3></td> \r\n              <td *ngIf=\"schedule.length > 0\" style=\"background: white; width: 2.5%; border: none;\"></td> \r\n            </tr>\r\n\r\n            <!-- Display scehdule items -->\r\n            <tr *ngFor=\"let sched of schedule; let i = index;\" colspan=\"6\" style=\"background-color: white\">\r\n              <td class=\"left-column\">{{sched.name}} {{sched.num}}</td> \r\n              <td>{{sched.sec}}</td> \r\n              <td>{{sched.day}}</td> \r\n              <td>{{sched.time}}</td> \r\n              <td>{{sched.location}}</td> \r\n              <td>{{sched.prof}}</td> \r\n\r\n              <!-- \r\n                Display icons in buttons\r\n                Source: https://getbootstrap.com/docs/3.3/components/ \r\n              --> \r\n              <td *ngIf=\"!isFinalized\" style=\"padding: 0;\"> \r\n                <button class=\"btn trash\" (click)=\"clickDelete(i)\"> \r\n                  <span class=\"fa fa-trash\" aria-hidden=\"true\"></span> \r\n                </button> \r\n              </td> \r\n            </tr>\r\n\r\n            <!-- Display add button if not finalized -->\r\n            <tr *ngIf=\"!isFinalized\">\r\n              <td colspan=\"6\" style=\"padding: 0px\">\r\n                <button class=\"btn btn-primary\" style=\"width : 100%\" value=\"Add Course\" (click)=\"clickAdd()\">\r\n                  <span class=\"fa fa-plus\" aria-hidden=\"true\"></span> Add Course\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </div>\r\n      \r\n    <!-- Display course component if you click the Add button -->\r\n    <div *ngIf=\"user && add && !delete\">\r\n      <app-course (afterConfirm)=\"onCourseAdd($event)\"></app-course>\r\n    </div>\r\n    \r\n    <!-- Display the remove confirmation page if you click the Trash icon -->\r\n    <div *ngIf=\"user && !add && delete\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to remove?</h1>\r\n      <h3>{{deleteMessage}}</h3>\r\n      <div>\r\n        <!-- If Yes, delete course from schedule -->\r\n        <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"onCourseDelete(true)\">\r\n          <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n        <!-- If No, keep course in schedule -->\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"onCourseDelete(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n\r\n    <!-- Display the finalize confirmation page if you click the finalize schedule button -->\r\n    <div *ngIf=\"user && !add && !delete && finalize && !isFinalized\" style=\"text-align: center;\"> \r\n      <h1>Are you sure you want to finalize your schedule?</h1>\r\n      <div>\r\n        <!-- If Yes, finalize the schedule -->\r\n        <button class=\"btn btn-default\" style=\"width: 33%\" (click)=\"onFinalize(true)\">\r\n          <span class=\"fa fa-check\" aria-hidden=\"true\"></span> Yes\r\n        </button>\r\n        <!-- If No, don't finalize the schedule -->\r\n        <button class=\"btn btn-primary\" style=\"width: 33%\" (click)=\"onFinalize(false)\">\r\n          <span class=\"fa fa-remove\" aria-hidden=\"true\"></span> No\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </body>\r\n</html>\r\n\r\n  "
 
 /***/ }),
-/* 253 */
+
+/***/ 256:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n<body>\r\n<div id=\"container\">\r\n  <h1>\r\n    Settings\r\n  </h1>\r\n  <h2>\r\n    <table id=\"t03\">\r\n      <tr>\r\n        <td class=\"align-left\">User Profile</td>\r\n        <td class=\"align-right\">\r\n          <label class=\"container small\">Finalized Schedule\r\n            <input type=\"checkbox\" [checked]=\"isFinalized\" [disabled]=\"!isFinalized\" (change)=\"unfinalize()\">\r\n            <span class=\"checkmark\"></span>\r\n          </label>\r\n        </td>\r\n      </tr>\r\n    </table>\r\n  </h2>\r\n\r\n  <div class=\"page-padding\">\r\n    <div class=\"borders\">\r\n        <table id=\"t01\">\r\n          <tr>\r\n            <td class=\"width\">Username</td>\r\n            <td class =\"align-left\"> {{username}} </td>\r\n          </tr>\r\n          <tr>\r\n            <td class=\"width\">E-mail</td>\r\n            <td class=\"align-left\">{{email}}</td>\r\n          </tr>\r\n        </table>\r\n      <button (click)=\"toggleView()\" class=\"dropdown\">\r\n        <table id=\"t02\">\r\n          <tr>\r\n            <td class=\"width\">Password</td>\r\n            <td class=\"align-left\">************</td>\r\n            <td class=\"align-right\" *ngIf=\"!show\">Edit</td>\r\n          </tr>\r\n        </table>\r\n      </button>\r\n\r\n      <div *ngIf=\"show\">\r\n          <form class=\"form-horizontal\" (submit)=\"onSubmitPW()\">\r\n            <div class=\"form-group form-group-sm col-xs-3\">\r\n              <label class=\"col-sm-2 control-label\" for=\"sm\">Old Password</label>\r\n              <div class=\"col-sm-10\">\r\n                <input class=\"form-control\" type=\"text\" id=\"sm\" [(ngModel)]=\"oldpw\" name=\"oldpw\">\r\n              </div>\r\n            </div>\r\n            <div class=\"form-group form-group-sm col-xs-3\">\r\n              <label class=\"col-sm-2 control-label\" for=\"sm\">New Password</label>\r\n              <div class=\"col-sm-10\">\r\n                <input class=\"form-control\" type=\"text\" id=\"sm\" [(ngModel)]=\"newpw\" name=\"newpw\">\r\n              </div>\r\n            </div>\r\n              <input style=\"margin: 15px\" type=\"submit\" class=\"btn btn-primary\" value=\"Submit\">\r\n          </form>\r\n      </div>\r\n\r\n      </div>\r\n  </div>\r\n</div>\r\n</body>\r\n</html>\r\n\r\n"
 
 /***/ }),
-/* 254 */
+
+/***/ 257:
 /***/ (function(module, exports) {
 
 module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head></head>\r\n  <body>\r\n    <div id=\"warning\" style=\"display: none\" *ngIf=\"!isFinalized\">\r\n      <h1>Please finalize your schedule in your schedule page</h1>\r\n    </div>\r\n\r\n    <div id=\"cronjobwait\" style=\"display: none\">\r\n      <h2> Please be paitent and wait for us to process your buddies, check back later to see!</h2>\r\n    </div>\r\n\r\n    <div id=\"buddies\" *ngIf=\"isFinalized\">\r\n    <h1 style=\"text-align: center\">Pick A Course</h1>\r\n    <select id=\"courseSelect\" class=\"form-control\" (change)=\"showBuddies()\">\r\n      <option selected hidden></option>\r\n      <option *ngFor=\"let class of schedule\"> {{class.name}} {{class.num}}</option>\r\n    </select>\r\n\r\n    <div id=\"nobuddies\" style=\"display: none\">\r\n      <h2> Sorry there are no study buddies available for this course</h2>\r\n    </div>\r\n\r\n    <div id=\"buddylist\" style=\"display: none\" *ngIf=\"loaded\">\r\n      <h1 class = \"courseTitle\">Potential Study Buddies For {{courseBuddies.name}}</h1>\r\n      <div class=\"studdyBuddies\" *ngIf=\"loaded\">\r\n        <a *ngFor = \"let buddy of courseBuddies?.buddies let i = index\" (click)=\"message(i)\" routerLink=\"/chat\"><h3 class=\"buddy\">{{buddy.name}}</h3></a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  </body>\r\n</html>\r\n"
 
 /***/ }),
-/* 255 */
+
+/***/ 258:
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> User manual </title>\r\n  </head>\r\n  <body style=\"text-align: left\">\r\n      <h1 class=\"page-header\" style=\"text-align: center;\">User Manual</h1>\r\n      <h2> Overview </h2>\r\n      <p class= \"tab\">\r\n        For a student, finding the ideal place to study can be a reoccurring issue.\r\n        With the inception of OpenClassroom, our goal is to minimize students' already\r\n        high stress levels by a simple solution to finding optimal classrooms to study in.\r\n        Our application will be able to search for classrooms based on a specific time,\r\n        a specific building, or by a \"now\" function that will list all available classrooms\r\n        that are open at the time of query.\r\n      </p>\r\n\r\n      <h2> Registration </h2>\r\n      <p>To register, you will need a valid e-mail address.</p>\r\n      <ol class = \"ol2\">\r\n        <li> Click on the 'Register' tab.</li>\r\n        <li> Enter your name.</li>\r\n        <li> Enter a username. (Other users will be able to identify you by this.)</li>\r\n        <li> Enter a valid e-mail address.</li>\r\n        <li> Create a password.</li>\r\n        <li> Click submit.</li>\r\n        <li> Congratulations! You will now be able to login and access our provided services.</li>\r\n      </ol>\r\n    \r\n      <h2> Login </h2>\r\n      <p>To login, you will need to have a registered account.</p>\r\n      <ol class = \"ol2\">\r\n        <li> Click on the 'Login' tab. </li>\r\n        <li> Enter your e-mail address.</li>\r\n        <li> Enter your password.</li>\r\n        <li> Click submit.</li>\r\n      </ol>\r\n\r\n      <h2> Adding Your Schedule </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Click on the 'Schedule' tab. </li>\r\n          <li> Click \"Add Course\". </li>\r\n          <li> Enter course information. </li>\r\n          <li> Click Accept. </li>\r\n      </ol>\r\n\r\n      <h2> Searching For a Classroom </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Click on the 'Find Classroom' tab. </li>\r\n          <li> Select a building from the provided list. </li>\r\n          <li> Select 'Right Now' </li>\r\n          <li> Select 'By Building' </li>\r\n          <ol type=\"i\">\r\n              <li> Select a day. </li>\r\n              <li> Browse the times by horizontally scrolling. </li>\r\n          </ol>\r\n          <li> Select 'By Time' </li>\r\n          <ol type=\"i\">\r\n              <li> Select a day. </li>\r\n              <li> Adjust the time slider. </li>\r\n              <li> Browse the times by horizontally scrolling. </li>\r\n          </ol>\r\n      </ol>\r\n\r\n      <h2> Finding a Study Buddy </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Click on the 'Schedule' tab. </li>\r\n          <li> Click 'Finalize Schedule' </li>\r\n          <li> Allow 24 hours for potential study buddies to appear. </li>\r\n          <li> Click on the 'Study Buddy' tab. </li>\r\n          <li> Select one of your courses. </li>\r\n          <li> Select a study buddy. </li>\r\n          <li> Start a conversation! </li>\r\n      </ol>\r\n      <h2> Viewing a Room's Information </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Search for a classroom via 'By Building' or 'By Time'. </li>\r\n          <ol type=\"i\"> <li>Click the room #.</li> </ol>\r\n          <li> Search for a classroom via 'By Now'. </li>\r\n          <ol type =\"i\"> <li>Click anywhere on the rooms that were found. </li></ol>\r\n      </ol>\r\n    \r\n    <h2> FAQ </h2>\r\n      <ol class =\"ol2\">\r\n          <li> When will the application be released to the public? </li>\r\n          <ul>\r\n              <li> We are looking to launch in December, 2017! </li>\r\n          </ul>\r\n          <li> How can I become a part of the development team? </li>\r\n          <ul>\r\n              <li> Please refer to our developer guide!  </li>\r\n          </ul>\r\n          <li> I can't login! What should I do?</li>\r\n          <ul>\r\n              <li> Please make sure you're using the credentials you created your account\r\n                  with, and if you are still unable to access your account, please contact us at\r\n                  <a href=\"openclassroom2017@gmail.com\">openclassroom2017@gmail.com.</a>\r\n              </li>\r\n          </ul>\r\n          <li> I finalized my schedule, how come no one appears in my Study Buddies? </li>\r\n          <ul>\r\n              <li>Please allow 24 hours for our system to update and provide users for you to study with. </li>\r\n          </ul>\r\n      </ol>\r\n\r\n  </body>\r\n</html>"
+module.exports = "<!DOCTYPE html>\r\n<html>\r\n  <head>\r\n    <title> User manual </title>\r\n  </head>\r\n  <body style=\"text-align: left\">\r\n      <h1 class=\"page-header\" style=\"text-align: center;\">User Manual</h1>\r\n      <h2> Overview </h2>\r\n      <p class= \"tab\">\r\n        For a student, finding the ideal place to study can be a reoccurring and tedious problem.\r\n        With the inception of OpenClassroom, our goal is to minimize students' stress\r\n          levels by providing a simple solution to finding optimal classrooms to study in.\r\n        Our application allows you to search for classrooms based on a specific time, building, or by the current time.\r\n          Not only that, but each room's info page allows user-specific feedback for each classroom on campus so\r\n          that you can access and contribute valuable information. Users are also able to upload their own schedule and\r\n          opt-in to our Study Buddy feature that allows for students to find study buddies in the same course.\r\n      </p>\r\n\r\n      <h2> Registration </h2>\r\n      <p>To register, you will need a valid e-mail address.</p>\r\n      <ol>\r\n        <li> Click on the 'Register' tab.</li>\r\n          <img src=\"assets/images/register/register_button.png\" style=\"max-width: 113px; max-height:39px;\"/>\r\n          <br><br>\r\n        <li> Fill out the form with valid information.</li>\r\n          <img src=\"assets/images/register/register_complete.png\" style=\"max-width: 452px; max-height:351px;\"/>\r\n          <br><br>\r\n        <li> Click submit.</li>\r\n        <li> Congratulations! You will now be able to login and access our provided services.</li>\r\n          <img src=\"assets/images/register/register_success.png\" style=\"max-width: 455px; max-height:279px;\"/>\r\n          <br><br>\r\n      </ol>\r\n    \r\n      <h2> Login </h2>\r\n      <p>To login, you will need to have a registered account.</p>\r\n      <ol>\r\n        <li> Click on the 'Login' tab. </li>\r\n          <img src=\"assets/images/login/login_button.png\" style=\"max-width: 112px; max-height:39px;\"/>\r\n          <br><br>\r\n        <li> Enter your e-mail address and password.</li>\r\n          <img src=\"assets/images/login/login_complete.png\"style=\"max-width: 848px ; max-height: 234px\"/>\r\n          <br><br>\r\n        <li> After clicking login, you will be redirected to your schedule page!</li>\r\n          <img src=\"assets/images/login/login_success.png\" style=\"max-width: 860px; max-height: 323px\"/>\r\n          <br><br>\r\n      </ol>\r\n\r\n      <h2> Adding Your Schedule </h2>\r\n      <ol>\r\n          <li> Click on the 'Schedule' tab. </li>\r\n          <img src=\"assets/images/schedule/schedule_myschedule.png\" style=\"max-width:481px; max-height: 43px\"/>\r\n          <br><br>\r\n          <li> Click 'Add Course'. </li>\r\n          <img src=\"assets/images/schedule/schedule_button.png\" style=\"max-width: 949px ; max-height: 210px\"/>\r\n          <br><br>\r\n          <li> Enter course information. </li>\r\n          <img src=\"assets/images/schedule/schedule_complete.png\" style=\"max-width: 972.5px; max-height: 383px\"/>\r\n          <br><br>\r\n          <li> Click 'Yes'. </li>\r\n          <img src=\"assets/images/schedule/schedule_accept.png\" style=\"max-width: 653px ; max-height: 153px\"/>\r\n          <br><br>\r\n          <li> Review your courses. </li>\r\n          <img src=\"assets/images/schedule/schedule_success.png\" style=\"max-width: 859px; max-height: 263px\"/>\r\n          <br><br>\r\n      </ol>\r\n\r\n      <h2> Searching For a Classroom </h2>\r\n      <ol>\r\n          <li> Click on the 'Find Classroom' tab. </li>\r\n          <img src=\"assets/images/find/find_button.png\" style=\"max-width: 473px; max-height: 35px\"/>\r\n          <br><br>\r\n          <li> Select a building from the list provided. </li>\r\n          <img src=\"assets/images/find/find_step.png\" style=\"max-width: 961px; max-height: 160px\"/>\r\n          <br><br>\r\n          <li> Select 'Right Now'. </li>\r\n          <img src=\"assets/images/find/find_now_success.png\" style=\"max-width: 945px; max-height: 346px\"/>\r\n          <br><br>\r\n          <li> Select 'By Building'. </li>\r\n          <ol type=\"a\">\r\n              <li> Select a day. </li>\r\n              <li> Browse the times by horizontally scrolling. </li>\r\n              <img src=\"assets/images/find/find_building_success.png\" style=\"max-width: 943px ; max-height: 618px\"/>\r\n              <br><br>\r\n          </ol>\r\n          <li> Select 'By Time'. </li>\r\n          <ol type=\"a\">\r\n              <li> Select a day. </li>\r\n              <li> Adjust the time slider. </li>\r\n              <img src=\"assets/images/find/find_time_step.png\" style=\"max-width: 978px; max-height: 233px\"/>\r\n              <br><br>\r\n              <li> Browse the times by horizontally scrolling. </li>\r\n              <img src=\"assets/images/find/find_time_success.png\" style=\"max-width: 949px; max-height: 585px\"/>\r\n              <br><br>\r\n          </ol>\r\n      </ol>\r\n\r\n      <h2> Finding a Study Buddy </h2>\r\n      <ol class = \"ol2\">\r\n          <li> On your schedule page, click 'Finalize Schedule' in the top right corner. </li>\r\n          <img src=\"assets/images/buddy/buddy_finalize.png\" style=\"max-width: 151px; max-height: 50px\"/>\r\n          <br><br>\r\n          <li> Click 'Yes'. </li>\r\n          <img src=\"assets/images/buddy/buddy_accept.png\" style=\"max-width: 544px; max-height: 138px\"/>\r\n          <br><br>\r\n          <li> Allow 24 hours for potential study buddies to appear. </li>\r\n          <li> Click on the 'Study Buddy' tab. </li>\r\n          <img src=\"assets/images/buddy/buddy_button.png\" style=\"max-width: 537px; max-height: 47px\"/>\r\n          <br><br>\r\n          <li> Select one of your courses. </li>\r\n          <li> Choose a study buddy and click! </li>\r\n          <img src=\"assets/images/buddy/buddy_buddies.png\" style=\"max-width: 417px; max-height: 174px\"/>\r\n          <br><br>\r\n          <li> Start a conversation! </li>\r\n          <img src=\"assets/images/buddy/buddy_message.png\" style=\"max-width: 621px; max-height: 345px\"/>\r\n          <br><br>\r\n      </ol>\r\n\r\n      <h2> Viewing a Room's Information </h2>\r\n      <ol class = \"ol2\">\r\n          <li> Search for a classroom via 'By Building' or 'By Time'.</li>\r\n          <img src=\"assets/images/room/room_buildingtime_step.png\" style=\"max-width: 354px; max-height: 174px\"/>\r\n          <br><br>\r\n          <ol type=\"a\">\r\n              <li>Click the room # and the room's information will be displayed below. </li>\r\n                <img src=\"assets/images/room/room_buildingtime_success.png\" style=\"max-width: 949px; max-height: 598px\"/>\r\n          </ol>\r\n          <br><br>\r\n          <li> Search for a classroom via 'By Now'. </li>\r\n          <img src=\"assets/images/room/room_now_step.png\" style=\"max-width: 946px; max-height: 153px\"/>\r\n          <br><br>\r\n          <ol type =\"a\">\r\n              <li>Click anywhere on the rooms that were found and the room's information will be displayed below. </li>\r\n              <img src=\"assets/images/room/room_now_success.png\" style=\"max-width: 950px; max-height: 549px\"/>\r\n          </ol>\r\n          <br><br>\r\n      </ol>\r\n    \r\n    <h2> FAQ </h2>\r\n      <ol class =\"ol2\">\r\n          <li> When will the application be released to the public? </li>\r\n          <ul>\r\n              <li class=\"nobold\"> We are looking to launch in December 2017! </li>\r\n          </ul>\r\n          <li> How can I become a part of the development team? </li>\r\n          <ul>\r\n              <li class=\"nobold\"> Please refer to our\r\n                  <a href=\"../devguide\"> developer guide!</a>\r\n              </li>\r\n          </ul>\r\n          <li> I can't login! What should I do?</li>\r\n          <ul>\r\n              <li class=\"nobold\"> Please make sure you're using the credentials you created your account\r\n                  with, and if you are still unable to access your account, please contact us at\r\n                  <a href=\"mailto:openclassroom2017@gmail.com\">openclassroom2017@gmail.com.</a>\r\n              </li>\r\n          </ul>\r\n          <li> I finalized my schedule, how come no one appears in my Study Buddies? </li>\r\n          <ul>\r\n              <li class=\"nobold\">Please allow 24 hours for our system to update and provide users for you to study with. </li>\r\n          </ul>\r\n      </ol>\r\n\r\n  </body>\r\n</html>"
 
 /***/ }),
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */
+
+/***/ 26:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuildingsService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//Service module for building, class, and classroom queries
+
+
+
+
+var BuildingsService = (function () {
+    function BuildingsService(http) {
+        this.http = http;
+    }
+    //=========== Buildings ======================
+    // Get building based on name
+    BuildingsService.prototype.getBuilding = function (name) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/buildings', { name: name }, { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.post('buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
+    };
+    // Get all buildings
+    BuildingsService.prototype.getBuildings = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.get('buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    };
+    // Get all building names
+    BuildingsService.prototype.getBuildingNames = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
+        // return this.http.get('buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    };
+    BuildingsService.prototype.extractData = function (res) {
+        var body = res.json();
+        return body || {};
+    };
+    BuildingsService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Response"]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Promise.reject(errMsg);
+    };
+    return BuildingsService;
+}());
+BuildingsService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], BuildingsService);
+
+var _a;
+//# sourceMappingURL=buildings.service.js.map
+
+/***/ }),
+
+/***/ 313:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 295 */
+
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(121);
+module.exports = __webpack_require__(124);
 
+
+/***/ }),
+
+/***/ 35:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StudyBuddyService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var StudyBuddyService = (function () {
+    function StudyBuddyService(http) {
+        this.http = http;
+    }
+    // Service to call /add route. Adds a user to study buddy feature
+    StudyBuddyService.prototype.joinStudyBuddies = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/studybuddies/add', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
+    };
+    // Service to call /remove route. Removes a user from study buddy feature
+    StudyBuddyService.prototype.unfinalize = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/studybuddies/remove', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('studybuddies/remove', email, { headers: headers }).map(res => res.json());
+    };
+    // Service to call /get route. Get Study Buddies based on classes
+    StudyBuddyService.prototype.getStudyBuddies = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
+    };
+    return StudyBuddyService;
+}());
+StudyBuddyService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], StudyBuddyService);
+
+var _a;
+//# sourceMappingURL=studybuddy.service.js.map
+
+/***/ }),
+
+/***/ 47:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_socket_io_client__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ChatService = (function () {
+    function ChatService(http) {
+        this.http = http;
+        // ID of the user that's going to be chatting with you
+        this.ID = null;
+    }
+    // Create the room based on user pair
+    ChatService.prototype.createRoom = function (sender, sendee) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        var payload = {
+            user_1: sender,
+            user_2: sendee
+        };
+        return this.http.post('http://localhost:3000/messages/create', payload, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('messages/create', payload, { headers: headers }).map(res => res.json());
+    };
+    // Tell the server to connect to server and join a room
+    ChatService.prototype.joinRoom = function (ID) {
+        // Connect once while on that page
+        if (this.socket == null) {
+            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("http://localhost:3000/");
+            // this.socket = io.connect("https://openclassroom.herokuapp.com/");
+        }
+        this.socket.emit('join room', ID);
+    };
+    // Tell the server to send a message to those in the room
+    ChatService.prototype.sendMessage = function (ID, sender, message) {
+        this.socket.emit('add message', ID, sender, message);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        var payload = {
+            sender: sender,
+            msg: message,
+            ID: ID
+        };
+        return this.http.post('http://localhost:3000/messages/send', payload, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('messages/send', payload, { headers: headers }).map(res => res.json());
+    };
+    ChatService.prototype.getBuddyList = function (email) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/users/buddylist', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
+    };
+    ChatService.prototype.addBuddyListItem = function (email1, email2, user) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        var payload = {
+            email1: email1,
+            email2: email2,
+            user: user
+        };
+        return this.http.post('http://localhost:3000/users/buddylist/add', payload, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('users/buddylist/add', payload, { headers: headers }).map(res => res.json());
+    };
+    // Create an observable that will read off the next message when the user gets a message
+    ChatService.prototype.getSubscription = function () {
+        var _this = this;
+        var observable = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
+            _this.socket.on('message', function (data) {
+                observer.next(data);
+            });
+        });
+        return observable;
+    };
+    ChatService.prototype.getMessages = function (ID) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/messages/get', { ID: ID }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
+    };
+    return ChatService;
+}());
+ChatService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], ChatService);
+
+var _a;
+//# sourceMappingURL=chat.service.js.map
+
+/***/ }),
+
+/***/ 48:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ValidateService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ValidateService = (function () {
+    function ValidateService() {
+    }
+    // Make sure the register information is all filled out
+    ValidateService.prototype.validateRegister = function (user) {
+        if (user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    };
+    // Make sure it's a valid email
+    // Source: LOST
+    ValidateService.prototype.validateEmail = function (email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    };
+    return ValidateService;
+}());
+ValidateService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [])
+], ValidateService);
+
+//# sourceMappingURL=validate.service.js.map
+
+/***/ }),
+
+/***/ 80:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__ = __webpack_require__(26);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FindNowComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var FindNowComponent = (function () {
+    // Need to pass argument so it can be used in functions below
+    function FindNowComponent(buildingService) {
+        this.buildingService = buildingService;
+        // Days the buildingService will query using
+        this.days = ["x", "omon", "otue", "owed", "othu", "x", "x"];
+        // The list that will be displayed after population in the show function
+        this.roomsList = [];
+        // Notifies the HTML to display the error message when out of hours
+        this.show = false;
+        //Arguments to pass to roomInfo
+        this.buildingName = "";
+        this.roomNumber = "";
+    }
+    // Set the day once when navigating to the find classroom page
+    FindNowComponent.prototype.ngOnInit = function () {
+        this.day = this.days[new Date().getDay()];
+    };
+    /*
+    * Gets the rooms that are open and display when they are open
+    * 1) Not "x" and between 8AM and 10 PM?
+    * 2) Notify buildingService to get the buildings from MongoDB
+    * 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
+    */
+    FindNowComponent.prototype.showNow = function () {
+        var _this = this;
+        document.getElementById("nowTimes").style.display = "block";
+        var st = new Date().getHours() * 60;
+        // 1) Not "x" and between 8 AM and 10 PM?
+        if (this.day != "x" && st >= 8 * 60 && st < 22 * 60) {
+            // Clear roomsList for new list
+            this.roomsList = [];
+            // 2) Notify buildingService to get the buildings from MongoDB
+            this.buildingService.getBuilding(this.name).subscribe(function (buildingList) {
+                // roomsJSON = { name, mon, tue, wed, thu, omon, otue, owed, othu }
+                var roomsJSON = buildingList.OpenBuilding[0].rooms;
+                for (var room in roomsJSON) {
+                    // timesJSON = [{ name, sec, days, location, st, et }]
+                    var timesJSON = roomsJSON[room][_this.day];
+                    for (var time in timesJSON) {
+                        // 3) Push room name if st >= timesJSON[time].st && (st+30) <= timesJSON[time].et
+                        if (st >= timesJSON[time].st && (st + 30) <= timesJSON[time].et) {
+                            _this.roomsList.push({ name: roomsJSON[room].name, st: _this.timeFormat(timesJSON[time].st), et: _this.timeFormat(timesJSON[time].et) });
+                        }
+                    }
+                }
+                if (_this.roomsList.length > 0) {
+                    _this.show = true;
+                }
+                else {
+                    _this.show = false;
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        }
+        else {
+            this.show = false;
+        }
+    };
+    // Adjust time in minutes to stringified time (No 12:00 AM)
+    FindNowComponent.prototype.timeFormat = function (time) {
+        // 12 AM
+        if (Math.trunc(time / 60) == 0) {
+            if (time % 60 < 10) {
+                return "12:0" + (time % 60) + " AM";
+            }
+            else {
+                return "12:" + (time % 60) + " AM";
+            }
+        }
+        else if (Math.trunc(time / 60) == 12) {
+            if (time % 60 < 10) {
+                return "12:0" + (time % 60) + " PM";
+            }
+            else {
+                return "12:" + (time % 60) + " PM";
+            }
+        }
+        // 1 PM to 12 AM (exclusive)
+        if (time / 60 > 12) {
+            if (time % 60 < 10) {
+                return (Math.trunc(time / 60) - 12) + ":0" + (time % 60) + " PM";
+            }
+            else {
+                return (Math.trunc(time / 60) - 12) + ":" + (time % 60) + " PM";
+            }
+        }
+        else {
+            if (time % 60 < 10) {
+                return Math.trunc(time / 60) + ":0" + (time % 60) + " AM";
+            }
+            else {
+                return Math.trunc(time / 60) + ":" + (time % 60) + " AM";
+            }
+        }
+    };
+    // Display the room info
+    FindNowComponent.prototype.showRoom = function (room, number) {
+        this.buildingName = room;
+        this.roomNumber = number;
+        document.getElementById("nowTimes").style.display = "none";
+        document.getElementById("room2").style.display = "block";
+    };
+    return FindNowComponent;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], FindNowComponent.prototype, "name", void 0);
+FindNowComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-find-now',
+        template: __webpack_require__(247),
+        styles: [__webpack_require__(225)]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_buildings_service__["a" /* BuildingsService */]) === "function" && _a || Object])
+], FindNowComponent);
+
+var _a;
+//# sourceMappingURL=find-now.component.js.map
+
+/***/ }),
+
+/***/ 81:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoomInfoService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//Service module for building, class, and classroom queries
+
+
+
+
+var RoomInfoService = (function () {
+    function RoomInfoService(http) {
+        this.http = http;
+    }
+    RoomInfoService.prototype.getRoomInfo = function (building, room) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('roominfo/getRoomInfo', { building, room }, { headers: headers }).map(res => res.json());
+    };
+    RoomInfoService.prototype.addComment = function (building, room, email, comment) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/roominfo/addComment', { building: building, room: room, email: email, comment: comment }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('roominfo/addComment', { building, room, email, comment }, { headers: headers }).map(res => res.json());
+    };
+    RoomInfoService.prototype.addVote = function (building, room, email, item, pos, nvote) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
+        return this.http.post('http://localhost:3000/roominfo/addVote', { building: building, room: room, email: email, item: item, pos: pos, nvote: nvote }, { headers: headers }).map(function (res) { return res.json(); });
+        // return this.http.post('roominfo/addVote', { building, room, email, item, pos, nvote }, { headers: headers }).map(res => res.json());
+    };
+    return RoomInfoService;
+}());
+RoomInfoService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
+], RoomInfoService);
+
+var _a;
+//# sourceMappingURL=roominfo.service.js.map
 
 /***/ })
-],[295]);
+
+},[314]);
 //# sourceMappingURL=main.bundle.js.map

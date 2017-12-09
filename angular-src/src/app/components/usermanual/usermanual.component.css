@@ -1,7 +1,10 @@
-h2 {
-    padding-bottom: 5px;
+body {
     padding-left: 10%;
     padding-right: 10%;
+}
+
+h2 {
+    padding-bottom: 5px;
     text-align: left;
     font-size: 30px;
 }
@@ -10,16 +13,6 @@ h2:after {
     content: "";
     display: block;
     border-bottom: 1px solid #FFD07F;
-}
-
-p {
-    padding-left: 10%;
-    padding-right: 10%;
-}
-
-.ol2 {
-    padding-left: 12%;
-    padding-right: 12%;
 }
 
 img {

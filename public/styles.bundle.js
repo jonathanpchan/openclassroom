@@ -1,6 +1,6 @@
 webpackJsonp([2,4],{
 
-/***/ 118:
+/***/ 121:
 /***/ (function(module, exports) {
 
 /*
@@ -253,7 +253,7 @@ function updateLink(linkElement, obj) {
 
 /***/ }),
 
-/***/ 123:
+/***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -262,7 +262,7 @@ function updateLink(linkElement, obj) {
 var content = __webpack_require__(95);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(118)(content, {});
+var update = __webpack_require__(121)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -280,16 +280,16 @@ if(false) {
 
 /***/ }),
 
-/***/ 124:
+/***/ 127:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(208);
+var content = __webpack_require__(211);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(118)(content, {});
+var update = __webpack_require__(121)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -307,7 +307,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 208:
+/***/ 211:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
@@ -318,15 +318,6 @@ exports.i(__webpack_require__(95), "");
 exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n\r\nhtml {\r\n    min-width: 320px;\r\n    min-height: 480px;\r\n}\r\n\r\nh1 { \r\n    text-align: center; \r\n    font-weight: bold; \r\n} \r\n\r\n.btn-primary {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n    opacity: 0.9;\r\n}\r\n\r\n.btn-primary:hover {\r\n    color: #333333;\r\n    background-color: #edaa00;\r\n    border: none;\r\n    opacity: 0.95;\r\n}\r\n\r\n.btn-primary:active {\r\n    color: #333333 !important;\r\n    background-color: #edaa00;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n.btn-primary:focus {\r\n    color: #333333 !important;\r\n    background-color: #edaa00 !important;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n.btn-default {\r\n    color: #edaa00;\r\n    background-color: #333333;\r\n    border: none;\r\n    opacity: 0.9;\r\n}\r\n\r\n.btn-default:hover {\r\n    color: #edaa00;\r\n    background-color: #333333;\r\n    border: none;\r\n    opacity: 0.95;\r\n}\r\n\r\n.btn-default:active {\r\n    color: #edaa00 !important;\r\n    background-color: #333333;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n.btn-default:focus {\r\n    color: #edaa00 !important;\r\n    background-color: #333333 !important;\r\n    border: none;\r\n    opacity: 1;\r\n}\r\n\r\n::-webkit-scrollbar {\r\n    height: 10px;\r\n}\r\n\r\n::-webkit-scrollbar-track:vertical {\r\n    background-color: #222222;\r\n}\r\n\r\n::-webkit-scrollbar-thumb {\r\n    background-color: #edaa00;\r\n}\r\n\r\n/* \r\n    Display only one message at a time\r\n    Source: https://github.com/moff/angular2-flash-messages/issues/22 \r\n*/\r\n#flashMessages .flash-message { display:none; }\r\n#flashMessages .flash-message:last-child { display:block; }", ""]);
 
 // exports
-
-
-/***/ }),
-
-/***/ 297:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(124);
-module.exports = __webpack_require__(123);
 
 
 /***/ }),
@@ -388,6 +379,15 @@ module.exports = function() {
 
 /***/ }),
 
+/***/ 316:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(127);
+module.exports = __webpack_require__(126);
+
+
+/***/ }),
+
 /***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -403,5 +403,5 @@ exports.push([module.i, "/*! nouislider - 10.1.0 - 2017-07-28 13:09:54 */.noUi-t
 
 /***/ })
 
-},[297]);
+},[316]);
 //# sourceMappingURL=styles.bundle.js.map
