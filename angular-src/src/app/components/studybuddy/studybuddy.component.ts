@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { ChatService } from '../../services/chat.service';
+import { StudyBuddyService } from '../../services/studybuddy.service';
 
 @Component({
   selector: 'app-studybuddy',
@@ -7,41 +9,68 @@ import {AuthService} from '../../services/auth.service';
   styleUrls: ['./studybuddy.component.css']
 })
 export class StudybuddyComponent implements OnInit {
-
-  email : JSON = JSON.parse(localStorage.getItem('user'))["email"];
+  //get user from local storage and set up all data needed for the component
+  user: JSON = JSON.parse(localStorage.getItem('user'));
+  buddy: string = null;
+  email: string;
   schedule = null;
-  courseName : string;
-  courseNum : string;
   buddies = null;
-  test = null;
-  loaded : boolean = false;
+  courseBuddies = null;
+  loaded: boolean = false;
+  isFinalized : boolean = false;
 
-  constructor(private authService:AuthService) { }
+  constructor(
+    private userService: UserService,
+    private chatService: ChatService,
+    private studyBuddyService: StudyBuddyService) { }
 
   ngOnInit() {
-    //console.log(this.email);
-
-
-
     this.schedule = []
-    this.authService.getSchedule({email : this.email}).subscribe(schedule => {
-      this.schedule = schedule.schedule
-      this.schedule.sort(this.sortByCourseName)
-      //console.log(this.schedule);
+    this.email = this.user["email"];
 
-      this.buddies = JSON.parse('{"res":[{"classes":[{"name":"CECS 444","buddies":[{"name":"guy0","id":"xxxxx"},{"name":"guy1","id":"xxxxx"},{"name":"guy2","id":"xxxxx"},{"name":"guy3","id":"xxxxx"}]},{"name":"CECS 445","buddies":[{"name":"guy4","id":"xxxxx"},{"name":"guy5","id":"xxxxx"},{"name":"guy6","id":"xxxxx"},{"name":"guy7","id":"xxxxx"}]},{"name":"CECS 446","buddies":[{"name":"guy8","id":"xxxxx"},{"name":"guy9","id":"xxxxx"}]}]}]}');
-      this.buddies = this.buddies.res[0].classes;
-      console.log(this.buddies);
-      setTimeout(this.lol(),100); // run donothing after 0.5 seconds
-
-
+    //calls isFinalized in user service to prevent users from using this when the data is not finalized
+    this.userService.isFinalized(this.email).subscribe( data => {
+        this.isFinalized = data[0].schedFinal;
+        //if not finalized display warning to user.
+        if(!this.isFinalized){
+          document.getElementById("warning").style.display = "inline-block";
+        }
     },
     err => {
       console.log(err)
-    })
+    });
 
+    //TODO: Use the course names once syed provides them instead of using the schedule
+    this.userService.getSchedule({email: this.email}).subscribe(schedule => {
+      this.schedule = schedule.schedule
+      this.schedule.sort(this.sortByCourseName)
+    },
+    err => {
+      console.log(err)
+    });
+
+    // Generate buddies for each course
+    this.studyBuddyService.getStudyBuddies({email: this.email}).subscribe(buddies => {
+
+      //This should be handled in the err, but routes do not proved a proper err
+      if(buddies.error == "Nothing Found in SB") {
+        document.getElementById("cronjobwait").style.display = "inline-block";
+        document.getElementById("buddies").style.display = "none";
+      }
+      //if it's not an error we load buddies
+      else
+      {
+        this.courseBuddies = buddies[0];
+        this.loaded = true;
+        this.buddies=buddies;
+      }
+    },
+    err => {
+      console.log(err)
+    });
   }
 
+  // Used to sort the schedule by coure names
   // Sort by Course, then Course Num, then by Course Sec
   sortByCourseName(a,b) {
     // Name (ex. CECS)
@@ -63,42 +92,39 @@ export class StudybuddyComponent implements OnInit {
     }
   }
 
+  //Shows the buddies depending on the index of the class that is chosen
+  //TODO fix this when routes provide course name ex 491b
   showBuddies()
   {
+    //get index of the select menu and set our buddyDisplay to that index of studyBuddies
     var index = (<HTMLSelectElement>document.getElementById('courseSelect')).selectedIndex - 1;
+    this.courseBuddies = this.buddies[index];
 
-    this.test = this.buddies[index];
-
-    console.log("index of course - " + index);
-    console.log(this.buddies);
-    document.getElementById("buddylist").style.display = "inline-block";
-
-    // var input = (<HTMLInputElement>document.getElementById('courseSelect')).value;
-    // var course = input.split(" ");
-    // this.courseName = course[0];
-    // this.courseNum = course[1];
-
-
-
-
-    // console.log(this.courseName + " " + this.courseNum);
-
-    // console.log("test\n" + this.test.name);
-    // console.log("test\n" + this,test.buddies);
-
-
-    //TODO implement routes get data and change it
-    //show study buddies now, we don't need to hide it anymore
+    //if there are no buddies display text indicating there are no buddies
+    if(this.courseBuddies.buddies.length < 1)    {
+      document.getElementById("buddylist").style.display = "none";
+      document.getElementById("nobuddies").style.display = "inline-block";
+    }
+    //otherwise display the list of buddies
+    else
+    {
+      document.getElementById("buddylist").style.display = "inline-block";
+      document.getElementById("nobuddies").style.display = "none";
+    }
   }
 
-  message(name)
+  //open message thread to buddy
+  message(buddyIndex)
   {
-    console.log("messaging " + name);
+    let buddy = this.courseBuddies.buddies[buddyIndex];
+    this.chatService.addBuddyListItem(this.user["email"], buddy.email, buddy.name).subscribe();
+    this.chatService.addBuddyListItem(buddy.email, this.user["email"], this.user["username"]).subscribe();
+    this.buddy = buddy;
   }
 
-  lol()
-  {
-    this.loaded=true;
-    document.getElementById("buddylist").style.display = "inline-block";
+  ngOnDestroy() {
+    if (this.buddy != null) {
+      this.chatService.ID = this.buddy;
+    }
   }
 }

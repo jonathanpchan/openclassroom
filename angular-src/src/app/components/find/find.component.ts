@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {BuildingsService} from '../../services/buildings.service';
-import {Router} from '@angular/router';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { BuildingsService } from '../../services/buildings.service';
+import { Router } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 //import { RoomComponent } from '../room/room.component';
 
 
@@ -13,11 +13,11 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 
 export class FindComponent implements OnInit {
   // Values that are passed from Find-Home Component
-  @Input() name : string;
-  day : string;
+  @Input() name: string;
+  day: string;
   // Values passed to room components
-  buildingName : String = "";
-  roomNumber : String = "";
+  buildingName: String = "";
+  roomNumber: String = "";
 
   // Times displayed on the front end but currently does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["8:00 AM", "9:00 AM",
@@ -33,12 +33,11 @@ export class FindComponent implements OnInit {
 
   // Need to pass arguments so it can be used in functions below
   constructor(
-    private buildingService : BuildingsService,
-    private router : Router,
-    private flashMessage : FlashMessagesService
-  ) {}
+    private buildingService: BuildingsService,
+    private router: Router,
+    private flashMessage: FlashMessagesService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   /*
   * Show the table based on the day (BUILDING name should be provided)
@@ -53,7 +52,7 @@ export class FindComponent implements OnInit {
   * 5) Push temp array to the roomsList
   * 6) Store in buildingList the query
   */
-  show(day : string) {
+  show(day: string) {
     document.getElementById("room").style.display = "none";
 
     // 0) Re-initialize if navigate away from current page
@@ -89,7 +88,7 @@ export class FindComponent implements OnInit {
               }
             }
             // 5) Add to the roomsList
-            this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+            this.roomsList.push({ name: roomsJSON[room].name, room: arr});
           }
           // 6) Store in the buildingList ("cache")
           this.buildingList = buildingList.OpenBuilding[0];
@@ -123,13 +122,14 @@ export class FindComponent implements OnInit {
             }
           }
           // 4a) Add to the roomsList
-          this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+          this.roomsList.push({ name: roomsJSON[room].name, room: arr});
         }
         this.day = day;
       }
     }
   }
 
+  // Jon C's algorithm for displaying the time on the time cell
   displayToolTip(time)
   {
     var  minutes = time*5;//since we have minutes in 5 minute chunks
@@ -141,10 +141,6 @@ export class FindComponent implements OnInit {
     if(minutes>=780)    {
       minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
     }
-    // // TODO: remove this for deployment as it's unneeded
-    // else if(minutes < 60)    {
-    //   minutes+=720;//adding 12 hours if its before 1 AM
-    // }
     t = (minutes - minutes%60)/60 + ":";//calculating hours
 
     if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
@@ -170,16 +166,9 @@ export class FindComponent implements OnInit {
     //set new inputs
     this.buildingName = building_name;
     this.roomNumber = room_num;
+
     //hide table and show room
     document.getElementById("table").style.display = "none";
     document.getElementById("room").style.display = "block";
-
-    //hide everything else
-    // document.getElementById("buttons").style.display = "none";
-    // document.getElementById("all").style.display = "none";
-    // document.getElementById("table-2").style.display = "none";
-    // document.getElementById("now").style.display = "none";
-    // document.getElementById("times").style.display = "none";
-
   }
 }

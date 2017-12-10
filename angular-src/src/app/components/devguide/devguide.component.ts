@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./devguide.component.css']
 })
 export class DevguideComponent implements OnInit {
-
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  // NOT NECESSARILY NEEDED SINCE THE DEV GUIDE IS STATIC
 }

@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
-    <body class="grid">
-      <div [ngClass]="sendee==null ? 'msglist' : 'msglist-hide'">
-        <div class="msglist-title">OC Messenger</div>
-        <ul *ngIf="names.length > 0" class="list-group msglist-users">
-          <li class="list-group-item msglist-user" *ngFor="let name of names">
-            <button class="btn msglist-btn" (click)="joinRoom(name)">{{name}}</button>
-          </li>
-        </ul>
-        <ul *ngIf="names.length <= 0" class="list-group msglist-users">
-          <h2 style="text-align: center; top: 50%;">Go to the Study Buddy Tab to add some buddies!</h2>
-        </ul>
+  <head></head>
+  <body class="grid">
+    <!-- BUDDY LIST: If you aren't talking to anyone, then SHOW the buddylist (small screen) -->
+    <div [ngClass]="sendee==null ? 'msglist' : 'msglist-hide'">
+      <div class="msglist-title">OC Messenger</div>
+      <!-- Buddies in list -->
+      <ul *ngIf="buddyList.length > 0" class="list-group msglist-users">
+        <li class="list-group-item msglist-user" *ngFor="let buddy of buddyList">
+          <button class="btn msglist-btn" (click)="joinRoom(buddy)">{{buddy.user}}</button>
+        </li>
+      </ul>
+      <!-- No buddies in list -->
+      <ul *ngIf="buddyList.length <= 0" class="list-group msglist-users">
+        <h2 style="text-align: center; top: 50%;">Go to the Study Buddy Tab to add some buddies!</h2>
+      </ul>
+    </div>
+
+    <!-- MESSAGE LOGS: If you aren't talking to anyone, HIDE the message logs (small screen) -->
+    <div [ngClass]="sendee==null ? 'chat-hide' : 'chat'">
+      <!-- Show the back button if you are talking to someone -->
+      <div class="chat-title">
+        <button *ngIf="showBack" class="btn" [ngClass]="showBack ? 'back' : 'back-hide'" (click)="back()">
+          <span class="fa fa-chevron-left" aria-hidden="true"></span>Back
+        </button>
+        <div class="announcer">{{sendee}}</div>
       </div>
-      <div [ngClass]="sendee==null ? 'chat-hide' : 'chat'">
-        <div class="chat-title">
-          <button *ngIf="showBack" class="btn" [ngClass]="showBack ? 'back' : 'back-hide'" (click)="back()">
-            <span class="fa fa-chevron-left" aria-hidden="true"></span>Back
-          </button>
-          <div class="announcer">{{sendee}}</div>
-        </div>
-        <!-- https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style -->
-        <div class="chatlogs" #chatlogs [scrollTop]="chatlogs.scrollHeight">
-          <div *ngFor="let message of messages">
-            <div *ngIf="message.sender!=sender" class="sendee">
-              <p class="chatmsg"><b style="font-style: bold">{{message.sender}}</b>: {{message.message}}</p>
-            </div>
-            <div *ngIf="message.sender==sender" class="sender">
-              <p class="chatmsg"><b style="font-style: bold">{{message.sender}}</b>: {{message.message}}</p>
-            </div>
+      <!--
+        Code to scroll to the bottom of the chat and display either you or the sendee's message 
+        Source: https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style 
+      -->
+      <div class="chatlogs" #chatlogs [scrollTop]="chatlogs.scrollHeight">
+        <div *ngFor="let message of messages">
+          <div *ngIf="message.sender!=sender" class="sendee">
+            <p class="chatmsg">{{message.message}}</p>
+          </div>
+          <div *ngIf="message.sender==sender" class="sender">
+            <p class="chatmsg">{{message.message}}</p>
           </div>
         </div>
-      <form class="chat-form" (submit)="sendMessage()">
-        <input type="text" class="chat-text" [(ngModel)]="message" [ngModelOptions]="{standalone: true}"/>
-        <button type="submit" class="btn btn-primary chat-submit">
-          <span class="fa fa-send" aria-hidden="true"></span>
-        </button>
-      </form>
       </div>
-    </body>
-  </html>
+    
+    <!-- SENDING MESSAGE: You can input into the text input, then click submit or click enter after writing a message to send a message -->
+    <form class="chat-form" (submit)="sendMessage()">
+      <input type="text" class="chat-text" [(ngModel)]="message" [ngModelOptions]="{standalone: true}"/>
+      <button type="submit" class="btn btn-primary chat-submit">
+        <span class="fa fa-send" aria-hidden="true"></span>
+      </button>
+    </form>
+    </div>
+  </body>
+</html>

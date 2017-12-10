@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {BuildingsService} from '../../services/buildings.service';
+import { BuildingsService } from '../../services/buildings.service';
 import { NouisliderComponent } from 'ng2-nouislider';
 
 @Component({
@@ -9,8 +9,8 @@ import { NouisliderComponent } from 'ng2-nouislider';
 })
 export class FindTimesComponent implements OnInit {
   // Value passed from Find-Home Component
-  @Input() name : string;
-  day : string;
+  @Input() name: string;
+  day: string;
 
   // Times displayed on the front end but currently only does 8 (inclusive) to 10 (exclusive). This can be filtered down.
   times = ["12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM",
@@ -22,14 +22,15 @@ export class FindTimesComponent implements OnInit {
             "6:00 PM","6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
             "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"];
   // Start and end values of the slider for AM/PM display
-  tstart : number = 16;
-  tend : number = 44;
+  tstart: number = 16;
+  tend: number = 44;
   // Start and end values for array display (in minutes)
-  start : number = 8*12;
-  end : number = 22*12;
+  start: number = 8*12;
+  end: number = 22*12;
 
-  // Configure the slider (as reference: http://tb.github.io/ng2-nouislider/)
-  timeRange : number[];
+  // Configure the slider
+  // Source: http://tb.github.io/ng2-nouislider/
+  timeRange: number[];
   timeSliderConfig: any = {
     behaviour: 'drag',
     connect: true, // Show color to show they're connected
@@ -38,8 +39,8 @@ export class FindTimesComponent implements OnInit {
     step: 0.5, // What to go up by
     margin: 0.5, // Make it so the smallest interval is 30 minutes apart
     range: {
-      min : 8, // 8 AM start
-      max : 22 // 10 PM end
+      min: 8, // 8 AM start
+      max: 22 // 10 PM end
     }
   };
 
@@ -49,8 +50,8 @@ export class FindTimesComponent implements OnInit {
   roomsList = [];
 
   //Arguments to pass to roomInfo
-  buildingName : String = "";
-  roomNumber : String = "";
+  buildingName: String = "";
+  roomNumber: String = "";
 
   // Need to pass argument so it can be used in functions below
   constructor(private buildingService:BuildingsService) { }
@@ -73,7 +74,7 @@ export class FindTimesComponent implements OnInit {
   * 5) Push temp array to the roomsList
   * 6) Store in buildingList the query
   */
-  show(day : string) {
+  show(day: string) {
     document.getElementById("room3").style.display = "none";
 
     // 0) Re-initialize if navigate away from current page
@@ -109,7 +110,7 @@ export class FindTimesComponent implements OnInit {
               }
             }
             // 5) Add to the roomsList
-            this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+            this.roomsList.push({ name: roomsJSON[room].name, room: arr});
           }
           // 6) Store in the buildingList ("cache")
           this.buildingList = buildingList.OpenBuilding[0];
@@ -143,13 +144,14 @@ export class FindTimesComponent implements OnInit {
             }
           }
           // 4a) Add to the roomsList
-          this.roomsList.push({ name : roomsJSON[room].name, room : arr});
+          this.roomsList.push({ name: roomsJSON[room].name, room: arr});
         }
         this.day = day;
       }
     }
   }
 
+  // Jon C's algorithm for displaying the time on the time cell
   displayToolTip(time)
   {
     var  minutes = time*5;//since we have minutes in 5 minute chunks
@@ -160,10 +162,6 @@ export class FindTimesComponent implements OnInit {
     if(minutes>=780)    {
       minutes-=720;//if its 13 o'clock you take off 12 hours or 720 mins
     }
-    // // TODO: remove this for deployment as it's unneeded
-    // else if(minutes < 60)    {
-    //   minutes+=720;//adding 12 hours if its before 1 AM
-    // }
     t = (minutes - minutes%60)/60 + ":";//calculating hours
 
     if(minutes%60<10)    {//formating minutes toFixed and to Prevision dont work
@@ -192,6 +190,7 @@ export class FindTimesComponent implements OnInit {
     document.getElementById('end').textContent = this.times[this.tend];
   }
 
+  // Display the room info
   getRoomInfo(building_name, room_num)
   {
     var email =  JSON.parse(localStorage.getItem('user')).email
@@ -199,16 +198,9 @@ export class FindTimesComponent implements OnInit {
     //set new inputs
     this.buildingName = building_name;
     this.roomNumber = room_num;
+
     //hide table and show room
     document.getElementById("table-2").style.display = "none";
     document.getElementById("room3").style.display = "block";
-
-    //hide everything else
-    // document.getElementById("buttons").style.display = "none";
-    // document.getElementById("all").style.display = "none";
-    // document.getElementById("table-2").style.display = "none";
-    // document.getElementById("now").style.display = "none";
-    // document.getElementById("times").style.display = "none";
-
   }
 }

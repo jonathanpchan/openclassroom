@@ -5,6 +5,7 @@
 1. node StudyBuddyTesting 1
 // to populate with some users ie ms5@gmail.com
 2. node StudyBuddyTesting
+    ctrl c when output stops
 // to calculate studyBuddies
 3. node studdybuddychron
     ctrl c when it stops displaying sections

@@ -3,19 +3,23 @@ const config = require('../config/database');
 const user = require('../models/user');
 const us = mongoose.model('User', user.schema);
 
-//Class schema
+//Classroom data that each user has in the students array of ClassSchema
 const BaseSched = new mongoose.Schema({
     num : {type: String},
     sec : {type: String}, 
     day : {type: String}, 
     time : {type: String}, 
-    stimeInMin : {type: Number},
-    etimeInMin : {type: Number},
+    sTimeInMin : {type: Number},
+    eTimeInMin : {type: Number},
     sh : {type: Number},
     room : {type: String}, 
     location : {type: String}, 
     prof : {type: String}, 
 })
+
+//Classroom schema that holds data regarding a class.
+//isChanged is used to notify chron job
+//Students array holds an array of users which holds their schedule based on days, and an array of buddies
 const ClassSchema = new mongoose.Schema({
     teacher : {type: String},
     dept: {type: String},
@@ -27,20 +31,24 @@ const ClassSchema = new mongoose.Schema({
         oTue: {type: [BaseSched]},
         oWed: {type: [BaseSched]},
         oThu: {type: [BaseSched]},
-        buddies: {type: [String]}
+        buddies: {type: [{chatRoomId: {type: String}, email: { type: String}, name: {type: String}}]}
     }],
     isChanged : {type: Boolean, default: false}
 })
 
-// Export Room SChema
-CS = module.exports = mongoose.model('StudyBuddy', ClassSchema );
+//Place schema in export variable
+SB = module.exports = mongoose.model('StudyBuddy', ClassSchema );
 
+//Export Schema
 module.exports = {
-    CS: CS
+    SB: SB
 }
 
-
-
+/**
+ *
+ * @param arr
+ * @param callback
+ */
 function placeByDay(arr , callback){
     function helperSort(a,b) {
         //console.log(a.time + " - " + b.time + " = " )
@@ -139,105 +147,154 @@ function placeByDay(arr , callback){
     callback(arr2)
 }
 
-//prototype for addUser. Adds user to class, implement open time data later
-//having trouble making callback to show success/failure
+/**Adds a user to all sections listed in his or her finalized schedule. Sets finalized schedule flag to true.
+ *
+ * @param eMail E-mail to grab user's schedule
+ * @param callback Returns a success message if all classes were successfully added
+ */
 module.exports.addUser = function(eMail, callback) {
     //open times algorithm goes here
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
-        sched = doc.schedule
-        placeByDay(sched, otObj => {
-            //query each class in studybuddymodel (foreach)
-            sched.forEach( function (crs) {
-            //add to classroom
-            CS.findOneAndUpdate(
-                {"sec" : crs.sec, "students.user" : {$ne: eMail}},
-                {
-                    $addToSet: {
-                        "students": {
-                            user: eMail,
-                            oMon: otObj.omon,
-                            oTue: otObj.otue,
-                            oWed: otObj.owed,
-                            oThu: otObj.othu,
-                            buddies: []
-                        }
+        var sched = doc.schedule
+        var brk = false;
+        setFinalizedFlag(eMail, true, filler => {
+            placeByDay(sched, otObj => {
+                //query each class in studybuddymodel (foreach)
+                var counter = -1
+                sched.forEach(function (crs) {
+                    if(!brk) {
+                        //add to classroom
+                        SB.findOneAndUpdate(
+                            {"sec": crs.sec, "students.user": {$ne: filler}},
+                            {
+                                $addToSet: {
+                                    "students": {
+                                        user: filler,
+                                        oMon: otObj.omon,
+                                        oTue: otObj.otue,
+                                        oWed: otObj.owed,
+                                        oThu: otObj.othu,
+                                        buddies: []
+                                    }
+                                }
+                            }, {new: true}, function (err, doc) {
+                                if (err) {
+                                    callback(null, "Something went wrong when adding a student!")
+                                }
+                                if (doc == null) {
+                                    brk = true;
+                                }
+                                else {
+                                    //set flag to true + return success
+                                    setFlag(crs.sec, true)
+                                    counter++
+                                    if(counter == sched.length - 1){
+                                        callback(null, "Student was successfully added to all classes.")
+                                    }
+                                }
+                            }
+                        )
                     }
-                }, {new: true}, function(err, doc) {
-                    if (err) {
-                        callback("Something went wrong when adding a student!")
-                        //console.log("Something went wrong when adding a student!");
+                    if (brk) {
+                        callback(null, "Student is already enrolled!");
                     }
-                    if (doc == null) {
-                        //callback("Student is already in this section!");
-                        //console.log("Student is already in this section!");
-                    }
-                    else {
-                        //set flag to true + return success
-                        setFlag(crs.sec, true)
-                    }
-                }
-            )
+                })
+            })
         })
-
-        })
-        
-    callback(null , "worked? maybe")
     })
 };
 
-//having trouble making a callback to show success/failure otherwise done
+/**Removes a user from each class section that he or she is enrolled in. Sets finalized schedule flag to false.
+ *
+ * @param eMail E-mail to grab the user's schedule
+ * @param callback Returns success message to callback function
+ */
 module.exports.removeUser = function(eMail, callback) {
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
-        success = -1
         sched = doc.schedule
+        var counter = -1
+        var brk = false;
         //query each class user's schedule in StudyBuddy Classroom schema
         sched.forEach( function (crs) {
-            //add to classroom
-            CS.findOneAndUpdate({"sec" : crs.sec},
-                {
+            if(!brk){
+                SB.findOneAndUpdate({"sec" : crs.sec}, {
                     $pull : {
                         "students" : { user : eMail }
-                    }
+                        }
                 }, {new: true}, function(err, doc) {
                     if (err) {
-                        console.log("Something went wrong when deleting the student!");
-                        success = 0
+                        brk = true;
+                        return
                     } else {
                         setFlag(crs.sec, true)
-                        success = 1
+                        counter++
+                        if(counter == sched.length - 1){
+                            setFinalizedFlag(eMail, false, null)
+                            callback(null, "All classes were successfully deleted")
+                        }
                     }
-                }
-            )
+                })
+            }
         })
-
-        if(success == 1){
-            callback("Success! User deleted.")
-        } else if(success == 0) {
-            callback("Failure! Something went wrong.")
-        } else {
-            callback("damn u rly messed up")
+        if(brk) {
+            callback(null, null)
         }
     })
 };
 
+/**Gets section object based on section number
+ *
+ * @param sect Section # of classroom
+ * @param callback function to receive section object
+ */
 module.exports.getClass = function(sect, callback){
-    CS.find({ 'sec' : sect }, callback)
+    SB.find({ 'sec' : sect }, callback)
 };
 
-//set flag to true + return success
+/**Sets flag for isChanged in the classroom. Used to signal chron job that a classroom is ready to be used
+ *
+ * @param sec Section of the classroom
+ * @param flag Flag to set to either true or false
+ */
 function setFlag(sec, flag) {
-    CS.findOneAndUpdate(
+    SB.findOneAndUpdate(
         {sec : sec},
         {
             $set : {
                 "isChanged" : flag
             }
         }, {new: true}, function(err, doc) {
-            //console.log(doc)
         }
     )
 }
 
+/**Sets the finalized flag inside a user's schedule. This signifies that the user has been added or removed
+ * from a classroom.
+ *
+ * @param eMail E-mail to access user's data
+ * @param flag Flag to set to either true or false
+ * @param callback Returns the eMail back to callback function
+ */
+function setFinalizedFlag(eMail, flag, callback) {
+    us.findOneAndUpdate(
+        {email : eMail},
+        {
+            $set : {
+                "schedFinal" : flag
+            }
+        }, {new: true}, function(err, doc) {
+            if(callback != null){
+                callback(eMail)
+            }
+        }
+    )
+}
+
+/**Grabs the buddies of a user
+ *
+ * @param eMail E-mail to access user's data
+ * @param callback Returns the the array of study buddies to callback function
+ */
 module.exports.getBuddies = function(eMail, callback) {
     us.findOne({ email : eMail }, {schedule : 1, _id : 0}, (err, doc) => {
         sched = doc.schedule
@@ -247,12 +304,14 @@ module.exports.getBuddies = function(eMail, callback) {
         }
         var promise = sched.length;
         var did =0;
-        var retArr = []
+        var retArr = [];
+        x = true;
         sched.forEach(function(element) {
-            CS.findOne(
-                {"sec" : element.sec}, (err, doc) => {
+            if(x == true){
+                SB.findOne(
+                    {"sec" : element.sec}, (err, doc) => {
                     if ( !(doc.students.length > 0)) {
-                        callback("Nothing Found in SB")
+                        x = false;
                         return
                     }
                     for (var i = 0; i< doc.students.length; i++){
@@ -267,15 +326,10 @@ module.exports.getBuddies = function(eMail, callback) {
                         callback(null, retArr)
                     }
                 })
+            }
         }, this);
+        if (x == false){
+            callback(null, null)
+        }
     })
 };
-//route for later
-// router.post('/test', (req,res, next) => {
-//     Buddy.getClass(req.body.crsID, (err, cls) => {
-//     return res.json({success: true, cls});
-// })
-// })
-//
-// module.exports.removeUser = function();
-

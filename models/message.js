@@ -2,12 +2,16 @@ const mongoose = require('mongoose');
 const config = require('../config/database');
 var ObjectId = require('mongodb').ObjectID;
 
+//Schema for a message object
 const MessageSchema = new mongoose.Schema({
     sender : {type : String, required : true},
     timeStamp : {type : Date},
     message : {type : String, required : true}
 })
 
+
+//Schema for message chat room
+//Schema uses 2 identifiers (two users), an ID, and message array
 const MessagesSchema = new mongoose.Schema({
     user_1 : {type : String},
     user_2 : {type : String},
@@ -18,16 +22,22 @@ const MessagesSchema = new mongoose.Schema({
 MSG = module.exports = mongoose.model('Messages', MessagesSchema);
 ME = module.exports = mongoose.model('Message', MessageSchema);
 
+//Export the schemas
 module.exports = {
     MSG : MSG,
     ME : ME
 }
 
 //Create a new user chat with two users and return _ID of the chat
+/**
+ *
+ * @param user_1
+ * @param user_2
+ * @param callback
+ */
 module.exports.createNewChat = function(user_1, user_2, callback){
-    console.log("createNewChat");
-    MSG.findOne({$and: [{"user_1": user_1 }, {"user_2": user_2}]}, (err, x) => {
-        console.log(x);
+    MSG.findOne(
+        {$or: [{$and: [{"user_1": user_1 }, {"user_2": user_2}]}, {$and: [{"user_1": user_2 }, {"user_2": user_1}]}]}, (err, x) => {
         if( x == null ){
             MSG.collection.insert(
                 {
@@ -37,14 +47,18 @@ module.exports.createNewChat = function(user_1, user_2, callback){
                 }
             )
         }
-    MSG.find({$and: [{"user_1": user_1 }, {"user_2": user_2}]}, { _id : 1}, callback)
-}).limit(1)
+    MSG.find({$or: [{$and: [{"user_1": user_1 }, {"user_2": user_2}]}, {$and: [{"user_1": user_2 }, {"user_2": user_1}]}]}, { _id : 1}, callback)
+    }).limit(1)
 }
 
-//add comment to chat array between 2 users
+/**Add a comment to a message array inside a message chatroom
+ *
+ * @param sender The user sending the message
+ * @param msg The message content
+ * @param ID Chatroom identifier
+ * @param callback callback function return message chain
+ */
 module.exports.saveMessage = function(sender, msg, ID, callback) {
-    console.log("saveMessage");
-    console.log(ID);
     MSG.collection.findOneAndUpdate(
         {"_id": new ObjectId(ID)},
         {
@@ -58,14 +72,18 @@ module.exports.saveMessage = function(sender, msg, ID, callback) {
             }
         }, {new: true}, function (err, doc) {
             if (err) {
-                console.log("Something went wrong!");
+                callback(null, null)
             }
-            console.log(doc)
             ME.find({ "_id": ObjectId(ID) }, {messages: 1}, callback)
-        })
+        }
+    )
 }
 
-//Get array of messages from messages array
+/**Gets the messages array from a chatroom object
+ *
+ * @param ID Chatroom ID to find in database
+ * @param callback Return message array to callback function
+ */
 module.exports.getMessages = function(ID, callback) {
     if(ID != null) {
         ME.find({"_id": ObjectId(ID)}, {messages: 1}, callback)

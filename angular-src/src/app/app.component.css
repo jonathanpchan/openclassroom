@@ -23,7 +23,7 @@
     /* border: 2px black solid; */
 }
 
-/* https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */
+/* Source: https://www.w3schools.com/howto/howto_js_scroll_to_top.asp */
 .button-to-top {
     display: none; /* Hidden by default */
     position: fixed; /* Fixed/sticky position */

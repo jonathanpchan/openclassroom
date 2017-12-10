@@ -7,9 +7,10 @@
 /*switch to different layout at 600px min-width*/
 /*@media (min-width: 600px) {*/
 .studyBuddies{
-  display: grid;
+  /*display: grid;
   grid-template-columns:repeat(4, 1fr);
-  grid-gap: 15px;
+  grid-gap: 15px;*/
+  /*display:inline-block;*/
 }
 /*}*/
 
@@ -18,9 +19,22 @@
   border: 1px solid black;
   border-radius: 25px;
   text-align: center;
+  display:inline-block;
+  width: auto;
+  padding: 25px;
+
 }
 
 .courseTitle
 {
+  padding-top: 20px;
   text-align: center;
+}
+
+#nobuddies
+{
+  padding-top: 20px;
+  text-align: center;
+
+
 }

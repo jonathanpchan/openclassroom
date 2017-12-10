@@ -1,0 +1,26 @@
+body {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+h2 {
+    padding-bottom: 5px;
+    font-size: 30px;
+}
+
+h2:after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #FFD07F;
+}
+
+img {
+    width:100%;
+    height:auto;
+    border-radius: 7px;
+    border:1px solid black;
+}
+
+li {
+    font-weight : bold;
+}

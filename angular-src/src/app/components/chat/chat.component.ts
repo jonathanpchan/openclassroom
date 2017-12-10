@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-chat',
@@ -8,46 +8,66 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  sender: String = JSON.parse(localStorage.getItem('user'))["name"];
+  // You
+  user: String = JSON.parse(localStorage.getItem('user'));
+  // You are the sender
+  sender: String = this.user["name"];
+  // You intially are talking to no one
   sendee: String = null;
+  // The current room is where you and the sendee will talk
   currentRoom: any;
+  // Holds the message logs
   messages: any = [];
+  // What message is being sent when sending a message
   message: String = null;
+  // Connection determines if you connected to the room
   connection: any = null;
-  // BELOW IS TESTING ITEM
-  // names must be initialized to an empty string
-  // names: string[] = ['jon', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick', 'syed', 'jonC', 'nick'];
-  names: string[] = ['all']
+  // Holds the listing of names of who you can talk to
+  buddyList: any = [];
+  // Flag for if you can show the back button (small screen: Show buddy list or message log)
   showBack: boolean = false;
-  // ABOVE IS TESTING ITEM
 
-  constructor(private chatService: ChatService, private flashMessage: FlashMessagesService) {}
+  constructor(
+    private chatService: ChatService, 
+    private flashMessage: FlashMessagesService) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    // Join room if you came from the study buddy page
+    if (this.chatService.ID != null) {
+      // If you clicked a study buddy, that info is put in chatService then received from chatservice to talk with that person
+      let payload = {
+        "user": this.chatService.ID["name"],
+        "email": this.chatService.ID["email"]
+      }
+      this.joinRoom(payload);
+      this.chatService.ID = null;
+    }
+    // Get the buddy list normally
+    this.chatService.getBuddyList(this.user['email']).subscribe((list) => {
+      for (let buddyIndex in list[0].buddyList) {
+        this.buddyList.push(list[0].buddyList[buddyIndex]);
+      }
+    })
+  }
 
-  // Join room (Leave room before joining new room)
-  joinRoom(sendee: string) {
-    // Back join room
-    this.sendee = sendee;
+  // Leave any pre-existing rooms, then join a room
+  joinRoom(sendee) {
+    this.sendee = sendee.user;
     this.showBack = true;
-    // this.chatService.createRoom(this.sender, sendee).subscribe((room) => {
-    this.chatService.createRoom("Test A", "Test B").subscribe((room) => {
-      this.currentRoom = room[0]._id
-
-      // Front join room
-      this.chatService.joinRoom(this.currentRoom)
-      
-      // Back get messages
+    // Create room and get a room # to join (Back End)
+    this.chatService.createRoom(this.user["email"], sendee.email).subscribe((out) => {
+      // Eliminate issue of room # too long
+      this.currentRoom = out[0]._id.substring(0, 24);
+      // Join Room (Back End)
+      this.chatService.joinRoom(this.currentRoom);
+      // Get Old Messages (Back End)
       this.chatService.getMessages(this.currentRoom).subscribe((messages) => {
-        // Set new room
         this.messages = []
-        // Populate messages
         for (let message in messages[0].messages) {
           this.messages.push(messages[0].messages[message])
         }
       })
-      // Subscribe to real time messages
-      // Front get messages
+      // Listen for Messages (Front End)
       if (this.connection == null) {
         this.connection = this.chatService.getSubscription().subscribe((payload) => {
           this.messages.push(payload);
@@ -57,38 +77,25 @@ export class ChatComponent implements OnInit {
     })
   }
 
-  // Send message (REQUIRES JOINROOM CALLED FIRST)
+  // Only send a message if you've joined a room
   sendMessage() {
-    console.log(this.showBack);
     // Make sure there is a connection, there is a message, and the message is not just white space
     if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
-      this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000})
+      this.flashMessage.show('Cannot send message. Did you join a room?', { cssClass: 'alert-danger', timeout: 3000 })
     }
     else {
-      // Send message to room with message
+      // Send message (Front End & Back End)
       this.chatService.sendMessage(this.currentRoom, this.sender, this.message).subscribe();
     }
     // Clear message
     this.message='';
   }
 
-  // TODO: USED WHILE WE DO NOT HAVE THE REST OF THE FUNCTIONALITY OF OUR CODE
-  stub() {
-    // Make sure there is a connection, there is a message, and the message is not just white space
-    if (this.connection == null || this.sendee == null || this.message == null || this.message.trim().length == 0) {
-      this.flashMessage.show('Cannot send message. Did you join a room?', {cssClass: 'alert-danger', timeout: 3000});
-    }
-    else {
-      // Send message to room with message
-      this.chatService.sendMessage(this.currentRoom, this.sendee, this.message).subscribe();
-    }
-    // Clear message
-    this.message='';
-  }
-
+  // Go back to the buddy list (small screen: Clears who you were talking)
   back() {
     this.sendee = null;
     this.showBack = false;
     this.messages = [];
+    this.message = '';
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +7,9 @@ import {AuthService} from '../../services/auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  constructor(private userService: UserService) { }
 
-  constructor(private authService: AuthService) { }
+  ngOnInit() { }
 
-  ngOnInit() {
-  }
-
+    // NOT NECESSARILY NEEDED SINCE THE HOME PAGE IS "STATIC"
 }

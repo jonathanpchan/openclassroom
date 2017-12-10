@@ -2,17 +2,22 @@
 <html>
   <head></head>
   <body>
+    <!-- Day Buttons -->
     <div style="text-align: center">
       <button (click) = "show('omon')" class="btn btn-primary"> Monday</button>
       <button (click) = "show('otue')" class="btn btn-primary"> Tuesday</button>
       <button (click) = "show('owed')" class="btn btn-primary"> Wednesday</button>
       <button (click) = "show('othu')" class="btn btn-primary"> Thursday</button>
     </div>
+    
+    <!-- Slider -->
     <div class="slider-grid">
       <span class="start" id="start"></span>
       <nouislider class="slider" [config]="timeSliderConfig" [(ngModel)]="timeRange" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}" id="slider"></nouislider>
       <span class="end" id="end"></span>
     </div>
+    
+    <!-- Find Times Table -->
     <div class="tablecontainer" id="table-2" style="display: none; margin-top: 35px;">
       <table>
         <tbody>
@@ -20,6 +25,7 @@
             <th colspan="6" *ngFor="let time of times | slice:tstart:tend">{{time}}</th>
           </tr>
           <tr *ngFor="let rooms of roomsList">
+            <!-- Attach a click to the leftmost column -->
             <th class="left-column" (click)="getRoomInfo(name, rooms.name)">{{name}}-{{rooms.name}}</th>
             <td class ="five-minute-chunk" *ngFor="let room of rooms?.room | slice:start:end let i = index " [ngClass]="room ? 'opentime' : 'closedtime'">
               <span class="time-tool-tip">{{displayToolTip(i)}}</span> <!--this messes up the left column for some reason -->
@@ -28,7 +34,8 @@
         </tbody>
       </table>
     </div>
-    <app-room id="room3" style="display: none" building={{buildingName}} room={{roomNumber}}></app-room>
 
+    <!-- Display the room info on leftmost column click -->
+    <app-room id="room3" style="display: none" building={{buildingName}} room={{roomNumber}}></app-room>
   </body>
 </html>

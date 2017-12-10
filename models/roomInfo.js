@@ -8,7 +8,7 @@ const Vote = mongoose.Schema({
     email: {type: String}
 })
 
-//Comments for each room's page schema
+//Comment schema for each room's page
 const CommentsSchema = mongoose.Schema({
     email: {type: String},
     uVote: {type: Number},
@@ -68,13 +68,18 @@ RI = module.exports = mongoose.model('RoomInfo', RoomInfoSchema );
 // Export comments Schema
 UC = module.exports = mongoose.model('Comments', CommentsSchema ); //UC = user comments
 
+//Export the schemas
 module.exports = {
   RI: RI,
   UC: UC
 }
 
-
-// return room info, no need to passalong votes array but do pass requested users vote
+/** Returns the room info based on building name and room #
+ *
+ * @param building Building name
+ * @param room Room name
+ * @param callback Function to receive room info object
+ */
 module.exports.getRoomInfo = function(building, room, callback){
     RI.findOne({$and: [{"building": building }, {"room": room}]} ,{_id : 0}, callback)
 }
@@ -84,6 +89,15 @@ module.exports.getRoomInfo = function(building, room, callback){
 //make generic
 //add case is beggining for two thins
 //make routes
+/**
+ *
+ * @param building
+ * @param room
+ * @param item
+ * @param uname
+ * @param nvote
+ * @param callback
+ */
 module.exports.addVote = function(building, room, item, uname, nvote, callback){
     var found = -1;
     var projection = item + '.votes'
@@ -112,32 +126,27 @@ module.exports.addVote = function(building, room, item, uname, nvote, callback){
         console.log("inserting new")
         //add to votes arr
         RI.update(
+            {$and: [{"building": building}, {"room": room}]},
+            {$push: {[projection]: {
+                vote: nvote,
+                email: uname
+            }}}, (err, x) => {
+            //update count
+            holder += nvote > 0 ? '.uVote' : '.dVote'
+            console.log("holder is: " + holder)
+            RI.update(
                 {$and: [{"building": building}, {"room": room}]},
-                {$push: {[projection]: {
-                    vote: nvote,
-                    email: uname
-                }}},
-                (err, x) => {
-                    //update count
-                    holder += nvote > 0 ? '.uVote' : '.dVote'
-                    console.log("holder is: " + holder)
-                    RI.update(
-                            {$and: [{"building": building}, {"room": room}]},
-                            {$inc: {[holder] : 1}},
-                            (err,x) => {callback(err, "Success! First Vote added")}
-                        )
-                }
+                {$inc: {[holder] : 1}},
+                (err,x) => {callback(err, "Success! First Vote added")}
             )
-    }
-
-    else {
+        }
+    )} else {
         var oldVote =  x[item].votes[found].vote
         //remove old vote
         RI.update(
             {$and: [{"building": building }, {"room": room}]},
             {$pull: {[projection] : {email: uname}}},
             (err, x) => {
-
                 //add new vote
                 RI.update(
                     {$and: [{"building": building }, {"room": room}]},
@@ -159,16 +168,25 @@ module.exports.addVote = function(building, room, item, uname, nvote, callback){
                                 {$inc: {[item1] : uVoteInc,[item2] : dVoteInc}},
                                 (err,x) => {callback(err, "Success! Vote Change")}
                             )
-
                         }
                         else {callback(err, "Success! Vote Updated")}
                     })      
-            }
-        )  
-    }
+                }
+            )
+        }
     })
 }
 
+/**
+ *
+ * @param building
+ * @param room
+ * @param item
+ * @param pos
+ * @param uname
+ * @param nvote
+ * @param callback
+ */
 module.exports.addNestedVote = function(building, room, item, pos, uname, nvote, callback){
     //callback(null, "hello2")
     var found = -1;
@@ -225,7 +243,6 @@ module.exports.addNestedVote = function(building, room, item, pos, uname, nvote,
                 }
             )
     }
-
     else {
         var oldVote =  x[item][pos].votes[found].vote
         //remove old vote
@@ -259,12 +276,20 @@ module.exports.addNestedVote = function(building, room, item, pos, uname, nvote,
                         }
                         else {callback(err, "Success! Vote Updated")}
                     })      
-            }
-        )  
-    }
+                }
+            )
+        }
     })
 }
 
+/** Add a comment to the room's info page
+ *
+ * @param building Building name
+ * @param room Room #
+ * @param newEmail User's e-mail submitting
+ * @param comment Comment message context
+ * @param callback Return to callback
+ */
 module.exports.addComment = function(building, room, newEmail, comment, callback){
     RI.update(
         {$and: [{"building": building }, {"room": room}]},

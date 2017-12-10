@@ -1,14 +1,32 @@
-<h1 style="text-align: center">Pick A Course</h1>
-<select id="courseSelect" class="form-control" (change)="showBuddies()">
-  <option selected hidden></option>
-  <option *ngFor="let class of schedule"> {{class.name}} {{class.num}}</option>
-</select>
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="warning" style="display: none" *ngIf="!isFinalized">
+      <h1>Please finalize your schedule in your schedule page</h1>
+    </div>
 
+    <div id="cronjobwait" style="display: none">
+      <h2> Please be paitent and wait for us to process your buddies, check back later to see!</h2>
+    </div>
 
-<div id="buddylist" style="display: none" *ngIf="loaded">
+    <div id="buddies" *ngIf="isFinalized">
+    <h1 style="text-align: center">Pick A Course</h1>
+    <select id="courseSelect" class="form-control" (change)="showBuddies()">
+      <option selected hidden></option>
+      <option *ngFor="let class of schedule"> {{class.name}} {{class.num}}</option>
+    </select>
 
-  <h1 class = "courseTitle">Potential Study Buddies For {{test.name}}</h1>
-  <div class="studdyBuddies">
-    <h3 class="buddy" *ngFor = "let buddy of test.buddies" (click)="message(buddy.name)">{{buddy.name}}</h3>
+    <div id="nobuddies" style="display: none">
+      <h2> Sorry there are no study buddies available for this course</h2>
+    </div>
+
+    <div id="buddylist" style="display: none" *ngIf="loaded">
+      <h1 class = "courseTitle">Potential Study Buddies For {{courseBuddies.name}}</h1>
+      <div class="studdyBuddies" *ngIf="loaded">
+        <a *ngFor = "let buddy of courseBuddies?.buddies let i = index" (click)="message(i)" routerLink="/chat"><h3 class="buddy">{{buddy.name}}</h3></a>
+      </div>
+    </div>
   </div>
-</div>
+  </body>
+</html>

@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
-import {FlashMessagesService} from 'angular2-flash-messages';
-import {ValidateService } from '../../services/validate.service';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { ValidateService } from '../../services/validate.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  show : boolean = false; // Initially show hidden
+  show: boolean = false; // Initially show hidden
 
   constructor(
-    private authService:AuthService,
-    private router:Router,
-    private flashMessage:FlashMessagesService,
-    private validateService: ValidateService
-  ) { }
+    private userService: UserService,
+    private router: Router,
+    private flashMessage: FlashMessagesService,
+    private validateService: ValidateService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  // Changes state of dropdown
+  // Change the state of dropdown
   toggle() {
     this.show = !this.show;
   }
@@ -32,7 +31,7 @@ export class NavbarComponent implements OnInit {
 
   // On logout, show log out and navigate back to login
   onLogoutClick() {
-    this.authService.logout();
+    this.userService.logout();
     this.flashMessage.show('You have logged out.', { cssClass:'alert-success', timeout:3000 });
     this.router.navigate(['/'])
   }

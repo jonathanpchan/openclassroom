@@ -4,14 +4,19 @@
   <body>
     <h1>Login</h1>
     <form (submit)="onLoginSubmit()">
+      <!-- Email field -->
       <div class="form-group">
         <label>Email</label>
         <input type="text" class="form-control" [(ngModel)]="email" name="email">
       </div>
+      
+      <!-- Password Field -->
       <div class="form-group">
         <label>Password</label>
         <input type="password" class="form-control" [(ngModel)]="password" name="password">
       </div>
+
+      <!-- Submit button -->
       <input type="submit" class="btn btn-primary" value="Login">
     </form>
   </body>

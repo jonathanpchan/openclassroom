@@ -26,12 +26,18 @@ module.exports = {
   CS: CS
 }
 
-// Gets the Buildings based on BuildingSchema name (sorted on name)
+/**Gets the Buildings based on BuildingSchema name (sorted on name)
+ *
+ * @param callback Return course names to callback function
+ */
 module.exports.getCourseNames = function(callback) {
   CS.find({}, {_id : 0, courses : 0}).sort({ name : 1}).exec(callback);
 }
 
-// Gets the Buildings based on BuildingSchema name (sorted on name)
+/**Gets the Buildings based on BuildingSchema name (sorted on name)
+ *
+ * @param callback Return all courses to callback function
+ */
 module.exports.getCourses = function(callback) {
   CS.find({}, {_id : 0}).sort({ name : 1}).exec(callback);
 }

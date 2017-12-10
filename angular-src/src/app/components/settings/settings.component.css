@@ -1,0 +1,119 @@
+/* For header styling */
+ h2 {
+     padding-bottom: 5px;
+     padding-left: 10%;
+     padding-right: 10%;
+     text-align: left;
+     font-size: 25px;
+  }
+
+ h2:after {
+     content: "";
+     display: block;
+     border-bottom: 1px solid #FFD07F;
+ }
+
+/*div left padding */
+ div.content-padding-left {
+     padding-left : 50px;
+ }
+
+/*padding for entire page*/
+ div.page-padding {
+     padding-left: 10%;
+     padding-right: 10%;
+ }
+
+ div.borders {
+     border-left: 1px dotted black;
+     border-right: 1px dotted black;
+     padding-left: 20px;
+     padding-right: 20px;
+ }
+
+/*left indent for header*/
+ div.p1 {
+     text-align: left;
+     padding-bottom:0px;
+     padding-top:0px;
+     padding-left:15px;
+ }
+
+/*dynamic table*/
+#t01 {
+    width:100%;
+    padding: 0;
+}
+
+/*inner table for hover color*/
+ #t02 {
+     width:100%;
+     padding: 0;
+ }
+
+/*inner table for hover color*/
+ #t03 {
+     width:100%;
+     padding: 0;
+ }
+
+/*table width*/
+ .width {
+    text-align: left;
+    width: 200px;
+}
+
+
+/*align-left*/
+.align-left {
+    text-align: left;
+}
+
+/*align-right*/
+.align-right {
+    text-align: right;
+}
+
+/*small text*/
+.small {
+    font-size: .7em;
+    text-align: right;
+    padding-right: 0;
+}
+
+/*dropdown styling*/
+.small {
+    font-size: .7em
+}
+
+button.dropdown {
+    background-color: inherit;
+    border: none;
+    width: 100%;
+    padding: 0;
+}
+
+/*center dropdown content*/
+button.hello {
+    padding: 0;
+}
+button.dropdown:hover, button.dropdown:active {
+    background-color: lightblue;
+    border: none;
+}
+
+ div.dropdown-content {
+     display: inline-block;
+     text-align: center;
+ }
+
+ /*hover color for table items*/
+ #t01 tr:hover {
+     background-color: lightgray;
+ }
+
+ /*hover color for drop down item*/
+ #t02 tr:hover {
+     background-color: lightblue;
+ }
+
