@@ -2581,13 +2581,13 @@ var StudyBuddyService = (function () {
     StudyBuddyService.prototype.unfinalize = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/studybuddies/remove', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studybuddies/remove', email, { headers: headers }).map(res => res.json());
+        // return this.http.post('studybuddies/remove', { email : email }, { headers: headers }).map(res => res.json());
     };
     // Service to call /get route. Get Study Buddies based on classes
     StudyBuddyService.prototype.getStudyBuddies = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
         return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studyBuddies/get', email, { headers: headers }).map(res => res.json());
+        // return this.http.post('studybuddies/get', email, { headers: headers }).map(res => res.json());
     };
     return StudyBuddyService;
 }());

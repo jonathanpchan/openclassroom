@@ -25,6 +25,6 @@ export class StudyBuddyService {
   getStudyBuddies(email): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(res => res.json());
-    // return this.http.post('studyBuddies/get', { email : email}, { headers: headers }).map(res => res.json());
+    // return this.http.post('studybuddies/get', email, { headers: headers }).map(res => res.json());
   }
 }

@@ -42,13 +42,13 @@ router.post('/get', (req, res) => {
     if (req.body.email){
         StudyBuddy.getBuddies(req.body.email, (err, x) => {
             if (err) {
-                res.json({error: err})
+                return res.json({error: err})
             }
             else
-                res.json(x)
+                return res.json(x)
         })
     }
     else {
-        res.json({error: "Malformatted Request"})
+        return res.json({error: "Malformatted Request"})
     }
 })
