@@ -32,58 +32,58 @@ var UserService = (function () {
     // Register a user given user information from payload
     UserService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/register', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/register', user, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/register', user, { headers: headers }).map(res => res.json());
+        return this.http.post('users/register', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Authenticate a user given user information from payload
     UserService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/authenticate', user, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers }).map(res => res.json());
+        return this.http.post('users/authenticate', user, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Route to call settings/pw. Used to changed the user's password.
     UserService.prototype.changePW = function (email, oldpw, newpw) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/settings/pw', { email: email, oldpw: oldpw, newpw: newpw }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/settings/pw', {email, oldpw, newpw}, {headers: headers}).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/settings/pw', {email, oldpw, newpw}, { headers: headers }).map(res => res.json());
+        return this.http.post('users/settings/pw', { email: email, oldpw: oldpw, newpw: newpw }, { headers: headers }).map(function (res) { return res.json(); });
     };
     //=========== Schedule =====================
     // Check to see if the user is finalized
     UserService.prototype.isFinalized = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/final', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/final', { email: email }, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/final', { email: email }, { headers: headers }).map(res => res.json());
+        return this.http.post('users/final', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Get the user's schedule
     UserService.prototype.getSchedule = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/schedule', email, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/schedule', email, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/schedule', email, { headers: headers }).map(res => res.json());
+        return this.http.post('users/schedule', email, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Add a schedule item to the user's schedule
     UserService.prototype.addScheduleItem = function (item) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/schedule/add', item, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/schedule/add', item, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/schedule/add', item, { headers: headers }).map(res => res.json());
+        return this.http.post('users/schedule/add', item, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Delete a schedule item from the user's schedule
     UserService.prototype.deleteScheduleItem = function (item) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/schedule/delete', item, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/schedule/delete', item, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/schedule/delete', item, { headers: headers }).map(res => res.json());
+        return this.http.post('users/schedule/delete', item, { headers: headers }).map(function (res) { return res.json(); });
     };
     //=========== Courses ======================
     // Get a list of all the course names
     UserService.prototype.getCourseNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/users/courses/names', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('users/courses/names', { headers: headers }).map(res => res.json());
+        // return this.http.get('http://localhost:3000/users/courses/names', { headers: headers }).map(res => res.json());
+        return this.http.get('users/courses/names', { headers: headers }).map(function (res) { return res.json(); });
     };
     // Get all course information
     UserService.prototype.getCourses = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/users/courses', { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.get('users/courses', { headers: headers }).map(res => res.json());
+        // return this.http.get('http://localhost:3000/users/courses', { headers: headers }).map(res => res.json());
+        return this.http.get('users/courses', { headers: headers }).map(function (res) { return res.json(); });
     };
     //=========== User Token ===================
     // Store user data into local storage
@@ -2489,20 +2489,20 @@ var BuildingsService = (function () {
     // Get building based on name
     BuildingsService.prototype.getBuilding = function (name) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/buildings', { name: name }, { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.post('buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
+        // return this.http.post('http://localhost:3000/buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
+        return this.http.post('buildings', { name: name }, { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
     };
     // Get all buildings
     BuildingsService.prototype.getBuildings = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.get('buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
+        // return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
+        return this.http.get('buildings', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
     };
     // Get all building names
     BuildingsService.prototype.getBuildingNames = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
-        // return this.http.get('buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
+        // return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
+        return this.http.get('buildings/names', { headers: headers }).map(function (res) { return res.json(); }).catch(this.handleError);
     };
     BuildingsService.prototype.extractData = function (res) {
         var body = res.json();
@@ -2574,20 +2574,20 @@ var StudyBuddyService = (function () {
     // Service to call /add route. Adds a user to study buddy feature
     StudyBuddyService.prototype.joinStudyBuddies = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studybuddies/add', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/studybuddies/add', { email: email },{ headers: headers }).map(res => res.json());
+        return this.http.post('studybuddies/add', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Service to call /remove route. Removes a user from study buddy feature
     StudyBuddyService.prototype.unfinalize = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studybuddies/remove', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studybuddies/remove', { email : email }, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/studybuddies/remove', {email : email}, { headers: headers }).map(res => res.json());
+        return this.http.post('studybuddies/remove', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Service to call /get route. Get Study Buddies based on classes
     StudyBuddyService.prototype.getStudyBuddies = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('studybuddies/get', email, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/studybuddies/get', email, { headers: headers }).map(res => res.json());
+        return this.http.post('studybuddies/get', email, { headers: headers }).map(function (res) { return res.json(); });
     };
     return StudyBuddyService;
 }());
@@ -2638,15 +2638,15 @@ var ChatService = (function () {
             user_1: sender,
             user_2: sendee
         };
-        return this.http.post('http://localhost:3000/messages/create', payload, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('messages/create', payload, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/messages/create', payload, { headers: headers }).map(res => res.json());
+        return this.http.post('messages/create', payload, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Tell the server to connect to server and join a room
     ChatService.prototype.joinRoom = function (ID) {
         // Connect once while on that page
         if (this.socket == null) {
-            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("http://localhost:3000/");
-            // this.socket = io.connect("https://openclassroom.herokuapp.com/");
+            // this.socket = io.connect("http://localhost:3000/");
+            this.socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client__["connect"]("https://openclassroom.herokuapp.com/");
         }
         this.socket.emit('join room', ID);
     };
@@ -2659,13 +2659,13 @@ var ChatService = (function () {
             msg: message,
             ID: ID
         };
-        return this.http.post('http://localhost:3000/messages/send', payload, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('messages/send', payload, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/messages/send', payload, { headers: headers }).map(res => res.json());
+        return this.http.post('messages/send', payload, { headers: headers }).map(function (res) { return res.json(); });
     };
     ChatService.prototype.getBuddyList = function (email) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/users/buddylist', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
+        return this.http.post('users/buddylist', { email: email }, { headers: headers }).map(function (res) { return res.json(); });
     };
     ChatService.prototype.addBuddyListItem = function (email1, email2, user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
@@ -2674,8 +2674,8 @@ var ChatService = (function () {
             email2: email2,
             user: user
         };
-        return this.http.post('http://localhost:3000/users/buddylist/add', payload, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('users/buddylist/add', payload, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/users/buddylist/add', payload, { headers: headers }).map(res => res.json());
+        return this.http.post('users/buddylist/add', payload, { headers: headers }).map(function (res) { return res.json(); });
     };
     // Create an observable that will read off the next message when the user gets a message
     ChatService.prototype.getSubscription = function () {
@@ -2689,8 +2689,8 @@ var ChatService = (function () {
     };
     ChatService.prototype.getMessages = function (ID) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/messages/get', { ID: ID }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
+        return this.http.post('messages/get', { ID: ID }, { headers: headers }).map(function (res) { return res.json(); });
     };
     return ChatService;
 }());
@@ -2922,18 +2922,18 @@ var RoomInfoService = (function () {
     }
     RoomInfoService.prototype.getRoomInfo = function (building, room) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('roominfo/getRoomInfo', { building, room }, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/roominfo/getRoomInfo', { building, room }, { headers: headers }).map(res => res.json());
+        return this.http.post('roominfo/getRoomInfo', { building: building, room: room }, { headers: headers }).map(function (res) { return res.json(); });
     };
     RoomInfoService.prototype.addComment = function (building, room, email, comment) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/roominfo/addComment', { building: building, room: room, email: email, comment: comment }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('roominfo/addComment', { building, room, email, comment }, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/roominfo/addComment', { building, room, email, comment }, { headers: headers }).map(res => res.json());
+        return this.http.post('roominfo/addComment', { building: building, room: room, email: email, comment: comment }, { headers: headers }).map(function (res) { return res.json(); });
     };
     RoomInfoService.prototype.addVote = function (building, room, email, item, pos, nvote) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/roominfo/addVote', { building: building, room: room, email: email, item: item, pos: pos, nvote: nvote }, { headers: headers }).map(function (res) { return res.json(); });
-        // return this.http.post('roominfo/addVote', { building, room, email, item, pos, nvote }, { headers: headers }).map(res => res.json());
+        // return this.http.post('http://localhost:3000/roominfo/addVote', { building, room, email, item, pos, nvote }, { headers: headers }).map(res => res.json());
+        return this.http.post('roominfo/addVote', { building: building, room: room, email: email, item: item, pos: pos, nvote: nvote }, { headers: headers }).map(function (res) { return res.json(); });
     };
     return RoomInfoService;
 }());

@@ -20,16 +20,16 @@ export class ChatService {
       user_1: sender,
       user_2: sendee
     }
-    return this.http.post('http://localhost:3000/messages/create', payload, { headers: headers }).map(res => res.json());
-    // return this.http.post('messages/create', payload, { headers: headers }).map(res => res.json());
+    // return this.http.post('http://localhost:3000/messages/create', payload, { headers: headers }).map(res => res.json());
+    return this.http.post('messages/create', payload, { headers: headers }).map(res => res.json());
   }
 
   // Tell the server to connect to server and join a room
   joinRoom(ID: String) {
     // Connect once while on that page
     if (this.socket == null) {
-      this.socket = io.connect("http://localhost:3000/");
-      // this.socket = io.connect("https://openclassroom.herokuapp.com/");
+      // this.socket = io.connect("http://localhost:3000/");
+      this.socket = io.connect("https://openclassroom.herokuapp.com/");
     }
     this.socket.emit('join room', ID);
   }
@@ -43,14 +43,14 @@ export class ChatService {
       msg: message,
       ID: ID
     }
-    return this.http.post('http://localhost:3000/messages/send', payload, { headers: headers }).map(res => res.json());
-    // return this.http.post('messages/send', payload, { headers: headers }).map(res => res.json());
+    // return this.http.post('http://localhost:3000/messages/send', payload, { headers: headers }).map(res => res.json());
+    return this.http.post('messages/send', payload, { headers: headers }).map(res => res.json());
   }
 
   getBuddyList(email: string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.post('http://localhost:3000/users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
-    // return this.http.post('users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
+    // return this.http.post('http://localhost:3000/users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
+    return this.http.post('users/buddylist', { email: email }, { headers: headers }).map(res => res.json());
   }
 
   addBuddyListItem(email1: String, email2: String, user: String) {
@@ -60,8 +60,8 @@ export class ChatService {
       email2: email2,
       user: user
     }
-    return this.http.post('http://localhost:3000/users/buddylist/add', payload, { headers: headers }).map(res => res.json());
-    // return this.http.post('users/buddylist/add', payload, { headers: headers }).map(res => res.json());
+    // return this.http.post('http://localhost:3000/users/buddylist/add', payload, { headers: headers }).map(res => res.json());
+    return this.http.post('users/buddylist/add', payload, { headers: headers }).map(res => res.json());
   }
 
   // Create an observable that will read off the next message when the user gets a message
@@ -76,7 +76,7 @@ export class ChatService {
 
   getMessages(ID: String) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.post('http://localhost:3000/messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
-    // return this.http.post('messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
+    // return this.http.post('http://localhost:3000/messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
+    return this.http.post('messages/get', { ID: ID }, { headers: headers }).map(res => res.json());
   }
 }

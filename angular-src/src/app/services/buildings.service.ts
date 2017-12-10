@@ -14,22 +14,22 @@ export class BuildingsService {
   // Get building based on name
   getBuilding(name: String): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.post('http://localhost:3000/buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
-    // return this.http.post('buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
+    // return this.http.post('http://localhost:3000/buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
+    return this.http.post('buildings', {name}, { headers: headers }).map(res => res.json()).catch(this.handleError);
   }
 
   // Get all buildings
   getBuildings(): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
-    // return this.http.get('buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    // return this.http.get('http://localhost:3000/buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    return this.http.get('buildings', { headers: headers }).map(res => res.json()).catch(this.handleError);
   }
 
   // Get all building names
   getBuildingNames(): Observable<any> {
     let headers = new Headers({'Content-Type': 'application/json' });
-    return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
-    // return this.http.get('buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    // return this.http.get('http://localhost:3000/buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
+    return this.http.get('buildings/names', { headers: headers }).map(res => res.json()).catch(this.handleError);
   }
 
   private extractData(res: Response) {
